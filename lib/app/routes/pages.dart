@@ -27,6 +27,18 @@ class PlugPages {
       page: () => const AccountImportPage(),
       binding: AccountImportPageBinding()
     ),
+    /// 创建账户-提示备份助记词
+    GetPage(
+      name: PlugRoutesNames.accountBackupTip,
+      page: () => const AccountBackupTipPage(),
+      binding: AccountBackupTipPageBinding(),
+    ),
+    /// 创建账户-显示助记词
+    GetPage(
+      name: PlugRoutesNames.accountBackupShow,
+      page: () => const AccountBackupShowPage(),
+      binding: AccountBackupShowPageBinding(),
+    ),
     // ExamplePage
     if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),
   ];

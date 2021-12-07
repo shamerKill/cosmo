@@ -90,6 +90,7 @@ ThemeData _getTheme (ThemeColorClass colors, AppSize sizes) => ThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all(colors.primaryColor),
       textStyle: MaterialStateProperty.all(TextStyle(color: colors.hightColor)),
+      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(sizes.buttonRadius))),
     ),
   ),
   outlinedButtonTheme: OutlinedButtonThemeData(

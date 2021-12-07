@@ -32,7 +32,7 @@
 	"redeemOfCourse": "确认赎回",
 	"notScreenshots": "请勿截屏",
 	"notScreenshotsTip": "请勿截屏分享和储存，这将可能被第三方恶意软件收集，造成资产损失",
-	"notScreenshotsTipIAmKown": "请勿截屏分享和储存，这将可能被第三方恶意软件收集，造成资产损失",
+	"notScreenshotsTipIAmKown": "已知晓",
 	"backupMnemonicListTitle": "备份助记词",
 	"backupMnemonicListDescription": "请按顺序抄写助记词，确保备份正确。",
 	"backupMnemonicInfoTip_1": "妥善保管助记词至隔离网络的安全地方。",

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/verify.dart';
@@ -99,6 +99,7 @@ class AccountCreateController extends GetxController {
       state._createLoading.toggle();
       LLoading.dismiss();
       LToast.success('SuccessWithCreate'.tr);
+      Get.offAllNamed(PlugRoutesNames.accountBackupTip);
     });
   }
 }

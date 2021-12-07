@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flustars/flustars.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
@@ -48,7 +49,7 @@ class LScaffold extends GetView<LScaffoldController> {
                     padding: padding??EdgeInsets.only(
                       left: appTheme.sizes.padding, right: appTheme.sizes.padding,
                       bottom: hidBottomBar ? 0 :
-                        (ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context))
+                        (Get.bottomBarHeight == 0 ? appTheme.sizes.padding : Get.bottomBarHeight.sp)
                     ),
                     child: singleScroll ? SingleChildScrollView(child: body) : body,
                   ),

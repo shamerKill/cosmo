@@ -65,7 +65,7 @@ class AccountChossePage extends GetView<AccountChossePageController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('createWalletPageTitle'.tr, style: TextStyle(
-                                  fontSize: appTheme.sizes.fontSizeBig * 1.1,
+                                  fontSize: appTheme.sizes.fontSizeBig,
                                   fontWeight: FontWeight.w600,
                                 )),
                                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
@@ -109,7 +109,7 @@ class AccountChossePage extends GetView<AccountChossePageController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text('importWallet'.tr, style: TextStyle(
-                                  fontSize: appTheme.sizes.fontSizeBig * 1.1,
+                                  fontSize: appTheme.sizes.fontSizeBig,
                                   fontWeight: FontWeight.w600,
                                 )),
                                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),

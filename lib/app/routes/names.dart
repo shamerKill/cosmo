@@ -11,4 +11,8 @@ abstract class PlugRoutesNames {
   static const accountCreate = '/accountCreate';
   /// 导入地址页面
   static const accountImport = '/accountImport';
+  /// 创建账户-提示备份助记词页
+  static const accountBackupTip = '/accountBackupTip';
+  /// 创建账户-显示助记词页
+  static const accountBackupShow = '/accountBackupShow';
 }

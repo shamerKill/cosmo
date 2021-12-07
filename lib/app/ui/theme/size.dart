@@ -8,9 +8,9 @@ class AppSize {
   final double infinity = double.infinity;
   final double titleBarHeight = basicScale * 100.0;
   final double titleBarTitleSize = basicScale * 36.0;
-  final double fontSizeSmall = basicScale * 24.0;
-  final double fontSize = basicScale * 24.0;
-  final double fontSizeBig = basicScale * 28.0;
+  final double fontSizeSmall = basicScale * 22.0;
+  final double fontSize = basicScale * 26.0;
+  final double fontSizeBig = basicScale * 32.0;
   final double inputFontSize = basicScale * 28.0;
   final double inputIconSize = basicScale * 34.0;
   final double paddingBig = basicScale * 50.0;
@@ -20,4 +20,5 @@ class AppSize {
   final double iconSize = basicScale * 45.0;
   final double inputHeight = basicScale * 100.0;
   final double buttonHeight = basicScale * 88.0;
+  final double buttonRadius = basicScale * 20.0;
 }

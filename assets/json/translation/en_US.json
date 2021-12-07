@@ -32,7 +32,7 @@
 	"redeemOfCourse": " Confirm unstaking",
 	"notScreenshots": "Please do not take screenshots",
 	"notScreenshotsTip": "Please do not take screenshots to share and store, it may be collected by third-party malware and cause asset loss",
-	"notScreenshotsTipIAmKown": "Please do not take screenshots to share and store, it may be collected by third-party malware and cause asset loss",
+	"notScreenshotsTipIAmKown": "Known",
 	"backupMnemonicListTitle": " Backup mnemonic",
 	"backupMnemonicListDescription": " Please copy the mnemonic phrases in order to ensure that the backup is correct",
 	"backupMnemonicInfoTip_1": "Keep the mnemonic words properly to a safe place on the isolated network。",

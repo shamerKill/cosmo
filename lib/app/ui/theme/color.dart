@@ -8,8 +8,10 @@ class AppColor {
     transparent: Colors.transparent,
     hightColor: Colors.white,
     pageBackgroundColor: Colors.white,
+    pageConTrastColor: Colors.black,
     borderColor: const Color(0xffebedf6),
     textGray: const Color(0xffc8cad2),
+    textGrayBig: const Color(0xFF878E9F),
     textBlack: const Color(0xFF222222),
   );
   static ThemeColorClass get darkColors => ThemeColorClass(
@@ -17,8 +19,10 @@ class AppColor {
     transparent: Colors.transparent,
     hightColor: Colors.yellow,
     pageBackgroundColor: Colors.white,
+    pageConTrastColor: Colors.black,
     borderColor: const Color(0xffebedf6),
     textGray: const Color(0xffc8cad2),
+    textGrayBig: const Color(0xFF878E9F),
     textBlack: const Color(0xFF222222),
   );
 }
@@ -29,8 +33,10 @@ class ThemeColorClass {
   final Color transparent;
   final Color hightColor;
   final Color pageBackgroundColor;
+  final Color pageConTrastColor;
   final Color borderColor;
   final Color textGray;
+  final Color textGrayBig;
   final Color textBlack;
   ThemeColorClass({
     required this.primaryColor,
@@ -40,5 +46,7 @@ class ThemeColorClass {
     required this.borderColor,
     required this.textGray,
     required this.textBlack,
+    required this.textGrayBig,
+    required this.pageConTrastColor,
   });
 }
