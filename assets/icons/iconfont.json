@@ -1,0 +1,289 @@
+{
+  "id": "2973413",
+  "name": "Cosmo Walle t2.0",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8817897",
+      "name": "增加添加加号",
+      "font_class": "zengjiatianjiajiahao",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "11494986",
+      "name": "更多3",
+      "font_class": "gengduo1",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "16322583",
+      "name": "垃圾桶",
+      "font_class": "lajitong",
+      "unicode": "e6ed",
+      "unicode_decimal": 59117
+    },
+    {
+      "icon_id": "16322894",
+      "name": "复制",
+      "font_class": "fuzhi",
+      "unicode": "e6fc",
+      "unicode_decimal": 59132
+    },
+    {
+      "icon_id": "16322909",
+      "name": "二维码",
+      "font_class": "erweima",
+      "unicode": "e6fd",
+      "unicode_decimal": 59133
+    },
+    {
+      "icon_id": "23308100",
+      "name": "左上",
+      "font_class": "zuoshang1",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "11989154",
+      "name": "指纹",
+      "font_class": "zhiwen",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "10654114",
+      "name": "开关-关",
+      "font_class": "guan",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "24435698",
+      "name": "KAI",
+      "font_class": "KAI",
+      "unicode": "e817",
+      "unicode_decimal": 59415
+    },
+    {
+      "icon_id": "26217881",
+      "name": "消息",
+      "font_class": "xiaoxi",
+      "unicode": "e820",
+      "unicode_decimal": 59424
+    },
+    {
+      "icon_id": "26217882",
+      "name": "账户",
+      "font_class": "zhanghu",
+      "unicode": "e821",
+      "unicode_decimal": 59425
+    },
+    {
+      "icon_id": "26217883",
+      "name": "dizh",
+      "font_class": "dizh",
+      "unicode": "e822",
+      "unicode_decimal": 59426
+    },
+    {
+      "icon_id": "26191671",
+      "name": "排序",
+      "font_class": "paixu",
+      "unicode": "e81f",
+      "unicode_decimal": 59423
+    },
+    {
+      "icon_id": "16322400",
+      "name": "完成",
+      "font_class": "wancheng",
+      "unicode": "e6d5",
+      "unicode_decimal": 59093
+    },
+    {
+      "icon_id": "16322472",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e6df",
+      "unicode_decimal": 59103
+    },
+    {
+      "icon_id": "16322727",
+      "name": "删除",
+      "font_class": "shanchu_2",
+      "unicode": "e6f3",
+      "unicode_decimal": 59123
+    },
+    {
+      "icon_id": "12503602",
+      "name": "正确 (1)",
+      "font_class": "zhengque",
+      "unicode": "e670",
+      "unicode_decimal": 58992
+    },
+    {
+      "icon_id": "17548041",
+      "name": "关 闭",
+      "font_class": "guanbi1",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "20523119",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "22641674",
+      "name": "login-circle-line",
+      "font_class": "login-circle-line",
+      "unicode": "e6f6",
+      "unicode_decimal": 59126
+    },
+    {
+      "icon_id": "22641677",
+      "name": "logout-circle-line",
+      "font_class": "logout-circle-line",
+      "unicode": "e6f7",
+      "unicode_decimal": 59127
+    },
+    {
+      "icon_id": "23073909",
+      "name": "GD",
+      "font_class": "GD1",
+      "unicode": "e815",
+      "unicode_decimal": 59413
+    },
+    {
+      "icon_id": "26191627",
+      "name": "zhifuxuanze",
+      "font_class": "zhifuxuanze1",
+      "unicode": "e81e",
+      "unicode_decimal": 59422
+    },
+    {
+      "icon_id": "16322402",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e6d6",
+      "unicode_decimal": 59094
+    },
+    {
+      "icon_id": "16322469",
+      "name": "扫码",
+      "font_class": "saoma",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "16193199",
+      "name": "菜单 (1)aas",
+      "font_class": "caidan1",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "16322457",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e6da",
+      "unicode_decimal": 59098
+    },
+    {
+      "icon_id": "16322543",
+      "name": "提醒",
+      "font_class": "tixing",
+      "unicode": "e6e6",
+      "unicode_decimal": 59110
+    },
+    {
+      "icon_id": "23694785",
+      "name": "wxz",
+      "font_class": "wxz",
+      "unicode": "e811",
+      "unicode_decimal": 59409
+    },
+    {
+      "icon_id": "23694786",
+      "name": "wzy",
+      "font_class": "wzy",
+      "unicode": "e812",
+      "unicode_decimal": 59410
+    },
+    {
+      "icon_id": "23694787",
+      "name": "xz",
+      "font_class": "xz",
+      "unicode": "e813",
+      "unicode_decimal": 59411
+    },
+    {
+      "icon_id": "23694788",
+      "name": "zy",
+      "font_class": "zy",
+      "unicode": "e814",
+      "unicode_decimal": 59412
+    },
+    {
+      "icon_id": "24775117",
+      "name": "ta",
+      "font_class": "ta",
+      "unicode": "e818",
+      "unicode_decimal": 59416
+    },
+    {
+      "icon_id": "24775118",
+      "name": "taxz",
+      "font_class": "taxz",
+      "unicode": "e819",
+      "unicode_decimal": 59417
+    },
+    {
+      "icon_id": "25403468",
+      "name": "ll",
+      "font_class": "ll",
+      "unicode": "e81c",
+      "unicode_decimal": 59420
+    },
+    {
+      "icon_id": "25403469",
+      "name": "wzy",
+      "font_class": "wzy1",
+      "unicode": "e81d",
+      "unicode_decimal": 59421
+    },
+    {
+      "icon_id": "26081978",
+      "name": "未选择",
+      "font_class": "weixuanze",
+      "unicode": "e81b",
+      "unicode_decimal": 59419
+    },
+    {
+      "icon_id": "8776631",
+      "name": "view",
+      "font_class": "icon-test4",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "21683046",
+      "name": "hide",
+      "font_class": "hide",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "8777512",
+      "name": "arrow_right",
+      "font_class": "icon-test",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    }
+  ]
+}

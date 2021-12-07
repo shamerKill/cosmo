@@ -1,0 +1,11 @@
+//
+//  Dart.xcconfig
+//  Runner
+//
+//  Created by shamer on 2021/11/29.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+DART_DEFINE_APP_ENV=flutter_flavor

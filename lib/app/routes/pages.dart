@@ -1,0 +1,33 @@
+part of './routes.dart';
+
+class PlugPages {
+  static String start = PlugRoutesNames.start;
+  static final List<GetPage> routes = [
+    /// 启动页
+    GetPage(
+      name: PlugRoutesNames.start,
+      page: () => const StartPage(),
+      binding: StartPageBinding(),
+    ),
+    /// 首次进入页面(无地址)
+    GetPage(
+      name: PlugRoutesNames.fristOpenWallet,
+      page: () => const AccountChossePage(),
+      binding: AccountChossePageBinding(),
+    ),
+    /// 创建账户
+    GetPage(
+      name: PlugRoutesNames.accountCreate,
+      page: () => const AccountCreatePage(),
+      binding: AccountCreateBinding()
+    ),
+    /// 导入地址
+    GetPage(
+      name: PlugRoutesNames.accountImport,
+      page: () => const AccountImportPage(),
+      binding: AccountImportPageBinding()
+    ),
+    // ExamplePage
+    if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),
+  ];
+}
