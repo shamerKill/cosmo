@@ -44,6 +44,7 @@ class StartPageController extends GetxController with SingleGetTickerProviderMix
   _toPage() async {
     await Future.delayed(const Duration(milliseconds: 100));
     // Get.offAllNamed('/example');
-    Get.offAllNamed(PlugRoutesNames.fristOpenWallet);
+    // Get.offAllNamed(PlugRoutesNames.fristOpenWallet);
+    Get.offAllNamed(PlugRoutesNames.walletHome);
   }
 }

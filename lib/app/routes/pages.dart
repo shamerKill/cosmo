@@ -47,9 +47,31 @@ class PlugPages {
     ),
     /// 钱包-首页
     GetPage(
-      name: PlugRoutesNames.basicHome,
+      name: PlugRoutesNames.walletHome,
       page: () => const BasicHomePage(),
       binding: BasicHomePageBinding(),
+      transition: Transition.fadeIn,
+    ),
+    /// 市场-首页
+    GetPage(
+      name: PlugRoutesNames.chainExport,
+      page: () => const ChainExportPage(),
+      binding: ChainExportPageBinding(),
+      transition: Transition.fadeIn,
+    ),
+    /// 生态-首页
+    GetPage(
+      name: PlugRoutesNames.dappExhibition,
+      page: () => const DappExhibitionPage(),
+      binding: DappExhibitionPageBinding(),
+      transition: Transition.fadeIn,
+    ),
+    /// 我的-首页
+    GetPage(
+      name: PlugRoutesNames.userMy,
+      page: () => const UserMyPage(),
+      binding: UserMyPageBinding(),
+      transition: Transition.fadeIn,
     ),
     // ExamplePage
     if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),

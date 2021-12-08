@@ -106,7 +106,7 @@ class AccountImportPageController extends GetxController {
       state._importLoading.toggle();
       LLoading.dismiss();
       LToast.success('SuccessWithImport'.tr);
-      Get.offAllNamed(PlugRoutesNames.basicHome);
+      Get.offAllNamed(PlugRoutesNames.walletHome);
     });
   }
 }

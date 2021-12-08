@@ -18,5 +18,11 @@ abstract class PlugRoutesNames {
   /// 创建账户-验证助记词页
   static const accountBackupVerify = '/accountBackupVerify';
   /// 钱包-首页
-  static const basicHome = '/basicHome';
+  static const walletHome = '/walletHome';
+  /// 市场-首页
+  static const chainExport = '/chainExport';
+  /// 生态-首页
+  static const dappExhibition = '/dappExhibition';
+  /// 我的-首页
+  static const userMy = '/userMy';
 }

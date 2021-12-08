@@ -58,6 +58,6 @@ class AccountBackupVerifyPageController extends GetxController {
 
   // 下一步
   stepFunc () {
-    Get.offAllNamed(PlugRoutesNames.basicHome);
+    Get.offAllNamed(PlugRoutesNames.walletHome);
   }
 }

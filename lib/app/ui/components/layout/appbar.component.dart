@@ -9,7 +9,7 @@ class LAppBar {
   }) => AppBar(
     elevation: appTheme.sizes.zero,
     toolbarHeight: appTheme.sizes.zero,
-    backgroundColor: backgroundColor??appTheme.colors.pageBackgroundColor,
+    backgroundColor: backgroundColor??appTheme.colors.transparent,
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: appTheme.colors.transparent,
       // iOS status background

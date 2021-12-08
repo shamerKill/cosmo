@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart' as util_screen;
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
@@ -13,19 +12,24 @@ class LScaffold extends GetView<LScaffoldController> {
     this.titleBar,
     this.body,
     this.footer,
+    this.bottomNavigationBar,
     this.padding,
     this.hidBottomBar = false,
     this.singleScroll = false,
+    this.basicBackgroundColor = false,
   }) : super(key: key);
   final AppBar? statusBar;
   final Widget? headerBar;
   final Widget? titleBar;
   final Widget? body;
   final Widget? footer;
+  final Widget? bottomNavigationBar;
   final EdgeInsetsGeometry? padding;
   /// 是否隐藏底部安全距离
   final bool hidBottomBar;
   final bool singleScroll;
+  // 是否显示首页的背景色
+  final bool basicBackgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +40,7 @@ class LScaffold extends GetView<LScaffoldController> {
       child: WillPopScope(
         child: Scaffold(
           appBar: statusBar,
+          backgroundColor: basicBackgroundColor ? appTheme.colors.pageBackgroundColorBasic : null,
           body: SizedBox(
             height: appTheme.sizes.infinity,
             child: Column(
@@ -68,6 +73,7 @@ class LScaffold extends GetView<LScaffoldController> {
               ],
             ),
           ),
+          bottomNavigationBar: bottomNavigationBar,
         ),
         onWillPop: GetPlatform.isAndroid ? controller.onWillPop : null,
       ),
