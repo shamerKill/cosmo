@@ -22,39 +22,35 @@ class AccountCreatePage extends GetView<AccountCreateController> {
         title: LAppBar.defaultHeaderTextWidget('createWalletPageTitle'.tr),
         description: Text('createWalletPageDescription'.tr, style: Get.textTheme.bodyText1),
       ),
+      singleScroll: true,
       body: Column(
         children: [
-          Expanded(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
-                    child: Obx(() => LInput(
-                      labelText: 'inputPassword'.tr,
-                      disabled: state.createLoading,
-                      textController: controller.passwordController,
-                      visibilityPass: state.passwordShow,
-                      keyboardType: TextInputType.visiblePassword,
-                      passOnPress: () => controller.togglePasswordView('password'),
-                    )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
-                    child: Obx(() => LInput(
-                      labelText: 'inputPasswordAgain'.tr,
-                      disabled: state.createLoading,
-                      textController: controller.rePasswordController,
-                      visibilityPass: state.rePasswordShow,
-                      keyboardType: TextInputType.visiblePassword,
-                      passOnPress: () => controller.togglePasswordView('rePassword'),
-                    )),
-                  ),
-                ],
-              ),
-            ),
+          Padding(
+            padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
+            child: Obx(() => LInput(
+              labelText: 'inputPassword'.tr,
+              disabled: state.createLoading,
+              textController: controller.passwordController,
+              visibilityPass: state.passwordShow,
+              keyboardType: TextInputType.visiblePassword,
+              passOnPress: () => controller.togglePasswordView('password'),
+            )),
           ),
+          Padding(
+            padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
+            child: Obx(() => LInput(
+              labelText: 'inputPasswordAgain'.tr,
+              disabled: state.createLoading,
+              textController: controller.rePasswordController,
+              visibilityPass: state.rePasswordShow,
+              keyboardType: TextInputType.visiblePassword,
+              passOnPress: () => controller.togglePasswordView('rePassword'),
+            )),
+          ),
+        ],
+      ),
+      footer: Column(
+        children: [
           Row(
             children: [
               Obx(() => Checkbox(

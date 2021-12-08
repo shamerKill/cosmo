@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart' as util_screen;
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
@@ -12,14 +12,16 @@ class LScaffold extends GetView<LScaffoldController> {
     this.headerBar,
     this.titleBar,
     this.body,
+    this.footer,
     this.padding,
     this.hidBottomBar = false,
     this.singleScroll = false,
   }) : super(key: key);
   final AppBar? statusBar;
   final Widget? headerBar;
-  final Widget? body;
   final Widget? titleBar;
+  final Widget? body;
+  final Widget? footer;
   final EdgeInsetsGeometry? padding;
   /// 是否隐藏底部安全距离
   final bool hidBottomBar;
@@ -48,11 +50,20 @@ class LScaffold extends GetView<LScaffoldController> {
                     width: appTheme.sizes.infinity,
                     padding: padding??EdgeInsets.only(
                       left: appTheme.sizes.padding, right: appTheme.sizes.padding,
-                      bottom: hidBottomBar ? 0 :
-                        (Get.bottomBarHeight == 0 ? appTheme.sizes.padding : Get.bottomBarHeight.sp)
+                      bottom: (hidBottomBar || footer != null) ? 0 :
+                        (ScreenUtil.getBottomBarH(context) == 0.0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context)),
                     ),
                     child: singleScroll ? SingleChildScrollView(child: body) : body,
                   ),
+                ),
+                if (footer != null) Container(
+                  width: appTheme.sizes.infinity,
+                  padding: padding??EdgeInsets.only(
+                    left: appTheme.sizes.padding, right: appTheme.sizes.padding,
+                      bottom: hidBottomBar ? 0 :
+                        (ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context))
+                  ),
+                  child: footer,
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 
 // TODO: 禁止截屏功能
@@ -57,7 +58,7 @@ class AccountBackupShowPageController extends GetxController {
 
   /// 备份下一步
   backupStep() {
-    _showNoShot();
+    Get.toNamed(PlugRoutesNames.accountBackupVerify);
   }
 
   /// 显示请勿截屏

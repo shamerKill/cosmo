@@ -20,6 +20,7 @@ class LInput extends StatelessWidget {
     this.focusNode,
     this.textAlign,
     this.hintText,
+    this.inputHeight,
     this.hidBorder = false,
     this.disabled = false,
     this.maxLines = 1,
@@ -28,6 +29,7 @@ class LInput extends StatelessWidget {
     this.onlyInt = false,
   }): super(key: key);
   
+  final double? inputHeight;
   final int? maxLines;
   final bool? obscureText;
   final TextEditingController? textController;
@@ -51,14 +53,14 @@ class LInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: appTheme.sizes.inputHeight,
+      height: inputHeight??appTheme.sizes.inputHeight,
       child: TextField(
         controller: textController,
         maxLines: maxLines,
         obscureText: !(visibilityPass??true),
         cursorColor: appTheme.colors.primaryColor,
         onChanged: onChanged,
-        style: TextStyle(fontSize: appTheme.sizes.inputFontSize, color: appTheme.colors.textBlack),
+        style: TextStyle(fontSize: appTheme.sizes.inputFontSize, color: appTheme.colors.textBlack, height: maxLines == 1 ? null : 1.8),
         keyboardType: keyboardType??(onlyNumber == true ? TextInputType.number : null),
         enabled: disabled == true ? false : true,
         inputFormatters: onlyNumber == true ? [

@@ -60,6 +60,7 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
           ],
         ),
       ),
+      singleScroll: true,
       body: Column(
         children: [
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
@@ -109,21 +110,17 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
               )),
             );
           }),
-          Expanded(
-            flex: 1,
-            child: Container(),
-          ),
-          Obx(() => LButton(
-            width: appTheme.sizes.infinity,
-            onPressed: state.backupTimeDown == 0 ? controller.backupStep : null,
-            child: LAnimationView(child: Text(
-              state.backupTimeDown == 0 ?
-              'backupMnemonicSuccess'.tr :
-              '${'backupMnemonicLoading'.tr}(${state.backupTimeDown}s)',
-            )),
-          )),
         ],
       ),
+      footer: Obx(() => LButton(
+        width: appTheme.sizes.infinity,
+        onPressed: state.backupTimeDown == 0 ? controller.backupStep : null,
+        child: LAnimationView(child: Text(
+          state.backupTimeDown == 0 ?
+          'backupMnemonicSuccess'.tr :
+          '${'backupMnemonicLoading'.tr}(${state.backupTimeDown}s)',
+        )),
+      )),
     );
   }
 }

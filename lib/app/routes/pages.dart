@@ -39,6 +39,18 @@ class PlugPages {
       page: () => const AccountBackupShowPage(),
       binding: AccountBackupShowPageBinding(),
     ),
+    /// 创建账户-验证助记词
+    GetPage(
+      name: PlugRoutesNames.accountBackupVerify,
+      page: () => const AccountBackupVerifyPage(),
+      binding: AccountBackupVerifyPageBinding(),
+    ),
+    /// 钱包-首页
+    GetPage(
+      name: PlugRoutesNames.basicHome,
+      page: () => const BasicHomePage(),
+      binding: BasicHomePageBinding(),
+    ),
     // ExamplePage
     if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),
   ];

@@ -15,4 +15,8 @@ abstract class PlugRoutesNames {
   static const accountBackupTip = '/accountBackupTip';
   /// 创建账户-显示助记词页
   static const accountBackupShow = '/accountBackupShow';
+  /// 创建账户-验证助记词页
+  static const accountBackupVerify = '/accountBackupVerify';
+  /// 钱包-首页
+  static const basicHome = '/basicHome';
 }

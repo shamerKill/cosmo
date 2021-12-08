@@ -12,5 +12,6 @@ class AccountBackupTipPageController extends GetxController {
     Get.toNamed(PlugRoutesNames.accountBackupShow);
   }
   void backupLate() {
+    Get.toNamed(PlugRoutesNames.basicHome);
   }
 }
