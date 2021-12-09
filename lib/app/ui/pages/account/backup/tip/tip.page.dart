@@ -38,11 +38,11 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: appTheme.sizes.padding),
-                  child: LViewDesTip(text: 'backupTipDescription_1'.tr),
+                  child: LDesTipView(text: 'backupTipDescription_1'.tr),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: appTheme.sizes.padding),
-                  child: LViewDesTip(text: 'backupTipDescription_2'.tr),
+                  child: LDesTipView(text: 'backupTipDescription_2'.tr),
                 ),
               ],
             ),

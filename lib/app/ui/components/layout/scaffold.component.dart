@@ -12,8 +12,11 @@ class LScaffold extends GetView<LScaffoldController> {
     this.titleBar,
     this.body,
     this.footer,
+    this.drawer,
+    this.onDrawerChanged,
     this.bottomNavigationBar,
     this.padding,
+    this.scaffoldKey,
     this.hidBottomBar = false,
     this.singleScroll = false,
     this.basicBackgroundColor = false,
@@ -23,6 +26,8 @@ class LScaffold extends GetView<LScaffoldController> {
   final Widget? titleBar;
   final Widget? body;
   final Widget? footer;
+  final Widget? drawer;
+  final void Function(bool)? onDrawerChanged;
   final Widget? bottomNavigationBar;
   final EdgeInsetsGeometry? padding;
   /// 是否隐藏底部安全距离
@@ -30,6 +35,7 @@ class LScaffold extends GetView<LScaffoldController> {
   final bool singleScroll;
   // 是否显示首页的背景色
   final bool basicBackgroundColor;
+  final Key? scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,10 @@ class LScaffold extends GetView<LScaffoldController> {
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: WillPopScope(
         child: Scaffold(
+          key: scaffoldKey,
           appBar: statusBar,
+          onDrawerChanged: onDrawerChanged,
+          drawer: drawer,
           backgroundColor: basicBackgroundColor ? appTheme.colors.pageBackgroundColorBasic : null,
           body: SizedBox(
             height: appTheme.sizes.infinity,
@@ -55,7 +64,7 @@ class LScaffold extends GetView<LScaffoldController> {
                     width: appTheme.sizes.infinity,
                     padding: padding??EdgeInsets.only(
                       left: appTheme.sizes.padding, right: appTheme.sizes.padding,
-                      bottom: (hidBottomBar || footer != null) ? 0 :
+                      bottom: (hidBottomBar || footer != null || bottomNavigationBar != null) ? 0 :
                         (ScreenUtil.getBottomBarH(context) == 0.0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context)),
                     ),
                     child: singleScroll ? SingleChildScrollView(child: body) : body,

@@ -54,9 +54,9 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
         title: LAppBar.defaultHeaderTextWidget('backupMnemonicListTitle'.tr),
         description: Column(
           children: [
-            LViewDesTip(text: 'backupMnemonicInfoTip_1'.tr),
+            LDesTipView(text: 'backupMnemonicInfoTip_1'.tr),
             Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-            LViewDesTip(text: 'backupMnemonicInfoTip_2'.tr),
+            LDesTipView(text: 'backupMnemonicInfoTip_2'.tr),
           ],
         ),
       ),

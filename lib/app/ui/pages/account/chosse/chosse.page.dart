@@ -14,6 +14,7 @@ class AccountChossePage extends GetView<AccountChossePageController> {
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
+      headerBar: Get.key.currentState?.canPop() == true ? LAppBar.defaultHeader() : null,
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

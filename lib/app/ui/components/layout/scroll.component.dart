@@ -11,12 +11,14 @@ class LScrollView extends GetView<_ScrollViewController> {
     this.children,
     this.onLoading,
     this.onRefresh,
+    this.headerBackgroundColor,
   }): super(key: key);
 
   final Future<void> Function()? onLoading;
   final Future<void> Function()? onRefresh;
   final List<Widget>? children;
   final Widget? child;
+  final Color? headerBackgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,10 @@ class LScrollView extends GetView<_ScrollViewController> {
       enablePullDown: onRefresh != null,
       onRefresh: () => controller.onRefresh(_refreshController),
       onLoading: () => controller.onLoading(_refreshController),
-      header: WaterDropMaterialHeader(distance: appTheme.sizes.titleBarHeight / 1.4),
+      header: WaterDropMaterialHeader(
+        distance: appTheme.sizes.titleBarHeight / 1.4,
+        backgroundColor: headerBackgroundColor,
+      ),
       footer: CustomFooter(
         builder: (BuildContext context ,LoadStatus? mode){
           if (controller.isRefreshing.value) return Container();

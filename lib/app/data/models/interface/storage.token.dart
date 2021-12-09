@@ -39,9 +39,13 @@ class TokenModel extends _StorageBaseAbstract {
   set remarks (String value) { _remarks = value; _saveKey(); }
   String _remarks = '';
   /// 拥有数量
-  String get balance => _balance;
-  set balance (String value) { _balance = value; _saveKey(); }
-  String _balance = '';
+  String get amount => _amount;
+  set amount (String value) { _amount = value; _saveKey(); }
+  String _amount = '';
+  /// 币种logo
+  String get logo => _logo;
+  set logo (String value) { _logo = value; _saveKey(); }
+  String _logo = '';
 
   TokenModel._(): super();
   factory TokenModel() => create();
@@ -58,7 +62,8 @@ class TokenModel extends _StorageBaseAbstract {
     _valueMap['scale'] = scale;
     _valueMap['mintable'] = mintable;
     _valueMap['remarks'] = remarks;
-    _valueMap['balance'] = balance;
+    _valueMap['amount'] = amount;
+    _valueMap['logo'] = logo;
   }
   @override
   void setData(String sourceStr) {
@@ -72,6 +77,7 @@ class TokenModel extends _StorageBaseAbstract {
     scale = source['scale']??0;
     mintable = source['mintable']??false;
     remarks = source['remarks']??'';
-    balance = source['balance']??'';
+    amount = source['amount']??'';
+    logo = source['logo']??'';
   }
 }

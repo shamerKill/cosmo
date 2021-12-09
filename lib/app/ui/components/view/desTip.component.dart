@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
-class LViewDesTip extends StatelessWidget {
-  const LViewDesTip({
+class LDesTipView extends StatelessWidget {
+  const LDesTipView({
     Key? key,
     required this.text,
   }) : super(key: key);
