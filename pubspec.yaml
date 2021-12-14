@@ -56,6 +56,8 @@ dependencies:
   flutter_displaymode: ^0.3.2
   # https://pub.flutter-io.cn/packages/qr_flutter
   qr_flutter: ^4.0.0
+  # https://pub.flutter-io.cn/packages/webview_flutter/example
+  webview_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:

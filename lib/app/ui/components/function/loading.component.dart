@@ -12,4 +12,5 @@ class LLoading {
   static dismiss () {
     EasyLoading.dismiss();
   }
+  static bool isShow() => EasyLoading.isShow;
 }

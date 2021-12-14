@@ -1,7 +1,7 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppSize {
-  static double basicScale = 1.sp;
+  static double basicScale = 1.0.sp;
   AppSize();
   final double zero = basicScale * 0.0;
   final double basic = basicScale;
@@ -21,4 +21,5 @@ class AppSize {
   final double inputHeight = basicScale * 100.0;
   final double buttonHeight = basicScale * 88.0;
   final double buttonRadius = basicScale * 20.0;
+  final double logoSize = basicScale * 80.0;
 }

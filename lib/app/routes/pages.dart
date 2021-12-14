@@ -45,12 +45,42 @@ class PlugPages {
       page: () => const AccountBackupVerifyPage(),
       binding: AccountBackupVerifyPageBinding(),
     ),
+    /// 账户管理
+    GetPage(
+      name: PlugRoutesNames.accountAdmin(':address'),
+      page: () => const AccountAdminPage(),
+      binding: AccountAdminPageBinding(),
+    ),
+    /// 账户管理-验证
+    GetPage(
+      name: PlugRoutesNames.accountAdminVerify(':address', ':type'),
+      page: () => const AccountAdminVerifyPage(),
+      binding: AccountAdminVerifyPageBinding(),
+    ),
+    /// 账户管理-修改密码
+    GetPage(
+      name: PlugRoutesNames.accountAdminEditPassword(':address'),
+      page: () => const AccountExitPasswordPage(),
+      binding: AccountExitPasswordPageBinding(),
+    ),
     /// 钱包-首页
     GetPage(
       name: PlugRoutesNames.walletHome,
       page: () => const BasicHomePage(),
       binding: BasicHomePageBinding(),
       transition: Transition.fadeIn,
+    ),
+    /// 钱包-消息-列表
+    GetPage(
+      name: PlugRoutesNames.walletNotification,
+      page: () => const WalletNotificationListPage(),
+      binding: WalletNotificationListPageBinding(),
+    ),
+    /// 钱包-消息-详情
+    GetPage(
+      name: PlugRoutesNames.walletNotificationDetails(':id'),
+      page: () => const WalletNotificationDetailsPage(),
+      binding: WalletNotificationDetailsPageBinding(),
     ),
     /// 市场-首页
     GetPage(

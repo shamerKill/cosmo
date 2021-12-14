@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 class StringTool {
+  // 比较字符串大小
   static bool asciiABiggerThanB (String aItem, String bItem) {
     Uint8List _aList = const AsciiCodec().encode(aItem);
     Uint8List _bList = const AsciiCodec().encode(bItem);
@@ -18,11 +18,13 @@ class StringTool {
     }
     return false;
   }
+  // 隐藏字符串中间
   static String hideAddressCenter(String address, { int startLen = 8, int endLen = 8 }) {
     if (address.length < (startLen + endLen)) return address;
     String result = address.replaceRange(startLen, address.length - endLen, '...');
     return result;
   }
+  // 根据字符串选择颜色
   static Color stringToColor(String str) {
     const List<Color> tokenBgList = [
       Color(0xff3f8678),
@@ -40,5 +42,21 @@ class StringTool {
       _sum += _i;
     }
     return tokenBgList[_sum % tokenBgList.length];
+  }
+  // 数组拼接成字符串
+  static String listToString(List<String> list) => list.join(',');
+  // 字符串结构成数组
+  static List<String> stringToList(String str) => str.split(',');
+  // 格式化时间
+  static String formatTime(DateTime? date, { String format = 'yyyy-MM-dd HH:mm:ss' }) {
+    if (date == null) return '';
+    String result = format;
+    result = result.replaceAll('yyyy', '${date.year}');
+    result = result.replaceFirst('MM', '${date.month < 10 ? '0' : ''}${date.month}');
+    result = result.replaceFirst('dd', '${date.day < 10 ? '0' : ''}${date.day}');
+    result = result.replaceFirst('HH', '${date.hour < 10 ? '0' : ''}${date.hour}');
+    result = result.replaceFirst('mm', '${date.minute < 10 ? '0' : ''}${date.minute}');
+    result = result.replaceFirst('ss', '${date.second < 10 ? '0' : ''}${date.second}');
+    return result;
   }
 }

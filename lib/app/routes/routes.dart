@@ -2,6 +2,12 @@ library plug_routes;
 
 import 'package:get/get.dart';
 import 'package:plug/app/env/env.dart';
+import 'package:plug/app/ui/pages/account/admin/admin.binding.dart';
+import 'package:plug/app/ui/pages/account/admin/admin.page.dart';
+import 'package:plug/app/ui/pages/account/admin/exitPassword/exitPassword.binding.dart';
+import 'package:plug/app/ui/pages/account/admin/exitPassword/exitPassword.page.dart';
+import 'package:plug/app/ui/pages/account/admin/verify/verify.binding.dart';
+import 'package:plug/app/ui/pages/account/admin/verify/verify.page.dart';
 import 'package:plug/app/ui/pages/account/backup/show/show.binding.dart';
 import 'package:plug/app/ui/pages/account/backup/show/show.page.dart';
 import 'package:plug/app/ui/pages/account/backup/tip/tip.binding.dart';
@@ -26,6 +32,10 @@ import 'package:plug/app/ui/pages/example/example.binding.dart';
 import 'package:plug/app/ui/pages/example/example.page.dart';
 import 'package:plug/app/ui/pages/start/start.binding.dart';
 import 'package:plug/app/ui/pages/start/start.page.dart';
+import 'package:plug/app/ui/pages/wallet/notification/details/details.binding.dart';
+import 'package:plug/app/ui/pages/wallet/notification/details/details.page.dart';
+import 'package:plug/app/ui/pages/wallet/notification/list/list.binding.dart';
+import 'package:plug/app/ui/pages/wallet/notification/list/list.page.dart';
 
 
 part './pages.dart';

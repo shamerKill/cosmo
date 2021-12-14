@@ -35,7 +35,7 @@ class ExamplePage extends GetView<ExamplePageController> {
                 TextButton(onPressed: controller.setTitle, child: Text('更新标题', style: TextStyle(color: appTheme.colors.primaryColor))),
                 ElevatedButton(onPressed: controller.chageLanguage, child: Text('切换语言', style: TextStyle(color: appTheme.colors.hightColor))),
                 ElevatedButton(onPressed: controller.linkToCreateAccount, child: Text('createWalletPageTitle'.tr, style: TextStyle(color: appTheme.colors.hightColor))),
-                IconButton(onPressed: () {}, icon: Icon(IconData(0xe81e, fontFamily: 'plugIcon'))),
+                IconButton(onPressed: () {}, icon: const Icon(IconData(0xe81e, fontFamily: 'plugIcon'))),
               ],
             ),
             Center(

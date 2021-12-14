@@ -12,7 +12,6 @@ import 'package:plug/app/ui/pages/wallet/home/home.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class BasicHomePage extends GetView<BasicHomePageController> {
   const BasicHomePage({Key? key}) : super(key: key);
@@ -63,33 +62,6 @@ class BasicHomePage extends GetView<BasicHomePageController> {
         ],
       ));
     }
-    // 二维码弹窗
-    if (state.qrcodeView.isEmpty) {
-      state.qrcodeView.add(SizedBox(
-        width: appTheme.sizes.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('walletAddress'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
-            Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-            Center(
-              child: Obx(() => QrImage(
-                data: state.accountInfo.address,
-                version: QrVersions.auto,
-                size: appTheme.sizes.basic * 380.0,
-                foregroundColor: appTheme.colors.textBlack,
-                backgroundColor: appTheme.colors.pageBackgroundColor,
-              )),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-            Center(
-              child: Text(state.accountInfo.address, style: Get.textTheme.bodyText1),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-          ],
-        ),
-      ));
-    }
 
 
     return LScaffold(
@@ -109,7 +81,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
               children: [
                 const Icon(IconData(0xe6e6, fontFamily: 'PlugIcon')),
                 Positioned(
-                  left: appTheme.sizes.iconSize - 10,
+                  right: appTheme.sizes.basic * 2,
                   top: 2,
                   child: Obx(() => Container(
                     width: appTheme.sizes.basic * 14,
@@ -150,7 +122,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                     ),
                   )),
                   Obx(() => TextButton(
-                    onPressed: state.drawerSelected != '' ? controller.onAdminAccount(state.drawerSelected) : null,
+                    onPressed: state.drawerSelected != '' ? () => controller.onAdminAccount(state.drawerSelected) : null,
                     child: Opacity(
                       opacity: state.drawerSelected != '' ? 1 : 0.5,
                       child: Row(
@@ -158,7 +130,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                         children: [
                           Text('管理'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
                           Padding(
-                            padding: EdgeInsets.only(top: appTheme.sizes.fontSize * 0.3, left: appTheme.sizes.fontSize * 0.2),
+                            padding: EdgeInsets.only(left: appTheme.sizes.fontSize * 0.2),
                             child: Icon(const IconData(0xe6da, fontFamily: 'PlugIcon'), size: appTheme.sizes.fontSize),
                           ),
                         ],
@@ -203,7 +175,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                   ),
                                 ),
                                 Icon(
-                                  IconData(_item.address == state.accountInfo.address ? 0xe81e : 0xe815, fontFamily: 'PlugIcon'),
+                                  _item.address == state.accountInfo.address ? const IconData(0xe81e, fontFamily: 'PlugIcon') : const IconData(0xe815, fontFamily: 'PlugIcon'),
                                   color: appTheme.colors.hightColor
                                 ),
                               ],

@@ -10,6 +10,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/components/view/qrcode.component.dart';
 
 class BasicHomePageState {
   // 消息提醒
@@ -52,16 +53,12 @@ class BasicHomePageState {
   
   // 提示备份显示内容
   final RxList<Widget> tipBackupView = RxList<Widget>();
-  // 二维码显示内容
-  final RxList<Widget> qrcodeView = RxList<Widget>();
 }
-
-BasicHomePageState _state = BasicHomePageState();
 
 class BasicHomePageController extends GetxController with SingleGetTickerProviderMixin {
   BasicHomePageController();
 
-  BasicHomePageState state = _state;
+  BasicHomePageState state = BasicHomePageState();
   late Animation<double> _infoAnimation;
   late AnimationController _infoAnimationController;
   bool close = false;
@@ -140,7 +137,9 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
     scaffoldKey.currentState?.openDrawer();
   }
   // 消息
-  goToNewsList () {}
+  goToNewsList () {
+    Get.toNamed(PlugRoutesNames.walletNotification);
+  }
   // 扫码
   goToScan () {}
   // 复制地址
@@ -152,7 +151,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
     bool _memType = state.hideInfo;
     onInfoHide(type: true);
     await LBottomSheet.baseBottomSheet(
-      child: state.qrcodeView[0],
+      child: LQrCodeView(address: state.accountInfo.address),
       horizontalPadding: true,
     );
     onInfoHide(type: _memType);
@@ -199,7 +198,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   }
   // 监听侧边栏
   onDrawerChanged(bool? type) {
-    if (type == true) {
+    if (type == true && state.accountList.isEmpty) {
       state.accountList.clear();
       state.accountList.addAll([
         AccountModel()
@@ -227,17 +226,22 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   onChangeAccount(String _address) async {
     AccountModel _memAccount = AccountModel();
     state.accountList.removeWhere((ele) {
-      _memAccount = ele;
+      if (ele.address == _address) _memAccount = ele;
       return ele.address == _address;
     });
     state.accountList.insert(0, _memAccount);
     scaffoldKey.currentState?.openEndDrawer();
-    state.accountInfo = _memAccount;
+    state._accountInfo.update((val) {
+      val?.address = _memAccount.address;
+      val?.nickName = _memAccount.nickName;
+    });
     await initAccountStorage(address: _address);
     LToast.success('切换成功');
   }
   // 管理账户
   onAdminAccount(String _address) {
+    scaffoldKey.currentState?.openEndDrawer();
+    Get.toNamed(PlugRoutesNames.accountAdmin(_address));
   }
   // 添加账户
   onAddAccount() {

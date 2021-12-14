@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class LInput extends StatelessWidget {
@@ -70,6 +69,12 @@ class LInput extends StatelessWidget {
         textAlign: textAlign??TextAlign.start,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+            top: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 2,
+            bottom: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 2,
+            left: appTheme.sizes.paddingSmall,
+            right: appTheme.sizes.paddingSmall,
+          ),
           labelText: labelText,
           hintText: hintText,
           suffixIcon: visibilityPass == null ? suffixIcon : IconButton(

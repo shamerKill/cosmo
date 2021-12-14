@@ -21,12 +21,13 @@ class LAppBar {
   static Widget defaultHeaderTextWidget (String titleStr) => Text(titleStr, style: TextStyle(fontSize: appTheme.sizes.titleBarTitleSize, color: appTheme.colors.textBlack, fontWeight: FontWeight.w500));
   static Widget defaultHeader ({
     Widget? title,
+    Widget? actions,
     String? titleStr,
     double? height,
-    Color? bgColor,
+    Color? backgroundColor,
     Map? backResult,
   }) {
-    Color _bgColor = bgColor??appTheme.colors.pageBackgroundColor;
+    Color _bgColor = backgroundColor??appTheme.colors.transparent;
     double _height = height??appTheme.sizes.titleBarHeight;
     Widget? _title = title??(titleStr != null ? defaultHeaderTextWidget(titleStr) : null);
     return SizedBox(
@@ -51,6 +52,16 @@ class LAppBar {
             if (_title != null) Center(
               child: _title
             ),
+            if (actions != null) Positioned(
+              top: 0,
+              right: 0,
+              child: SizedBox(
+                height: _height,
+                child: Center(
+                  child: actions,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -59,8 +70,10 @@ class LAppBar {
   static Widget defaultTitle ({
     Widget? title,
     Widget? description,
+    Color? backgroundColor,
   }) {
     return Container(
+      color: backgroundColor,
       padding: EdgeInsets.only(
         left: appTheme.sizes.padding,
         right: appTheme.sizes.padding,
