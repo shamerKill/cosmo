@@ -95,13 +95,13 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
       state.accountInfo
         .tokenList = [
           TokenModel()
-            ..symbol = 'PLUGCN'
+            ..symbol = 'plugcn'
             ..scale = 6
-            ..minUnit = 'PLUGCN',
+            ..minUnit = 'uplugcn',
           TokenModel()
-            ..symbol = 'SHAMER'
+            ..symbol = 'shamer'
             ..scale = 8
-            ..minUnit = 'SHA',
+            ..minUnit = 'sha',
         ];
       LLoading.showLoading();
     }
@@ -186,6 +186,10 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   onAddToken() {
     _checkBackup();
   }
+  // 我的代币详情
+  onToTokenPage(String token) {
+    Get.toNamed(PlugRoutesNames.walletTokenUser(token));
+  }
   // 前往备份
   onGoToBackup() {
     Get.back();
@@ -245,6 +249,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   }
   // 添加账户
   onAddAccount() {
+    Get.back();
     Get.toNamed(PlugRoutesNames.fristOpenWallet);
   }
 }

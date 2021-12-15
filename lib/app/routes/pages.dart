@@ -82,6 +82,12 @@ class PlugPages {
       page: () => const WalletNotificationDetailsPage(),
       binding: WalletNotificationDetailsPageBinding(),
     ),
+    /// 钱包-持有代币信息
+    GetPage(
+      name: PlugRoutesNames.walletTokenUser(':token'),
+      page: () => const WalletTokenUserPage(),
+      binding: WalletTokenUserPageBinding(),
+    ),
     /// 市场-首页
     GetPage(
       name: PlugRoutesNames.chainExport,

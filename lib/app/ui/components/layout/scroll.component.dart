@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class LScrollView extends GetView<_ScrollViewController> {
+class LScrollView extends GetView<_ScrollViewController>  {
   const LScrollView({
     Key? key,
     this.child,

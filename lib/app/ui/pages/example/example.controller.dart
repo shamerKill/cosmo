@@ -80,7 +80,7 @@ class ExamplePageController extends GetxController {
     var newAccount = AccountModel()..setData(accountDemo.toJson());
 
     var verifer = VerifierModel()
-      ..status = EnumVerifierStatus.jailing;
+      ..status = VerifierStatusEnum.jailing;
     print(verifer.toJson());
     var verifierRaw = VerifierModel()..setData(verifer.toJson());
     print(verifierRaw.status);

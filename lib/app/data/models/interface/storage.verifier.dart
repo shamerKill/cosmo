@@ -1,7 +1,7 @@
 part of './interface.dart';
 
 /// 节点状态
-enum EnumVerifierStatus {
+enum VerifierStatusEnum {
   /// 运行中
   running,
   /// 监禁中
@@ -15,9 +15,9 @@ enum EnumVerifierStatus {
 /// 节点模型
 class VerifierModel extends _StorageBaseAbstract {
   /// 节点状态
-  EnumVerifierStatus get status => _status;
-  set status (EnumVerifierStatus value) { _status = value; _saveKey(); }
-  EnumVerifierStatus _status = EnumVerifierStatus.running;
+  VerifierStatusEnum get status => _status;
+  set status (VerifierStatusEnum value) { _status = value; _saveKey(); }
+  VerifierStatusEnum _status = VerifierStatusEnum.running;
   /// 节点头像
   String get avatar => _avatar;
   set avatar (String value) { _avatar = value; _saveKey(); }
@@ -66,12 +66,12 @@ class VerifierModel extends _StorageBaseAbstract {
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
     // status
-    switch (source['status']??EnumVerifierStatus.running) {
-      case 'enumVerifierStatus.running': status = EnumVerifierStatus.running; break;
-      case 'enumVerifierStatus.jailing': status = EnumVerifierStatus.jailing; break;
-      case 'enumVerifierStatus.offLine': status = EnumVerifierStatus.offLine; break;
-      case 'enumVerifierStatus.invalid': status = EnumVerifierStatus.invalid; break;
-      default: status = EnumVerifierStatus.running; break;
+    switch (source['status']??VerifierStatusEnum.running) {
+      case 'verifierStatusEnum.running': status = VerifierStatusEnum.running; break;
+      case 'verifierStatusEnum.jailing': status = VerifierStatusEnum.jailing; break;
+      case 'verifierStatusEnum.offLine': status = VerifierStatusEnum.offLine; break;
+      case 'verifierStatusEnum.invalid': status = VerifierStatusEnum.invalid; break;
+      default: status = VerifierStatusEnum.running; break;
     }
     avatar = source['avatar']??'${Env.envConfig.assets.veriferAvatarUrl}/default/image.png';
     avatar = source['nickName']??'';
@@ -128,12 +128,12 @@ class UserVerifierModel extends VerifierModel {
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
     // status
-    switch (source['status']??EnumVerifierStatus.running) {
-      case 'enumVerifierStatus.running': status = EnumVerifierStatus.running; break;
-      case 'enumVerifierStatus.jailing': status = EnumVerifierStatus.jailing; break;
-      case 'enumVerifierStatus.offLine': status = EnumVerifierStatus.offLine; break;
-      case 'enumVerifierStatus.invalid': status = EnumVerifierStatus.invalid; break;
-      default: status = EnumVerifierStatus.running; break;
+    switch (source['status']??VerifierStatusEnum.running) {
+      case 'verifierStatusEnum.running': status = VerifierStatusEnum.running; break;
+      case 'verifierStatusEnum.jailing': status = VerifierStatusEnum.jailing; break;
+      case 'verifierStatusEnum.offLine': status = VerifierStatusEnum.offLine; break;
+      case 'verifierStatusEnum.invalid': status = VerifierStatusEnum.invalid; break;
+      default: status = VerifierStatusEnum.running; break;
     }
     avatar = source['avatar']??'${Env.envConfig.assets.veriferAvatarUrl}/default/image.png';
     avatar = source['nickName']??'';

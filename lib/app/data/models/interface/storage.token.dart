@@ -38,7 +38,7 @@ class TokenModel extends _StorageBaseAbstract {
   String get remarks => _remarks;
   set remarks (String value) { _remarks = value; _saveKey(); }
   String _remarks = '';
-  /// 拥有数量
+  /// 数量
   String get amount => _amount;
   set amount (String value) { _amount = value; _saveKey(); }
   String _amount = '';

@@ -1,0 +1,163 @@
+import 'package:flustars/flustars.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:plug/app/ui/components/function/button.component.dart';
+import 'package:plug/app/ui/components/function/keep.component.dart';
+import 'package:plug/app/ui/components/layout/appbar.component.dart';
+import 'package:plug/app/ui/components/layout/scaffold.component.dart';
+import 'package:plug/app/ui/components/layout/scroll.component.dart';
+import 'package:plug/app/ui/components/view/animation.component.dart';
+import 'package:plug/app/ui/components/view/image.component.dart';
+import 'package:plug/app/ui/components/view/logsItem.component.dart';
+import 'package:plug/app/ui/pages/wallet/token/user/user.controller.dart';
+import 'package:plug/app/ui/theme/theme.dart';
+import 'package:plug/app/ui/utils/number.dart';
+
+class WalletTokenUserPage extends GetView<WalletTokenUserPageController> {
+  const WalletTokenUserPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    WalletTokenUserPageState state = controller.state;
+
+    return LScaffold(
+      statusBar: LAppBar.defaultStatus(),
+      headerBar: LAppBar.defaultHeader(),
+      titleBar: LAppBar.defaultTitle(
+        padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.padding, left: appTheme.sizes.padding, right: appTheme.sizes.padding),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      LViewImage(
+                        url: 'http://via.placeholder.com/43x46',
+                        width: appTheme.sizes.basic * 60,
+                        height: appTheme.sizes.basic * 60,
+                        isRadius: true,
+                      ),
+                      Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(state.tokenInfo.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                            Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.fontSizeSmall / 2)),
+                            Text(state.tokenInfo.name, style: Get.textTheme.bodyText1),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)), style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.fontSizeSmall / 2)),
+                          Text('≈\r\$' + NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)), style: Get.textTheme.bodyText1),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: LButton(
+                          child: Text('转账'.tr, style: TextStyle(color: appTheme.colors.textBlack)),
+                          onPressed: controller.onToSend,
+                          radius: true,
+                          contrast: true,
+                          height: appTheme.sizes.basic * 70,
+                        ),
+                      ),
+                      Padding(padding: EdgeInsets.only(left: appTheme.sizes.padding)),
+                      Expanded(
+                        child: LButton(
+                          child: Text('收款'.tr, style: TextStyle(color: appTheme.colors.textBlack)),
+                          onPressed: controller.onToReceive,
+                          radius: true,
+                          contrast: true,
+                          height: appTheme.sizes.basic * 70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: appTheme.sizes.padding,
+              color: appTheme.colors.borderColor,
+            ),
+            TabBar(
+              controller: controller.tabController,
+              labelColor: appTheme.colors.primaryColor,
+              unselectedLabelColor: appTheme.colors.textGray,
+              indicatorColor: appTheme.colors.primaryColor,
+              indicatorSize: TabBarIndicatorSize.label,
+              isScrollable: true,
+              tabs: [
+                Padding(
+                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
+                  child: Text('全部'.tr),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
+                  child: Text('转出'.tr),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
+                  child: Text('转入'.tr),
+                ),
+              ],
+            ),
+            Container(
+              width: appTheme.sizes.infinity,
+              height: appTheme.sizes.basic,
+              color: appTheme.colors.borderColor.withOpacity(0.8),
+            ),
+          ],
+        ),
+      ),
+      padding: EdgeInsets.all(appTheme.sizes.zero),
+      body: TabBarView(
+        controller: controller.tabController,
+        children: [
+          // 全部
+          LScrollView(
+            onRefresh: () => controller.onRefresh(WalletTokenUserPageTabType.all),
+            onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenUserPageTabType.all),
+            child: Obx(() => Column(
+              children: state.transferLogsAll.map((_item) => LAnimationView(
+                child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+              )).toList(),
+            )),
+          ),
+          // 转出
+          LScrollView(
+            onRefresh: () => controller.onRefresh(WalletTokenUserPageTabType.send),
+            onLoading: state.logsPageSend == 0 ? null : () => controller.onLoading(WalletTokenUserPageTabType.send),
+            child: Obx(() => Column(
+              children: state.transferLogsSend.map((_item) => LAnimationView(
+                child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+              )).toList(),
+            )),
+          ),
+          // 转入
+          LScrollView(
+            onRefresh: () => controller.onRefresh(WalletTokenUserPageTabType.receive),
+            onLoading: state.logsPageReceive == 0 ? null : () => controller.onLoading(WalletTokenUserPageTabType.receive),
+            child: Obx(() => Column(
+              children: state.transferLogsReceive.map((_item) => LAnimationView(
+                child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+              )).toList(),
+            )),
+          ),
+        ],
+      ),
+    );
+  }
+}

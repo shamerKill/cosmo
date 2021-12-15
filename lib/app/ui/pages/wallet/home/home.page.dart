@@ -387,46 +387,49 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                 return Column(
                   children: state.accountInfo.tokenList.map((_item) => Padding(
                     padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
-                      decoration: BoxDecoration(
-                        color: appTheme.colors.pageBackgroundColor,
-                        borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                      ),
-                      child: Row(
-                        children: [
-                          LViewImage(
-                            url: 'http://via.placeholder.com/43x46',
-                            width: appTheme.sizes.basic * 60,
-                            height: appTheme.sizes.basic * 60,
-                            isRadius: true,
-                          ),
-                          Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
-                          Expanded(
-                            flex: 1,
-                            child: Text(_item.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Obx(() => LAnimationView(
-                                randomKey: false,
-                                child: Text(
-                                  state.hideInfo ? NumberTool.getNumberLenStar(6) : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale)),
-                                  style: TextStyle(fontSize: appTheme.sizes.fontSize),
+                    child: InkWell(
+                      onTap: () => controller.onToTokenPage(_item.symbol),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
+                        decoration: BoxDecoration(
+                          color: appTheme.colors.pageBackgroundColor,
+                          borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                        ),
+                        child: Row(
+                          children: [
+                            LViewImage(
+                              url: 'http://via.placeholder.com/43x46',
+                              width: appTheme.sizes.basic * 60,
+                              height: appTheme.sizes.basic * 60,
+                              isRadius: true,
+                            ),
+                            Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+                            Expanded(
+                              flex: 1,
+                              child: Text(_item.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Obx(() => LAnimationView(
+                                  randomKey: false,
+                                  child: Text(
+                                    state.hideInfo ? NumberTool.getNumberLenStar(6) : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale)),
+                                    style: TextStyle(fontSize: appTheme.sizes.fontSize),
+                                  ),
+                                )),
+                                Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10)),
+                                LAnimationView(
+                                  randomKey: false,
+                                  child: Text(
+                                    state.hideInfo ? NumberTool.getNumberLenStar(6) : '≈\r\$${NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale))}',
+                                    style: Get.textTheme.bodyText1,
+                                  ),
                                 ),
-                              )),
-                              Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10)),
-                              LAnimationView(
-                                randomKey: false,
-                                child: Text(
-                                  state.hideInfo ? NumberTool.getNumberLenStar(6) : '≈\r\$${NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale))}',
-                                  style: Get.textTheme.bodyText1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     )),
                   ).toList(),

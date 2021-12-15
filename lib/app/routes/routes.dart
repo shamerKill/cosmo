@@ -36,6 +36,8 @@ import 'package:plug/app/ui/pages/wallet/notification/details/details.binding.da
 import 'package:plug/app/ui/pages/wallet/notification/details/details.page.dart';
 import 'package:plug/app/ui/pages/wallet/notification/list/list.binding.dart';
 import 'package:plug/app/ui/pages/wallet/notification/list/list.page.dart';
+import 'package:plug/app/ui/pages/wallet/token/user/user.binding.dart';
+import 'package:plug/app/ui/pages/wallet/token/user/user.page.dart';
 
 
 part './pages.dart';

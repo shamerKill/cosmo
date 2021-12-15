@@ -71,10 +71,11 @@ class LAppBar {
     Widget? title,
     Widget? description,
     Color? backgroundColor,
+    EdgeInsets? padding,
   }) {
     return Container(
       color: backgroundColor,
-      padding: EdgeInsets.only(
+      padding: padding??EdgeInsets.only(
         left: appTheme.sizes.padding,
         right: appTheme.sizes.padding,
         top: appTheme.sizes.basic * 15,

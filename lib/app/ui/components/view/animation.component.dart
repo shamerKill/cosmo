@@ -7,13 +7,16 @@ class LAnimationView extends StatelessWidget {
     Key? key,
     required this.child,
     this.randomKey = true,
+    this.vKey,
   }) : super(key: key);
   final Widget child;
   final bool randomKey;
+  final Key? vKey;
 
   @override
   Widget build(BuildContext context) {
     Key _key = randomKey ? Key('animation_${Random().nextInt(1000)}') : Key('animation_${child.toString()}');
+    if (vKey != null) _key = vKey!;
     return AnimatedSwitcher(
       transitionBuilder: (child, anim){
         return FadeTransition(child: child, opacity: anim);
