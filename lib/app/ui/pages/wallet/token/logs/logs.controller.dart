@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/routes/routes.dart';
 
-class WalletTokenUserPageState {
+class WalletTokenLogsPageState {
   // 账户信息
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
@@ -34,9 +35,9 @@ class WalletTokenUserPageState {
   set logsPageReceive (int value) => _logsPageReceive.value = value;
 }
 
-class WalletTokenUserPageController extends GetxController with SingleGetTickerProviderMixin {
-  WalletTokenUserPageController();
-  WalletTokenUserPageState state = WalletTokenUserPageState();
+class WalletTokenLogsPageController extends GetxController with SingleGetTickerProviderMixin {
+  WalletTokenLogsPageController();
+  WalletTokenLogsPageState state = WalletTokenLogsPageState();
 
   TabController? tabController;
   
@@ -48,18 +49,19 @@ class WalletTokenUserPageController extends GetxController with SingleGetTickerP
     // 初始化tab
     tabController = TabController(initialIndex: 0, length: 3, vsync: this);
     state.tokenInfo
-      ..symbol = token
-      ..name = token
+      ..symbol = 'p$token'
+      ..minUnit = token
+      ..name = 'p$token'
       ..amount = '10000123'
       ..scale = 0;
-    _getTransferLogs(WalletTokenUserPageTabType.all);
-    _getTransferLogs(WalletTokenUserPageTabType.send);
-    _getTransferLogs(WalletTokenUserPageTabType.receive);
+    _getTransferLogs(WalletTokenLogsPageTabType.all);
+    _getTransferLogs(WalletTokenLogsPageTabType.send);
+    _getTransferLogs(WalletTokenLogsPageTabType.receive);
   }
 
   // 获取交易记录
   _getTransferLogs(
-    WalletTokenUserPageTabType type,
+    WalletTokenLogsPageTabType type,
   ) {
     bool _random = Random().nextBool();
     TransferLogModel oneItem = TransferLogModel()
@@ -67,6 +69,7 @@ class WalletTokenUserPageController extends GetxController with SingleGetTickerP
       ..time = DateTime.now()
       ..status = _random ? TransferLogStatusEnum.success : TransferLogStatusEnum.fail
       ..type = _random ? TransferLogTypeEnum.receive : TransferLogTypeEnum.send
+      ..hash = '5F6BA29583ABB097325D1C3A6A41D021E3440E793F68ABA5735D652DDD4BB0AF'
       ..items = [
         TransferLogItemModel()
           ..toAddress = 'gxasodifj9asdflkjag09asdflkjasdg0asdf'
@@ -81,35 +84,39 @@ class WalletTokenUserPageController extends GetxController with SingleGetTickerP
     for (int i = 0; i < 10; i++) {
       items.add(oneItem);
     }
-    if (type == WalletTokenUserPageTabType.all) {
+    if (type == WalletTokenLogsPageTabType.all) {
       state.transferLogsAll.addAll(items);
-    } else if (type == WalletTokenUserPageTabType.send) {
+    } else if (type == WalletTokenLogsPageTabType.send) {
       state.transferLogsSend.addAll(items);
-    } else if (type == WalletTokenUserPageTabType.receive) {
+    } else if (type == WalletTokenLogsPageTabType.receive) {
       state.transferLogsReceive.addAll(items);
     }
   }
 
   // 转账
-  onToSend() {}
+  onToSend() {
+    Get.toNamed(PlugRoutesNames.walletTokenSend(state.tokenInfo.minUnit));
+  }
   // 收款
-  onToReceive() {}
+  onToReceive() {
+    Get.toNamed(PlugRoutesNames.walletTokenReceive(state.tokenInfo.minUnit));
+  }
 
   // 刷新
   Future<void> onRefresh(
-    WalletTokenUserPageTabType type,
+    WalletTokenLogsPageTabType type,
   ) async {
-    if (type == WalletTokenUserPageTabType.all) {
+    if (type == WalletTokenLogsPageTabType.all) {
       await Future.delayed(const Duration(seconds: 1));
       state.transferLogsAll.clear();
       _getTransferLogs(type);
     }
-    if (type == WalletTokenUserPageTabType.send) {
+    if (type == WalletTokenLogsPageTabType.send) {
       await Future.delayed(const Duration(seconds: 1));
       state.transferLogsSend.clear();
       _getTransferLogs(type);
     }
-    if (type == WalletTokenUserPageTabType.receive) {
+    if (type == WalletTokenLogsPageTabType.receive) {
       await Future.delayed(const Duration(seconds: 1));
       state.transferLogsReceive.clear();
       _getTransferLogs(type);
@@ -118,25 +125,29 @@ class WalletTokenUserPageController extends GetxController with SingleGetTickerP
   }
   // 加载更多
   Future<void> onLoading(
-    WalletTokenUserPageTabType type,
+    WalletTokenLogsPageTabType type,
   ) async {
-    if (type == WalletTokenUserPageTabType.all) {
+    if (type == WalletTokenLogsPageTabType.all) {
       await Future.delayed(const Duration(seconds: 1));
       _getTransferLogs(type);
     }
-    if (type == WalletTokenUserPageTabType.send) {
+    if (type == WalletTokenLogsPageTabType.send) {
       await Future.delayed(const Duration(seconds: 1));
       _getTransferLogs(type);
     }
-    if (type == WalletTokenUserPageTabType.receive) {
+    if (type == WalletTokenLogsPageTabType.receive) {
       await Future.delayed(const Duration(seconds: 1));
       _getTransferLogs(type);
     }
   }
+  // 前往详情页
+  onGoToDetail(String hash) {
+    Get.toNamed(PlugRoutesNames.walletTokenLogsDetail(hash));
+  }
 }
 
 
-enum WalletTokenUserPageTabType {
+enum WalletTokenLogsPageTabType {
   /// 全部
   all,
   /// 转出

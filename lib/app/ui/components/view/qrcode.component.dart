@@ -4,8 +4,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:get/get.dart';
 
 class LQrCodeView extends StatelessWidget {
-  const LQrCodeView({ Key? key, required this.address }) : super(key: key);
+  const LQrCodeView({ Key? key, required this.address, this.hideTitle = false }) : super(key: key);
   final String address;
+  final bool hideTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class LQrCodeView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('walletAddress'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
+          if (!hideTitle) Text('walletAddress'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
           Center(
             child: QrImage(

@@ -29,8 +29,14 @@ abstract class PlugRoutesNames {
   static const walletNotification = '/walletNotification';
   /// 钱包-消息-详情
   static walletNotificationDetails (String id) => '/walletNotification/$id';
-  /// 钱包-持有代币信息
-  static walletTokenUser (String token) => '/walletTokenUser/$token';
+  /// 钱包-代币交易记录
+  static walletTokenLogs (String token) => '/walletTokenLogs/$token';
+  /// 钱包-代币交易记录详情
+  static walletTokenLogsDetail (String hash) => '/walletTokenLogsDetail/$hash';
+  /// 钱包-收款页面
+  static walletTokenReceive (String token) => '/walletTokenReceive/$token';
+  /// 钱包-转账
+  static walletTokenSend (String token) => '/walletTokenSend/$token';
   /// 市场-首页
   static const chainExport = '/chainExport';
   /// 生态-首页

@@ -1,24 +1,22 @@
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
-import 'package:plug/app/ui/components/function/keep.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/layout/scroll.component.dart';
 import 'package:plug/app/ui/components/view/animation.component.dart';
 import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/components/view/logsItem.component.dart';
-import 'package:plug/app/ui/pages/wallet/token/user/user.controller.dart';
+import 'package:plug/app/ui/pages/wallet/token/logs/logs.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 
-class WalletTokenUserPage extends GetView<WalletTokenUserPageController> {
-  const WalletTokenUserPage({Key? key}) : super(key: key);
+class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
+  const WalletTokenLogsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    WalletTokenUserPageState state = controller.state;
+    WalletTokenLogsPageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
@@ -128,31 +126,40 @@ class WalletTokenUserPage extends GetView<WalletTokenUserPageController> {
         children: [
           // 全部
           LScrollView(
-            onRefresh: () => controller.onRefresh(WalletTokenUserPageTabType.all),
-            onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenUserPageTabType.all),
+            onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.all),
+            onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.all),
             child: Obx(() => Column(
-              children: state.transferLogsAll.map((_item) => LAnimationView(
-                child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+              children: state.transferLogsAll.map((_item) => InkWell(
+                onTap: () => controller.onGoToDetail(_item.hash),
+                child: LAnimationView(
+                  child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+                ),
               )).toList(),
             )),
           ),
           // 转出
           LScrollView(
-            onRefresh: () => controller.onRefresh(WalletTokenUserPageTabType.send),
-            onLoading: state.logsPageSend == 0 ? null : () => controller.onLoading(WalletTokenUserPageTabType.send),
+            onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.send),
+            onLoading: state.logsPageSend == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.send),
             child: Obx(() => Column(
-              children: state.transferLogsSend.map((_item) => LAnimationView(
-                child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+              children: state.transferLogsSend.map((_item) => InkWell(
+                onTap: () => controller.onGoToDetail(_item.hash),
+                child: LAnimationView(
+                  child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+                ),
               )).toList(),
             )),
           ),
           // 转入
           LScrollView(
-            onRefresh: () => controller.onRefresh(WalletTokenUserPageTabType.receive),
-            onLoading: state.logsPageReceive == 0 ? null : () => controller.onLoading(WalletTokenUserPageTabType.receive),
+            onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.receive),
+            onLoading: state.logsPageReceive == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.receive),
             child: Obx(() => Column(
-              children: state.transferLogsReceive.map((_item) => LAnimationView(
-                child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+              children: state.transferLogsReceive.map((_item) => InkWell(
+                onTap: () => controller.onGoToDetail(_item.hash),
+                child: LAnimationView(
+                  child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+                ),
               )).toList(),
             )),
           ),

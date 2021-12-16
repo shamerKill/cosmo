@@ -36,8 +36,14 @@ import 'package:plug/app/ui/pages/wallet/notification/details/details.binding.da
 import 'package:plug/app/ui/pages/wallet/notification/details/details.page.dart';
 import 'package:plug/app/ui/pages/wallet/notification/list/list.binding.dart';
 import 'package:plug/app/ui/pages/wallet/notification/list/list.page.dart';
-import 'package:plug/app/ui/pages/wallet/token/user/user.binding.dart';
-import 'package:plug/app/ui/pages/wallet/token/user/user.page.dart';
+import 'package:plug/app/ui/pages/wallet/token/logs/detail/detail.binding.dart';
+import 'package:plug/app/ui/pages/wallet/token/logs/detail/detail.page.dart';
+import 'package:plug/app/ui/pages/wallet/token/logs/logs.binding.dart';
+import 'package:plug/app/ui/pages/wallet/token/logs/logs.page.dart';
+import 'package:plug/app/ui/pages/wallet/token/receive/receive.binding.dart';
+import 'package:plug/app/ui/pages/wallet/token/receive/receive.page.dart';
+import 'package:plug/app/ui/pages/wallet/token/send/send.binding.dart';
+import 'package:plug/app/ui/pages/wallet/token/send/send.page.dart';
 
 
 part './pages.dart';

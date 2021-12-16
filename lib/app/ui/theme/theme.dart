@@ -70,6 +70,9 @@ ThemeData _getTheme (ThemeColorClass colors, AppSize sizes) => ThemeData(
   primaryColor: colors.primaryColor,
   backgroundColor: colors.pageBackgroundColor,
   scaffoldBackgroundColor: colors.pageBackgroundColor,
+  colorScheme: ThemeData().colorScheme.copyWith(
+    primary: colors.primaryColor,
+  ),
   textTheme: TextTheme(
     bodyText2: TextStyle(
       color: colors.textBlack,

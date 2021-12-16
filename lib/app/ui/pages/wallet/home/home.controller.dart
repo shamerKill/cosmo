@@ -91,7 +91,6 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
         ..address = address??'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04y'
         ..nickName = 'cosmo-import-1'
         ..createTime = DateTime.now();
-      state._accountInfo.refresh();
       state.accountInfo
         .tokenList = [
           TokenModel()
@@ -103,6 +102,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
             ..scale = 8
             ..minUnit = 'sha',
         ];
+      state._accountInfo.refresh();
       LLoading.showLoading();
     }
     await initAccountNet();
@@ -188,7 +188,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   }
   // 我的代币详情
   onToTokenPage(String token) {
-    Get.toNamed(PlugRoutesNames.walletTokenUser(token));
+    Get.toNamed(PlugRoutesNames.walletTokenLogs(token));
   }
   // 前往备份
   onGoToBackup() {

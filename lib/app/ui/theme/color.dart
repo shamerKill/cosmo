@@ -14,6 +14,7 @@ class AppColor {
     textGray: const Color(0xffc8cad2),
     textGrayBig: const Color(0xFF878E9F),
     textBlack: const Color(0xFF222222),
+    textBlackBig: const Color(0xFF000000),
     errorColor: const Color(0xFFFF0000),
     homeAddressBg: [const Color(0xFF081327), const Color(0xFF060F19), const Color(0xFF172230)],
     homeAssetsBg: [const Color(0xFF05E6A8), const Color(0xFF158878)],
@@ -29,6 +30,7 @@ class AppColor {
     textGray: const Color(0xffc8cad2),
     textGrayBig: const Color(0xFF878E9F),
     textBlack: const Color(0xFF222222),
+    textBlackBig: const Color(0xFF000000),
     errorColor: const Color(0xFFFF0000),
     homeAddressBg: [const Color(0xFF081327), const Color(0xFF060F19), const Color(0xFF172230)],
     homeAssetsBg: [const Color(0xFF05E6A8), const Color(0xFF158878)],
@@ -48,6 +50,7 @@ class ThemeColorClass {
   final Color textGray;
   final Color textGrayBig;
   final Color textBlack;
+  final Color textBlackBig;
   final Color errorColor;
   final List<Color> homeAddressBg;
   final List<Color> homeAssetsBg;
@@ -60,6 +63,7 @@ class ThemeColorClass {
     required this.borderColor,
     required this.textGray,
     required this.textBlack,
+    required this.textBlackBig,
     required this.textGrayBig,
     required this.pageConTrastColor,
     required this.errorColor,

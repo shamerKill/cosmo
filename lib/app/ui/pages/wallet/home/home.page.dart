@@ -388,7 +388,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                   children: state.accountInfo.tokenList.map((_item) => Padding(
                     padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
                     child: InkWell(
-                      onTap: () => controller.onToTokenPage(_item.symbol),
+                      onTap: () => controller.onToTokenPage(_item.minUnit),
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
                         decoration: BoxDecoration(

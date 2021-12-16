@@ -42,7 +42,9 @@ class NumberTool {
   static String amountToBalance(String input, { scale = 6}) {
     double? num = double.tryParse(input);
     if (num == null) return input;
-    return NumUtil.divide(num, pow(10, scale)).toString();
+    double result = NumUtil.divide(num, pow(10, scale));
+    if (result % 1 == 0) return result.toStringAsFixed(0);
+    return result.toString();
   }
   static String balanceToAmount(String input, { scale = 6, bool? ceil }) {
     double? num = double.tryParse(input);

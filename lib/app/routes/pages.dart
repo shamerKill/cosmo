@@ -82,11 +82,29 @@ class PlugPages {
       page: () => const WalletNotificationDetailsPage(),
       binding: WalletNotificationDetailsPageBinding(),
     ),
-    /// 钱包-持有代币信息
+    /// 钱包-代币交易记录
     GetPage(
-      name: PlugRoutesNames.walletTokenUser(':token'),
-      page: () => const WalletTokenUserPage(),
-      binding: WalletTokenUserPageBinding(),
+      name: PlugRoutesNames.walletTokenLogs(':token'),
+      page: () => const WalletTokenLogsPage(),
+      binding: WalletTokenLogsPageBinding(),
+    ),
+    /// 钱包-代币交易记录详情
+    GetPage(
+      name: PlugRoutesNames.walletTokenLogsDetail(':hash'),
+      page: () => const WalletTokenLogsDetailPage(),
+      binding: WalletTokenLogsDetailPageBinding(),
+    ),
+    /// 钱包-收款页面
+    GetPage(
+      name: PlugRoutesNames.walletTokenReceive(':token'),
+      page: () => const WalletTokenReceivePage(),
+      binding: WalletTokenReceivePageBinding(),
+    ),
+    /// 钱包-转账页面
+    GetPage(
+      name: PlugRoutesNames.walletTokenSend(':token'),
+      page: () => const WalletTokenSendPage(),
+      binding: WalletTokenSendPageBinding(),
     ),
     /// 市场-首页
     GetPage(

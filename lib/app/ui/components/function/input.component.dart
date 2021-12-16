@@ -9,6 +9,8 @@ class LInput extends StatelessWidget {
     this.textController,
     this.labelText,
     this.suffixIcon,
+    this.suffixText,
+    this.suffix,
     this.visibilityPass,
     this.padding,
     this.passOnPress,
@@ -35,6 +37,8 @@ class LInput extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final Widget? suffixIcon;
+  final String? suffixText;
+  final Widget? suffix;
   final bool? visibilityPass;
   final EdgeInsetsGeometry? padding;
   final TextInputType? keyboardType;
@@ -63,20 +67,22 @@ class LInput extends StatelessWidget {
         keyboardType: keyboardType??(onlyNumber == true ? TextInputType.number : null),
         enabled: disabled == true ? false : true,
         inputFormatters: onlyNumber == true ? [
-          FilteringTextInputFormatter.allow(RegExp(onlyInt == true ? "[0-9]" : "[0-9]+.?[0-9]*"))
+          FilteringTextInputFormatter.allow(RegExp(onlyInt == true ? "[0-9]" : r"[0-9]+\.?[0-9]*"))
         ] : null,
         maxLength: maxLength,
         textAlign: textAlign??TextAlign.start,
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
-            top: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 2,
-            bottom: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 2,
+            top: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 4,
+            bottom: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 4,
             left: appTheme.sizes.paddingSmall,
             right: appTheme.sizes.paddingSmall,
           ),
           labelText: labelText,
           hintText: hintText,
+          suffixText: suffixText,
+          suffix: suffix,
           suffixIcon: visibilityPass == null ? suffixIcon : IconButton(
             splashRadius: appTheme.sizes.inputIconSize,
             icon: Icon(
