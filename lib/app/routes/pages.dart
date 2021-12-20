@@ -106,6 +106,18 @@ class PlugPages {
       page: () => const WalletTokenSendPage(),
       binding: WalletTokenSendPageBinding(),
     ),
+    /// 钱包-代币列表
+    GetPage(
+      name: PlugRoutesNames.walletTokenList,
+      page: () => const WalletTokenListPage(),
+      binding: WalletTokenListPageBinding(),
+    ),
+    /// 钱包-代币详情
+    GetPage(
+      name: PlugRoutesNames.walletTokenDetail(':token'),
+      page: () => const WalletTokenDetailPage(),
+      binding: WalletTokenDetailPageBinding(),
+    ),
     /// 市场-首页
     GetPage(
       name: PlugRoutesNames.chainExport,

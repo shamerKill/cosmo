@@ -34,7 +34,7 @@ class TokenModel extends _StorageBaseAbstract {
   bool get mintable => _mintable;
   set mintable (bool value) { _mintable = value; _saveKey(); }
   bool _mintable = false;
-  /// 币种备注
+  /// 币种备注 暂时无用
   String get remarks => _remarks;
   set remarks (String value) { _remarks = value; _saveKey(); }
   String _remarks = '';

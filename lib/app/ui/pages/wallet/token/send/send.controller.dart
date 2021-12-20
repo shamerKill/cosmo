@@ -64,10 +64,12 @@ class WalletTokenSendPageController extends GetxController {
   }
 
 
+  // 前往地址簿
+  onGoToAddressList() {
+    
+  }
   // 扫码事件
   onScanQr() {
-    print(123);
-    print(1.0);
   }
   // 全部划转
   onAllSend() {
@@ -76,6 +78,7 @@ class WalletTokenSendPageController extends GetxController {
   }
   // 确认转账
   onSend() async {
+    Get.focusScope?.unfocus();
     String? password = await LBottomSheet.passwordBottomSheet();
     print(password);
     state.sendLoadding = true;

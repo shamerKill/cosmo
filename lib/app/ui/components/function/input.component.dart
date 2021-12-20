@@ -11,17 +11,20 @@ class LInput extends StatelessWidget {
     this.suffixIcon,
     this.suffixText,
     this.suffix,
+    this.prefixIcon,
     this.visibilityPass,
     this.padding,
     this.passOnPress,
     this.onChanged,
     this.onFocus,
+    this.onSubmitted,
     this.keyboardType,
     this.maxLength,
     this.focusNode,
     this.textAlign,
     this.hintText,
     this.inputHeight,
+    this.textInputAction,
     this.hidBorder = false,
     this.disabled = false,
     this.maxLines = 1,
@@ -38,6 +41,7 @@ class LInput extends StatelessWidget {
   final String? hintText;
   final Widget? suffixIcon;
   final String? suffixText;
+  final Widget? prefixIcon;
   final Widget? suffix;
   final bool? visibilityPass;
   final EdgeInsetsGeometry? padding;
@@ -49,7 +53,9 @@ class LInput extends StatelessWidget {
   final bool? hidBorder;
   final TextAlign? textAlign;
   final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
   final void Function(String)? onChanged;
+  final void Function(String)? onSubmitted;
   final void Function(bool)? onFocus;
   final void Function()? passOnPress;
 
@@ -71,11 +77,12 @@ class LInput extends StatelessWidget {
         ] : null,
         maxLength: maxLength,
         textAlign: textAlign??TextAlign.start,
-        textInputAction: TextInputAction.next,
+        textInputAction: textInputAction??TextInputAction.next,
+        onSubmitted: onSubmitted,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.only(
-            top: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 4,
-            bottom: (inputHeight??appTheme.sizes.inputHeight - appTheme.sizes.inputFontSize) / 4,
+            top: appTheme.sizes.paddingSmall,
+            bottom: appTheme.sizes.paddingSmall,
             left: appTheme.sizes.paddingSmall,
             right: appTheme.sizes.paddingSmall,
           ),
@@ -83,6 +90,7 @@ class LInput extends StatelessWidget {
           hintText: hintText,
           suffixText: suffixText,
           suffix: suffix,
+          prefixIcon: prefixIcon,
           suffixIcon: visibilityPass == null ? suffixIcon : IconButton(
             splashRadius: appTheme.sizes.inputIconSize,
             icon: Icon(

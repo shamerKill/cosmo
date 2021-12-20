@@ -184,7 +184,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   }
   // 添加代币
   onAddToken() {
-    _checkBackup();
+    Get.toNamed(PlugRoutesNames.walletTokenList);
   }
   // 我的代币详情
   onToTokenPage(String token) {

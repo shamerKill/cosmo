@@ -42,7 +42,7 @@ class LScaffold extends GetView<LScaffoldController> {
     final LScaffoldController controller = Get.put(LScaffoldController());
     return GestureDetector(
       // 点击其他位置取消焦点
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+      onTap: () => Get.focusScope?.unfocus(),
       child: WillPopScope(
         child: Scaffold(
           key: scaffoldKey,

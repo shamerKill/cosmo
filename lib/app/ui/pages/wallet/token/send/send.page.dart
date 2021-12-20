@@ -27,8 +27,19 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('接收地址', style: TextStyle(color: appTheme.colors.textBlackBig)),
-          Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('接收地址', style: TextStyle(color: appTheme.colors.textBlackBig)),
+              InkWell(
+                onTap: controller.onGoToAddressList,
+                child: Padding(
+                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
+                  child: Text('地址簿', style: TextStyle(color: appTheme.colors.primaryColor)),
+                ),
+              ),
+            ],
+          ),
           Obx(() => LInput(
             hintText: '扫描或粘贴钱包地址'.tr,
             textController: controller.addressController,
@@ -68,7 +79,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
                       TextSpan(text: '可转数量'.tr),
                       const TextSpan(text: '\r\r'),
                       TextSpan(
-                        text: NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale) + '\r' + state.tokenInfo.symbol,
+                        text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)) + '\r' + state.tokenInfo.symbol,
                         style: TextStyle(color: appTheme.colors.primaryColor),
                       ),
                     ]

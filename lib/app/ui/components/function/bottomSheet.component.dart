@@ -111,4 +111,44 @@ class LBottomSheet {
       ),
     );
   }
+  static Future<bool?> promptBottomSheet({
+    String? title,
+    Widget? message
+  }) {
+    return baseBottomSheet<bool>(
+      showClose: false,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+        child: Column(
+          children: [
+            Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
+            if (title != null) Text(title, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
+            Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+            if (message != null) message,
+            Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
+            Row(
+              children: [
+                Expanded(
+                  child: LButton(
+                    contrast: true,
+                    height: appTheme.sizes.buttonHeight * 0.8,
+                    child: Text('取消'.tr),
+                    onPressed: () => Get.back(result: false),
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(left: appTheme.sizes.padding)),
+                Expanded(
+                  child: LButton(
+                    height: appTheme.sizes.buttonHeight * 0.8,
+                    child: Text('确定'.tr),
+                    onPressed: () => Get.back(result: true),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

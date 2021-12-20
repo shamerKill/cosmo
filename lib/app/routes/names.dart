@@ -37,6 +37,10 @@ abstract class PlugRoutesNames {
   static walletTokenReceive (String token) => '/walletTokenReceive/$token';
   /// 钱包-转账
   static walletTokenSend (String token) => '/walletTokenSend/$token';
+  /// 钱包-代币列表
+  static const walletTokenList = '/walletTokenList';
+  /// 钱包-代币详情
+  static walletTokenDetail (String token) => '/walletTokenDetail/$token';
   /// 市场-首页
   static const chainExport = '/chainExport';
   /// 生态-首页
