@@ -139,6 +139,12 @@ class PlugPages {
       binding: UserMyPageBinding(),
       transition: Transition.fadeIn,
     ),
+    /// 我的-地址簿列表
+    GetPage(
+      name: PlugRoutesNames.userAddressBookList,
+      page: () => const UserAddressBookListPage(),
+      binding: UserAddressBookListPageBinding(),
+    ),
     // ExamplePage
     if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),
   ];

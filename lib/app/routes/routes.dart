@@ -24,6 +24,8 @@ import 'package:plug/app/ui/pages/chain/export/export.binding.dart';
 import 'package:plug/app/ui/pages/chain/export/export.page.dart';
 import 'package:plug/app/ui/pages/dapp/exhibition/dapp.binding.dart';
 import 'package:plug/app/ui/pages/dapp/exhibition/dapp.page.dart';
+import 'package:plug/app/ui/pages/user/addressBook/list/list.binding.dart';
+import 'package:plug/app/ui/pages/user/addressBook/list/list.page.dart';
 import 'package:plug/app/ui/pages/user/my/my.binding.dart';
 import 'package:plug/app/ui/pages/user/my/my.page.dart';
 import 'package:plug/app/ui/pages/wallet/home/home.binding.dart';

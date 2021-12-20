@@ -47,4 +47,6 @@ abstract class PlugRoutesNames {
   static const dappExhibition = '/dappExhibition';
   /// 我的-首页
   static const userMy = '/userMy';
+  // 我的-地址簿列表
+  static const userAddressBookList = '/userAddressBookList';
 }

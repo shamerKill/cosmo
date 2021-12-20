@@ -60,6 +60,8 @@ dependencies:
   webview_flutter: ^3.0.0
   # https://pub.flutter-io.cn/packages/dotted_line
   dotted_line: ^3.1.0
+  # https://pub.flutter-io.cn/packages/flutter_svg
+  flutter_svg: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -107,6 +109,10 @@ flutter:
     - assets/images/start_bg.png
     - assets/images/start_logo.png
     - assets/images/proposal_list_top.png
+    # svg
+    - assets/svg/my_account.svg
+    - assets/svg/my_address.svg
+    - assets/svg/my_news.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
