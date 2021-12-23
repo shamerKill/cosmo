@@ -18,9 +18,9 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
       headerBar: Row(),
       basicBackgroundColor: true,
       body: Container(
-        child: Text('生态'),
+        child: Text('社区'),
       ),
-      bottomNavigationBar: LBottomNavigation(),
+      bottomNavigationBar: const LBottomNavigation(),
     );
   }
 }

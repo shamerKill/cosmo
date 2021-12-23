@@ -118,14 +118,14 @@ class PlugPages {
       page: () => const WalletTokenDetailPage(),
       binding: WalletTokenDetailPageBinding(),
     ),
-    /// 市场-首页
+    /// 生态-首页
     GetPage(
       name: PlugRoutesNames.chainExport,
       page: () => const ChainExportPage(),
       binding: ChainExportPageBinding(),
       transition: Transition.fadeIn,
     ),
-    /// 生态-首页
+    /// 社区-首页
     GetPage(
       name: PlugRoutesNames.dappExhibition,
       page: () => const DappExhibitionPage(),

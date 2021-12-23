@@ -41,9 +41,9 @@ abstract class PlugRoutesNames {
   static const walletTokenList = '/walletTokenList';
   /// 钱包-代币详情
   static walletTokenDetail (String token) => '/walletTokenDetail/$token';
-  /// 市场-首页
-  static const chainExport = '/chainExport';
   /// 生态-首页
+  static const chainExport = '/chainExport';
+  /// 社区-首页
   static const dappExhibition = '/dappExhibition';
   /// 我的-首页
   static const userMy = '/userMy';

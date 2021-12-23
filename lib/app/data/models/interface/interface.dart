@@ -12,3 +12,4 @@ part './storage.notification.dart';
 part './storage.transferLog.dart';
 part './storage.address.dart';
 part './storage.network.dart';
+part './storage.dapp.dart';

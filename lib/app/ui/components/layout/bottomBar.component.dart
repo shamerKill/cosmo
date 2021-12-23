@@ -79,6 +79,12 @@ class LBottomNavigationController extends GetxController {
         state.selectedIndex = state.tabItems.indexOf(_item);
       }
     }
+    // 刷新状态情况下，保持
+    if ([
+      PlugRoutesNames.userLanguage, PlugRoutesNames.userNetwork
+    ].contains(Get.currentRoute)) {
+      state.selectedIndex = 3;
+    }
   }
   changeSelectd(int? type) {
     if (type != null && type != state.selectedIndex) {
