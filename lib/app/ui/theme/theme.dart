@@ -128,7 +128,15 @@ ThemeData _getTheme (ThemeColorClass colors, AppSize sizes) => ThemeData(
     fillColor: MaterialStateProperty.all(colors.primaryColor),
   ),
   switchTheme: SwitchThemeData(
-    thumbColor: MaterialStateProperty.all(colors.primaryColor),
+    thumbColor: MaterialStateProperty.resolveWith((states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.selected,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return colors.primaryColor;
+      }
+      return colors.textGrayBig;
+    }),
     trackColor: MaterialStateProperty.resolveWith((states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.selected,

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,9 +17,6 @@ class AccountAdminPageState {
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
   set accountInfo (AccountModel value) => _accountInfo.value = value;
-
-  // 密码/助记词选择弹窗
-  final RxList<Widget> checkVerifiType = RxList<Widget>();
 }
 
 class AccountAdminPageController extends GetxController {
@@ -62,29 +57,35 @@ class AccountAdminPageController extends GetxController {
   }
   // 备份账户
   onToBackupAddress() {
-    if (state.checkVerifiType.isEmpty) return;
     _doType = 'backup';
     LBottomSheet.baseBottomSheet(
       showClose: false,
-      child: state.checkVerifiType[0],
+      child: LBottomSheet.selectSheetChild(
+        labelList: ['密码验证', '助记词验证'],
+        successCallBack: onVerifyCallBack
+      ),
     );
   }
   // 修改密码
   onEditPassword() {
-    if (state.checkVerifiType.isEmpty) return;
     _doType = 'exitPassword';
     LBottomSheet.baseBottomSheet(
       showClose: false,
-      child: state.checkVerifiType[0],
+      child: LBottomSheet.selectSheetChild(
+        labelList: ['密码验证', '助记词验证'],
+        successCallBack: onVerifyCallBack
+      ),
     );
   }
   // 移除账户
   onRemoveAccount() {
-    if (state.checkVerifiType.isEmpty) return;
     _doType = 'remove';
     LBottomSheet.baseBottomSheet(
       showClose: false,
-      child: state.checkVerifiType[0],
+      child: LBottomSheet.selectSheetChild(
+        labelList: ['密码验证', '助记词验证'],
+        successCallBack: onVerifyCallBack
+      ),
     );
   }
   // 验证方式选择回调

@@ -18,7 +18,11 @@ class LAppBar {
       statusBarIconBrightness: Brightness.dark,
     ),
   );
-  static Widget defaultHeaderTextWidget (String titleStr) => Text(titleStr, style: TextStyle(fontSize: appTheme.sizes.titleBarTitleSize, color: appTheme.colors.textBlack, fontWeight: FontWeight.w500));
+  static Widget defaultHeaderTextWidget (String titleStr) => Text(
+    titleStr,
+    style: TextStyle(fontSize: appTheme.sizes.titleBarTitleSize, color: appTheme.colors.textBlack, fontWeight: FontWeight.w500),
+    textAlign: TextAlign.left
+  );
   static Widget defaultHeader ({
     Widget? title,
     Widget? actions,

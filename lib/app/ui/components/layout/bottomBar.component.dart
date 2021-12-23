@@ -16,7 +16,7 @@ class LBottomNavigation extends GetView {
       child: Obx(() => BottomNavigationBar(
         items: state.tabItems.map<BottomNavigationBarItem>((_item) => BottomNavigationBarItem(
           icon: _item.icon,
-          label: _item.label,
+          label: _item.label.tr,
           activeIcon: _item.activeIcon,
         )).toList(),
         selectedIconTheme: IconThemeData(size: appTheme.sizes.iconSize * 0.8),
@@ -43,25 +43,25 @@ class LBottomNavigationState {
     _BottomItem(
       icon: const Icon(IconData(0xe811, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe813, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_wallet'.tr,
+      label: 'tabbarLabel_wallet',
       route: PlugRoutesNames.walletHome,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe812, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe814, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_market'.tr,
+      label: 'tabbarLabel_ecology',
       route: PlugRoutesNames.chainExport,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe818, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe819, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_ecology'.tr,
+      label: 'tabbarLabel_community',
       route: PlugRoutesNames.dappExhibition,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe81c, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe81d, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_my'.tr,
+      label: 'tabbarLabel_my',
       route: PlugRoutesNames.userMy,
     ),
   ];

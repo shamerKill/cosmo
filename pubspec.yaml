@@ -62,6 +62,10 @@ dependencies:
   dotted_line: ^3.1.0
   # https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^1.0.0
+  # https://pub.flutter-io.cn/packages/package_info
+  package_info: ^2.0.2
+  # https://pub.flutter-io.cn/packages/image_picker
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:
@@ -109,6 +113,7 @@ flutter:
     - assets/images/start_bg.png
     - assets/images/start_logo.png
     - assets/images/proposal_list_top.png
+    - assets/images/logo_icon.png
     # svg
     - assets/svg/my_account.svg
     - assets/svg/my_address.svg

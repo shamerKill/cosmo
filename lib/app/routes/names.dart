@@ -49,4 +49,18 @@ abstract class PlugRoutesNames {
   static const userMy = '/userMy';
   // 我的-地址簿列表
   static const userAddressBookList = '/userAddressBookList';
+  // 我的-地址簿编辑
+  static const userAddressBookEdit = '/userAddressBookEdit';
+  // 我的-账户管理
+  static const userAccountList = '/userAccountList';
+  // 我的-DAPP设置
+  static const userDappSetting = '/userDappSetting';
+  // 我的-网络切换
+  static const userNetwork = '/userNetwork';
+  // 我的-语言切换
+  static const userLanguage = '/userLanguage';
+  // 我的-关于我们
+  static const userAbout = '/userAbout';
+  // 我的-问题反馈
+  static const userProblems = '/userProblems';
 }

@@ -25,6 +25,7 @@ class LInput extends StatelessWidget {
     this.hintText,
     this.inputHeight,
     this.textInputAction,
+    this.fillColor,
     this.hidBorder = false,
     this.disabled = false,
     this.maxLines = 1,
@@ -51,6 +52,7 @@ class LInput extends StatelessWidget {
   final bool? onlyInt;
   final int? maxLength;
   final bool? hidBorder;
+  final Color? fillColor;
   final TextAlign? textAlign;
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;
@@ -80,6 +82,7 @@ class LInput extends StatelessWidget {
         textInputAction: textInputAction??TextInputAction.next,
         onSubmitted: onSubmitted,
         decoration: InputDecoration(
+          fillColor: fillColor,
           contentPadding: EdgeInsets.only(
             top: appTheme.sizes.paddingSmall,
             bottom: appTheme.sizes.paddingSmall,

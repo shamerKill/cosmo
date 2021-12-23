@@ -1,0 +1,100 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:plug/app/ui/components/function/button.component.dart';
+import 'package:plug/app/ui/components/function/input.component.dart';
+import 'package:plug/app/ui/components/layout/appbar.component.dart';
+import 'package:plug/app/ui/components/layout/scaffold.component.dart';
+import 'package:plug/app/ui/pages/user/problems/problems.controller.dart';
+import 'package:plug/app/ui/theme/theme.dart';
+
+class UserProblemsPage extends GetView<UserProblemsPageController> {
+  const UserProblemsPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    UserProblemsPageState state = controller.state;
+
+    return LScaffold(
+      statusBar: LAppBar.defaultStatus(),
+      headerBar: LAppBar.defaultHeader(),
+      titleBar: LAppBar.defaultTitle(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            LAppBar.defaultHeaderTextWidget('问题反馈'.tr),
+            LButton(
+              radius: true,
+              height: appTheme.sizes.basic * 56,
+              onPressed: controller.onSubmitProblems,
+              child: Text('提交'.tr),
+            ),
+          ],
+        ),
+        description: Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
+      ),
+      singleScroll: true,
+      basicBackgroundColor: true,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('标题'.tr),
+          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          LInput(
+            hintText: '请输入标题'.tr,
+            textController: controller.titleController,
+          ),
+          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Text('描述'.tr),
+          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          LInput(
+            hintText: '请输入您遇到的问题'.tr,
+            textController: controller.descController,
+            maxLines: 5,
+            inputHeight: appTheme.sizes.inputHeight * 3,
+          ),
+          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Text('上传截图'.tr),
+          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Obx(() => Wrap(
+            spacing: appTheme.sizes.paddingSmall,
+            runSpacing: appTheme.sizes.paddingSmall,
+            children: [
+              for (String _pic in state.picList)
+                InkWell(
+                  onTap: () => controller.onShowPic(_pic),
+                  onLongPress: () => controller.onLongDelete(_pic),
+                  child: Container(
+                    width: appTheme.sizes.basic * 175,
+                    height: appTheme.sizes.basic * 175,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                    ),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: Image.file(
+                      File(_pic),
+                      fit: BoxFit.cover
+                    ),
+                  ),
+                ),
+              if (state.picList.length < 6)
+                InkWell(
+                  onTap: controller.onSelectPicture,
+                  child: Container(
+                    width: appTheme.sizes.basic * 175,
+                    height: appTheme.sizes.basic * 175,
+                    decoration: BoxDecoration(
+                      color: appTheme.colors.textGray.withOpacity(0.1),
+                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                    ),
+                    child: Icon(Icons.cloud_upload_outlined, color: appTheme.colors.textGray, size: appTheme.sizes.iconSize * 1.5),
+                  ),
+                ),
+            ],
+          )),
+        ],
+      ),
+    );
+  }
+}

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -150,5 +151,44 @@ class LBottomSheet {
         ),
       ),
     );
+  }
+  static Widget selectSheetChild({
+    required List<String> labelList,
+    Function(int)? successCallBack,
+    int selected = 0,
+  }) {
+    return Builder(builder: (BuildContext _context) {
+      int _selectValue = selected;
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(onPressed: Get.back, child: Text('cancel'.tr, style: TextStyle(color: appTheme.colors.textGray))),
+              TextButton(onPressed: () => (successCallBack != null ? successCallBack(_selectValue) : null), child: Text('sure'.tr)),
+            ],
+          ),
+          Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
+          SizedBox(
+            width: appTheme.sizes.infinity,
+            height: appTheme.sizes.basic * 380,
+            child: CupertinoPicker(
+              backgroundColor: Colors.white,
+              itemExtent: appTheme.sizes.basic * 90,
+              scrollController: FixedExtentScrollController(initialItem: _selectValue),
+              children: [
+                for (String _item in labelList)
+                  Center(
+                    child: Text(_item, style: Get.textTheme.bodyText2),
+                  ),
+              ],
+              onSelectedItemChanged: (value) {
+                _selectValue = value;
+              },
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

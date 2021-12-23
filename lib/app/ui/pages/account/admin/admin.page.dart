@@ -13,45 +13,6 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
   @override
   Widget build(BuildContext context) {
     AccountAdminPageState state = controller.state;
-    state.checkVerifiType.clear();
-    if (state.checkVerifiType.isEmpty) {
-      // 添加弹窗
-      state.checkVerifiType.add(Builder(builder: (BuildContext _context) {
-        int _selectValue = 0;
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(onPressed: Get.back, child: Text('cancel'.tr, style: TextStyle(color: appTheme.colors.textGray))),
-                TextButton(onPressed: () => controller.onVerifyCallBack(_selectValue), child: Text('sure'.tr)),
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
-            SizedBox(
-              width: appTheme.sizes.infinity,
-              height: appTheme.sizes.basic * 380,
-              child: CupertinoPicker(
-                backgroundColor: Colors.white,
-                itemExtent: appTheme.sizes.basic * 90,
-                scrollController: FixedExtentScrollController(initialItem: _selectValue),
-                children: [
-                  Center(
-                    child: Text('密码验证'.tr, style: Get.textTheme.bodyText2),
-                  ),
-                  Center(
-                    child: Text('助记词验证'.tr, style: Get.textTheme.bodyText2),
-                  ),
-                ],
-                onSelectedItemChanged: (value) {
-                  _selectValue = value;
-                },
-              ),
-            ),
-          ],
-        );
-      }));
-    }
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(backgroundColor: appTheme.colors.pageBackgroundColor),

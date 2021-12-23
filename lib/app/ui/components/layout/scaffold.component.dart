@@ -17,6 +17,7 @@ class LScaffold extends GetView<LScaffoldController> {
     this.bottomNavigationBar,
     this.padding,
     this.scaffoldKey,
+    this.hidHorizontalPadding = false,
     this.hidBottomBar = false,
     this.singleScroll = false,
     this.basicBackgroundColor = false,
@@ -30,6 +31,8 @@ class LScaffold extends GetView<LScaffoldController> {
   final void Function(bool)? onDrawerChanged;
   final Widget? bottomNavigationBar;
   final EdgeInsetsGeometry? padding;
+  /// 是否隐藏左右padding
+  final bool hidHorizontalPadding;
   /// 是否隐藏底部安全距离
   final bool hidBottomBar;
   final bool singleScroll;
@@ -63,7 +66,7 @@ class LScaffold extends GetView<LScaffoldController> {
                   child: Container(
                     width: appTheme.sizes.infinity,
                     padding: padding??EdgeInsets.only(
-                      left: appTheme.sizes.padding, right: appTheme.sizes.padding,
+                      left: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding, right: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding,
                       bottom: (hidBottomBar || footer != null || bottomNavigationBar != null) ? 0 :
                         (ScreenUtil.getBottomBarH(context) == 0.0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context)),
                     ),
@@ -73,7 +76,7 @@ class LScaffold extends GetView<LScaffoldController> {
                 if (footer != null) Container(
                   width: appTheme.sizes.infinity,
                   padding: padding??EdgeInsets.only(
-                    left: appTheme.sizes.padding, right: appTheme.sizes.padding,
+                    left: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding, right: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding,
                       bottom: hidBottomBar ? 0 :
                         (ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context))
                   ),

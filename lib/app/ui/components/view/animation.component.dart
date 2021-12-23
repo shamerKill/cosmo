@@ -6,11 +6,13 @@ class LAnimationView extends StatelessWidget {
   const LAnimationView({
     Key? key,
     required this.child,
+    this.width,
     this.randomKey = true,
     this.vKey,
   }) : super(key: key);
   final Widget child;
   final bool randomKey;
+  final double? width;
   final Key? vKey;
 
   @override
@@ -24,6 +26,7 @@ class LAnimationView extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       child: Container(
         key: _key,
+        width: width,
         child: child,
       ),
     );

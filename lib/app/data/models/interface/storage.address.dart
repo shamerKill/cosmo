@@ -26,8 +26,8 @@ class AddressModel extends _StorageBaseAbstract {
   @override
   void _saveKey(){
     _valueMap['name'] = name;
-    _valueMap['remarks'] = name;
-    _valueMap['address'] = name;
+    _valueMap['remarks'] = remarks;
+    _valueMap['address'] = address;
     _valueMap['id'] = id;
   }
   @override

@@ -4,6 +4,7 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<!-- <string>zh,en,tr</string> -->
 	<key>CFBundleDisplayName</key>
 	<string>cosmo wallet</string>
 	<key>CFBundleExecutable</key>

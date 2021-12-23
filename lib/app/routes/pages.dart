@@ -145,6 +145,48 @@ class PlugPages {
       page: () => const UserAddressBookListPage(),
       binding: UserAddressBookListPageBinding(),
     ),
+    /// 我的-地址簿编辑
+    GetPage(
+      name: PlugRoutesNames.userAddressBookEdit,
+      page: () => const UserAddressBookEditPage(),
+      binding: UserAddressBookEditPageBinding(),
+    ),
+    /// 我的-账户管理
+    GetPage(
+      name: PlugRoutesNames.userAccountList,
+      page: () => const UserAccountListPage(),
+      binding: UserAccountListPageBinding(),
+    ),
+    /// 我的-DAPP设置
+    GetPage(
+      name: PlugRoutesNames.userDappSetting,
+      page: () => const UserDappSettingPage(),
+      binding: UserDappSettingPageBinding(),
+    ),
+    /// 我的-网络切换
+    GetPage(
+      name: PlugRoutesNames.userNetwork,
+      page: () => const UserNetworkPage(),
+      binding: UserNetworkPageBinding(),
+    ),
+    /// 我的-语言切换
+    GetPage(
+      name: PlugRoutesNames.userLanguage,
+      page: () => const UserLanguagePage(),
+      binding: UserLanguagePageBinding(),
+    ),
+    /// 我的-关于我们
+    GetPage(
+      name: PlugRoutesNames.userAbout,
+      page: () => const UserAboutPage(),
+      binding: UserAboutPageBinding(),
+    ),
+    /// 我的-问题反馈
+    GetPage(
+      name: PlugRoutesNames.userProblems,
+      page: () => const UserProblemsPage(),
+      binding: UserProblemsPageBinding(),
+    ),
     // ExamplePage
     if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),
   ];

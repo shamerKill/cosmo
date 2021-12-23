@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/routes/routes.dart';
 
 class UserAddressBookListPageState {
   // 地址簿列表
@@ -24,4 +25,17 @@ class UserAddressBookListPageController extends GetxController {
     }
   }
 
+  // 创建地址
+  onCreateAddress() {
+    Get.toNamed(PlugRoutesNames.userAddressBookEdit);
+  }
+  // 修改地址
+  onEditAddress(String address) {
+    Get.toNamed(
+      PlugRoutesNames.userAddressBookEdit,
+      arguments: {
+        'address': address
+      }
+    );
+  }
 }

@@ -24,7 +24,7 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
             LButton(
               radius: true,
               height: appTheme.sizes.basic * 56,
-              onPressed: () {},
+              onPressed: controller.onCreateAddress,
               child: const Icon(Icons.add),
             ),
           ],
@@ -37,17 +37,52 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
             padding: EdgeInsets.only(top: appTheme.sizes.padding),
           ),
           for (var _item in state.addressList)
-            Container(
-              decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: appTheme.colors.borderColor)),
+            InkWell(
+              splashColor: appTheme.colors.transparent,
+              onTap: () => controller.onEditAddress(_item.address),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: appTheme.colors.borderColor)),
+                ),
+                padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(_item.name),
+                              Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
+                              Text(_item.address, style: Get.textTheme.bodyText1),
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          const IconData(0xe658, fontFamily: 'plugIcon'),
+                          color: appTheme.colors.textGray,
+                          size: appTheme.sizes.iconSize * 0.6,
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
+                    ),
+                    Container(
+                      width: appTheme.sizes.infinity,
+                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall / 2, horizontal: appTheme.sizes.paddingSmall),
+                      decoration: BoxDecoration(
+                        color: appTheme.colors.pageBackgroundColorBasic,
+                        borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius / 2)),
+                      ),
+                      child: Text('备注：'.tr + _item.remarks, style: Get.textTheme.bodyText1),
+                    ),
+                  ],
+                ),
               ),
-              padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-              child: Column(
-                children: [
-                  
-                ],
-              ),
-            )
+            ),
         ],
       )),
     );

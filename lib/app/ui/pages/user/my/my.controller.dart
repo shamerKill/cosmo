@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
 
 class UserMyPageState {
   // 是否开启了指纹验证
@@ -27,10 +28,25 @@ class UserMyPageController extends GetxController {
     state.language = '简体中文';
   }
 
+  // 前往账户管理地址列表
+  onGoToAccountList() => Get.toNamed(PlugRoutesNames.userAccountList);
   // 前往地址簿
   onGoToAddressBookList() => Get.toNamed(PlugRoutesNames.userAddressBookList);
+  // 前往消息中心
+  onGoToNotificationsList() => Get.toNamed(PlugRoutesNames.walletNotification);
+  // 前往DAPP设置
+  onGoToDappSetting() => Get.toNamed(PlugRoutesNames.userDappSetting);
   // 切换指纹验证
   onToggleTouch(bool? type) {
-    if (type != null) state.enableTouch = type;
+    LToast.info('功能暂未开启');
+    // if (type != null) state.enableTouch = type;
   }
+  // 前往网络切换
+  onGoToNetwork() => Get.toNamed(PlugRoutesNames.userNetwork);
+  // 前往语言切换
+  onGoToLanguage() => Get.toNamed(PlugRoutesNames.userLanguage);
+  // 前往关于我们
+  onGoToAboutUs() => Get.toNamed(PlugRoutesNames.userAbout);
+  // 前往问题反馈
+  onGoToProblems() => Get.toNamed(PlugRoutesNames.userProblems);
 }

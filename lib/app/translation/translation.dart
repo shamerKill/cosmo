@@ -55,6 +55,11 @@ class _InitTranslation {
       nowLocale = localList[0];
     }
   }
+  String localToString(Locale language) {
+    if (language.toLanguageTag() == localList[0].toLanguageTag()) return '简体中文';
+    if (language.toLanguageTag() == localList[1].toLanguageTag()) return 'English';
+    return '';
+  }
 }
 
 _InitTranslation plugTranslation = _InitTranslation();
