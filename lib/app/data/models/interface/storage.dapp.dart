@@ -7,9 +7,13 @@ class DappModel extends _StorageBaseAbstract {
   set id (int value) { _id = value; _saveKey(); }
   int _id = 0;
   /// 名称
-  String get name => _name;
-  set name (String value) { _name = value; _saveKey(); }
-  String _name = '';
+  String get title => _title;
+  set title (String value) { _title = value; _saveKey(); }
+  String _title = '';
+  /// logo
+  String get logo => _logo;
+  set logo (String value) { _logo = value; _saveKey(); }
+  String _logo = '';
   /// 描述
   String get description => _description;
   set description (String value) { _description = value; _saveKey(); }
@@ -29,7 +33,8 @@ class DappModel extends _StorageBaseAbstract {
 
   @override
   void _saveKey(){
-    _valueMap['name'] = name;
+    _valueMap['title'] = title;
+    _valueMap['logo'] = logo;
     _valueMap['description'] = description;
     _valueMap['address'] = address;
     _valueMap['id'] = id;
@@ -38,10 +43,40 @@ class DappModel extends _StorageBaseAbstract {
   @override
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
-    name = source['name']??'';
+    title = source['title']??'';
+    logo = source['logo']??'';
     description = source['description']??'';
     address = source['address']??'';
     id = source['id']??0;
   permissions = source['permissions']??[];
+  }
+}
+
+
+/// 远程Dapp列表头部模型
+class DappRemoteTypeModel extends _StorageBaseAbstract {
+  /// id
+  int get id => _id;
+  set id (int value) { _id = value; _saveKey(); }
+  int _id = 0;
+  /// 名称
+  String get name => _name;
+  set name (String value) { _name = value; _saveKey(); }
+  String _name = '';
+
+  DappRemoteTypeModel._(): super();
+  factory DappRemoteTypeModel() => create();
+  static DappRemoteTypeModel create() => DappRemoteTypeModel._();
+
+  @override
+  void _saveKey(){
+    _valueMap['name'] = name;
+    _valueMap['id'] = id;
+  }
+  @override
+  void setData(String sourceStr) {
+    Map<String, dynamic> source = json.decode(sourceStr);
+    name = source['name']??'';
+    id = source['id']??0;
   }
 }

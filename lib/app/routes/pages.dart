@@ -132,6 +132,24 @@ class PlugPages {
       binding: DappExhibitionPageBinding(),
       transition: Transition.fadeIn,
     ),
+    /// 社区-搜索
+    GetPage(
+      name: PlugRoutesNames.dappSearch,
+      page: () => const DappSearchPage(),
+      binding: DappSearchPageBinding(),
+    ),
+    /// 社区-webview
+    GetPage(
+      name: PlugRoutesNames.dappWebview,
+      page: () => const DappWebviewPage(),
+      binding: DappWebviewPageBinding(),
+    ),
+    /// 社区-收藏
+    GetPage(
+      name: PlugRoutesNames.dappCollection,
+      page: () => const DappCollectionPage(),
+      binding: DappCollectionPageBinding(),
+    ),
     /// 我的-首页
     GetPage(
       name: PlugRoutesNames.userMy,

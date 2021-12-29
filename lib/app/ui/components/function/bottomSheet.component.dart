@@ -38,7 +38,7 @@ class LBottomSheet {
               ),
               if (child != null) child,
               // 底部尺寸
-              Padding(padding: EdgeInsets.only(bottom: Get.bottomBarHeight == 0 ? appTheme.sizes.padding : Get.bottomBarHeight.sp)),
+              Padding(padding: EdgeInsets.only(bottom: Get.bottomBarHeight == 0 ? appTheme.sizes.paddingBig * 2 : Get.bottomBarHeight.sp)),
             ],
           ),
         ),

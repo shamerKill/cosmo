@@ -45,6 +45,12 @@ abstract class PlugRoutesNames {
   static const chainExport = '/chainExport';
   /// 社区-首页
   static const dappExhibition = '/dappExhibition';
+  /// 社区-搜索
+  static const dappSearch = '/dappSearch';
+  /// 社区-收藏
+  static const dappCollection = '/dappCollection';
+  /// 社区-webview
+  static const dappWebview = '/dappWebview';
   /// 我的-首页
   static const userMy = '/userMy';
   // 我的-地址簿列表

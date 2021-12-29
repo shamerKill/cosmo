@@ -59,4 +59,12 @@ class StringTool {
     result = result.replaceFirst('ss', '${date.second < 10 ? '0' : ''}${date.second}');
     return result;
   }
+  // 判断是否是http url
+  static bool isHttpUrl(String url) {
+    return RegExp(r'^http:\/\/.+$').hasMatch(url);
+  }
+  // 判断是否是https url
+  static bool isHttpsUrl(String url) {
+    return RegExp(r'^https:\/\/.+$').hasMatch(url);
+  }
 }

@@ -147,7 +147,11 @@ class WalletTokenListPageController extends GetxController with SingleGetTickerP
   // 我的代币列表排序
   onUserAssetsReorder (int oldIndex, int newIndex) {
     var _token = state.userTokenList.removeAt(oldIndex + 1);
-    state.userTokenList.insert(newIndex + 1, _token);
+    if (newIndex >= oldIndex) {
+      state.userTokenList.insert(newIndex, _token);
+    } else {
+      state.userTokenList.insert(newIndex + 1, _token);
+    }
   }
   // 一键获取所有资产
   onGetUserAllAssets() async {

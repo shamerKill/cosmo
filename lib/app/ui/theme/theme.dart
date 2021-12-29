@@ -116,9 +116,20 @@ ThemeData _getTheme (ThemeColorClass colors, AppSize sizes) => ThemeData(
     labelStyle: TextStyle(color: colors.textGray.withOpacity(0.5), fontSize: sizes.inputFontSize),
     floatingLabelStyle: TextStyle(color: colors.primaryColor.withOpacity(0.5)),
     hintStyle: TextStyle(color: colors.textGray.withOpacity(0.5), fontSize: sizes.inputFontSize),
-    border: OutlineInputBorder(borderSide: BorderSide(color: colors.primaryColor.withOpacity(0.1))),
-    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colors.textGray.withOpacity(0.1))),
-    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: colors.primaryColor)),
+    prefixIconColor: MaterialStateColor.resolveWith((states) => states.any({MaterialState.focused}.contains) ? colors.primaryColor : colors.textGray),
+    suffixIconColor: MaterialStateColor.resolveWith((states) => states.any({MaterialState.focused}.contains) ? colors.primaryColor : colors.textGray),
+    border: OutlineInputBorder(
+      borderSide: BorderSide(color: colors.primaryColor.withOpacity(0.1)),
+      borderRadius: BorderRadius.circular(sizes.radius),
+    ),
+    enabledBorder:  OutlineInputBorder(
+      borderSide: BorderSide(color: colors.textGray.withOpacity(0.1)),
+      borderRadius: BorderRadius.circular(sizes.radius),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(color: colors.primaryColor),
+      borderRadius: BorderRadius.circular(sizes.radius),
+    ),
     fillColor: colors.textGray.withOpacity(0.05),
     contentPadding: EdgeInsets.symmetric(vertical: sizes.basic * 10, horizontal: sizes.basic * 20),
     filled: true,

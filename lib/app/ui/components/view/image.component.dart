@@ -6,12 +6,12 @@ import 'package:plug/app/ui/theme/theme.dart';
 class LViewImage extends GetView<LViewImageController> {
   const LViewImage({
     Key? key,
-    required this.url,
+    this.url,
     required this.width,
     required this.height,
     this.isRadius = false,
   }) : super(key: key);
-  final String url;
+  final String? url;
   final double width;
   final double height;
   final bool isRadius;
@@ -20,10 +20,17 @@ class LViewImage extends GetView<LViewImageController> {
   Widget build(BuildContext context) {
     LViewImageController controller = Get.put(LViewImageController());
 
+    if (url == null) {
+      return Container(
+        width: width,
+        height: height,
+        color: appTheme.colors.transparent,
+      );
+    }
     return CachedNetworkImage(
       width: width,
       height: height,
-      imageUrl: url,
+      imageUrl: url!,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,

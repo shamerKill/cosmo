@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class LInput extends StatelessWidget {
@@ -21,11 +22,13 @@ class LInput extends StatelessWidget {
     this.keyboardType,
     this.maxLength,
     this.focusNode,
+    this.autofocus = false,
     this.textAlign,
     this.hintText,
     this.inputHeight,
     this.textInputAction,
     this.fillColor,
+    this.radiusCircular,
     this.hidBorder = false,
     this.disabled = false,
     this.maxLines = 1,
@@ -52,6 +55,8 @@ class LInput extends StatelessWidget {
   final bool? onlyInt;
   final int? maxLength;
   final bool? hidBorder;
+  final bool? radiusCircular;
+  final bool autofocus;
   final Color? fillColor;
   final TextAlign? textAlign;
   final FocusNode? focusNode;
@@ -63,8 +68,9 @@ class LInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double _height = inputHeight??appTheme.sizes.inputHeight;
     return SizedBox(
-      height: inputHeight??appTheme.sizes.inputHeight,
+      height: _height,
       child: TextField(
         controller: textController,
         maxLines: maxLines,
@@ -81,6 +87,7 @@ class LInput extends StatelessWidget {
         textAlign: textAlign??TextAlign.start,
         textInputAction: textInputAction??TextInputAction.next,
         onSubmitted: onSubmitted,
+        autofocus: autofocus,
         decoration: InputDecoration(
           fillColor: fillColor,
           contentPadding: EdgeInsets.only(
@@ -94,6 +101,9 @@ class LInput extends StatelessWidget {
           suffixText: suffixText,
           suffix: suffix,
           prefixIcon: prefixIcon,
+          border: (radiusCircular == true) ? (Get.theme.inputDecorationTheme.border as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null,
+          enabledBorder: (radiusCircular == true) ? (Get.theme.inputDecorationTheme.enabledBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null,
+          focusedBorder: (radiusCircular == true) ? (Get.theme.inputDecorationTheme.focusedBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null,
           suffixIcon: visibilityPass == null ? suffixIcon : IconButton(
             splashRadius: appTheme.sizes.inputIconSize,
             icon: Icon(

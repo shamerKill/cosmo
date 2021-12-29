@@ -103,6 +103,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                     onPressed: () => controller.onGoToDetail(_item),
                     icons: InkWell(
                       splashColor: appTheme.colors.transparent,
+                      highlightColor: appTheme.colors.transparent,
                       onTap: () => controller.onToggleToken(_item),
                       child: Padding(
                         padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
@@ -136,6 +137,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                           children: [
                             InkWell(
                               splashColor: appTheme.colors.transparent,
+                              highlightColor: appTheme.colors.transparent,
                               onTap: () => controller.onLocalRemoveToken(_item),
                               child: Padding(
                                 padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
@@ -181,6 +183,9 @@ class _WalletTokenListItem extends StatelessWidget {
       child: InkWell(
         onTap: onPressed,
         splashColor: appTheme.colors.transparent,
+        highlightColor: appTheme.colors.transparent,
+        focusColor: appTheme.colors.transparent,
+        hoverColor: appTheme.colors.transparent,
         child: Row(
           children: [
             LViewImage(
