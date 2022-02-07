@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/bottomBar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
+import 'package:plug/app/ui/pages/chain/export/delegate/delegate.page.dart';
 import 'package:plug/app/ui/pages/chain/export/export.controller.dart';
+import 'package:plug/app/ui/pages/chain/export/proposal/proposal.page.dart';
+import 'package:plug/app/ui/pages/chain/export/transaction/transaction.page.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class ChainExportPage extends GetView<ChainExportPageController> {
@@ -15,12 +18,84 @@ class ChainExportPage extends GetView<ChainExportPageController> {
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(backgroundColor: appTheme.colors.pageBackgroundColorBasic),
-      headerBar: Row(),
-      basicBackgroundColor: true,
-      body: Container(
-        child: Text('主链'),
+      headerBar: Container(
+        height: appTheme.sizes.titleBarHeight * 0.8,
+        padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+        child: Row(
+          children: [
+            Expanded(
+              child: TabBar(
+                controller: state.pageTabController,
+                isScrollable: true,
+                labelStyle: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold),
+                unselectedLabelStyle: TextStyle(color: appTheme.colors.textBlack, fontSize: appTheme.sizes.fontSize),
+                labelColor: appTheme.colors.textBlackBig,
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorColor: appTheme.colors.primaryColor,
+                tabs: [
+                  SizedBox(
+                    width: appTheme.sizes.basic * 80,
+                    height: appTheme.sizes.basic * 60,
+                    child: Center(child: Text('交易'.tr)),
+                  ),
+                  SizedBox(
+                    width: appTheme.sizes.basic * 80,
+                    height: appTheme.sizes.basic * 60,
+                    child: Center(child: Text('质押'.tr)),
+                  ),
+                  SizedBox(
+                    width: appTheme.sizes.basic * 80,
+                    height: appTheme.sizes.basic * 60,
+                    child: Center(child: Text('提案'.tr)),
+                  ),
+                ]
+              ),
+            ),
+            InkWell(
+              onTap: controller.onCreateToken,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: appTheme.colors.textBlack,
+                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                ),
+                height: appTheme.sizes.basic * 44,
+                padding: EdgeInsets.symmetric(
+                  horizontal: appTheme.sizes.paddingSmall,
+                ),
+                child: Center(
+                  child: Text(
+                    '一键发行'.tr,
+                    style: TextStyle(
+                      color: appTheme.colors.hightColor.withOpacity(0.9),
+                      fontSize: appTheme.sizes.fontSizeSmall,
+                    )
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      bottomNavigationBar: LBottomNavigation(),
+      basicBackgroundColor: true,
+      hidHorizontalPadding: true,
+      body: TabBarView(
+        controller: state.pageTabController,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+            child: const ChainExportTransactionPage(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+            child: const ChainExportDelegatePage(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+            child: const ChainExportProposalPage(),
+          ),
+        ],
+      ),
+      bottomNavigationBar: const LBottomNavigation(),
     );
   }
 }

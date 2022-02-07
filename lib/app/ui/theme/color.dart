@@ -15,7 +15,12 @@ class AppColor {
     textGrayBig: const Color(0xFF878E9F),
     textBlack: const Color(0xFF222222),
     textBlackBig: const Color(0xFF000000),
-    errorColor: const Color(0xFFFF0000),
+    errorColor: const Color(0xFFCC3300),
+    warningColor: const Color(0xFFFFCC00),
+    proposalAgree: const Color(0xFF06E2A6),
+    proposalReject: const Color(0xFF000000),
+    proposalVeto: const Color(0xFFCD464D),
+    proposalAbandon: const Color(0xFFCFD5E5),
     homeAddressBg: [const Color(0xFF081327), const Color(0xFF060F19), const Color(0xFF172230)],
     homeAssetsBg: [const Color(0xFF05E6A8), const Color(0xFF158878)],
   );
@@ -31,7 +36,12 @@ class AppColor {
     textGrayBig: const Color(0xFF878E9F),
     textBlack: const Color(0xFF222222),
     textBlackBig: const Color(0xFF000000),
-    errorColor: const Color(0xFFFF0000),
+    errorColor: const Color(0xFFCC3300),
+    warningColor: const Color(0xFFFFCC00),
+    proposalAgree: const Color(0xFF06E2A6),
+    proposalReject: const Color(0xFF000000),
+    proposalVeto: const Color(0xFFCD464D),
+    proposalAbandon: const Color(0xFFCFD5E5),
     homeAddressBg: [const Color(0xFF081327), const Color(0xFF060F19), const Color(0xFF172230)],
     homeAssetsBg: [const Color(0xFF05E6A8), const Color(0xFF158878)],
   );
@@ -52,6 +62,11 @@ class ThemeColorClass {
   final Color textBlack;
   final Color textBlackBig;
   final Color errorColor;
+  final Color warningColor;
+  final Color proposalAgree;
+  final Color proposalReject;
+  final Color proposalVeto;
+  final Color proposalAbandon;
   final List<Color> homeAddressBg;
   final List<Color> homeAssetsBg;
   ThemeColorClass({
@@ -67,6 +82,11 @@ class ThemeColorClass {
     required this.textGrayBig,
     required this.pageConTrastColor,
     required this.errorColor,
+    required this.warningColor,
+    required this.proposalAgree,
+    required this.proposalReject,
+    required this.proposalVeto,
+    required this.proposalAbandon,
     required this.homeAddressBg,
     required this.homeAssetsBg,
   });

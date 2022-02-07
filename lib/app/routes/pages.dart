@@ -125,6 +125,12 @@ class PlugPages {
       binding: ChainExportPageBinding(),
       transition: Transition.fadeIn,
     ),
+    /// 生态-提案详情
+    GetPage(
+      name: PlugRoutesNames.chainProposalDetails(':id'),
+      page: () => const ChainProposalDetailsPage(),
+      binding: ChainProposalDetailsPageBinding(),
+    ),
     /// 社区-首页
     GetPage(
       name: PlugRoutesNames.dappExhibition,

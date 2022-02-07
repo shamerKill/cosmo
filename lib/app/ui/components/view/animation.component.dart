@@ -24,7 +24,7 @@ class LAnimationView extends StatelessWidget {
         return FadeTransition(child: child, opacity: anim);
       },
       duration: const Duration(milliseconds: 200),
-      child: Container(
+      child: SizedBox(
         key: _key,
         width: width,
         child: child,

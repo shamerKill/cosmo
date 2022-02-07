@@ -43,6 +43,8 @@ abstract class PlugRoutesNames {
   static walletTokenDetail (String token) => '/walletTokenDetail/$token';
   /// 生态-首页
   static const chainExport = '/chainExport';
+  /// 生态-提案详情
+  static chainProposalDetails (String id) => '/chainProposalDetails/$id';
   /// 社区-首页
   static const dappExhibition = '/dappExhibition';
   /// 社区-搜索

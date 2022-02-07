@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 
 class StringTool {
   // 比较字符串大小
@@ -66,5 +67,14 @@ class StringTool {
   // 判断是否是https url
   static bool isHttpsUrl(String url) {
     return RegExp(r'^https:\/\/.+$').hasMatch(url);
+  }
+  // 根据节点状态返回文字
+  static String getVerifierStatus(VerifierStatusEnum status) {
+    switch (status) {
+      case VerifierStatusEnum.running: return '运行中';
+      case VerifierStatusEnum.offLine: return '已离线';
+      case VerifierStatusEnum.jailing: return '监禁中';
+      case VerifierStatusEnum.invalid: return '已失效';
+    }
   }
 }

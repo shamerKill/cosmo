@@ -22,6 +22,8 @@ import 'package:plug/app/ui/pages/account/import/import.binding.dart';
 import 'package:plug/app/ui/pages/account/import/import.page.dart';
 import 'package:plug/app/ui/pages/chain/export/export.binding.dart';
 import 'package:plug/app/ui/pages/chain/export/export.page.dart';
+import 'package:plug/app/ui/pages/chain/proposalDatails/proposalDetail.binding.dart';
+import 'package:plug/app/ui/pages/chain/proposalDatails/propposalDetails.page.dart';
 import 'package:plug/app/ui/pages/dapp/collection/collection.binding.dart';
 import 'package:plug/app/ui/pages/dapp/collection/collection.page.dart';
 import 'package:plug/app/ui/pages/dapp/exhibition/dapp.binding.dart';

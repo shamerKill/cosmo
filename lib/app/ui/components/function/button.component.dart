@@ -40,9 +40,10 @@ class LButton extends GetView<LButtonController> {
             if (onPressed != null) onPressed!();
           }
         ),
-        style: ButtonStyle(
+        style:  ButtonStyle(
           backgroundColor: MaterialStateProperty.all(contrast == true ? appTheme.colors.borderColor : null),
           overlayColor: MaterialStateProperty.all(contrast == true ? appTheme.colors.primaryColor.withOpacity(0.1) : null),
+          foregroundColor: MaterialStateProperty.all(contrast == true ? appTheme.colors.textGrayBig : null),
           shape: radius == true ? MaterialStateProperty.all(const StadiumBorder()) : null,
         ),
       ),
