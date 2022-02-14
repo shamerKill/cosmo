@@ -64,10 +64,13 @@ class LScrollView extends GetView<_ScrollViewController>  {
       ),
       child: CustomScrollView(
         physics: const ClampingScrollPhysics(),
-        slivers: children??[
+        slivers: (children == null) ? [
           SliverToBoxAdapter(
             child: child,
           )
+        ] : [
+          for (var _item in children!)
+            SliverToBoxAdapter(child: _item)
         ],
       ),
     );

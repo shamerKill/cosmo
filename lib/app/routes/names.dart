@@ -43,8 +43,17 @@ abstract class PlugRoutesNames {
   static walletTokenDetail (String token) => '/walletTokenDetail/$token';
   /// 生态-首页
   static const chainExport = '/chainExport';
+  /// 生态-兑换详情
+  static chainExchange (String tokenList) => '/chainExchange/$tokenList';
+  // 生态-质押详情-转账
+  static chainPledgeTransfer (String address) => '/chainPledgeTransfer/$address';
   /// 生态-提案详情
   static chainProposalDetails (String id) => '/chainProposalDetails/$id';
+  /// 生态-节点列表
+  static const chainVerifiersList = '/chainVerifiersList';
+  /// 生态-节点详情
+  /// type 是否已质押/0未质押/1已质押
+  static chainVerifierDetail (String address, String type) => '/chainVerifierDetail/$address/$type';
   /// 社区-首页
   static const dappExhibition = '/dappExhibition';
   /// 社区-搜索

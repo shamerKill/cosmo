@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/routes/routes.dart';
 
 class ChainExportDelegatePageState {
   // 质押中数量
@@ -66,7 +67,10 @@ class ChainExportDelegatePageController extends GetxController {
 
   // 前往节点列表
   onGoToVerifierList() {
+    Get.toNamed(PlugRoutesNames.chainVerifiersList);
   }
   // 查看已质押详情
-  onGoToDelegatedDetails(UserVerifierModel verifier) {}
+  onGoToDelegatedDetails(UserVerifierModel verifier) {
+    Get.toNamed(PlugRoutesNames.chainPledgeTransfer(verifier.address));
+  }
 }

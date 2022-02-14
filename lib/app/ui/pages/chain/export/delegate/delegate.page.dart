@@ -48,7 +48,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('节点列表'.tr, style: TextStyle(color: appTheme.colors.hightColor)),
+                        Text('验证者列表'.tr, style: TextStyle(color: appTheme.colors.hightColor)),
                         Padding(padding: EdgeInsets.only(right: appTheme.sizes.basic * 5.0)),
                         Icon(
                           const IconData(0xe60a, fontFamily: 'plugIcon'),

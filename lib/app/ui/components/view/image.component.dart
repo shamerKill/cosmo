@@ -20,7 +20,7 @@ class LViewImage extends GetView<LViewImageController> {
   Widget build(BuildContext context) {
     LViewImageController controller = Get.put(LViewImageController());
 
-    if (url == null) {
+    if (url == null || url == '') {
       return Container(
         width: width,
         height: height,

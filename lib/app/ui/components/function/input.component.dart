@@ -98,12 +98,13 @@ class LInput extends StatelessWidget {
           ),
           labelText: labelText,
           hintText: hintText,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixText: suffixText,
           suffix: suffix,
           prefixIcon: prefixIcon,
-          border: (radiusCircular == true) ? (Get.theme.inputDecorationTheme.border as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null,
-          enabledBorder: (radiusCircular == true) ? (Get.theme.inputDecorationTheme.enabledBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null,
-          focusedBorder: (radiusCircular == true) ? (Get.theme.inputDecorationTheme.focusedBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null,
+          border: hidBorder == true ? (InputBorder.none) : ((radiusCircular == true) ? (Get.theme.inputDecorationTheme.border as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null),
+          enabledBorder: hidBorder == true ? (InputBorder.none) : ((radiusCircular == true) ? (Get.theme.inputDecorationTheme.enabledBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null),
+          focusedBorder: hidBorder == true ? (InputBorder.none) : ((radiusCircular == true) ? (Get.theme.inputDecorationTheme.focusedBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null),
           suffixIcon: visibilityPass == null ? suffixIcon : IconButton(
             splashRadius: appTheme.sizes.inputIconSize,
             icon: Icon(

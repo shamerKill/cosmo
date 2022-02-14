@@ -20,8 +20,8 @@ class LVerifierStatusNode extends StatelessWidget {
           padding: EdgeInsets.only(
             right: appTheme.sizes.paddingSmall * 0.5,
             left: appTheme.sizes.paddingSmall * 0.5,
-            top: appTheme.sizes.paddingSmall * 0.2,
-            bottom: appTheme.sizes.paddingSmall * 0.2,
+            top: appTheme.sizes.paddingSmall * 0.5,
+            bottom: appTheme.sizes.paddingSmall * 0.5,
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(

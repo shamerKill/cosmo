@@ -33,11 +33,11 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorColor: appTheme.colors.primaryColor,
                 tabs: [
-                  SizedBox(
-                    width: appTheme.sizes.basic * 80,
-                    height: appTheme.sizes.basic * 60,
-                    child: Center(child: Text('交易'.tr)),
-                  ),
+                  // SizedBox(
+                  //   width: appTheme.sizes.basic * 80,
+                  //   height: appTheme.sizes.basic * 60,
+                  //   child: Center(child: Text('交易'.tr)),
+                  // ),
                   SizedBox(
                     width: appTheme.sizes.basic * 80,
                     height: appTheme.sizes.basic * 60,
@@ -81,10 +81,11 @@ class ChainExportPage extends GetView<ChainExportPageController> {
       body: TabBarView(
         controller: state.pageTabController,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
-            child: const ChainExportTransactionPage(),
-          ),
+          // swap交易
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+          //   child: const ChainExportTransactionPage(),
+          // ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
             child: const ChainExportDelegatePage(),

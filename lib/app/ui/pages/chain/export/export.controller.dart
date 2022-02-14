@@ -20,7 +20,7 @@ class ChainExportPageController extends GetxController with SingleGetTickerProvi
 
   // 初始化切换控制器
   _onInitPageTabController() {
-    state.pageTabController = TabController(vsync: this, length: 3);
+    state.pageTabController = TabController(vsync: this, length: 2);
   }
 
   // 一键发行

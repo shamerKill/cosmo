@@ -125,11 +125,35 @@ class PlugPages {
       binding: ChainExportPageBinding(),
       transition: Transition.fadeIn,
     ),
+    /// 生态-兑换
+    GetPage(
+      name: PlugRoutesNames.chainExchange(':tokenList'),
+      page: () => const ChainExchangePage(),
+      binding: ChainExchangePageBinding(),
+    ),
+    /// 生态-质押详情-转账
+    GetPage(
+      name: PlugRoutesNames.chainPledgeTransfer(':address'),
+      page: () => const ChainPledgeTransferPage(),
+      binding: ChainPledgeTransferPageBinding(),
+    ),
+    /// 生态-节点详情
+    GetPage(
+      name: PlugRoutesNames.chainVerifierDetail(':address', ':type'),
+      page: () => const ChainVerifierDetailPage(),
+      binding: ChainVerifierDetailPageBinding(),
+    ),
     /// 生态-提案详情
     GetPage(
       name: PlugRoutesNames.chainProposalDetails(':id'),
       page: () => const ChainProposalDetailsPage(),
       binding: ChainProposalDetailsPageBinding(),
+    ),
+    /// 生态-节点列表
+    GetPage(
+      name: PlugRoutesNames.chainVerifiersList,
+      page: () => const ChainVerifiersPage(),
+      binding: ChainVerifiersPageBinding(),
     ),
     /// 社区-首页
     GetPage(

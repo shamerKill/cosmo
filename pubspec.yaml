@@ -114,6 +114,8 @@ flutter:
     - assets/images/start_logo.png
     - assets/images/proposal_list_top.png
     - assets/images/logo_icon.png
+    - assets/images/page_exchange_to.png
+    - assets/images/page_exchange_wallet.png
     # svg
     - assets/svg/my_account.svg
     - assets/svg/my_address.svg
