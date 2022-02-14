@@ -77,9 +77,11 @@ class LVerifierCard extends StatelessWidget {
     Key? key,
     required this.verifier,
     this.child,
+    this.transparentBg,
   }) : super(key: key);
   final UserVerifierModel verifier;
   final Widget? child;
+  final bool? transparentBg;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +93,7 @@ class LVerifierCard extends StatelessWidget {
         left: appTheme.sizes.padding,
       ),
       decoration: BoxDecoration(
-        color: appTheme.colors.pageBackgroundColor,
+        color: transparentBg == true ? null : appTheme.colors.pageBackgroundColor,
         borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
       ),
       child: Column(

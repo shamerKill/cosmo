@@ -7,16 +7,16 @@ import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/components/view/verifierCard.component.dart';
-import 'package:plug/app/ui/pages/chain/pledge-transfer/pledge-transfer.controller.dart';
+import 'package:plug/app/ui/pages/chain/backup-pledge/backup-pledge.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 
-class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController> {
-  const ChainPledgeTransferPage({Key? key}) : super(key: key);
+class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
+  const ChainBackupPledgePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ChainPledgeTransferPageState state = controller.state;
+    ChainBackupPledgePageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
@@ -79,20 +79,20 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Text(state.veriferInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
                       ],
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('节点质押总量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('质押中数量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.allPledged.toString())))
+                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.pledged.toString())))
                       ],
                     ),
                   ),
@@ -121,7 +121,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('质押数量'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('赎回数量'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
@@ -135,7 +135,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                   child: Obx(() => Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(text: '可质押数量'.tr),
+                        TextSpan(text: '账户余额'.tr),
                         const TextSpan(text: '  '),
                         TextSpan(
                           text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.baseCoin.amount, scale: state.baseCoin.scale)),
@@ -156,27 +156,14 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                   )),
                 ),
-                Container(
-                  padding: EdgeInsets.all(appTheme.sizes.padding),
-                  decoration: BoxDecoration(
-                    color: appTheme.colors.pageBackgroundColorBasic,
-                    borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                  ),
-                  child: Column(
-                    children: [
-                      Text('委托 ${state.baseCoin.symbol} 给验证节点可以随时赎回，但赎回委托需要等待 21 天。'.tr, style: Get.textTheme.bodyText1),
-                      Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('如果验证节点行为不端将可能会被罚没部分委托代币，比如验证节点双重签名、经常性离线。为了规避风险，请认真选择合格的验证节点。'.tr, style: Get.textTheme.bodyText1),
-                    ],
-                  ),
-                ),
+                Text('赎回委托需要等待 21 天。'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.warningColor)),
                 Padding(
                   padding: EdgeInsets.only(top: appTheme.sizes.padding * 2, bottom: appTheme.sizes.padding),
                   child: Obx(() => LButton(
                     onPressed: controller.onPledgeListener,
                     width: appTheme.sizes.infinity,
                     disabled: state.pledgeLoading,
-                    child: Text('质押'.tr),
+                    child: Text('赎回'.tr),
                   )),
                 ),
               ],

@@ -12,6 +12,7 @@ class LScaffold extends GetView<LScaffoldController> {
     this.titleBar,
     this.body,
     this.footer,
+    this.footerBgColor,
     this.drawer,
     this.onDrawerChanged,
     this.bottomNavigationBar,
@@ -39,6 +40,8 @@ class LScaffold extends GetView<LScaffoldController> {
   // 是否显示首页的背景色
   final bool basicBackgroundColor;
   final Key? scaffoldKey;
+  // 底部元素背景色
+  final Color? footerBgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +78,7 @@ class LScaffold extends GetView<LScaffoldController> {
                 ),
                 if (footer != null) Container(
                   width: appTheme.sizes.infinity,
+                  color: footerBgColor,
                   padding: padding??EdgeInsets.only(
                     left: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding, right: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding,
                       bottom: hidBottomBar ? 0 :

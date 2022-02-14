@@ -52,8 +52,13 @@ abstract class PlugRoutesNames {
   /// 生态-节点列表
   static const chainVerifiersList = '/chainVerifiersList';
   /// 生态-节点详情
-  /// type 是否已质押/0未质押/1已质押
+  /// type 是否已质押/0未质押/1已质押/null不显示按钮
   static chainVerifierDetail (String address, String type) => '/chainVerifierDetail/$address/$type';
+  static chainVerifierDetailNull (String address) => '/chainVerifierDetailNull/$address/null';
+  /// 生态-转质押
+  static chainRePledge (String address) => '/chainVerifierRePledge/$address';
+  /// 生态-赎回质押
+  static chainBackupPledge (String address) => '/chainVerifierBackupPledge/$address';
   /// 社区-首页
   static const dappExhibition = '/dappExhibition';
   /// 社区-搜索

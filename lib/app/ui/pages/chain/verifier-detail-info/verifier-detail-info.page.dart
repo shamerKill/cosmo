@@ -6,16 +6,16 @@ import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/components/view/verifierCard.component.dart';
-import 'package:plug/app/ui/pages/chain/verifier-detail/verifier-detail.controller.dart';
+import 'package:plug/app/ui/pages/chain/verifier-detail-info/verifier-detail-info.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 
-class ChainVerifierDetailPage extends GetView<ChainVerifierDetailPageController> {
-  const ChainVerifierDetailPage({Key? key}) : super(key: key);
+class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageController> {
+  const ChainVerifierDetailInfoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ChainVerifierDetailPageState state = controller.state;
+    ChainVerifierDetailInfoPageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
@@ -173,59 +173,6 @@ class ChainVerifierDetailPage extends GetView<ChainVerifierDetailPageController>
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding * 2.0)),
-          Obx(() => Visibility(
-            visible: state.showPledgedState,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: LButton(
-                        child: Text('赎回质押'.tr),
-                        onPressed: controller.onBackPledge,
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(left: appTheme.sizes.padding)),
-                    Expanded(
-                      flex: 1,
-                      child: LButton(
-                        child: Text('获取收益'.tr),
-                        onPressed: controller.onBackReward,
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                LButton(
-                  child: Text('转质押'.tr),
-                  onPressed: controller.onRePledge,
-                  width: appTheme.sizes.infinity,
-                ),
-                Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                LButton(
-                  child: Text('追加质押'.tr),
-                  onPressed: controller.onPledge,
-                  contrast: true,
-                  width: appTheme.sizes.infinity,
-                ),
-              ],
-            ),
-          )),
-          Obx(() => Visibility(
-            visible: state.showNoPledgeState,
-            child: Column(
-              children: [
-                Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                LButton(
-                  child: Text('质押'.tr),
-                  onPressed: controller.onPledge,
-                  width: appTheme.sizes.infinity,
-                ),
-              ],
-            ),
-          ))
         ]
       ),
     );

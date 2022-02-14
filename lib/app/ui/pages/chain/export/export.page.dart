@@ -64,7 +64,7 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                 ),
                 child: Center(
                   child: Text(
-                    '一键发行'.tr,
+                    '代币发行'.tr,
                     style: TextStyle(
                       color: appTheme.colors.hightColor.withOpacity(0.9),
                       fontSize: appTheme.sizes.fontSizeSmall,

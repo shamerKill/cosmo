@@ -71,6 +71,6 @@ class ChainExportDelegatePageController extends GetxController {
   }
   // 查看已质押详情
   onGoToDelegatedDetails(UserVerifierModel verifier) {
-    Get.toNamed(PlugRoutesNames.chainPledgeTransfer(verifier.address));
+    Get.toNamed(PlugRoutesNames.chainVerifierDetail(verifier.address, '1'));
   }
 }

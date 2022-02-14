@@ -143,6 +143,24 @@ class PlugPages {
       page: () => const ChainVerifierDetailPage(),
       binding: ChainVerifierDetailPageBinding(),
     ),
+    /// 生态-节点详情
+    GetPage(
+      name: PlugRoutesNames.chainVerifierDetailNull(':address'),
+      page: () => const ChainVerifierDetailInfoPage(),
+      binding: ChainVerifierDetailInfoPageBinding(),
+    ),
+    /// 生态-转让质押
+    GetPage(
+      name: PlugRoutesNames.chainRePledge(':address'),
+      page: () => const ChainRePledgePage(),
+      binding: ChainRePledgePageBinding(),
+    ),
+    /// 生态-赎回质押
+    GetPage(
+      name: PlugRoutesNames.chainBackupPledge(':address'),
+      page: () => const ChainBackupPledgePage(),
+      binding: ChainBackupPledgePageBinding(),
+    ),
     /// 生态-提案详情
     GetPage(
       name: PlugRoutesNames.chainProposalDetails(':id'),
