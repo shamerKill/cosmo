@@ -1,5 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 
 class StartPageState {
@@ -12,7 +14,7 @@ class StartPageState {
   set logoBottomPadding (double data) { _logoBottomPadding.value = data; }
 }
 
-class StartPageController extends GetxController with SingleGetTickerProviderMixin {
+class StartPageController extends GetxController with GetSingleTickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _controller;
   final int _animationTimeMillisseconds = 1000;
@@ -20,6 +22,7 @@ class StartPageController extends GetxController with SingleGetTickerProviderMix
   final double _endValue = 10.0;
 
   StartPageState state = StartPageState();
+  final DataAccountController accountController = Get.find();
 
   @override
   void onInit() {
@@ -44,7 +47,11 @@ class StartPageController extends GetxController with SingleGetTickerProviderMix
   _toPage() async {
     await Future.delayed(const Duration(milliseconds: 100));
     // Get.offAllNamed('/example');
-    // Get.offAllNamed(PlugRoutesNames.fristOpenWallet);
-    Get.offAllNamed(PlugRoutesNames.walletHome);
+    // 判断是否拥有账户信息
+    if (accountController.state.hadAccount) {
+      Get.offAllNamed(PlugRoutesNames.walletHome);
+    } else {
+      Get.offAllNamed(PlugRoutesNames.fristOpenWallet);
+    }
   }
 }

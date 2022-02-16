@@ -35,7 +35,7 @@ class WalletTokenLogsPageState {
   set logsPageReceive (int value) => _logsPageReceive.value = value;
 }
 
-class WalletTokenLogsPageController extends GetxController with SingleGetTickerProviderMixin {
+class WalletTokenLogsPageController extends GetxController with GetSingleTickerProviderStateMixin {
   WalletTokenLogsPageController();
   WalletTokenLogsPageState state = WalletTokenLogsPageState();
 

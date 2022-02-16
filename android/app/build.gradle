@@ -40,7 +40,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -59,7 +59,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId dartDefine.DART_DEFINE_APP_ENV == 'release' ? "network.plugchain.cosmo" : "${dartDefine.DART_DEFINE_APP_ENV}.plugchain.cosmo"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         resValue "string", "app_name", dartDefine.DART_DEFINE_APP_ENV == 'release' ? "cosmo wallet" : "${dartDefine.DART_DEFINE_APP_ENV} cosmo"

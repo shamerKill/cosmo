@@ -2,10 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/verify.dart';
+import 'package:plug/app/ui/utils/wallet.dart';
+import 'package:plug/app/config/config.chain.dart';
 
 class AccountImportPageState {
   final Rx<bool> _passwordShow = false.obs;
@@ -36,6 +40,8 @@ class AccountImportPageController extends GetxController {
   TextEditingController mnemonicController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
+  final DataAccountController dataAccountController = Get.find();
+
 
 
   @override
@@ -73,8 +79,7 @@ class AccountImportPageController extends GetxController {
     ) {
       // 助记词判断
       List<String> mnemonic = mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
-      // TODO: 助记词判断
-      if (mnemonic.length == 12) {
+      if (_checkMnemonic(mnemonic)) {
         state.canImport = true;
       } else {
         state.canImport = false;
@@ -84,7 +89,7 @@ class AccountImportPageController extends GetxController {
     }
   }
   // 导入
-  importAccount () {
+  importAccount () async {
     if (!VerifyTool.password(passwordController.text)) {
       return LToast.error('ErrorWithPasswordInput'.tr);
     }
@@ -95,18 +100,30 @@ class AccountImportPageController extends GetxController {
       return LToast.error('ErrorWithUserArguments'.tr);
     }
     List<String> mnemonic = mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
-    // TODO: 助记词判断
-    if (mnemonic.length != 12) {
+    if (!_checkMnemonic(mnemonic)) {
       return LToast.error('ErrorWithMnemonicInput'.tr);
     }
     state._importLoading.toggle();
     LLoading.showBgLoading();
-    Timer(const Duration(seconds: 2), () {
-      // TODO: 助记词导入
-      state._importLoading.toggle();
-      LLoading.dismiss();
-      LToast.success('SuccessWithImport'.tr);
-      Get.offAllNamed(PlugRoutesNames.walletHome);
-    });
+    await Future.delayed(const Duration(seconds: 2));
+    final newWallet = WalletTool.walletForMnemonic(mnemonic);
+    AccountModel createdAccount = AccountModel();
+    createdAccount..address = newWallet.bech32Address
+      ..nickName = '${ConfigChainData.dappNicknamePrex}${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
+      ..stringifyRaw = WalletTool.encryptMnemonic(mnemonic, passwordController.text)
+      ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1;
+    dataAccountController.addAccount(createdAccount);
+    state._importLoading.toggle();
+    LLoading.dismiss();
+    LToast.success('SuccessWithImport'.tr);
+    Get.offAllNamed(PlugRoutesNames.walletHome);
+  }
+
+  // 判断助记词是否可用
+  _checkMnemonic(List<String> mnemonic) {
+    if (mnemonic.length == 12) return true;
+    if (mnemonic.length == 16) return true;
+    if (mnemonic.length == 24) return true;
+    return false;
   }
 }

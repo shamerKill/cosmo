@@ -2,10 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/config/config.chain.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/verify.dart';
+import 'package:plug/app/ui/utils/wallet.dart';
 
 
 class AccountCreateState {
@@ -36,6 +40,7 @@ class AccountCreateController extends GetxController {
   AccountCreateState state = AccountCreateState();
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
+  final DataAccountController dataAccountController = Get.find();
 
   @override
   onInit() {
@@ -59,7 +64,9 @@ class AccountCreateController extends GetxController {
     state.agreement = type??state.agreement;
     _checkGanCreate();
   }
+  // 用户协议
   goToUserAgreement() => Get.toNamed('');
+  // 隐私保护
   goToUserPrivacy() => Get.toNamed('');
   // 判断是否可以创建
   _checkGanCreate() {
@@ -74,7 +81,7 @@ class AccountCreateController extends GetxController {
     }
   }
   // 创建
-  createAccount() {
+  createAccount() async {
     if (!VerifyTool.password(passwordController.text)) {
       return LToast.error('ErrorWithPasswordInput'.tr);
     }
@@ -86,20 +93,19 @@ class AccountCreateController extends GetxController {
     }
     state._createLoading.toggle();
     LLoading.showBgLoading();
-    Timer(const Duration(seconds: 2), () {
-      // List<String> newMnemonic = ToolWallet.creaetMnemonic();
-      // InWalletData walletData = InWalletData(
-      //   selected: true,
-      //   address: ToolWallet.walletForMnemonic(newMnemonic).bech32Address,
-      //   stringifyRaw: ToolWallet.encryptMnemonic(newMnemonic, _passControll.text),
-      //   nickname: '${ToolWallet.baseCoinUnit}-${localData.walletDataBase.length + 1}',
-      //   noTackupTime: DateTime.now(),
-      // );
-      // print(walletData);
-      state._createLoading.toggle();
-      LLoading.dismiss();
-      LToast.success('SuccessWithCreate'.tr);
-      Get.offAllNamed(PlugRoutesNames.accountBackupTip);
-    });
+    await Future.delayed(const Duration(seconds: 2));
+    List<String> newMnemonic = WalletTool.creaetMnemonic();
+    AccountModel createdAccount = AccountModel();
+    createdAccount..address = WalletTool.walletForMnemonic(newMnemonic).bech32Address
+      ..nickName = '${ConfigChainData.dappNicknamePrex}${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
+      ..stringifyRaw = WalletTool.encryptMnemonic(newMnemonic, passwordController.text)
+      ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1
+      ..createTime = DateTime.now();
+    dataAccountController.state.memAccount = createdAccount;
+    dataAccountController.state.memMnemonic = newMnemonic;
+    state._createLoading.toggle();
+    LLoading.dismiss();
+    LToast.success('SuccessWithCreate'.tr);
+    Get.offAllNamed(PlugRoutesNames.accountBackupTip);
   }
 }

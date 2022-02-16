@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
@@ -54,10 +55,11 @@ class BasicHomePageState {
   final RxList<Widget> tipBackupView = RxList<Widget>();
 }
 
-class BasicHomePageController extends GetxController with SingleGetTickerProviderMixin {
+class BasicHomePageController extends GetxController with GetSingleTickerProviderStateMixin {
   BasicHomePageController();
 
   BasicHomePageState state = BasicHomePageState();
+  final DataAccountController dataAccountController = Get.find();
   late Animation<double> _infoAnimation;
   late AnimationController _infoAnimationController;
   bool close = false;
@@ -68,6 +70,7 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   @override
   onInit() {
     super.onInit();
+    state.accountInfo = dataAccountController.state.nowAccount!;
     initAccountStorage();
     _initAnimationController();
   }
@@ -86,25 +89,9 @@ class BasicHomePageController extends GetxController with SingleGetTickerProvide
   // 获取当前账户
   Future<void> initAccountStorage({String? address}) async {
     if (state.accountInfo.address == '' || address != null) {
-      state.accountInfo
-        ..address = address??'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04y'
-        ..nickName = 'cosmo-import-1'
-        ..createTime = DateTime.now();
-      state.accountInfo
-        .tokenList = [
-          TokenModel()
-            ..symbol = 'plugcn'
-            ..scale = 6
-            ..minUnit = 'uplugcn',
-          TokenModel()
-            ..symbol = 'shamer'
-            ..scale = 8
-            ..minUnit = 'sha',
-        ];
-      state._accountInfo.refresh();
       LLoading.showLoading();
     }
-    await initAccountNet();
+    // await initAccountNet();
   }
   Future<void> initAccountNet () async {
     int random = Random().nextInt(1000);

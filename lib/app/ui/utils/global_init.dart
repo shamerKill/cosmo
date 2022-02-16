@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/instance_manager.dart';
+import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/provider/data.init.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/translation/translation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -12,6 +15,7 @@ class UtilGlobalInit {
     }
     await _changeSystemPerferred();
     await plugTranslation.init();
+    await DataInitState.onInit();
   }
   static _changeSystemUI() async {
     SystemChrome.setSystemUIOverlayStyle(

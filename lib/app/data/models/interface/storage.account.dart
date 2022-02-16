@@ -19,6 +19,7 @@ class AccountModel extends _StorageBaseAbstract {
   set weight (int value) { _weight = value; _saveKey(); }
   int _weight = 0;
   /// 创建时间/存在时间时，判断超过三天提醒进行备份
+  /// null代表已经备份过或者导入进来的
   DateTime? get createTime => _createTime;
   set createTime (DateTime? value) { _createTime = value; _saveKey(); }
   DateTime? _createTime;

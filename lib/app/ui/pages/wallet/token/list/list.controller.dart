@@ -27,7 +27,7 @@ class WalletTokenListPageState {
   set allTokenPage (int value) => _allTokenPage.value = value;
 }
 
-class WalletTokenListPageController extends GetxController with SingleGetTickerProviderMixin {
+class WalletTokenListPageController extends GetxController with GetSingleTickerProviderStateMixin {
   WalletTokenListPageController();
   // 动画控制器
   late AnimationController _controller;

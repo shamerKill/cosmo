@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenshot_switcher/flutter_screenshot_switcher.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 
-// TODO: 禁止截屏功能
 // TODO: 验证方式
 
 class AccountBackupShowPageState {
@@ -25,23 +27,24 @@ class AccountBackupShowPageState {
 class AccountBackupShowPageController extends GetxController {
   AccountBackupShowPageController();
   AccountBackupShowPageState state = AccountBackupShowPageState();
+  final DataAccountController dataAccountController = Get.find();
   Timer? backTimeTimer;
 
   @override
   onInit() {
     super.onInit();
-    state._mnemonicList.addAll([
-      'purchase','kiwi','gloom','margin','frozen','diagram','cry','sort','chalk','parade','coach','manual'
-    ]);
+    if (dataAccountController.state.memAccount == null) return Get.back();
   }
   @override
   void onReady() {
     super.onReady();
+    state._mnemonicList.addAll(dataAccountController.state.memMnemonic!);
     _showNoShot();
   }
   @override
   onClose() {
     backTimeTimer?.cancel();
+    FlutterScreenshotSwitcher.enableScreenshots();
     super.onClose();
   }
 
@@ -67,6 +70,7 @@ class AccountBackupShowPageController extends GetxController {
       horizontalPadding: true,
       child: state.screenShotView[0]
     );
+    if (Platform.isAndroid) FlutterScreenshotSwitcher.disableScreenshots();
     _startTimer();
   }
 }

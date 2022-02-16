@@ -62,10 +62,18 @@ dependencies:
   dotted_line: ^3.1.0
   # https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^1.0.0
-  # https://pub.flutter-io.cn/packages/package_info
-  package_info: ^2.0.2
+  # https://pub.flutter-io.cn/packages/package_info_plus
+  package_info_plus: ^1.3.0
   # https://pub.flutter-io.cn/packages/image_picker
   image_picker: ^0.8.4+4
+  # https://pub.flutter-io.cn/packages/get_storage
+  get_storage: ^2.0.3
+  # https://pub.flutter-io.cn/packages/alan
+  alan: ^0.40.2+1
+  # https://pub.flutter-io.cn/packages/encrypt
+  encrypt: ^5.0.1
+  # https://pub.flutter-io.cn/packages/flutter_screenshot_switcher
+  flutter_screenshot_switcher: ^2.1.0
 
 dev_dependencies:
   flutter_test:
