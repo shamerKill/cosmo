@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/verify.dart';
+import 'package:plug/app/ui/utils/wallet.dart';
 
 
 class AccountExitPasswordPageState {
@@ -23,18 +26,27 @@ class AccountExitPasswordPageState {
   final Rx<bool> _createLoading = false.obs;
   bool get createLoading => _createLoading.value;
   set createLoading (bool value) => _createLoading.value = value;
+
+
+  // 当前编辑账户
+  final Rx<AccountModel> _accountInfo = AccountModel().obs;
+  AccountModel get accountInfo => _accountInfo.value;
+  set accountInfo (AccountModel value) => _accountInfo.value = value;
 }
 
 class AccountExitPasswordPageController extends GetxController {
   AccountExitPasswordPageController();
 
   AccountExitPasswordPageState state = AccountExitPasswordPageState();
+  DataAccountController dataAccountController = Get.find();
+
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
 
   @override
-  onInit() {
-    super.onInit();
+  onReady() {
+    if (dataAccountController.state.memAddress == null) return Get.back();
+    state.accountInfo = dataAccountController.getAccountFromAddress(dataAccountController.state.memAddress!)!;
     passwordController.addListener(_checkGanCreate);
     rePasswordController.addListener(_checkGanCreate);
   }
@@ -67,7 +79,7 @@ class AccountExitPasswordPageController extends GetxController {
     }
   }
   // 修改
-  createAccount() {
+  createAccount() async {
     if (!VerifyTool.password(passwordController.text)) {
       return LToast.error('ErrorWithPasswordInput'.tr);
     }
@@ -76,19 +88,13 @@ class AccountExitPasswordPageController extends GetxController {
     }
     state._createLoading.toggle();
     LLoading.showBgLoading();
-    Timer(const Duration(seconds: 2), () {
-      // List<String> newMnemonic = ToolWallet.creaetMnemonic();
-      // InWalletData walletData = InWalletData(
-      //   selected: true,
-      //   address: ToolWallet.walletForMnemonic(newMnemonic).bech32Address,
-      //   stringifyRaw: ToolWallet.encryptMnemonic(newMnemonic, _passControll.text),
-      //   nickname: '${ToolWallet.baseCoinUnit}-${localData.walletDataBase.length + 1}',
-      //   noTackupTime: DateTime.now(),
-      // );
-      // print(walletData);
-      state._createLoading.toggle();
-      LLoading.dismiss();
-      Get.back();
-    });
+    await Future.delayed(const Duration(seconds: 2));
+    if (dataAccountController.state.memMnemonic == null) return Get.back();
+    state.accountInfo.stringifyRaw = WalletTool.encryptMnemonic(dataAccountController.state.memMnemonic!, passwordController.text);
+    if (!dataAccountController.updataAccount(state.accountInfo)) return LToast.error('修改失败'.tr);
+    LToast.error('修改成功'.tr);
+    state._createLoading.toggle();
+    LLoading.dismiss();
+    Get.back();
   }
 }

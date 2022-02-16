@@ -2,6 +2,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
@@ -23,13 +24,14 @@ class AccountAdminPageController extends GetxController {
   AccountAdminPageController();
   AccountAdminPageState state = AccountAdminPageState();
 
+  DataAccountController dataAccountController = Get.find();
+
   /// 操作类型 备份backup/改密exitPassword/移除remove
   String _doType = '';
 
   @override
   onInit() {
     super.onInit();
-    state.useAccountInfo.address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04y';
     if (Get.parameters['address'] == null) {
       return Get.back();
     } else {
@@ -38,11 +40,8 @@ class AccountAdminPageController extends GetxController {
   }
 
   _getAccountData(String _address) {
-    state._accountInfo.update((val) {
-      val?..address = _address
-          ..nickName = 'cosmo-import-1'
-          ..createTime = DateTime.now();
-    });
+    state.accountInfo = dataAccountController.getAccountFromAddress(_address)!;
+    state.useAccountInfo = dataAccountController.state.nowAccount!;
   }
   // 复制地址
   onCopyAddress() {
@@ -61,7 +60,8 @@ class AccountAdminPageController extends GetxController {
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['密码验证', '助记词验证'],
+        labelList: ['密码验证'.tr],
+        // labelList: ['密码验证', '助记词验证'],
         successCallBack: onVerifyCallBack
       ),
     );
@@ -72,18 +72,24 @@ class AccountAdminPageController extends GetxController {
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['密码验证', '助记词验证'],
+        labelList: ['密码验证'.tr],
+        // labelList: ['密码验证', '助记词验证'],
         successCallBack: onVerifyCallBack
       ),
     );
   }
   // 移除账户
-  onRemoveAccount() {
+  onRemoveAccount() async {
+    if ((await LBottomSheet.promptBottomSheet(
+      title: '移除提示'.tr,
+      message: Text('是否需要移除账户: ${state.accountInfo.nickName} ?'.tr),
+    )) != true) return; 
     _doType = 'remove';
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['密码验证', '助记词验证'],
+        labelList: ['密码验证'.tr],
+        // labelList: ['密码验证', '助记词验证'],
         successCallBack: onVerifyCallBack
       ),
     );
@@ -91,15 +97,20 @@ class AccountAdminPageController extends GetxController {
   // 验证方式选择回调
   onVerifyCallBack(int type) async {
     Get.back();
-    dynamic mnemonic = await Get.toNamed(
-      PlugRoutesNames.accountAdminVerify(state.useAccountInfo.address, ['password', 'mnemonic'][type]),
+    var mnemonic = await Get.toNamed(
+      PlugRoutesNames.accountAdminVerify(state.accountInfo.address, ['password', 'mnemonic'][type]),
     );
-    if (mnemonic == null) return;
-    // TODO: 备份
-    if (_doType == 'backup') Get.toNamed(PlugRoutesNames.accountBackupShow);
-    // TODO: 修改密码
-    if (_doType == 'exitPassword') Get.toNamed(PlugRoutesNames.accountAdminEditPassword(mnemonic));
-    // TODO: 移除
-    if (_doType == 'remove') Get.back();
+    if (mnemonic == null || mnemonic is! String) return;
+    dataAccountController.state.memMnemonic = mnemonic.split(' ');
+    dataAccountController.state.memAddress = state.accountInfo.address;
+    // 备份
+    if (_doType == 'backup') await Get.toNamed(PlugRoutesNames.accountBackupShow);
+    // 修改密码
+    if (_doType == 'exitPassword') await Get.toNamed(PlugRoutesNames.accountAdminEditPassword);
+    dataAccountController.state.memMnemonic = null;
+    dataAccountController.state.memAddress = null;
+    if (_doType == 'remove' && dataAccountController.removeAccount(state.accountInfo)) {
+      Get.offAllNamed(PlugRoutesNames.walletHome);
+    }
   }
 }

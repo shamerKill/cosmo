@@ -33,7 +33,7 @@ class AccountBackupShowPageController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    if (dataAccountController.state.memAccount == null) return Get.back();
+    if (dataAccountController.state.memMnemonic == null) return Get.back();
   }
   @override
   void onReady() {

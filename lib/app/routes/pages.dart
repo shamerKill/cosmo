@@ -59,7 +59,7 @@ class PlugPages {
     ),
     /// 账户管理-修改密码
     GetPage(
-      name: PlugRoutesNames.accountAdminEditPassword(':address'),
+      name: PlugRoutesNames.accountAdminEditPassword,
       page: () => const AccountExitPasswordPage(),
       binding: AccountExitPasswordPageBinding(),
     ),

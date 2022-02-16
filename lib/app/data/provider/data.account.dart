@@ -14,13 +14,14 @@ class DataAccountState {
   AccountModel? get nowAccount {
     if (!hadAccount) return null;
     int maxWeight = 0;
+    AccountModel? _account;
     for (var element in _accountsList) {
-      if (element.weight > maxWeight) {
+      if (element.weight >= maxWeight) {
         maxWeight = element.weight;
+        _account = element;
       }
     }
-    print(_accountsList[maxWeight].toJson());
-    return _accountsList[maxWeight];
+    return _account;
   }
   // 判断是否有账户
   bool get hadAccount => _accountsList.isNotEmpty;
@@ -28,6 +29,8 @@ class DataAccountState {
   AccountModel? memAccount;
   // 创建账户时，暂存的助记词
   List<String>? memMnemonic;
+  // 备份账户时，暂存的地址
+  String? memAddress;
 }
 
 class DataAccountController extends GetxController {
@@ -46,6 +49,46 @@ class DataAccountController extends GetxController {
   // 储存账户
   saveAccounts() {
     GetStorage().write(state.accountStorageName, json.encode(state.accountsList.map((e) => e.toJson()).toList()));
+  }
+  // 切换账户
+  bool exchangeAccount(String _address) {
+    if (_address == state.nowAccount!.address) return false;
+    for (var item in state.accountsList) {
+      if (item.address == _address) {
+        var weight = state.nowAccount!.weight;
+        state.nowAccount!.weight = item.weight;
+        item.weight = weight;
+        saveAccounts();
+        return true;
+      }
+    }
+    return false;
+  }
+  // 根据地址获取账户
+  AccountModel? getAccountFromAddress(String _address) {
+    for (var element in state.accountsList) {
+      if (element.address == _address) return element;
+    }
+    return null;
+  }
+  // 更新账户处理
+  bool updataAccount(AccountModel _account) {
+    for (var _item in state.accountsList) {
+      if (_item.address == _account.address) {
+        _item.setData(_account.toJson());
+        saveAccounts();
+        return true;
+      }
+    }
+    return false;
+  }
+  // 移除账户
+  bool removeAccount(AccountModel _account) {
+    var _index = state.accountsList.indexWhere((element) => element.address == _account.address);
+    if (_index < 0) return false;
+    state.accountsList.removeAt(_index);
+    saveAccounts();
+    return true;
   }
   _readStorage() {
     // 读取账户列表

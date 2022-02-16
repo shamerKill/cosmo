@@ -22,7 +22,7 @@ abstract class PlugRoutesNames {
   /// 账户管理-验证 /address/type ('password|mnemonic')
   static accountAdminVerify (String address, String type) => '/accountAdmin/$address/$type';
   /// 账户管理-修改密码
-  static accountAdminEditPassword (String mnemonic) => '/accountAdminEditPassword/$mnemonic';
+  static const accountAdminEditPassword = '/accountAdminEditPassword';
   /// 钱包-首页
   static const walletHome = '/walletHome';
   /// 钱包-消息-列表

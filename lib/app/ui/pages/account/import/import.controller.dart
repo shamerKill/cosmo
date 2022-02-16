@@ -99,6 +99,16 @@ class AccountImportPageController extends GetxController {
     if (state.agreement == false) {
       return LToast.error('ErrorWithUserArguments'.tr);
     }
+    try {
+      await processImport();
+    } catch (e) {
+      state._importLoading.toggle();
+      LLoading.dismiss();
+      LToast.error('ErrorWithMnemonicInput'.tr);
+    }
+  }
+  // 进行导入
+  processImport() async {
     List<String> mnemonic = mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
     if (!_checkMnemonic(mnemonic)) {
       return LToast.error('ErrorWithMnemonicInput'.tr);
@@ -106,10 +116,10 @@ class AccountImportPageController extends GetxController {
     state._importLoading.toggle();
     LLoading.showBgLoading();
     await Future.delayed(const Duration(seconds: 2));
-    final newWallet = WalletTool.walletForMnemonic(mnemonic);
+    var newWallet = WalletTool.walletForMnemonic(mnemonic);
     AccountModel createdAccount = AccountModel();
     createdAccount..address = newWallet.bech32Address
-      ..nickName = '${ConfigChainData.dappNicknamePrex}${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
+      ..nickName = '${ConfigChainData.dappNicknamePrex}-import-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
       ..stringifyRaw = WalletTool.encryptMnemonic(mnemonic, passwordController.text)
       ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1;
     dataAccountController.addAccount(createdAccount);

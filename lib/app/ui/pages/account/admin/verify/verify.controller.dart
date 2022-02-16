@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/wallet.dart';
 
 class AccountAdminVerifyPageState {
   // 账户信息
@@ -32,13 +35,15 @@ class AccountAdminVerifyPageController extends GetxController {
   // 密码
   TextEditingController passwordController = TextEditingController();
 
+  DataAccountController dataAccountController = Get.find();
+
   @override
   onInit() {
     super.onInit();
     String? address = Get.parameters['address'];
     String? type = Get.parameters['type'];
     if (address == null || type == null) return Get.back();
-    state.accountInfo.address = address;
+    state.accountInfo = dataAccountController.getAccountFromAddress(address)!;
     if (type == 'password') state.type = 0;
     if (type == 'mnemonic') state.type = 1;
   }
@@ -57,10 +62,28 @@ class AccountAdminVerifyPageController extends GetxController {
     state.verifyLoading = true;
     LLoading.showBgLoading();
     await Future.delayed(const Duration(seconds: 1));
+    String? resultMnemonic;
+    if (state.type == 0) {
+      try {
+        var mnemonic = WalletTool.decryptMnemonic(state.accountInfo.stringifyRaw, passwordController.text);
+        if (mnemonic != null) resultMnemonic = mnemonic.join(' ');
+      } catch (e) {
+        LToast.error('ErrorWithPasswordInput'.tr);
+      }
+    }
     LLoading.dismiss();
     state.verifyLoading = false;
+    if (state.type == 1) return LToast.error('不支持助记词验证'.tr);
     // 助记词列表
-    Get.back<String?>(result: 'ajisdofjioasdjfiaosdif2,asdofij,asdofij,asio,asd');
+    if (resultMnemonic == null) return LToast.error('ErrorWithPasswordInput'.tr);
+    Get.back<String?>(result: resultMnemonic);
   }
 
+  // 判断助记词是否可用
+  _checkMnemonic(List<String> mnemonic) {
+    if (mnemonic.length == 12) return true;
+    if (mnemonic.length == 16) return true;
+    if (mnemonic.length == 24) return true;
+    return false;
+  }
 }

@@ -86,12 +86,13 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
     close = true;
   }
 
-  // 获取当前账户
+  // 获取当前账户信息
   Future<void> initAccountStorage({String? address}) async {
+    return;
     if (state.accountInfo.address == '' || address != null) {
       LLoading.showLoading();
     }
-    // await initAccountNet();
+    await initAccountNet();
   }
   Future<void> initAccountNet () async {
     int random = Random().nextInt(1000);
@@ -189,21 +190,7 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
   // 监听侧边栏
   onDrawerChanged(bool? type) {
     if (type == true && state.accountList.isEmpty) {
-      state.accountList.clear();
-      state.accountList.addAll([
-        AccountModel()
-          ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04y'
-          ..nickName = 'cosmo-import-1',
-        AccountModel()
-          ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04z'
-          ..nickName = 'cosmo-import-2',
-        AccountModel()
-          ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04n'
-          ..nickName = 'cosmo-import-3',
-        AccountModel()
-          ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04e'
-          ..nickName = 'cosmo-create-4',
-      ]);
+      state.accountList.addAll(dataAccountController.state.accountsList);
     } else if (type == false) {
       state.drawerSelected = '';
     }
@@ -214,17 +201,9 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
   }
   // 切换账户
   onChangeAccount(String _address) async {
-    AccountModel _memAccount = AccountModel();
-    state.accountList.removeWhere((ele) {
-      if (ele.address == _address) _memAccount = ele;
-      return ele.address == _address;
-    });
-    state.accountList.insert(0, _memAccount);
     scaffoldKey.currentState?.openEndDrawer();
-    state._accountInfo.update((val) {
-      val?.address = _memAccount.address;
-      val?.nickName = _memAccount.nickName;
-    });
+    if (!dataAccountController.exchangeAccount(_address)) return;
+    state.accountInfo = dataAccountController.state.nowAccount!;
     await initAccountStorage(address: _address);
     LToast.success('切换成功');
   }

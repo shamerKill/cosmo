@@ -32,7 +32,7 @@ class AccountBackupVerifyPageController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    if (dataAccountController.state.memAccount == null) return Get.back();
+    if (dataAccountController.state.memMnemonic == null) return Get.back();
   }
 
   @override
@@ -64,8 +64,12 @@ class AccountBackupVerifyPageController extends GetxController {
 
   // 下一步
   stepFunc () {
-    dataAccountController.addAccount(dataAccountController.state.memAccount!..createTime = null);
-    dataAccountController.state.memAccount = null;
+    if (dataAccountController.state.memAccount != null) {
+      dataAccountController.addAccount(dataAccountController.state.memAccount!..createTime = null);
+      dataAccountController.state.memAccount = null;
+    } if (dataAccountController.state.memAddress != null) {
+      dataAccountController.updataAccount(dataAccountController.getAccountFromAddress(dataAccountController.state.memAddress!)!..createTime = null);
+    }
     dataAccountController.state.memMnemonic = null;
     Get.offAllNamed(PlugRoutesNames.walletHome);
   }

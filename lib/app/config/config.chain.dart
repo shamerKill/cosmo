@@ -4,5 +4,5 @@ class ConfigChainData {
   // 1317接口地址
   static const chainInfoRpcUrl = 'https://api.plugchain.network/rawapi';
   // app账户昵称默认前缀
-  static const dappNicknamePrex = 'cmoso-';
+  static const dappNicknamePrex = 'cmoso';
 }

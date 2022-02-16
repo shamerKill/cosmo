@@ -20,4 +20,19 @@ class WalletTool {
     final encrypted = encrypter.encrypt(mnemonic.join('_'));
     return encrypted.base64;
   }
+  static List<String>? decryptMnemonic(String raw, String pass) {
+    String keyPass = pass;
+    while (keyPass.length < 32) {
+      keyPass += '0';
+    }
+    final key = Key.fromUtf8(keyPass);
+    final fernet = Fernet(key);
+    final encrypter = Encrypter(fernet);
+    try {
+      final mnemonic = encrypter.decrypt(Encrypted.fromBase64(raw));
+      return mnemonic.split('_');
+    } catch (err) {
+      return null;
+    }
+  }
 }

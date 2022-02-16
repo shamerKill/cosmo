@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
+import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/pages/account/admin/admin.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class AccountAdminPage extends GetView<AccountAdminPageController> {
   const AccountAdminPage({Key? key}) : super(key: key);
@@ -45,12 +47,10 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                       color: appTheme.colors.pageBackgroundColorBasic,
                     ),
                     clipBehavior: Clip.antiAlias,
-                    child: Image(
-                      image: const AssetImage('assets/images/start_bg.png'),
+                    child: LViewImage(
+                      bgColor: StringTool.stringToColor(state.accountInfo.address),
                       width: appTheme.sizes.logoSize,
                       height: appTheme.sizes.logoSize,
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
                     ),
                   ),
                 ),

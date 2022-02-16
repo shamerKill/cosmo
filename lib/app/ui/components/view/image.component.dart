@@ -7,11 +7,13 @@ class LViewImage extends GetView<LViewImageController> {
   const LViewImage({
     Key? key,
     this.url,
+    this.bgColor,
     required this.width,
     required this.height,
     this.isRadius = false,
   }) : super(key: key);
   final String? url;
+  final Color? bgColor;
   final double width;
   final double height;
   final bool isRadius;
@@ -24,7 +26,7 @@ class LViewImage extends GetView<LViewImageController> {
       return Container(
         width: width,
         height: height,
-        color: appTheme.colors.transparent,
+        color: bgColor??appTheme.colors.transparent,
       );
     }
     return CachedNetworkImage(
