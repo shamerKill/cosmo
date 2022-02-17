@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainVerifiersPageState {
   // 质押节点列表
@@ -15,6 +16,7 @@ class ChainVerifiersPageState {
 class ChainVerifiersPageController extends GetxController {
   ChainVerifiersPageController();
   ChainVerifiersPageState state = ChainVerifiersPageState();
+  RefreshController verifiersRefreshController = RefreshController();
 
   @override
   onInit() {

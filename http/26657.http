@@ -1,0 +1,6 @@
+
+@chainUri = http://47.243.114.57:26657/
+@address = gx1yay6nn50t84nmrdx84dj3sp4y3na87swjen9xu
+
+### 链信息
+GET {{chainUri}}/abci_info

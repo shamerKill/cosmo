@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainExportDelegatePageState {
   // 质押中数量
@@ -26,6 +27,8 @@ class ChainExportDelegatePageState {
 class ChainExportDelegatePageController extends GetxController {
   ChainExportDelegatePageController();
   ChainExportDelegatePageState state = ChainExportDelegatePageState();
+
+  RefreshController delegateRefreshController = RefreshController();
 
   @override
   onInit() {

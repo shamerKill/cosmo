@@ -12,6 +12,7 @@ import 'package:plug/app/ui/pages/wallet/home/home.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BasicHomePage extends GetView<BasicHomePageController> {
   const BasicHomePage({Key? key}) : super(key: key);
@@ -218,7 +219,8 @@ class BasicHomePage extends GetView<BasicHomePageController> {
         ),
       ),
       body: LScrollView(
-        onRefresh: controller.initAccountNet,
+        refreshController: controller.accountRefreshController,
+        onRefresh: controller.initAccountStorage,
         child: Column(
           children: [
             // 头部

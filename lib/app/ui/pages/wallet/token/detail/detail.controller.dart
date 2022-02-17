@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/ui/utils/http.dart';
 
 class WalletTokenDetailPageState {
   // 当前代币详情
@@ -11,35 +14,54 @@ class WalletTokenDetailPageState {
   final Rx<bool> _isAdd = false.obs;
   bool get isAdd => _isAdd.value;
   set isAdd (bool value) => _isAdd.value = value;
+  // 是否显示按钮
+  final Rx<bool> _showButton = true.obs;
+  bool get showButton => _showButton.value;
+  set showButton (bool value) => _showButton.value = value;
 }
 
 class WalletTokenDetailPageController extends GetxController {
   WalletTokenDetailPageController();
+
   WalletTokenDetailPageState state = WalletTokenDetailPageState();
+  DataAccountController dataAccount = Get.find();
+  DataCoinsController dataCoins = Get.find();
 
   @override
-  onInit() {
-    super.onInit();
-    String? token = Get.parameters['token'];
-    if (token == null) return Get.back();
-    state.tokenInfo
-      ..symbol = 'p$token'
-      ..minUnit = token
-      ..name = 'p$token'
-      ..amount = '10000123'
-      ..scale = 6
-      ..initialSupply = '10086111234123'
-      ..maxSupply = '100000000000000'
-      ..owner = 'gx1ax3kr9ut96pj4f84cs644de30han5ulxwpa65d'
-      ..mintable = true
-      ..remarks = '你好么'
-      ..logo = 'http://via.placeholder.com/43x46';
+  onReady() {
+    String? minUnit = Get.parameters['token'];
+    if (minUnit == null) return Get.back();
+    if (minUnit == dataCoins.state.baseCoin.minUnit) state.showButton = false; 
+    _getToken(minUnit);
+  }
+
+  // 获取币种
+  _getToken(String minUnit) async {
+    LLoading.showLoading();
+    var _token = dataAccount.state.nowAccount?.tokenList.firstWhereOrNull((_token) => _token.minUnit == minUnit);
+    if (_token != null) state.isAdd = true;
+    _token ??= await httpToolApp.getCoinInfo(minUnit);
+    if (_token != null) state.tokenInfo = _token;
+    LLoading.dismiss();
   }
 
   // 代币移除/添加
   onTokenToggle() async {
+    var _account = dataAccount.state.nowAccount;
+    if (_account == null) return;
+    _account = AccountModel()..setData(_account.toJson());
     LLoading.showLoading();
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 200));
+    if (state.isAdd) {
+      var _index = dataAccount.state.nowAccount?.tokenList.indexWhere((_item) => _item.minUnit == state.tokenInfo.minUnit);
+      if (_index != null) {
+        _account.tokenList.removeAt(_index);
+        dataAccount.updataAccount(_account);
+      }
+    } else {
+      _account.tokenList.add(state.tokenInfo);
+      dataAccount.updataAccount(_account);
+    }
     state._isAdd.toggle();
     LLoading.dismiss();
   }

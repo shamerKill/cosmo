@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletTokenLogsPageState {
   // 账户信息
@@ -35,11 +36,14 @@ class WalletTokenLogsPageState {
   set logsPageReceive (int value) => _logsPageReceive.value = value;
 }
 
-class WalletTokenLogsPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class WalletTokenLogsPageController extends GetxController with GetTickerProviderStateMixin {
   WalletTokenLogsPageController();
   WalletTokenLogsPageState state = WalletTokenLogsPageState();
 
   TabController? tabController;
+  RefreshController allRefreshController = RefreshController();
+  RefreshController sendRefreshController = RefreshController();
+  RefreshController receiveRefreshController = RefreshController();
   
   @override
   void onInit() {

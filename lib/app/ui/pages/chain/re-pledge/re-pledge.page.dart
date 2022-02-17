@@ -173,6 +173,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                 color: appTheme.colors.pageBackgroundColorBasic,
               ),
               child: LScrollView(
+                refreshController: controller.verifiersRefreshController,
                 onRefresh: controller.onRefreshVerifiersList,
                 onLoading: controller.getAllVerifiersList,
                 child: Obx(() => Column(

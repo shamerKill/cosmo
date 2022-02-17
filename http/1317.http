@@ -1,0 +1,27 @@
+@baseUri = http://47.243.114.57:1317/
+@address = gx1yay6nn50t84nmrdx84dj3sp4y3na87swjen9xu
+
+### 账户信息
+GET {{baseUri}}/cosmos/auth/v1beta1/accounts/{{address}}
+
+### 账户余额
+GET {{baseUri}}/cosmos/bank/v1beta1/balances/{{address}}
+
+### 查找账户代币余额
+GET {{baseUri}}/cosmos/bank/v1beta1/balances/{{address}}/plug
+
+### 获取基础币
+# @name baseDenom
+GET {{baseUri}}/token/params
+
+### 获取基础币信息
+GET {{baseUri}}/token/tokens/{{baseDenom.response.body.params.issue_token_base_fee.denom}}
+
+### 获取交易记录/发送
+GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.sender='{{address}}'&pagination.limit=1
+
+### 获取交易记录/接收
+GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.recipient='{{address}}'&pagination.limit=1
+
+### 获取所有币种
+GET {{baseUri}}/token/tokens

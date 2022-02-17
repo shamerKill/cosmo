@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletNotificationListPageState {
   // 是否全部已读
@@ -20,6 +21,8 @@ class WalletNotificationListPageState {
 class WalletNotificationListPageController extends GetxController {
   WalletNotificationListPageController();
   WalletNotificationListPageState state = WalletNotificationListPageState();
+
+  RefreshController notifRefreshController = RefreshController();
   
   @override
   onInit() {

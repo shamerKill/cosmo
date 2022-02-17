@@ -5,6 +5,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainRePledgePageState {
   // 节点信息
@@ -40,6 +41,7 @@ class ChainRePledgePageController extends GetxController {
   ChainRePledgePageState state = ChainRePledgePageState();
   // 转质押数量输入值
   TextEditingController pledgeController = TextEditingController(text: '0');
+  RefreshController verifiersRefreshController = RefreshController();
 
 
   @override

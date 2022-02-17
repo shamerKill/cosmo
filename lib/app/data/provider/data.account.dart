@@ -90,6 +90,10 @@ class DataAccountController extends GetxController {
     saveAccounts();
     return true;
   }
+  // 判断账户是否有基础币
+  bool checkAccountHadCoin(String address, String minUnit) {
+    return getAccountFromAddress(address)?.tokenList.where((element) => element.minUnit == minUnit).isNotEmpty??false;
+  }
   _readStorage() {
     // 读取账户列表
     String? data = GetStorage().read(state.accountStorageName);

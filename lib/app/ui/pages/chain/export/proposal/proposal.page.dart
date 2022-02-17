@@ -42,6 +42,7 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
         ),
         Expanded(
           child: LScrollView(
+            refreshController: controller.proposalsRefreshController,
             onRefresh: controller.onGetData,
             child: Obx(() => Column(
               children: [

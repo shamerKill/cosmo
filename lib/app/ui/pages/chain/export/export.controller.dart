@@ -8,7 +8,7 @@ class ChainExportPageState {
   set pageTabController (TabController? value) => _pageTabController.value = value;
 }
 
-class ChainExportPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class ChainExportPageController extends GetxController with GetTickerProviderStateMixin {
   ChainExportPageController();
   ChainExportPageState state = ChainExportPageState();
 

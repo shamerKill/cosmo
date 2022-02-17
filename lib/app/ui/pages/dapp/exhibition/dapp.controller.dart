@@ -32,7 +32,7 @@ class DappExhibitionPageState {
   set localDappTabIndex (int value) => _localDappTabIndex.value = value;
 }
 
-class DappExhibitionPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class DappExhibitionPageController extends GetxController with GetTickerProviderStateMixin {
   DappExhibitionPageController();
   DappExhibitionPageState state = DappExhibitionPageState();
 

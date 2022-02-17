@@ -7,6 +7,7 @@ import 'package:plug/app/ui/components/view/animation.component.dart';
 import 'package:plug/app/ui/pages/wallet/notification/list/list.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/string.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletNotificationListPage extends GetView<WalletNotificationListPageController> {
   const WalletNotificationListPage({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
       ),
       basicBackgroundColor: true,
       body: LScrollView(
+        refreshController: controller.notifRefreshController,
         onRefresh: controller.onRefresh,
         onLoading: controller.onLoading,
         child: Obx(() => LAnimationView(

@@ -9,6 +9,7 @@ import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/pages/wallet/token/detail/detail.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
   const WalletTokenDetailPage({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
           children: [
             Obx(() => LViewImage(
               url: state.tokenInfo.logo,
+              bgColor: StringTool.stringToColor(state.tokenInfo.minUnit),
               width: appTheme.sizes.basic * 80,
               height: appTheme.sizes.basic * 80,
               isRadius: true,
@@ -106,7 +108,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
             padding: EdgeInsets.only(
               top: appTheme.sizes.padding, left: appTheme.sizes.padding, right: appTheme.sizes.padding,
             ),
-            child: Obx(() => LAnimationView(
+            child: Obx(() => state.showButton ? LAnimationView(
               randomKey: false,
               child: LButton(
                 onPressed: controller.onTokenToggle,
@@ -114,7 +116,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                 contrast: state.isAdd,
                 child: Text(state.isAdd ? '移除' : '添加'),
               ),
-            )),
+            ) : Container()),
           ),
         ],
       ),

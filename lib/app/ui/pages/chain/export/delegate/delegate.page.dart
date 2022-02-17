@@ -131,6 +131,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
         ),
         Expanded(
           child: LScrollView(
+            refreshController: controller.delegateRefreshController,
             onRefresh: controller.initGetData,
             child: Obx(() => Column(
               children: [

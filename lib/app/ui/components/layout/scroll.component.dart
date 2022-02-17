@@ -7,6 +7,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class LScrollView extends GetView<_ScrollViewController>  {
   const LScrollView({
     Key? key,
+    required this.refreshController,
     this.child,
     this.children,
     this.onLoading,
@@ -19,20 +20,20 @@ class LScrollView extends GetView<_ScrollViewController>  {
   final List<Widget>? children;
   final Widget? child;
   final Color? headerBackgroundColor;
+  final RefreshController refreshController;
 
   @override
   Widget build(BuildContext context) {
     _ScrollViewController controller = Get.put(_ScrollViewController());
-    RefreshController _refreshController = RefreshController(initialRefresh: false);
     controller.setLoading(onLoading);
     controller.setRefresh(onRefresh);
 
     return SmartRefresher(
-      controller: _refreshController,
+      controller: refreshController,
       enablePullUp: onLoading != null,
       enablePullDown: onRefresh != null,
-      onRefresh: () => controller.onRefresh(_refreshController),
-      onLoading: () => controller.onLoading(_refreshController),
+      onRefresh: () => controller.onRefresh(refreshController),
+      onLoading: () => controller.onLoading(refreshController),
       header: WaterDropMaterialHeader(
         distance: appTheme.sizes.titleBarHeight / 1.4,
         backgroundColor: headerBackgroundColor,

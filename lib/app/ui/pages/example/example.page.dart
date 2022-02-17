@@ -65,6 +65,7 @@ class ExamplePage extends GetView<ExamplePageController> {
             Expanded(
               flex: 1,
               child: LScrollView(
+                refreshController: controller.accountRefreshController,
                 onLoading: controller.onLoading,
                 onRefresh: controller.onRefresh,
                 child: Obx(() => Column(

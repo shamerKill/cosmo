@@ -38,4 +38,12 @@ class LToast {
     );
   }
 
+  static log(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      gravity: ToastGravity.TOP,
+      fontSize: appTheme.sizes.fontSize,
+    );
+  }
+
 }

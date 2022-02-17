@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletTokenListPageState {
   // 展示列表0还是已添加1
@@ -15,19 +18,22 @@ class WalletTokenListPageState {
   final Rx<double> _animationRatio = 1.0.obs;
   double get animationRatio => _animationRatio.value;
   set animationRatio (double value) => _animationRatio.value = value;
+  // 当前账户数据
+  final Rx<AccountModel> _accountInfo = AccountModel().obs;
+  AccountModel get accountInfo => _accountInfo.value;
+  set accountInfo (AccountModel value) {
+    _accountInfo.value = value;
+    _accountInfo.refresh();
+  }
   // 所有代币列表
   final RxList<TokenModel> allTokenList = RxList();
-  // 已添加代币列表
-  final RxList<TokenModel> userTokenList = RxList();
-  // 已添加代币minUnit列表
-  final RxList<String> userTokenMinUnitList = RxList();
   // 所有代币列表分页/0代表没有更多
   final Rx<int> _allTokenPage = 1.obs;
   int get allTokenPage => _allTokenPage.value;
   set allTokenPage (int value) => _allTokenPage.value = value;
 }
 
-class WalletTokenListPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class WalletTokenListPageController extends GetxController with GetTickerProviderStateMixin {
   WalletTokenListPageController();
   // 动画控制器
   late AnimationController _controller;
@@ -36,8 +42,10 @@ class WalletTokenListPageController extends GetxController with GetSingleTickerP
   TextEditingController searchTextController = TextEditingController();
   // 切换控制器
   late TabController tabBarController;
+  RefreshController remoteListRefreshController = RefreshController();
 
   WalletTokenListPageState state = WalletTokenListPageState();
+  DataAccountController accountController = Get.find();
 
   @override
   onInit() {
@@ -49,7 +57,7 @@ class WalletTokenListPageController extends GetxController with GetSingleTickerP
       });
     tabBarController = TabController(vsync: this, length: 2);
     tabBarController.addListener(_onToggleList);
-    _getTokenList(null);
+    getTokenRemoteList();
     _getLocalTokenList();
   }
   @override
@@ -76,91 +84,93 @@ class WalletTokenListPageController extends GetxController with GetSingleTickerP
     state.showType = tabBarController.index;
   }
   // 搜索
-  onSearch(String? text) {
-    print(text);
+  onSearch(String? text) async {
   }
   // 获取远程代币列表
-  _getTokenList(String? search) {
-    for (int i = 0; i < 10; i++) {
-      TokenModel _token = TokenModel()
-        ..symbol = 'plugcn$i'
-        ..name = 'plugcn$i'
-        ..logo = 'http://via.placeholder.com/43x46'
-        ..scale = 6
-        ..minUnit = 'uplugcn$i';
-      state.allTokenList.add(_token);
-    }
+  Future<dynamic> getTokenRemoteList() async {
+    if (state.allTokenPage == 0) return null;
+    return httpToolApp.getChainTokensList(state.allTokenPage, limit: 10)
+      .then((res) {
+        state.allTokenPage++;
+        if (res.data.length < 10) {
+          state.allTokenPage = 0;
+        }
+        return res.data.forEach((_item) => state.allTokenList.add(_item));
+      });
   }
-  // 获取本地代币列表
+  // 获取当前账户
   _getLocalTokenList() {
-    TokenModel _token1 = TokenModel()
-      ..symbol = 'plugcn'
-      ..name = 'plugcn'
-      ..logo = 'http://via.placeholder.com/43x46'
-      ..scale = 6
-      ..minUnit = 'uplugcn';
-    state.userTokenList.add(_token1);
-    state.userTokenMinUnitList.add(_token1.minUnit);
-    for (int i = 1; i < 10; i++) {
-      TokenModel _token = TokenModel()
-        ..symbol = 'plugcn$i'
-        ..name = 'plugcn$i'
-        ..logo = 'http://via.placeholder.com/43x46'
-        ..scale = 6
-        ..minUnit = 'uplugcn$i';
-      state.userTokenList.add(_token);
-      state.userTokenMinUnitList.add(_token.minUnit);
-    }
+    state.accountInfo = accountController.state.nowAccount!;
   }
   // 判断是否已添加有当前代币
   bool checkTokenIsAdd(String minUnit) {
-    return state.userTokenMinUnitList.contains(minUnit);
+    return state.accountInfo.tokenList.where((_token) => _token.minUnit == minUnit).isNotEmpty;
   }
   // 添加/删除当前代币
   onToggleToken(TokenModel token) async {
-    String minUnit = token.minUnit;
-    LLoading.showBgLoading();
-    TokenModel _token = state.allTokenList.firstWhere((element) => element.minUnit == minUnit, orElse: () => TokenModel());
-    if (checkTokenIsAdd(minUnit)) {
-      int _index = state.userTokenMinUnitList.indexOf(_token.minUnit);
-      state.userTokenList.removeAt(_index);
-      state.userTokenMinUnitList.removeAt(_index);
+    if (checkTokenIsAdd(token.minUnit)) {
+      bool? result = await LBottomSheet.promptBottomSheet(
+        title: '提示'.tr,
+        message: Text('是否移除当前代币:'.tr +  token.symbol + '?'),
+      );
+      if (result != true) return;
+      var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
+      state.accountInfo.tokenList.removeAt(_index);
     } else {
-      state.userTokenList.add(_token);
-      state.userTokenMinUnitList.add(_token.minUnit);
+      state.accountInfo.tokenList.add(token);
     }
+    LLoading.showBgLoading();
+    accountController.updataAccount(state.accountInfo);
+    state.allTokenList.refresh();
     await Future.delayed(const Duration(milliseconds: 500));
     LLoading.dismiss();
   }
   // 我的代币列表移除当前代币
   onLocalRemoveToken(TokenModel token) async {
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '提示',
-      message: Text('是否移除当前代币: ${token.symbol}?'),
+      title: '提示'.tr,
+      message: Text('是否移除当前代币:'.tr +  token.symbol + '?'),
     );
     if (result != true) return;
-    int _index = state.userTokenMinUnitList.indexOf(token.minUnit);
-    state.userTokenList.removeAt(_index);
-    state.userTokenMinUnitList.removeAt(_index);
+    var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
+    state.accountInfo.tokenList.removeAt(_index);
+    accountController.updataAccount(state.accountInfo);
+    state._accountInfo.refresh();
     LToast.success('移除代币成功');
   }
   // 我的代币列表排序
   onUserAssetsReorder (int oldIndex, int newIndex) {
-    var _token = state.userTokenList.removeAt(oldIndex + 1);
+    var _token = state.accountInfo.tokenList.removeAt(oldIndex + 1);
     if (newIndex >= oldIndex) {
-      state.userTokenList.insert(newIndex, _token);
+      state.accountInfo.tokenList.insert(newIndex, _token);
     } else {
-      state.userTokenList.insert(newIndex + 1, _token);
+      state.accountInfo.tokenList.insert(newIndex + 1, _token);
     }
+    accountController.updataAccount(state.accountInfo);
   }
   // 一键获取所有资产
   onGetUserAllAssets() async {
+    bool? result = await LBottomSheet.promptBottomSheet(
+      title: '提示'.tr,
+      message: Text('是否从云端获取所有资产列表?'.tr),
+    );
+    if (result != true) return;
     LLoading.showBgLoading();
-    await Future.delayed(const Duration(milliseconds: 5000));
+    var tokenList = await httpToolApp.getAccountAllBalance(state.accountInfo.address);
+    for (var i = 0; i < tokenList?.data.length; i++) {
+      var _item = tokenList?.data[i];
+      if (!checkTokenIsAdd(_item['denom'])) {
+        var token = await httpToolApp.getCoinInfo(_item['denom']);
+        if (token != null) state.accountInfo.tokenList.add(token..amount=_item['amount']);
+      }
+    }
+    state._accountInfo.refresh();
+    accountController.updataAccount(state.accountInfo);
     LLoading.dismiss();
   }
   // 前往代币详情页面
-  onGoToDetail(TokenModel token) {
-    Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
+  onGoToDetail(TokenModel token) async {
+    await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
+    _getLocalTokenList();
   }
 }

@@ -41,7 +41,7 @@ class DappWebviewPageState {
   set webviewHasHistory (bool value) => _webviewHasHistory.value = value;
 }
 
-class DappWebviewPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class DappWebviewPageController extends GetxController with GetTickerProviderStateMixin {
   DappWebviewPageController();
   DappWebviewPageState state = DappWebviewPageState();
   late Animation<double> _animation;

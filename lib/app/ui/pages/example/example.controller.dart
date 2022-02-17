@@ -6,6 +6,7 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/translation/translation.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ExamplePageState {
   final Rx<String> _title = 'settingPageTitle'.obs;
@@ -24,6 +25,7 @@ class ExamplePageController extends GetxController {
   ExamplePageState state = ExamplePageState();
   TextEditingController inputVolume = TextEditingController();
   TextEditingController password = TextEditingController();
+  RefreshController accountRefreshController = RefreshController();
 
 
   ExamplePageController();

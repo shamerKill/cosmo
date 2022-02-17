@@ -145,7 +145,7 @@ class ChainProposalDetailsPageState {
   final RxList<HashInfo> depositsHashList = RxList();
 }
 
-class ChainProposalDetailsPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class ChainProposalDetailsPageController extends GetxController with GetTickerProviderStateMixin {
   ChainProposalDetailsPageController();
   ChainProposalDetailsPageState state = ChainProposalDetailsPageState();
   TabController? listTabController;

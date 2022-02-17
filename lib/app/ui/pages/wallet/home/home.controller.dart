@@ -6,11 +6,14 @@ import 'package:clipboard/clipboard.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BasicHomePageState {
   // 消息提醒
@@ -55,11 +58,16 @@ class BasicHomePageState {
   final RxList<Widget> tipBackupView = RxList<Widget>();
 }
 
-class BasicHomePageController extends GetxController with GetSingleTickerProviderStateMixin {
+BasicHomePageState _baseHomePageState = BasicHomePageState();
+class BasicHomePageController extends GetxController with GetTickerProviderStateMixin {
   BasicHomePageController();
 
-  BasicHomePageState state = BasicHomePageState();
+  RefreshController accountRefreshController = RefreshController();
+
+  BasicHomePageState state = _baseHomePageState;
   final DataAccountController dataAccountController = Get.find();
+  final DataCoinsController dataCoinsController = Get.find();
+
   late Animation<double> _infoAnimation;
   late AnimationController _infoAnimationController;
   bool close = false;
@@ -70,7 +78,6 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
   @override
   onInit() {
     super.onInit();
-    state.accountInfo = dataAccountController.state.nowAccount!;
     initAccountStorage();
     _initAnimationController();
   }
@@ -87,12 +94,37 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
   }
 
   // 获取当前账户信息
-  Future<void> initAccountStorage({String? address}) async {
-    return;
-    if (state.accountInfo.address == '' || address != null) {
-      LLoading.showLoading();
+  Future<void> initAccountStorage() async {
+    _checkAndInsertAccountBaseCoin();
+    LLoading.showLoading();
+    var result = await Future.wait<dynamic>(
+      state.accountInfo.tokenList.map<Future<dynamic>>((token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.minUnit)).toList()
+      ..addAll([
+        httpToolApp.getAccountTransferLength(state.accountInfo.address),
+      ])
+    );
+    // 更改币种余额
+    var _tokensResult = result.sublist(0, state.accountInfo.tokenList.length);
+    for (var i = 0; i < _tokensResult.length; i++) {
+      state.accountInfo.tokenList[i].amount = _tokensResult[i]!.data;
     }
+    state._accountInfo.refresh();
+    // 更改交易次数
+    var _otherResult = result.sublist(state.accountInfo.tokenList.length);
+    state.accountTransTime = _otherResult[0];
+    LLoading.dismiss();
+    return;
     await initAccountNet();
+  }
+  // 判断账户是否有基础币，如果没有加入并储存
+  _checkAndInsertAccountBaseCoin() {
+    var type = dataAccountController.checkAccountHadCoin(dataAccountController.state.nowAccount!.address, dataCoinsController.state.baseCoin.minUnit);
+    if (!type) {
+      dataAccountController.updataAccount(
+        dataAccountController.state.nowAccount!..tokenList.insert(0, dataCoinsController.state.baseCoin),
+      );
+    }
+    state.accountInfo = dataAccountController.state.nowAccount!;
   }
   Future<void> initAccountNet () async {
     int random = Random().nextInt(1000);
@@ -170,12 +202,14 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
     _infoAnimationController.forward(from: 0.0);
   }
   // 添加代币
-  onAddToken() {
-    Get.toNamed(PlugRoutesNames.walletTokenList);
+  onAddToken() async {
+    await Get.toNamed(PlugRoutesNames.walletTokenList);
+    initAccountStorage();
   }
   // 我的代币详情
-  onToTokenPage(String token) {
-    Get.toNamed(PlugRoutesNames.walletTokenLogs(token));
+  onToTokenPage(String token) async {
+    await Get.toNamed(PlugRoutesNames.walletTokenLogs(token));
+    initAccountStorage();
   }
   // 前往备份
   onGoToBackup() {
@@ -204,7 +238,7 @@ class BasicHomePageController extends GetxController with GetSingleTickerProvide
     scaffoldKey.currentState?.openEndDrawer();
     if (!dataAccountController.exchangeAccount(_address)) return;
     state.accountInfo = dataAccountController.state.nowAccount!;
-    await initAccountStorage(address: _address);
+    await initAccountStorage();
     LToast.success('切换成功');
   }
   // 管理账户

@@ -8,6 +8,7 @@ import 'package:plug/app/ui/components/view/verifierCard.component.dart';
 import 'package:plug/app/ui/pages/chain/verifiers/verifiers.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
   const ChainVerifiersPage({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
       body: SizedBox(
         height: appTheme.sizes.infinity,
         child: LScrollView(
+          refreshController: controller.verifiersRefreshController,
           onRefresh: controller.onRefreshListener,
           onLoading: controller.onLoadListener,
           child: Obx(() => Column(

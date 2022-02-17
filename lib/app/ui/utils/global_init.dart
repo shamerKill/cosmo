@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/instance_manager.dart';
-import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.init.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/translation/translation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:plug/app/ui/utils/http.dart';
 
 class UtilGlobalInit {
   static init () async {
@@ -17,6 +16,7 @@ class UtilGlobalInit {
     await plugTranslation.init();
     await DataInitState.onInit();
   }
+  // 修改头部背景
   static _changeSystemUI() async {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
@@ -24,6 +24,7 @@ class UtilGlobalInit {
       )
     );
   }
+  // 禁止转向
   static _changeSystemPerferred({ canRotate = false }) async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -32,6 +33,7 @@ class UtilGlobalInit {
       if (canRotate) DeviceOrientation.landscapeRight,
     ]);
   }
+  // 开启高高刷
   static _openSuperFPS() async {
     try {
       var modes = await FlutterDisplayMode.supported;

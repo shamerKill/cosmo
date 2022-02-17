@@ -26,7 +26,11 @@ class LViewImage extends GetView<LViewImageController> {
       return Container(
         width: width,
         height: height,
-        color: bgColor??appTheme.colors.transparent,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: bgColor??appTheme.colors.transparent,
+          borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+        ),
       );
     }
     return CachedNetworkImage(
@@ -34,6 +38,7 @@ class LViewImage extends GetView<LViewImageController> {
       height: height,
       imageUrl: url!,
       imageBuilder: (context, imageProvider) => Container(
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
           image: DecorationImage(
@@ -45,6 +50,7 @@ class LViewImage extends GetView<LViewImageController> {
       placeholder: (context, url) => Container(
         width: width,
         height: height,
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: appTheme.colors.borderColor,
           borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
@@ -53,6 +59,7 @@ class LViewImage extends GetView<LViewImageController> {
       errorWidget: (context, url, error) => Container(
         width: width,
         height: height,
+        clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: appTheme.colors.borderColor,
           borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,

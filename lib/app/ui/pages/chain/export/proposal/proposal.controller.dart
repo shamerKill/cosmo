@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 enum EnumProposalStatus {
   votingPeriod, // 投票中
@@ -57,6 +58,8 @@ class ChainExportProposalPageState {
 class ChainExportProposalPageController extends GetxController {
   ChainExportProposalPageController();
   ChainExportProposalPageState state = ChainExportProposalPageState();
+
+  RefreshController proposalsRefreshController = RefreshController();
 
   @override
   onInit() {

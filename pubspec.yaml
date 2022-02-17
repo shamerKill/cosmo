@@ -74,6 +74,8 @@ dependencies:
   encrypt: ^5.0.1
   # https://pub.flutter-io.cn/packages/flutter_screenshot_switcher
   flutter_screenshot_switcher: ^2.1.0
+  # https://pub.flutter-io.cn/packages/dio
+  dio: ^4.0.4
 
 dev_dependencies:
   flutter_test:

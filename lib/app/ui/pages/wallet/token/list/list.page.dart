@@ -10,6 +10,7 @@ import 'package:plug/app/ui/components/view/animation.component.dart';
 import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/pages/wallet/token/list/list.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class WalletTokenListPage extends GetView<WalletTokenListPageController> {
   const WalletTokenListPage({Key? key}) : super(key: key);
@@ -94,8 +95,10 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
       body: TabBarView(
         controller: controller.tabBarController,
         children: [
-          LScrollView(
-            child: Obx(() => Column(
+          Obx(() => LScrollView(
+            refreshController: controller.remoteListRefreshController,
+            onLoading: state.allTokenPage == 0 ? null : controller.getTokenRemoteList,
+            child: Column(
               children: [
                 for (TokenModel _item in state.allTokenList)
                   _WalletTokenListItem(
@@ -119,17 +122,18 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
               ],
             )),
           ),
-          Column(
+          Obx(() => Column(
             children: [
               _WalletTokenListItem(
-                token: state.userTokenList.first,
+                onPressed: () => controller.onGoToDetail(state.accountInfo.tokenList.first),
+                token: state.accountInfo.tokenList.first,
               ),
               Expanded(
-                child: Obx(() => ReorderableListView(
+                child: ReorderableListView(
                   onReorder: controller.onUserAssetsReorder,
                   children: [
-                    for (TokenModel _item in state.userTokenList)
-                      if (state.userTokenList.indexOf(_item) != 0) _WalletTokenListItem(
+                    for (TokenModel _item in state.accountInfo.tokenList)
+                      if (state.accountInfo.tokenList.indexOf(_item) != 0) _WalletTokenListItem(
                         key: Key(_item.minUnit + _item.symbol),
                         token: _item,
                         onPressed: () => controller.onGoToDetail(_item),
@@ -148,10 +152,10 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                         ),
                       )
                   ],
-                )),
+                ),
               ),
             ],
-          ),
+          )),
         ],
       ),
     );
@@ -190,6 +194,7 @@ class _WalletTokenListItem extends StatelessWidget {
           children: [
             LViewImage(
               url: token.logo,
+              bgColor: StringTool.stringToColor(token.minUnit),
               width: appTheme.sizes.basic * 60,
               height: appTheme.sizes.basic * 60,
               isRadius: true,

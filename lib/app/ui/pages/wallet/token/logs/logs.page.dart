@@ -126,6 +126,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
         children: [
           // 全部
           LScrollView(
+            refreshController: controller.allRefreshController,
             onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.all),
             onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.all),
             child: Obx(() => Column(
@@ -139,6 +140,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
           ),
           // 转出
           LScrollView(
+            refreshController: controller.sendRefreshController,
             onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.send),
             onLoading: state.logsPageSend == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.send),
             child: Obx(() => Column(
@@ -152,6 +154,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
           ),
           // 转入
           LScrollView(
+            refreshController: controller.receiveRefreshController,
             onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.receive),
             onLoading: state.logsPageReceive == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.receive),
             child: Obx(() => Column(

@@ -14,7 +14,7 @@ class StartPageState {
   set logoBottomPadding (double data) { _logoBottomPadding.value = data; }
 }
 
-class StartPageController extends GetxController with GetSingleTickerProviderStateMixin {
+class StartPageController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _controller;
   final int _animationTimeMillisseconds = 1000;
