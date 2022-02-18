@@ -50,7 +50,7 @@ class ChainBackupPledgePageController extends GetxController {
       ..rePledging = '289124809123'
       ..redeeming = '123940125123'
       ..reward = '123124123'
-      ..minPledgVolume = '10';
+      ..minPledgeVolume = '10';
     state.baseCoin..symbol = 'PLUGCN' ..scale = 6 ..amount = '100000';
     state.feeAmount = '200';
   }

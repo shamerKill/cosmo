@@ -113,8 +113,6 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     var _otherResult = result.sublist(state.accountInfo.tokenList.length);
     state.accountTransTime = _otherResult[0];
     LLoading.dismiss();
-    return;
-    await initAccountNet();
   }
   // 判断账户是否有基础币，如果没有加入并储存
   _checkAndInsertAccountBaseCoin() {
@@ -125,17 +123,6 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       );
     }
     state.accountInfo = dataAccountController.state.nowAccount!;
-  }
-  Future<void> initAccountNet () async {
-    int random = Random().nextInt(1000);
-    await Future.delayed(const Duration(seconds: 1));
-    state.accountInfo.tokenList
-      ..[0].amount = '${random}38221035'
-      ..[1].amount = '${random}12456712';
-    state._accountInfo.refresh();
-    state.accountAssetsPrice = '${random}469.123';
-    state.accountTransTime = random;
-    LLoading.dismiss();
   }
   // 检查是否需要备份
   _checkBackup() async {

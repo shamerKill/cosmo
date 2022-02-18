@@ -35,7 +35,7 @@ class ChainVerifierDetailInfoPageController extends GetxController {
       ..rePledging = '289124809123'
       ..redeeming = '123940125123'
       ..reward = '123124123'
-      ..minPledgVolume = '100000';
+      ..minPledgeVolume = '100000';
     state.baseCoinInfo..symbol = 'plugcn'
       ..scale = 6;
   }

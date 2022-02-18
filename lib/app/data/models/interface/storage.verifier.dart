@@ -21,7 +21,7 @@ class VerifierModel extends _StorageBaseAbstract {
   /// 节点头像
   String get avatar => _avatar;
   set avatar (String value) { _avatar = value; _saveKey(); }
-  String _avatar = '${Env.envConfig.assets.veriferAvatarUrl}/default/image.png';
+  String _avatar = '${Env.envConfig.assets.verifierAvatarUrl}/default/image.png';
   /// 节点昵称
   String get nickName => _nickName;
   set nickName (String value) { _nickName = value; _saveKey(); }
@@ -43,9 +43,9 @@ class VerifierModel extends _StorageBaseAbstract {
   set allPledged (String? value) { _allPledged = value; _saveKey(); }
   String? _allPledged = '';
   /// 最小质押数量
-  String? get minPledgVolume => _minPledgVolume;
-  set minPledgVolume (String? value) { _minPledgVolume = value; _saveKey(); }
-  String? _minPledgVolume = '';
+  String? get minPledgeVolume => _minPledgeVolume;
+  set minPledgeVolume (String? value) { _minPledgeVolume = value; _saveKey(); }
+  String? _minPledgeVolume = '';
 
   VerifierModel._(): super();
   factory VerifierModel() => create();
@@ -60,7 +60,7 @@ class VerifierModel extends _StorageBaseAbstract {
     _valueMap['yieldRate'] = yieldRate;
     _valueMap['cutRate'] = cutRate;
     _valueMap['allPledged'] = allPledged;
-    _valueMap['minPledgVolume'] = minPledgVolume;
+    _valueMap['minPledgeVolume'] = minPledgeVolume;
   }
   @override
   void setData(String sourceStr) {
@@ -73,13 +73,29 @@ class VerifierModel extends _StorageBaseAbstract {
       case 'verifierStatusEnum.invalid': status = VerifierStatusEnum.invalid; break;
       default: status = VerifierStatusEnum.running; break;
     }
-    avatar = source['avatar']??'${Env.envConfig.assets.veriferAvatarUrl}/default/image.png';
+    avatar = source['avatar']??'${Env.envConfig.assets.verifierAvatarUrl}/default/image.png';
     avatar = source['nickName']??'';
     avatar = source['address']??'';
     avatar = source['yieldRate']??'';
     avatar = source['cutRate']??'';
     avatar = source['allPledged']??'';
     avatar = source['minPledgVolume']??'';
+  }
+  
+  // 设置节点状态
+  setStatus(String type) {
+    switch(type) {
+      case 'BOND_STATUS_UNSPECIFIED':
+        status = VerifierStatusEnum.invalid; break;
+      case 'BOND_STATUS_UNBONDED':
+        status = VerifierStatusEnum.offLine; break;
+      case 'BOND_STATUS_UNBONDING':
+        status = VerifierStatusEnum.jailing; break;
+      case 'BOND_STATUS_BONDED':
+        status = VerifierStatusEnum.running; break;
+      default:
+        status = VerifierStatusEnum.running; break;
+    }
   }
 }
 
@@ -118,7 +134,7 @@ class UserVerifierModel extends VerifierModel {
     _valueMap['yieldRate'] = yieldRate;
     _valueMap['cutRate'] = cutRate;
     _valueMap['allPledged'] = allPledged;
-    _valueMap['minPledgVolume'] = minPledgVolume;
+    _valueMap['minPledgeVolume'] = minPledgeVolume;
     _valueMap['pledged'] = pledged;
     _valueMap['reward'] = reward;
     _valueMap['rePledging'] = rePledging;
@@ -135,13 +151,13 @@ class UserVerifierModel extends VerifierModel {
       case 'verifierStatusEnum.invalid': status = VerifierStatusEnum.invalid; break;
       default: status = VerifierStatusEnum.running; break;
     }
-    avatar = source['avatar']??'${Env.envConfig.assets.veriferAvatarUrl}/default/image.png';
+    avatar = source['avatar']??'${Env.envConfig.assets.verifierAvatarUrl}/default/image.png';
     avatar = source['nickName']??'';
     avatar = source['address']??'';
     avatar = source['yieldRate']??'';
     avatar = source['cutRate']??'';
     avatar = source['allPledged']??'';
-    avatar = source['minPledgVolume']??'';
+    avatar = source['minPledgeVolume']??'';
     pledged = source['pledged'];
     reward = source['reward'];
     rePledging = source['rePledging'];

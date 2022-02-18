@@ -165,7 +165,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                     Text('节点最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                    Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgVolume??'')) + ' ' + state.baseCoinInfo.symbol)),
+                    Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume??'')) + ' ' + state.baseCoinInfo.symbol)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                     DottedLine(dashColor: appTheme.colors.borderColor,),
                   ],

@@ -3,7 +3,7 @@ part of './env.dart';
 /// 资源配置
 abstract class _AssetsConfig {
   /// 节点默认头像前缀
-  late String veriferAvatarUrl;
+  late String verifierAvatarUrl;
 }
 
 /// 链信息

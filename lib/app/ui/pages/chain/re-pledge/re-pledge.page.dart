@@ -104,7 +104,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                       children: [
                         Text('最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.minPledgVolume.toString())))
+                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.minPledgeVolume.toString())))
                       ],
                     ),
                   ),

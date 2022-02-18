@@ -2,7 +2,7 @@ part of './env.dart';
 
 class _AssetsConfigRelease implements _AssetsConfig {
   @override
-  String veriferAvatarUrl = 'https://api.plugchain.network/static';
+  String verifierAvatarUrl = 'https://api.plugchain.network/static';
 }
 
 class _ChainInfoRelease implements _ChainInfo {

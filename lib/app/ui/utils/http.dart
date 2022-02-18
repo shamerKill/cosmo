@@ -107,9 +107,12 @@ class UriTool {
 class _HttpToolApp extends UriTool {
   _HttpToolApp() : super(ConfigChainData.appInfoRpcUrl);
   /// 获取基础币信息
-  getBaseCoin() {
-    HttpToolClient.getHttp(_defaultSetUri('token/params'))
-      .then((res) => getCoinInfo(res.data['params']['issue_token_base_fee']['denom']), onError: (e) => null);
+  Future<TokenModel?> getBaseCoin() {
+    return HttpToolClient.getHttp(_defaultSetUri('token/params'))
+      .then(
+        (res) => getCoinInfo(res.data['params']['issue_token_base_fee']['denom']),
+        onError: (e) => null
+      );
   }
   /// 获取币种信息
   Future<TokenModel?> getCoinInfo(String denom) {
@@ -136,22 +139,26 @@ class _HttpToolApp extends UriTool {
       );
   }
   // 获取账户发送记录
-  Future<HttpToolResponse?> getAccountSenderList(String address) {
+  Future<HttpToolResponse?> getAccountSenderList(String address, { page = 1, limit = 10 }) {
     return HttpToolClient.getHttp(
       // ignore: equal_keys_in_map
-      _defaultSetUri('/cosmos/tx/v1beta1/txs', queryParameters: { 'events': "message.module='bank'", 'events': "transfer.sender='$address'", 'limit': '1' })
+      _defaultSetUri('/cosmos/tx/v1beta1/txs', queryParameters: {
+        'events': "message.module='bank'", 'events': "transfer.sender='$address'", 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(),
+      })
     );
   }
   // 获取账户接收记录
-  Future<HttpToolResponse?> getAccountRecipientList(String address) {
+  Future<HttpToolResponse?> getAccountRecipientList(String address, { page = 1, limit = 10 }) {
     return HttpToolClient.getHttp(
       // ignore: equal_keys_in_map
-      _defaultSetUri('/cosmos/tx/v1beta1/txs', queryParameters: { 'events': "message.module='bank'", 'events': "transfer.recipient='$address'", 'limit': '1' })
+      _defaultSetUri('/cosmos/tx/v1beta1/txs', queryParameters: {
+        'events': "message.module='bank'", 'events': "transfer.recipient='$address'", 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(),
+      })
     );
   }
   // 获取账户发送/接收记录次数
   Future<int> getAccountTransferLength (String address) {
-    return Future.wait([getAccountRecipientList(address), getAccountSenderList(address)])
+    return Future.wait([getAccountRecipientList(address, limit: 1), getAccountSenderList(address, limit: 1)])
       .then<int>((res) => (int.parse(res[0]?.data['pagination']['total']) + int.parse(res[1]?.data['pagination']['total'])))
       .catchError((e) => 0);
   }
@@ -161,6 +168,39 @@ class _HttpToolApp extends UriTool {
       _defaultSetUri('/token/tokens', queryParameters: { 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(), 'pagination.count_total': 'true' })
     ).then((res) => res..data = ((res.data['Tokens']?.map((_item) => _resFormatToToken(_item)).toList())??[]));
   }
+  // 获取账户质押中数据
+  Future<HttpToolResponse?> getAccountDelegateData(String address) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/staking/v1beta1/delegations/$address', queryParameters: { 'pagination.limit': '100000'}))
+      .then(
+        (res) => res,
+        onError: (e) => null,
+      );
+  }
+  // 获取账户赎回中数据
+  Future<HttpToolResponse?> getAccountUnDelegateData(String address) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/staking/v1beta1/delegators/$address/unbonding_delegations', queryParameters: { 'pagination.limit': '100000'}))
+      .then(
+        (res) => res,
+        onError: (e) => null,
+      );
+  }
+  // 获取账户质押奖励
+  Future<HttpToolResponse?> getAccountRewardData(String address) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/distribution/v1beta1/delegators/$address/rewards', queryParameters: { 'pagination.limit': '100000'}))
+      .then(
+        (res) => res,
+        onError: (e) => null,
+      );
+  }
+  // 获取节点验证者信息
+  Future<HttpToolResponse?> getChainVerifierInfo(String vAddress) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/staking/v1beta1/validators/$vAddress'))
+      .then(
+        (res) => res,
+        onError: (e) => null,
+      );
+  }
+  // 获取账户质押列表
   TokenModel _resFormatToToken(dynamic _token) {
     return TokenModel()
       ..symbol = _token['symbol']

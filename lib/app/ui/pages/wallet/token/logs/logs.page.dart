@@ -10,6 +10,7 @@ import 'package:plug/app/ui/components/view/logsItem.component.dart';
 import 'package:plug/app/ui/pages/wallet/token/logs/logs.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
   const WalletTokenLogsPage({Key? key}) : super(key: key);
@@ -32,29 +33,31 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
                 children: [
                   Row(
                     children: [
-                      LViewImage(
-                        url: 'http://via.placeholder.com/43x46',
+                      Obx(() => LViewImage(
+                        url: state.tokenInfo.logo,
+                        bgColor: StringTool.stringToColor(state.tokenInfo.symbol),
                         width: appTheme.sizes.basic * 60,
                         height: appTheme.sizes.basic * 60,
                         isRadius: true,
-                      ),
+                      )),
                       Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(state.tokenInfo.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                            Obx(() => Text(state.tokenInfo.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig))),
                             Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.fontSizeSmall / 2)),
-                            Text(state.tokenInfo.name, style: Get.textTheme.bodyText1),
+                            Obx(() => Text(state.tokenInfo.name, style: Get.textTheme.bodyText1)),
                           ],
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)), style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                          Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)), style: TextStyle(fontSize: appTheme.sizes.fontSizeBig))),
                           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.fontSizeSmall / 2)),
-                          Text('≈\r\$' + NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)), style: Get.textTheme.bodyText1),
+                          // TODO: 币种价格
+                          // Obx(() => Text('≈\r\$' + NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)), style: Get.textTheme.bodyText1)),
                         ],
                       ),
                     ],

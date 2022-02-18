@@ -1,5 +1,5 @@
 @baseUri = http://47.243.114.57:1317/
-@address = gx1yay6nn50t84nmrdx84dj3sp4y3na87swjen9xu
+@address = gx1ttytyfmrzfccxrnv5ddz2uxl7wggcwys3qj4uf
 
 ### 账户信息
 GET {{baseUri}}/cosmos/auth/v1beta1/accounts/{{address}}
@@ -17,11 +17,33 @@ GET {{baseUri}}/token/params
 ### 获取基础币信息
 GET {{baseUri}}/token/tokens/{{baseDenom.response.body.params.issue_token_base_fee.denom}}
 
+### 获取交易记录/全部
+# GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer='{{address}}'&pagination.limit=1
+
 ### 获取交易记录/发送
-GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.sender='{{address}}'&pagination.limit=1
+GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.sender='{{address}}'&pagination.limit=1&pagination.offset=1
 
 ### 获取交易记录/接收
 GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.recipient='{{address}}'&pagination.limit=1
 
 ### 获取所有币种
 GET {{baseUri}}/token/tokens
+
+### 查询账户所有质押节点
+GET {{baseUri}}/cosmos/staking/v1beta1/delegations/{{address}}
+
+### 查询账户所有质押节点
+# @name allDelegatorNodes
+GET {{baseUri}}/cosmos/distribution/v1beta1/delegators/{{address}}/validators
+
+### 获取账户质押奖励
+GET {{baseUri}}/cosmos/distribution/v1beta1/delegators/{{address}}/rewards
+
+### 获取账户单个节点取消质押状态
+GET {{baseUri}}/cosmos/staking/v1beta1/delegators/{{address}}/unbonding_delegations
+
+### 单个节点所有账户取消质押状态
+GET {{baseUri}}/cosmos/staking/v1beta1/validators/{{allDelegatorNodes.response.body.validators[0]}}/unbonding_delegations
+
+### 查询验证者信息
+GET {{baseUri}}/cosmos/staking/v1beta1/validators/{{allDelegatorNodes.response.body.validators[0]}}

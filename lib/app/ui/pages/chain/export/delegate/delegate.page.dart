@@ -84,10 +84,10 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: LAnimationView(
-                              child: Text(
+                              child: Obx(() => Text(
                                 NumberTool.formatNumberStr(NumberTool.amountToBalance(state.delegatingAmount, scale: state.tokenInfo.scale)),
                                 style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeBig * 1.1, letterSpacing: -1 * appTheme.sizes.basic),
-                              ),
+                              )),
                               randomKey: false,
                             ),
                           ),
@@ -96,10 +96,10 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: LAnimationView(
-                            child: Text(
+                            child: Obx(() => Text(
                               NumberTool.formatNumberStr(NumberTool.amountToBalance(state.redeemingAmount, scale: state.tokenInfo.scale)),
                               style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSizeBig * 1.1, letterSpacing: -1 * appTheme.sizes.basic),
-                            ),
+                            )),
                             randomKey: false,
                           ),
                         ),
@@ -113,7 +113,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('质押奖励'.tr, style: Get.textTheme.bodyText1),
-                        LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.rewardedAmount, scale: state.tokenInfo.scale))), randomKey: false,),
+                        Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.rewardedAmount, scale: state.tokenInfo.scale))), randomKey: false,)),
                       ],
                     ),
                   ],
@@ -145,22 +145,23 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                           Row(
                             children: [
+                              // Expanded(
+                              //   child: Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                              //     children: [
+                              //       LAnimationView(
+                              //         randomKey: false,
+                              //         child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
+                              //       ),
+                              //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
+                              //       Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
+                              //     ],
+                              //   ),
+                              // ),
+                              // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    LAnimationView(
-                                      randomKey: false,
-                                      child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
-                                    ),
-                                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                    Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
-                                  ],
-                                ),
-                              ),
-                              Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
-                              Expanded(
-                                child: Column(
                                   children: [
                                     SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,

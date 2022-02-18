@@ -3,7 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/ui/utils/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletTokenLogsPageState {
@@ -39,29 +42,48 @@ class WalletTokenLogsPageState {
 class WalletTokenLogsPageController extends GetxController with GetTickerProviderStateMixin {
   WalletTokenLogsPageController();
   WalletTokenLogsPageState state = WalletTokenLogsPageState();
+  DataAccountController dataAccount = Get.find();
 
   TabController? tabController;
   RefreshController allRefreshController = RefreshController();
   RefreshController sendRefreshController = RefreshController();
   RefreshController receiveRefreshController = RefreshController();
-  
+
   @override
-  void onInit() {
+  onInit() {
     super.onInit();
-    String? token = Get.parameters['token'];
-    if (token == null) return Get.back();
     // 初始化tab
     tabController = TabController(initialIndex: 0, length: 3, vsync: this);
-    state.tokenInfo
-      ..symbol = 'p$token'
-      ..minUnit = token
-      ..name = 'p$token'
-      ..amount = '10000123'
-      ..scale = 0;
+  }
+  
+  @override
+  void onReady() {
+    String? token = Get.parameters['token'];
+    if (token == null) return Get.back();
+    _initTokenInfo(token);
+  }
+
+  // 获取token
+  _initTokenInfo (String minUnit) async {
+    LLoading.showLoading();
+    state.accountInfo = dataAccount.state.nowAccount!;
+    var token = dataAccount.state.nowAccount?.tokenList.firstWhere((element) => element.minUnit == minUnit);
+    if (token != null) {
+      state.tokenInfo = token;
+    } else {
+      token = await httpToolApp.getCoinInfo(minUnit);
+    }
+    var resultAmount = await httpToolApp.getAccountBalance(state.accountInfo.address, minUnit);
+    if (token != null) token.amount = resultAmount?.data;
+    if (token == null) return Get.back();
+    state.tokenInfo = token;
+    state._tokenInfo.refresh();
     _getTransferLogs(WalletTokenLogsPageTabType.all);
     _getTransferLogs(WalletTokenLogsPageTabType.send);
     _getTransferLogs(WalletTokenLogsPageTabType.receive);
+    LLoading.dismiss();
   }
+  // 获取代币价格
 
   // 获取交易记录
   _getTransferLogs(
