@@ -27,11 +27,11 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
       basicBackgroundColor: true,
       body: SizedBox(
         height: appTheme.sizes.infinity,
-        child: LScrollView(
+        child: Obx(() => LScrollView(
           refreshController: controller.verifiersRefreshController,
           onRefresh: controller.onRefreshListener,
-          onLoading: controller.onLoadListener,
-          child: Obx(() => Column(
+          onLoading: state.listPage == 0 ? null : controller.onLoadListener,
+          child: Column(
             children: [
               for (var _item in state.verifiesList)
                 Padding(
@@ -43,16 +43,30 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                         Row(
                           children: [
+                            // Expanded(
+                            //   child: Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       LAnimationView(
+                            //         randomKey: false,
+                            //         child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
+                            //       ),
+                            //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
+                            //       Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
+                            //     ],
+                            //   ),
+                            // ),
+                            // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   LAnimationView(
                                     randomKey: false,
-                                    child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
+                                    child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.minPledgeVolume)), style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
                                   ),
                                   Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                  Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
+                                  Text('最小质押'.tr, style: Get.textTheme.bodyText1)
                                 ],
                               ),
                             ),
@@ -65,7 +79,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                     child: LAnimationView(
                                       randomKey: false,
                                       child: Text(
-                                        NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.allPledged??'')),
+                                        NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.allPledged)),
                                         style: TextStyle(letterSpacing: -1 * appTheme.sizes.basic,)
                                       ),
                                     ),
@@ -85,8 +99,8 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                     child: LAnimationView(
                                       randomKey: false,
                                       child: Text(
-                                        _item.pledged == null ? '未质押' : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged??'')),
-                                        style: _item.pledged == null ? TextStyle(color: appTheme.colors.textGrayBig) : TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
+                                        _item.pledged == '' ? '未质押' : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
+                                        style: _item.pledged == '' ? TextStyle(color: appTheme.colors.textGrayBig) : TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
                                       ),
                                     ),
                                   ),
@@ -123,8 +137,8 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                   ),
                 ),
             ],
-          )),
-        ),
+          ),
+        )),
       ),
     );
   }

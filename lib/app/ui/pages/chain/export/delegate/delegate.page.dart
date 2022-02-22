@@ -168,7 +168,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                                       child: LAnimationView(
                                         randomKey: false,
                                         child: Text(
-                                          NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged??'')),
+                                          NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
                                           style: TextStyle(letterSpacing: -1 * appTheme.sizes.basic,)
                                         ),
                                       ),
@@ -188,7 +188,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                                       child: LAnimationView(
                                         randomKey: false,
                                         child: Text(
-                                          NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.reward??'')),
+                                          NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.reward)),
                                           style: TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
                                         ),
                                       ),

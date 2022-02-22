@@ -63,7 +63,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(state.tokenInfo.symbol, style: TextStyle(color: appTheme.colors.textGray))
+                  Obx(() => Text(state.tokenInfo.symbol, style: TextStyle(color: appTheme.colors.textGray)))
                 ],
               ),
             ),
@@ -73,7 +73,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text.rich(
+                child: Obx(() => Text.rich(
                   TextSpan(
                     children: [
                       TextSpan(text: '可转数量'.tr),
@@ -84,7 +84,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
                       ),
                     ]
                   ),
-                ),
+                )),
               ),
               InkWell(
                 onTap: state.sendLoadding ? null : controller.onAllSend,
@@ -99,7 +99,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
             padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
             child: DottedLine(dashColor: appTheme.colors.borderColor,),
           ),
-          Obx(() => Text('手续费'.tr + '\r\r${NumberTool.amountToBalance(state.fee, scale: state.tokenInfo.scale)}\r${state.tokenInfo.symbol}')),
+          Obx(() => Text('手续费'.tr + '\r\r${NumberTool.formatNumberStr(state.fee)}\r${state.tokenInfo.symbol}')),
         ],
       ),
       footer: Obx(() => LButton(

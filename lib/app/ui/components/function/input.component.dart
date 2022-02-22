@@ -72,6 +72,7 @@ class LInput extends StatelessWidget {
     return SizedBox(
       height: _height,
       child: TextField(
+        focusNode: focusNode,
         controller: textController,
         maxLines: maxLines,
         obscureText: !(visibilityPass??true),

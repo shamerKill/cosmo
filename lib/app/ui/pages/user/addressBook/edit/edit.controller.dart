@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class UserAddressBookEditPageState {
   // 是否是修改
@@ -25,16 +27,18 @@ class UserAddressBookEditPageController extends GetxController {
   // 地址
   TextEditingController addressController = TextEditingController();
 
+  DataAddressController dataAddress = Get.find();
+
   @override
-  onInit() {
-    super.onInit();
+  onReady() {
     if (Get.arguments != null && Get.arguments['address'] is String) {
       state.isEdit = true;
-      state.addressInfo
-        ..address = Get.arguments['address']
-        ..id = 1
-        ..name = '名字'
-        ..remarks = '备注';
+      for (var item in dataAddress.state.addressList) {
+        if (item.address == Get.arguments['address']) {
+          state.addressInfo = item;
+          break;
+        }
+      }
       nameController.text = state.addressInfo.name;
       remarksController.text = state.addressInfo.remarks;
       addressController.text = state.addressInfo.address;
@@ -43,6 +47,17 @@ class UserAddressBookEditPageController extends GetxController {
 
   // 保存
   onSave() {
+    if (addressController.text == '') return LToast.warning('地址输入有误'.tr);
+    state.addressInfo.name = nameController.text;
+    state.addressInfo.remarks = remarksController.text;
+    state.addressInfo.address = addressController.text;
+    if (state.addressInfo.id == '') state.addressInfo.id = StringTool.getRandomStr();
+    if (state.isEdit) {
+      dataAddress.updateAddress(state.addressInfo);
+    } else {
+      dataAddress.addAddress(state.addressInfo);
+    }
+    Get.focusScope?.unfocus();
     LToast.success('保存成功');
   }
   // 删除
@@ -52,6 +67,7 @@ class UserAddressBookEditPageController extends GetxController {
       message: Text('是否删除当前地址？'.tr),
     );
     if (type == true) {
+      dataAddress.removeAddress(state.addressInfo);
       Get.back();
     }
   }

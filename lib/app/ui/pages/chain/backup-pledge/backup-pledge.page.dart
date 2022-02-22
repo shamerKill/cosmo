@@ -10,6 +10,7 @@ import 'package:plug/app/ui/components/view/verifierCard.component.dart';
 import 'package:plug/app/ui/pages/chain/backup-pledge/backup-pledge.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
   const ChainBackupPledgePage({Key? key}) : super(key: key);
@@ -39,7 +40,8 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                         borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 100.0)),
                       ),
                       child: Obx(() => LViewImage(
-                        url: state.veriferInfo.avatar,
+                        url: state.verifierInfo.avatar,
+                        bgColor: StringTool.stringToColor(state.verifierInfo.address),
                         width: appTheme.sizes.basic * 56.0,
                         height: appTheme.sizes.basic * 56.0,
                         isRadius: true,
@@ -49,9 +51,9 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Obx(() =>  Text(state.veriferInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold, height: 1.6))),
+                        Obx(() =>  Text(state.verifierInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold, height: 1.6))),
                         Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(state.veriferInfo.address, style: Get.textTheme.bodyText1)),
+                        Obx(() => Text(state.verifierInfo.address, style: Get.textTheme.bodyText1)),
                       ],
                     ),
                   ],
@@ -59,7 +61,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                 Positioned(
                   top: appTheme.sizes.basic * 10.0,
                   right: appTheme.sizes.zero,
-                  child: LVerifierStatusNode(verifier: state.veriferInfo),
+                  child: LVerifierStatusNode(verifier: state.verifierInfo),
                 ),
               ],
             ),
@@ -74,25 +76,25 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
               ),
               child: Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(state.veriferInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
-                      ],
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text('年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                  //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
+                  //       Text(state.veriferInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
                     flex: 2,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('质押中数量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('总质押数量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.pledged.toString())))
+                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged.toString()))))
                       ],
                     ),
                   ),
@@ -101,9 +103,9 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('我的质押'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.minPledgeVolume.toString())))
+                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged.toString()))))
                       ],
                     ),
                   ),
@@ -127,7 +129,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                   textController: controller.pledgeController,
                   hintText: '请输入将要质押的数量'.tr,
                   obscureText: true,
-                  suffix: Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack)),
+                  suffix: Obx(() => Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack))),
                   onlyNumber: true,
                 ),
                 Padding(
@@ -152,7 +154,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(NumberTool.amountToBalance(state.feeAmount, scale: state.baseCoin.scale)) + ' ' + state.baseCoin.symbol,
+                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                   )),
                 ),

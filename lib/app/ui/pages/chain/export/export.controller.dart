@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/routes/routes.dart';
 
 class ChainExportPageState {
   // 页面切换controller
@@ -25,6 +26,6 @@ class ChainExportPageController extends GetxController with GetTickerProviderSta
 
   // 一键发行
   onCreateToken() {
-
+    Get.toNamed(PlugRoutesNames.chainCreateToken);
   }
 }

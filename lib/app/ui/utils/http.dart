@@ -21,7 +21,7 @@ class HttpToolResponse {
         message = 'ok';
       } else {
         data = value['data'];
-        status = value['status']??200;
+        status = value['status'] == 200 ? 0 : value['status'];
         message = value['message']??'';
       }
     } else {
@@ -46,9 +46,9 @@ class HttpToolClient {
     } catch (e) {
       DioError err = e as DioError;
       if (err.error is String && RegExp(r"404").hasMatch(err.error)) {
-        LToast.log('404');
+        LToast.print('404 + ${uri.toString()}');
       } else {
-        LToast.log(e.message);
+        LToast.print('${e.message} + ${uri.toString()}');
       }
     }
     if (response != null && response.data != null) {
@@ -65,9 +65,9 @@ class HttpToolClient {
     } catch (e) {
       DioError err = e as DioError;
       if (err.error is String && RegExp(r"404").hasMatch(err.error)) {
-        LToast.log('404');
+        LToast.print('404');
       } else {
-        LToast.log(e.message);
+        LToast.print(e.message);
       }
     }
     if (response != null && response.data != null) {
@@ -89,6 +89,7 @@ class UriTool {
     String path,
     {
       Map<String, dynamic>? queryParameters,
+      String? query,
     }
   ) {
     return Uri(
@@ -96,6 +97,7 @@ class UriTool {
       host: _baseUri.host,
       port: _baseUri.port,
       path: '${_baseUri.path}/$path',
+      query: query,
       queryParameters: queryParameters,
     );
   }
@@ -106,6 +108,14 @@ class UriTool {
 // 1317接口信息
 class _HttpToolApp extends UriTool {
   _HttpToolApp() : super(ConfigChainData.appInfoRpcUrl);
+  /// 获取账户信息
+  Future<HttpToolResponse?> getAccountChainInfo(String address) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/auth/v1beta1/accounts/$address'))
+      .then(
+        (res) => res..data = res.data['account'],
+        onError: (e) => null,
+      );
+  }
   /// 获取基础币信息
   Future<TokenModel?> getBaseCoin() {
     return HttpToolClient.getHttp(_defaultSetUri('token/params'))
@@ -134,26 +144,20 @@ class _HttpToolApp extends UriTool {
   Future<HttpToolResponse?> getAccountBalance(String address, String minUnit) {
     return HttpToolClient.getHttp(_defaultSetUri('/cosmos/bank/v1beta1/balances/$address/$minUnit'))
       .then(
-        (res) => res..data = res.data['balance']['amount'],
+        (res) => res..data = res.data == null ? null : res.data['balance']['amount'],
         onError: (e) => null,
       );
   }
   // 获取账户发送记录
   Future<HttpToolResponse?> getAccountSenderList(String address, { page = 1, limit = 10 }) {
     return HttpToolClient.getHttp(
-      // ignore: equal_keys_in_map
-      _defaultSetUri('/cosmos/tx/v1beta1/txs', queryParameters: {
-        'events': "message.module='bank'", 'events': "transfer.sender='$address'", 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(),
-      })
+      _defaultSetUri('/cosmos/tx/v1beta1/txs', query: "events=message.module='bank'&events=transfer.sender='$address'&pagination.limit=$limit&pagination.offset=${(page - 1) * limit}&order_by=ORDER_BY_DESC")
     );
   }
   // 获取账户接收记录
   Future<HttpToolResponse?> getAccountRecipientList(String address, { page = 1, limit = 10 }) {
     return HttpToolClient.getHttp(
-      // ignore: equal_keys_in_map
-      _defaultSetUri('/cosmos/tx/v1beta1/txs', queryParameters: {
-        'events': "message.module='bank'", 'events': "transfer.recipient='$address'", 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(),
-      })
+      _defaultSetUri('/cosmos/tx/v1beta1/txs', query: "events=message.module='bank'&events=transfer.recipient='$address'&pagination.limit=$limit&pagination.offset=${(page - 1) * limit}&order_by=ORDER_BY_DESC")
     );
   }
   // 获取账户发送/接收记录次数
@@ -185,8 +189,8 @@ class _HttpToolApp extends UriTool {
       );
   }
   // 获取账户质押奖励
-  Future<HttpToolResponse?> getAccountRewardData(String address) {
-    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/distribution/v1beta1/delegators/$address/rewards', queryParameters: { 'pagination.limit': '100000'}))
+  Future<HttpToolResponse?> getAccountRewardData(String address, { String? vAddress }) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/distribution/v1beta1/delegators/$address/rewards' + (vAddress == null ? '' : '/$vAddress'), queryParameters: { 'pagination.limit': '100000'}))
       .then(
         (res) => res,
         onError: (e) => null,
@@ -200,6 +204,78 @@ class _HttpToolApp extends UriTool {
         onError: (e) => null,
       );
   }
+  // 获取账户转质押信息
+  Future<HttpToolResponse?> getAccountReDelegateData(String address) {
+    return HttpToolClient.getHttp(_defaultSetUri('/cosmos/staking/v1beta1/delegators/$address/redelegations'))
+      .then(
+        (res) => res,
+        onError: (e) => null,
+      );
+  }
+  // 获取所有节点列表
+  Future<HttpToolResponse> getChainVerifiersList(int page, { limit = 10 }) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/staking/v1beta1/validators', queryParameters: { 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(), 'pagination.count_total': 'true' })
+    ).then((res) => res..data = res.data['validators']);
+  }
+  // 获取所有提案列表
+  Future<HttpToolResponse> getChainProposalsList(int page, { limit = 10 }) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/gov/v1beta1/proposals', queryParameters: { 'pagination.limit': '$limit', 'pagination.offset': ((page - 1) * limit).toString(), 'pagination.count_total': 'true' })
+    ).then((res) => res..data = (res.data['proposals']));
+  }
+  // 获取代币发行数量
+  Future<HttpToolResponse> getTokenSupply(String minUnit) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/bank/v1beta1/supply/$minUnit')
+    ).then((res) => res..data = (res.data['amount']['amount']));
+  }
+  // 获取提案详情
+  Future<HttpToolResponse> getChainProposalDetail(String id) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/gov/v1beta1/proposals/$id')
+    ).then((res) => res..data = (res.data['proposal']));
+  }
+  // 提案投票总数
+  Future<HttpToolResponse> getChainProposalDetailTally(String id) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/gov/v1beta1/proposals/$id/tally')
+    ).then((res) => res);
+  }
+  // 投票发起者
+  Future<HttpToolResponse> getChainProposalDetailProposer(String id) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/gov/proposals/$id/proposer')
+    ).then((res) => res);
+  }
+  // 提案存款人
+  Future<HttpToolResponse> getChainProposalDetailDeposits(String id) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/gov/v1beta1/proposals/$id/deposits')
+    ).then((res) => res);
+  }
+  // 提案投票详情
+  Future<HttpToolResponse> getChainProposalDetailVotes(String id, int page, { String? type, limit = 10 }) {
+    var events = [
+      'message.action=\'vote\'',
+      'proposal_vote.proposal_id=$id',
+    ];
+    if (type != null) events.add('proposal_vote.option=\'$type\'');
+    return HttpToolClient.getHttp(
+      _defaultSetUri('cosmos/tx/v1beta1/txs', queryParameters: {
+        'events': events,
+        'pagination.limit': '$limit',
+        'pagination.offset': '${limit * (page - 1)}'
+      })
+    ).then((res) => res);
+  }
+  // 获取代币发行费用
+  Future<HttpToolResponse> getChainCreateTokenFee(String symbol) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/token/fee/$symbol')
+    ).then((res) => res);
+  }
+
   // 获取账户质押列表
   TokenModel _resFormatToToken(dynamic _token) {
     return TokenModel()
@@ -218,8 +294,21 @@ _HttpToolApp httpToolApp = _HttpToolApp();
 class _HttpToolChain extends UriTool {
   _HttpToolChain() : super(ConfigChainData.chainInfoRpcUrl);
   /// 获取链信息
-  getChainInfo() {
+  Future<HttpToolResponse> getChainInfo() {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/abci_info')
+    ).then((res) => res..data = res.data['result']['response']);
   }
 }
 _HttpToolChain httpToolChain = _HttpToolChain();
 // 其他信息
+class _HttpToolServer extends UriTool {
+  _HttpToolServer() : super(ConfigChainData.serverInfoRpcUrl);
+  /// 获取手续费
+  Future<HttpToolResponse> getChainFee() {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/rpc/tx_fee')
+    );
+  }
+}
+_HttpToolServer httpToolServer = _HttpToolServer();

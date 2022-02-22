@@ -53,7 +53,7 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
   onInit() {
     super.onInit();
     // 初始化tab
-    tabController = TabController(initialIndex: 0, length: 3, vsync: this);
+    tabController = TabController(initialIndex: 0, length: 2, vsync: this);
   }
   
   @override
@@ -78,44 +78,71 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
     if (token == null) return Get.back();
     state.tokenInfo = token;
     state._tokenInfo.refresh();
-    _getTransferLogs(WalletTokenLogsPageTabType.all);
-    _getTransferLogs(WalletTokenLogsPageTabType.send);
-    _getTransferLogs(WalletTokenLogsPageTabType.receive);
+    // _getTransferLogs(WalletTokenLogsPageTabType.all);
+    await Future.wait([
+      _getTransferLogs(WalletTokenLogsPageTabType.send),
+      _getTransferLogs(WalletTokenLogsPageTabType.receive)
+    ]);
     LLoading.dismiss();
   }
   // 获取代币价格
 
   // 获取交易记录
-  _getTransferLogs(
+  Future<void> _getTransferLogs(
     WalletTokenLogsPageTabType type,
-  ) {
-    bool _random = Random().nextBool();
-    TransferLogModel oneItem = TransferLogModel()
-      ..blockHeight = 10
-      ..time = DateTime.now()
-      ..status = _random ? TransferLogStatusEnum.success : TransferLogStatusEnum.fail
-      ..type = _random ? TransferLogTypeEnum.receive : TransferLogTypeEnum.send
-      ..hash = '5F6BA29583ABB097325D1C3A6A41D021E3440E793F68ABA5735D652DDD4BB0AF'
-      ..items = [
-        TransferLogItemModel()
-          ..toAddress = 'gxasodifj9asdflkjag09asdflkjasdg0asdf'
-          ..formAddress = 'gxasjdifolxzkcjvaoisdfjdxgaoisdjf'
-          ..coin = (
-            TokenModel()
-              ..setData(state.tokenInfo.toJson())
-              ..amount = '123123'
-          ),
-      ];
-    List<TransferLogModel> items = [];
-    for (int i = 0; i < 10; i++) {
-      items.add(oneItem);
-    }
-    if (type == WalletTokenLogsPageTabType.all) {
-      state.transferLogsAll.addAll(items);
-    } else if (type == WalletTokenLogsPageTabType.send) {
-      state.transferLogsSend.addAll(items);
+  ) async {
+    HttpToolResponse? result;
+    if (type == WalletTokenLogsPageTabType.send) {
+      result = await httpToolApp.getAccountSenderList(
+        dataAccount.state.nowAccount?.address??'',
+        page: state.logsPageSend,
+        limit: 10
+      );
     } else if (type == WalletTokenLogsPageTabType.receive) {
-      state.transferLogsReceive.addAll(items);
+      result = await httpToolApp.getAccountRecipientList(
+        dataAccount.state.nowAccount?.address??'',
+        page: state.logsPageReceive,
+        limit: 10
+      );
+    }
+    if (result == null) return;
+    if (type == WalletTokenLogsPageTabType.send) {
+      if (result.data == null || result.data['tx_responses'].length < 10) {
+        state.logsPageSend = 0;
+      } else {
+        state.logsPageSend++;
+      }
+    }
+    if (type == WalletTokenLogsPageTabType.receive) {
+      if (result.data == null || result.data['tx_responses'].length < 10) {
+        state.logsPageReceive = 0;
+      } else {
+        state.logsPageReceive++;
+      }
+    }
+    if (result.data == null) return;
+    for (var res in result.data['tx_responses']) {
+      TransferLogModel _item = TransferLogModel()
+        ..blockHeight = int.parse(res['height'])
+        ..hash = res['txhash']
+        ..status = (res['code'] == 0 ? TransferLogStatusEnum.success : TransferLogStatusEnum.fail)
+        ..type = (type == WalletTokenLogsPageTabType.send ? TransferLogTypeEnum.send : TransferLogTypeEnum.receive)
+        ..time = DateTime.parse(res['timestamp'])
+        ..items = [
+          for (var _res in res['tx']['body']['messages'])
+            TransferLogItemModel()..toAddress = _res['to_address']
+              ..formAddress = _res['from_address']
+              ..coin = (
+                TokenModel()..amount=_res['amount'][0]['amount']
+                            ..minUnit=_res['amount'][0]['denom']
+                            ..scale=state.tokenInfo.scale
+              )
+        ];
+      if (type == WalletTokenLogsPageTabType.send) {
+        state.transferLogsSend.add(_item);
+      } else if (type == WalletTokenLogsPageTabType.receive) {
+        state.transferLogsReceive.add(_item);
+      }
     }
   }
 
@@ -133,19 +160,18 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
     WalletTokenLogsPageTabType type,
   ) async {
     if (type == WalletTokenLogsPageTabType.all) {
-      await Future.delayed(const Duration(seconds: 1));
       state.transferLogsAll.clear();
-      _getTransferLogs(type);
+      await _getTransferLogs(type);
     }
     if (type == WalletTokenLogsPageTabType.send) {
-      await Future.delayed(const Duration(seconds: 1));
       state.transferLogsSend.clear();
-      _getTransferLogs(type);
+      state.logsPageSend = 1;
+      await _getTransferLogs(type);
     }
     if (type == WalletTokenLogsPageTabType.receive) {
-      await Future.delayed(const Duration(seconds: 1));
       state.transferLogsReceive.clear();
-      _getTransferLogs(type);
+      state.logsPageReceive = 1;
+      await _getTransferLogs(type);
     }
     refresh();
   }
@@ -154,20 +180,18 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
     WalletTokenLogsPageTabType type,
   ) async {
     if (type == WalletTokenLogsPageTabType.all) {
-      await Future.delayed(const Duration(seconds: 1));
-      _getTransferLogs(type);
+      await _getTransferLogs(type);
     }
     if (type == WalletTokenLogsPageTabType.send) {
-      await Future.delayed(const Duration(seconds: 1));
-      _getTransferLogs(type);
+      await _getTransferLogs(type);
     }
     if (type == WalletTokenLogsPageTabType.receive) {
-      await Future.delayed(const Duration(seconds: 1));
-      _getTransferLogs(type);
+      await _getTransferLogs(type);
     }
   }
   // 前往详情页
   onGoToDetail(String hash) {
+    print(hash);
     Get.toNamed(PlugRoutesNames.walletTokenLogsDetail(hash));
   }
 }

@@ -101,10 +101,10 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
               indicatorSize: TabBarIndicatorSize.label,
               isScrollable: true,
               tabs: [
-                Padding(
-                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('全部'.tr),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
+                //   child: Text('全部'.tr),
+                // ),
                 Padding(
                   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
                   child: Text('转出'.tr),
@@ -128,47 +128,53 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
         controller: controller.tabController,
         children: [
           // 全部
-          LScrollView(
-            refreshController: controller.allRefreshController,
-            onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.all),
-            onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.all),
-            child: Obx(() => Column(
-              children: state.transferLogsAll.map((_item) => InkWell(
-                onTap: () => controller.onGoToDetail(_item.hash),
-                child: LAnimationView(
-                  child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
-                ),
-              )).toList(),
-            )),
-          ),
+          // LScrollView(
+          //   refreshController: controller.allRefreshController,
+          //   onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.all),
+          //   onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.all),
+          //   child: Obx(() => Column(
+          //     children: state.transferLogsAll.map((_item) => InkWell(
+          //       onTap: () => controller.onGoToDetail(_item.hash),
+          //       child: LAnimationView(
+          //         child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+          //       ),
+          //     )).toList(),
+          //   )),
+          // ),
           // 转出
-          LScrollView(
+          Obx(() => LScrollView(
             refreshController: controller.sendRefreshController,
             onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.send),
             onLoading: state.logsPageSend == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.send),
-            child: Obx(() => Column(
-              children: state.transferLogsSend.map((_item) => InkWell(
-                onTap: () => controller.onGoToDetail(_item.hash),
-                child: LAnimationView(
-                  child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
-                ),
-              )).toList(),
-            )),
-          ),
+            child: Column(
+              children: [
+                for (var _item in state.transferLogsSend)
+                  InkWell(
+                    onTap: () => controller.onGoToDetail(_item.hash),
+                    child: LAnimationView(
+                      child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+                    ),
+                  ),
+              ],
+            ),
+          )),
           // 转入
-          LScrollView(
+          Obx(() => LScrollView(
             refreshController: controller.receiveRefreshController,
             onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.receive),
             onLoading: state.logsPageReceive == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.receive),
-            child: Obx(() => Column(
-              children: state.transferLogsReceive.map((_item) => InkWell(
-                onTap: () => controller.onGoToDetail(_item.hash),
-                child: LAnimationView(
-                  child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
-                ),
-              )).toList(),
-            )),
-          ),
+            child: Column(
+              children: [
+                for (var _item in state.transferLogsReceive)
+                  InkWell(
+                    onTap: () => controller.onGoToDetail(_item.hash),
+                    child: LAnimationView(
+                      child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
+                    ),
+                  ),
+              ],
+            ),
+          )),
         ],
       ),
     );

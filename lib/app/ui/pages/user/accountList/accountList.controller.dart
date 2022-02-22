@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 
 class UserAccountListPageState {
@@ -16,24 +17,13 @@ class UserAccountListPageController extends GetxController {
   UserAccountListPageController();
   UserAccountListPageState state = UserAccountListPageState();
 
+  DataAccountController dataAccount = Get.find();
+
   @override
-  onInit() {
+  onReady() {
     super.onInit();
     state.accountList.clear();
-    state.accountList.addAll([
-      AccountModel()
-        ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04y'
-        ..nickName = 'cosmo-import-1',
-      AccountModel()
-        ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04z'
-        ..nickName = 'cosmo-import-2',
-      AccountModel()
-        ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04n'
-        ..nickName = 'cosmo-import-3',
-      AccountModel()
-        ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04e'
-        ..nickName = 'cosmo-create-4',
-    ]);
+    state.accountList.addAll(dataAccount.state.accountsList);
   }
 
   // 侧边栏账户选择

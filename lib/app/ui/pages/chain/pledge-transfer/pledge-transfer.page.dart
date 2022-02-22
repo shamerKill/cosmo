@@ -10,6 +10,7 @@ import 'package:plug/app/ui/components/view/verifierCard.component.dart';
 import 'package:plug/app/ui/pages/chain/pledge-transfer/pledge-transfer.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController> {
   const ChainPledgeTransferPage({Key? key}) : super(key: key);
@@ -39,7 +40,8 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                         borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 100.0)),
                       ),
                       child: Obx(() => LViewImage(
-                        url: state.veriferInfo.avatar,
+                        url: state.verifierInfo.avatar,
+                        bgColor: StringTool.stringToColor(state.verifierInfo.address),
                         width: appTheme.sizes.basic * 56.0,
                         height: appTheme.sizes.basic * 56.0,
                         isRadius: true,
@@ -49,9 +51,9 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Obx(() =>  Text(state.veriferInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold, height: 1.6))),
+                        Obx(() =>  Text(state.verifierInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold, height: 1.6))),
                         Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(state.veriferInfo.address, style: Get.textTheme.bodyText1)),
+                        Obx(() => Text(state.verifierInfo.address, style: Get.textTheme.bodyText1)),
                       ],
                     ),
                   ],
@@ -59,7 +61,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                 Positioned(
                   top: appTheme.sizes.basic * 10.0,
                   right: appTheme.sizes.zero,
-                  child: LVerifierStatusNode(verifier: state.veriferInfo),
+                  child: LVerifierStatusNode(verifier: state.verifierInfo),
                 ),
               ],
             ),
@@ -74,25 +76,25 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
               ),
               child: Row(
                 children: [
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                  //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
+                  //       Text(state.veriferInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
                     flex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(state.veriferInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
                         Text('节点质押总量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.allPledged.toString())))
+                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged.toString()))))
                       ],
                     ),
                   ),
@@ -103,7 +105,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                       children: [
                         Text('最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.veriferInfo.minPledgeVolume.toString())))
+                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume.toString()))))
                       ],
                     ),
                   ),
@@ -152,7 +154,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(NumberTool.amountToBalance(state.feeAmount, scale: state.baseCoin.scale)) + ' ' + state.baseCoin.symbol,
+                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                   )),
                 ),
@@ -164,7 +166,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                   ),
                   child: Column(
                     children: [
-                      Text('委托 ${state.baseCoin.symbol} 给验证节点可以随时赎回，但赎回委托需要等待 21 天。'.tr, style: Get.textTheme.bodyText1),
+                      Obx(() => Text('委托 ${state.baseCoin.symbol} 给验证节点可以随时赎回，但赎回委托需要等待 21 天。'.tr, style: Get.textTheme.bodyText1)),
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                       Text('如果验证节点行为不端将可能会被罚没部分委托代币，比如验证节点双重签名、经常性离线。为了规避风险，请认真选择合格的验证节点。'.tr, style: Get.textTheme.bodyText1),
                     ],

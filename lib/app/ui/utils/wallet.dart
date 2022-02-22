@@ -1,14 +1,173 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:math';
 import 'package:alan/alan.dart' as alan;
-import 'package:plug/app/config/config.chain.dart';
+import 'package:alan/proto/cosmos/bank/v1beta1/export.dart' as bank;
+import 'package:flustars/flustars.dart';
+import 'package:alan/proto/cosmos/auth/v1beta1/export.dart' as auth;
+import 'package:alan/proto/cosmos/auth/v1beta1/auth.pb.dart' as authPb;
+import 'package:alan/proto/cosmos/staking/v1beta1/tx.pb.dart' as staking;
+import 'package:alan/proto/cosmos/gov/v1beta1/tx.pb.dart' as gov;
+import 'package:alan/proto/cosmos/gov/v1beta1/gov.pb.dart' as govDef;
+import 'package:alan/proto/cosmos/distribution/v1beta1/tx.pb.dart' as distribution;
+import 'package:alan/proto/google/protobuf/any.pb.dart' as $1;
 import 'package:encrypt/encrypt.dart';
+import 'package:fixnum/fixnum.dart' as $fixnum;
+import 'package:get/instance_manager.dart';
+import 'package:grpc/grpc.dart' as grpc;
+import 'package:http/http.dart' as http;
+import 'package:alan/proto/cosmos/crypto/secp256k1/export.dart' as secp256;
+import 'package:plug/app/config/config.chain.dart';
+import 'package:plug/app/data/provider/data.base-coin.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/number.dart';
+import 'package:protobuf/protobuf.dart';
+import 'package:plug/protobuf/token/tx.pb.dart' as tokenTx;
+import 'package:plug/protobuf/liquidity/v1beta1/tx.pb.dart' as liquidityTx;
+
+
+List<int> errorCode = [
+  -10001, // 签名数据有误
+  -10002, // 请求交易签名hash超时
+];
+
+class SelfAuthQuerier extends alan.AuthQuerier {
+  final alan.Wallet wallet;
+
+  SelfAuthQuerier({
+    required auth.QueryClient client,
+    required this.wallet,
+  }) : super(client: client);
+
+  @override
+  factory SelfAuthQuerier.build(alan.Wallet wallet, grpc.ClientChannel channel) {
+    return SelfAuthQuerier(client: auth.QueryClient(channel), wallet: wallet);
+  }
+  @override
+  Future<alan.AccountI?> getAccountData(String address) async {
+    final secp256Key = secp256.PubKey.create()..key = wallet.publicKey;
+    $1.Any pubKey = alan.Codec.serialize(secp256Key);
+    var accountResult = await httpToolApp.getAccountChainInfo(address);
+    String accountNumber = '0';
+    String sequence = '0';
+    if (accountResult?.data["account_number"] != '') accountNumber = '${accountResult?.data["account_number"]}';
+    if (accountResult?.data["sequence"] != '') sequence = '${accountResult?.data["sequence"]}';
+    return alan.BaseAccount(
+      authPb.BaseAccount(
+        address: wallet.bech32Address,
+        pubKey: pubKey,
+        accountNumber: $fixnum.Int64.parseInt(accountNumber),
+        sequence: $fixnum.Int64.parseInt(sequence),
+      )
+    );
+  }
+}
+class SelfNodeQuerier extends alan.QueryHelper implements alan.NodeQuerier {
+  SelfNodeQuerier._({
+    required http.Client httpClient,
+  }) : super(httpClient: httpClient);
+
+  factory SelfNodeQuerier.build(http.Client httpClient) {
+    return SelfNodeQuerier._(httpClient: httpClient);
+  }
+  Future<alan.NodeInfo> getNodeInfo(String lcdEndpoint) async {
+    return alan.NodeInfo(
+      network: (await httpToolChain.getChainInfo()).data['data'],
+    );
+  }
+}
 
 class WalletTool {
   static final _networkInfo = alan.NetworkInfo.fromSingleHost(
     bech32Hrp: ConfigChainData.addressPrex,
-    host: ConfigChainData.chainInfoRpcUrl,
+    host: '',
   );
+  static Future<HttpToolResponse> _createAndSendMsg (
+    alan.Wallet wallet,
+    List<GeneratedMessage> msgs,
+    String memo,
+    $fixnum.Int64 gasLimit,
+    String gasAll,
+    {
+      bool? noWait,
+    }
+  ) async {
+    DataCoinsController dataCoins = Get.find();
+    var signer = alan.TxSigner(
+      nodeQuerier: SelfNodeQuerier.build(http.Client()),
+      authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel),
+    );
+    var tx = await signer.createAndSign(
+      wallet,
+      msgs,
+      memo: memo,
+      fee: alan.Fee(
+        gasLimit: gasLimit,
+        amount: [
+          alan.Coin.create()
+            ..denom=dataCoins.state.baseCoin.minUnit
+            ..amount=gasAll
+        ],
+      ),
+    );
+    var config = alan.DefaultTxConfig.create();
+    var encoder = config.txEncoder();
+    var request = base64.encode(encoder(tx));
+    HttpToolResponse result = await _walletSendFetch('broadcast_tx_async', { 'tx': request }, noWait: noWait);
+    return result;
+  }
+  static Future<HttpToolResponse> _fetchDefault(String method, Map<String, dynamic> params) {
+    String data = json.encode({
+      'jsonrpc': '2.0',
+      'id': '${Random(1000).nextInt(1000000000)}',
+      'method': method,
+      'params': params,
+    });
+    return HttpToolClient.postHttp(
+      Uri.parse(ConfigChainData.webRawRpcUrl),
+      data: data,
+    );
+  }
+  static Future<HttpToolResponse> _walletSendFetch (String method, Map<String, dynamic> params, { bool? noWait }) async {
+    var result = await _fetchDefault(method, params);
+    Completer<HttpToolResponse> compute = Completer();
+    if (result.data == null || result.data['result'] == null || result.data['result']['code'] != 0) {
+      result.status = errorCode[0]; // 发送出错
+      result.message = 'error';
+      return result;
+    } else {
+      if (noWait == true) {
+        return result;
+      }
+      var isSuccessEnd = 0; // 10结束
+      Timer.periodic(const Duration(seconds: 3), (timer) async {
+        var successResult = await _fetchDefault('tx_search', { 'query': 'tx.hash=\'' + result.data['result']['hash'] + '\'', 'page': '1', 'prove': false });
+        if (successResult.data['result']['total_count'] != '0') {
+          timer.cancel();
+          result.data = successResult.data;
+          if (successResult.data['result']['txs'][0]['tx_result']['code'] != 0) {
+            result.status = successResult.data['result']['txs'][0]['tx_result']['code']; // 发送出错
+            result.message = 'error';
+          }
+          compute.complete(result);
+          return;
+        }
+        if (isSuccessEnd++ == 10) {
+          timer.cancel();
+          result.status = errorCode[1]; // 查询超时
+          result.message = 'error';
+          compute.complete(result);
+          return;
+        }
+      });
+    }
+    return compute.future;
+  }
+  // 创建账户助记词
   static List<String> creaetMnemonic () => alan.Bip39.generateMnemonic();
+  // 解压助记词
   static alan.Wallet walletForMnemonic (List<String> mnemonic) => alan.Wallet.derive(mnemonic, _networkInfo);
+  /// 加密
   static encryptMnemonic (List<String> mnemonic, String pass) {
     String keyPass = pass;
     while (keyPass.length < 32) {
@@ -20,6 +179,7 @@ class WalletTool {
     final encrypted = encrypter.encrypt(mnemonic.join('_'));
     return encrypted.base64;
   }
+  /// 解压
   static List<String>? decryptMnemonic(String raw, String pass) {
     String keyPass = pass;
     while (keyPass.length < 32) {
@@ -34,5 +194,156 @@ class WalletTool {
     } catch (err) {
       return null;
     }
+  }
+  // 赎回收益
+  static Future<HttpToolResponse> withReward({
+    required List<String> mnemonic,
+    required String validatorAddress,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) async {
+    gasLimit ??= 400000.toInt64();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var message = distribution.MsgWithdrawDelegatorReward.create()
+      ..delegatorAddress = wallet.bech32Address
+      ..validatorAddress = validatorAddress;
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // 赎回质押
+  static Future<HttpToolResponse> unDelegate({
+    required List<String> mnemonic,
+    required String validatorAddress,
+    required String volume,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) async {
+    gasLimit ??= 400000.toInt64();
+    DataCoinsController dataCoins = Get.find();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var message = staking.MsgUndelegate.create()
+      ..delegatorAddress = wallet.bech32Address
+      ..validatorAddress = validatorAddress
+      ..amount = (
+        alan.Coin.create()
+        ..denom = dataCoins.state.baseCoin.minUnit
+        ..amount = volume
+      );
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // 质押
+  static Future<HttpToolResponse> delegate({
+    required List<String> mnemonic,
+    required String validatorAddress,
+    required String volume,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) async {
+    gasLimit ??= 400000.toInt64();
+    DataCoinsController dataCoins = Get.find();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var message = staking.MsgDelegate.create()
+      ..delegatorAddress = wallet.bech32Address
+      ..validatorAddress = validatorAddress
+      ..amount = (
+        alan.Coin.create()
+        ..denom = dataCoins.state.baseCoin.minUnit
+        ..amount = volume
+      );
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // 转让质押
+  static Future<HttpToolResponse> reDelegate({
+    required List<String> mnemonic,
+    required String validatorSrcAddress,
+    required String validatorDstAddress,
+    required String volume,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) async {
+    gasLimit ??= 400000.toInt64();
+    DataCoinsController dataCoins = Get.find();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var message = staking.MsgBeginRedelegate.create()
+      ..delegatorAddress = wallet.bech32Address
+      ..validatorSrcAddress = validatorSrcAddress
+      ..validatorDstAddress = validatorDstAddress
+      ..amount = (
+        alan.Coin.create()
+        ..denom = dataCoins.state.baseCoin.minUnit
+        ..amount = volume
+      );
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // 转账
+  static Future<HttpToolResponse> transfer({
+    required List<String> mnemonic,
+    required String toAddress,
+    required String volume,
+    required String gasAll,
+    required String denom,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+    bool? noWait,
+  }) async {
+    gasLimit ??= 400000.toInt64();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var message = bank.MsgSend.create()
+      ..fromAddress = wallet.bech32Address
+      ..toAddress = toAddress
+      ..amount.add(alan.Coin.create()
+        ..denom = denom
+        ..amount = volume
+      );
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll, noWait: noWait);
+  }
+  // 进行投票
+  static Future<HttpToolResponse> proposalVote({
+    required List<String> mnemonic,
+    required String proposalId,
+    required govDef.VoteOption option,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) async {
+    gasLimit ??= 400000.toInt64();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var message = gov.MsgVote.create()
+      ..voter = wallet.bech32Address
+      ..proposalId = $fixnum.Int64.parseInt(proposalId)
+      ..option = option;
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // 创建代币
+  static Future<HttpToolResponse> createToken({
+    required List<String> mnemonic,
+    required String name,
+    required String symbol,
+    required String minUnit,
+    required String initialSupply,
+    required String maxSupply,
+    required bool mintable,
+    required String scale,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) async {
+    $fixnum.Int64 gasLimit = 400000.toInt64();
+    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    String memo = '';
+    var message = tokenTx.MsgIssueToken.create()
+        ..owner = wallet.bech32Address
+        ..name = name
+        ..symbol = symbol
+        ..minUnit = minUnit
+        ..initialSupply = $fixnum.Int64.parseInt(initialSupply)
+        ..maxSupply = $fixnum.Int64.parseInt(maxSupply)
+        ..mintable = mintable
+        ..scale = int.parse(scale)
+        ;
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
 }

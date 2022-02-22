@@ -1,6 +1,7 @@
 import 'package:clipboard/clipboard.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 
 class WalletTokenReceivePageState {
@@ -18,29 +19,20 @@ class WalletTokenReceivePageController extends GetxController {
   WalletTokenReceivePageController();
   WalletTokenReceivePageState state = WalletTokenReceivePageState();
 
+  DataAccountController dataAccount = Get.find();
+
   @override
-  void onInit() {
-    super.onInit();
-    state.accountInfo
-      ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04y'
-      ..nickName = 'cosmo-import-1'
-      ..createTime = DateTime.now();
-    state.accountInfo
-      .tokenList = [
-        TokenModel()
-          ..symbol = 'plugcn'
-          ..scale = 6
-          ..minUnit = 'uplugcn',
-        TokenModel()
-          ..symbol = 'shamer'
-          ..scale = 8
-          ..minUnit = 'sha',
-      ];
+  void onReady() {
+    String? token = Get.parameters['token'];
+    if (dataAccount.state.nowAccount == null || token == null) return Get.back();
+    state.accountInfo = dataAccount.state.nowAccount!;
     state._accountInfo.refresh();
-    state.tokenInfo = TokenModel()
-          ..symbol = 'plugcn'
-          ..scale = 6
-          ..minUnit = 'uplugcn';
+    for (var _item in state.accountInfo.tokenList) {
+      if (_item.minUnit == token) {
+        state.tokenInfo = _item;
+      }
+    }
+    state._tokenInfo.refresh();
   }
 
   // 分享操作

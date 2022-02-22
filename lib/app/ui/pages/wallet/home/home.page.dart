@@ -12,7 +12,6 @@ import 'package:plug/app/ui/pages/wallet/home/home.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BasicHomePage extends GetView<BasicHomePageController> {
   const BasicHomePage({Key? key}) : super(key: key);
@@ -256,7 +255,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                   children: [
                                     Text('balance'.tr),
                                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall / 2)),
-                                    GetX<BasicHomePageController>(builder: (BasicHomePageController _controller) {
+                                    Obx(() {
                                       var _balance = state.accountInfo.tokenList.isEmpty ? '' : NumberTool.amountToBalance(state.accountInfo.tokenList.first.amount, scale: state.accountInfo.tokenList.first.scale);
                                       return LAnimationView(randomKey: false, child: Text.rich(
                                         TextSpan(
@@ -384,60 +383,57 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                 ),
               ],
             ),
-            GetX<BasicHomePageController>(
-              builder: (BasicHomePageController _controller) {
-                return Column(
-                  children: state.accountInfo.tokenList.map((_item) => Padding(
-                    padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
-                    child: InkWell(
-                      onTap: () => controller.onToTokenPage(_item.minUnit),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
-                        decoration: BoxDecoration(
-                          color: appTheme.colors.pageBackgroundColor,
-                          borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+            Obx(() => Column(
+              children: state.accountInfo.tokenList.map((_item) => Padding(
+                padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
+                child: InkWell(
+                  onTap: () => controller.onToTokenPage(_item.minUnit),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
+                    decoration: BoxDecoration(
+                      color: appTheme.colors.pageBackgroundColor,
+                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                    ),
+                    child: Row(
+                      children: [
+                        LViewImage(
+                          url: _item.logo,
+                          bgColor: StringTool.stringToColor(_item.symbol),
+                          width: appTheme.sizes.basic * 60,
+                          height: appTheme.sizes.basic * 60,
+                          isRadius: true,
                         ),
-                        child: Row(
+                        Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+                        Expanded(
+                          flex: 1,
+                          child: Text(_item.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            LViewImage(
-                              url: 'http://via.placeholder.com/43x46',
-                              width: appTheme.sizes.basic * 60,
-                              height: appTheme.sizes.basic * 60,
-                              isRadius: true,
-                            ),
-                            Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
-                            Expanded(
-                              flex: 1,
-                              child: Text(_item.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Obx(() => LAnimationView(
-                                  randomKey: false,
-                                  child: Text(
-                                    state.hideInfo ? NumberTool.getNumberLenStar(6) : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale)),
-                                    style: TextStyle(fontSize: appTheme.sizes.fontSize),
-                                  ),
-                                )),
-                                Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10)),
-                                LAnimationView(
-                                  randomKey: false,
-                                  child: Text(
-                                    state.hideInfo ? NumberTool.getNumberLenStar(6) : '≈\r\$${NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale))}',
-                                    style: Get.textTheme.bodyText1,
-                                  ),
-                                ),
-                              ],
+                            Obx(() => LAnimationView(
+                              randomKey: false,
+                              child: Text(
+                                state.hideInfo ? NumberTool.getNumberLenStar(6) : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale)),
+                                style: TextStyle(fontSize: appTheme.sizes.fontSize),
+                              ),
+                            )),
+                            Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10)),
+                            LAnimationView(
+                              randomKey: false,
+                              child: Text(
+                                state.hideInfo ? NumberTool.getNumberLenStar(6) : '≈\r\$${NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale))}',
+                                style: Get.textTheme.bodyText1,
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    )),
-                  ).toList(),
-                );
-              },
-            ),
+                      ],
+                    ),
+                  ),
+                )),
+              ).toList(),
+            )),
           ],
         ),
       ),

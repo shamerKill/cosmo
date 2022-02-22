@@ -1,17 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainRePledgePageState {
   // 节点信息
-  final Rx<UserVerifierModel> _veriferInfo = UserVerifierModel().obs;
-  UserVerifierModel get veriferInfo => _veriferInfo.value;
-  set veriferInfo (UserVerifierModel value) => _veriferInfo.value = value;
+  final Rx<UserVerifierModel> _verifierInfo = UserVerifierModel().obs;
+  UserVerifierModel get verifierInfo => _verifierInfo.value;
+  set verifierInfo (UserVerifierModel value) => _verifierInfo.value = value;
   // 手续费数量
   final Rx<String> _feeAmount = ''.obs;
   String get feeAmount => _feeAmount.value;
@@ -43,47 +48,108 @@ class ChainRePledgePageController extends GetxController {
   TextEditingController pledgeController = TextEditingController(text: '0');
   RefreshController verifiersRefreshController = RefreshController();
 
+  DataAccountController dataAccount = Get.find();
+  DataCoinsController dataCoins = Get.find();
+
 
   @override
-  onInit() {
-    super.onInit();
+  onReady() async {
     String? address = Get.parameters['address'];
     if (address == null) return Get.back();
-    _initData();
+    state.verifierInfo.address = address;
+    state._verifierInfo.refresh();
+    LLoading.showBgLoading();
+    await _initData();
+    LLoading.dismiss();
   }
 
   // 初始化数据
-  _initData() {
-    state.veriferInfo..address = 'gxjioasdjfasldgkjoi123jioldsajfgolasdjgio'
-      ..avatar = 'http://via.placeholder.com/43x46'
-      ..nickName = 'zhiyayihao'
-      ..status = VerifierStatusEnum.running
-      ..allPledged = '100000'
-      ..yieldRate = '47.99'
-      ..pledged = '2022248912345'
-      ..rePledging = '289124809123'
-      ..redeeming = '123940125123'
-      ..reward = '123124123'
-      ..minPledgeVolume = '10';
-    state.baseCoin..symbol = 'PLUGCN' ..scale = 6 ..amount = '100000';
-    state.feeAmount = '200';
-    getAllVerifiersList();
+  _initData() async {
+    var result = await Future.wait([
+      // 节点信息
+      httpToolApp.getChainVerifierInfo(state.verifierInfo.address),
+      // 质押信息
+      httpToolApp.getAccountDelegateData(dataAccount.state.nowAccount!.address),
+      // 账户余额
+      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, dataCoins.state.baseCoin.minUnit),
+      // 手续费
+      httpToolServer.getChainFee(),
+      // 获取奖励
+      httpToolApp.getAccountRewardData(dataAccount.state.nowAccount!.address, vAddress: state.verifierInfo.address),
+    ]);
+    var _verifierInfo = result[0];
+    var _accountDelegate = result[1];
+    var _balance = result[2];
+    var _fee = result[3];
+    var _reward = result[4];
+    if (_verifierInfo != null && _verifierInfo.status == 0 && _verifierInfo.data != null) {
+      state.verifierInfo..nickName = _verifierInfo.data['validator']['description']['moniker']
+        ..setStatus(_verifierInfo.data['validator']['status'])
+        ..allPledged = _verifierInfo.data['validator']['tokens']
+        ..minPledgeVolume = _verifierInfo.data['validator']['min_self_delegation'];
+    }
+    if (_accountDelegate != null && _accountDelegate.status == 0 && _accountDelegate.data != null) {
+      var _res1 = _accountDelegate.data['delegation_responses'];
+      state.verifierInfo.pledged = '0';
+      for (var _item in _res1) {
+        if (_item['delegation']['validator_address'] == state.verifierInfo.address) {
+          state.verifierInfo.pledged = _item['balance']['amount'];
+          break;
+        }
+      }
+    }
+    if (_balance != null && _balance.status == 0) {
+      state.baseCoin.setData(
+        (dataCoins.state.baseCoin..amount = _balance.data).toJson()
+      );
+    }
+    // 奖励
+    if (_reward != null && _reward.status == 0 && _reward.data != null && _reward.data['rewards'] != null) {
+      var _res0 = _reward.data['rewards'];
+      state.verifierInfo.reward = '0';
+      for (var _item in _res0) {
+        if (_item['denom'] == dataCoins.state.baseCoin.minUnit) {
+          state.verifierInfo.reward = NumberTool.getNumberInt(_item['amount']);
+          break;
+        }
+      }
+    }
+    state.feeAmount = _fee!.data??'0.0002';
+    state._verifierInfo.refresh();
+    state._baseCoin.refresh();
+    await _getVerifierList();
   }
   // 获取分页数据
-  Future<void> getAllVerifiersList() async {
-    state.allVerifiers.addAll([
-      state.veriferInfo..address += '1',
-      state.veriferInfo..address += '2',
-      state.veriferInfo..address += '3',
-      state.veriferInfo..address += '4',
-      state.veriferInfo..address += '5',
-      state.veriferInfo..address += '6',
-    ]);
-    state.allVerifiersPage++;
+  Future<void> _getVerifierList() async {
+    var result = await httpToolApp.getChainVerifiersList(state.allVerifiersPage, limit: 10);
+    List<UserVerifierModel> list = [];
+    if (result.status == 0) {
+      if (result.data.length < 10) state.allVerifiersPage = 0;
+      for (var _item in result.data) {
+        if (_item['operator_address'] == state.verifierInfo.address) continue;
+        list.add(
+          UserVerifierModel()
+            ..address = _item['operator_address']
+            ..setStatus(_item['status'])
+            ..nickName = _item['description']['moniker']
+            ..allPledged = _item['tokens']
+            ..minPledgeVolume = _item['min_self_delegation']
+        );
+      }
+    }
+    state.allVerifiers.addAll(list);
   }
   // 刷新列表
   Future<void> onRefreshVerifiersList() async {
-    getAllVerifiersList();
+    state.allVerifiers.clear();
+    state.allVerifiersPage = 1;
+    await _getVerifierList();
+  }
+  // 加载列表
+  Future<void> onLoadVerifiersList() async {
+    if (state.allVerifiersPage == 0) return;
+    state.allVerifiersPage++;
+    await _getVerifierList();
   }
   // 查看节点详情
   onVerifierDetailListener(UserVerifierModel verifier) {
@@ -91,14 +157,33 @@ class ChainRePledgePageController extends GetxController {
   }
   //  转让质押监听
   onPledgeListener() async {
+    if (state.selectVerifier.address == '') return;
+    var _rePledgeValue = NumberTool.balanceToAmount(pledgeController.text);
+    var douValue = double.tryParse(_rePledgeValue);
+    if (
+      douValue == null || douValue == 0.0
+    ) return LToast.warning('数量输入有误'.tr);
     String? pass = await LBottomSheet.passwordBottomSheet();
-    print(pass);
+    if (pass == null) return;
+    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, pass);
+    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
+    Get.focusScope?.unfocus();
     state.pledgeLoading = true;
     LLoading.showBgLoading();
-    await Future.delayed(const Duration(seconds: 5));
+    var result = await WalletTool.reDelegate(
+      mnemonic: mnemonicList,
+      validatorSrcAddress: state.verifierInfo.address,
+      validatorDstAddress: state.selectVerifier.address,
+      volume: _rePledgeValue,
+      gasAll: NumberTool.balanceToAmount(state.feeAmount),
+    );
     LLoading.dismiss();
     state.pledgeLoading = false;
-    LToast.success('转让质押完成'.tr);
+    if (result.status == -10001) return LToast.error('ErrorWithRePledgeCallback'.tr);
+    if (result.status == -10002) return LToast.error('ErrorWithRePledgeTimeout'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithRePledgeUnkown'.tr);
+    LToast.success('SuccessRePledgeRedeem'.tr);
+    pledgeController.text = '0';
   }
   // 选择转质押节点
   onSelectVerifier(UserVerifierModel verifier) {

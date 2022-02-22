@@ -59,6 +59,8 @@ abstract class PlugRoutesNames {
   static chainRePledge (String address) => '/chainVerifierRePledge/$address';
   /// 生态-赎回质押
   static chainBackupPledge (String address) => '/chainVerifierBackupPledge/$address';
+  /// 生态-创建代币
+  static const chainCreateToken = '/chainCreateToken';
   /// 社区-首页
   static const dappExhibition = '/dappExhibition';
   /// 社区-搜索

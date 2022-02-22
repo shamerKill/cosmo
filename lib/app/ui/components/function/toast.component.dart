@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:get/get.dart';
 
+var _print = print;
+
 // TODO: 提示样式
 class LToast {
   static success(String message) {
@@ -44,6 +46,10 @@ class LToast {
       gravity: ToastGravity.TOP,
       fontSize: appTheme.sizes.fontSize,
     );
+  }
+
+  static print(String message) {
+    _print(message);
   }
 
 }

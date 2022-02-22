@@ -31,9 +31,9 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
                 return Row(
                   children: [
                     Icon(
-                      IconData(state.logDetail.status == TransferLogStatusEnum.success ? 0xe81e : (
-                        state.logDetail.status == TransferLogStatusEnum.fail ? 0xe60c : 0xe815
-                      ), fontFamily: 'plugIcon'),
+                      state.logDetail.status == TransferLogStatusEnum.success ? const IconData(0xe81e, fontFamily: 'plugIcon') : (
+                        state.logDetail.status == TransferLogStatusEnum.fail ? const IconData(0xe60c, fontFamily: 'plugIcon') : const IconData(0xe815, fontFamily: 'plugIcon')
+                      ),
                       size: appTheme.sizes.iconSize / 1.5,
                       color: state.logDetail.status == TransferLogStatusEnum.success ? appTheme.colors.primaryColor : (
                         state.logDetail.status == TransferLogStatusEnum.fail ? appTheme.colors.errorColor : appTheme.colors.textGrayBig

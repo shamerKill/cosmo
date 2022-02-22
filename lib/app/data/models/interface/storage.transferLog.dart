@@ -48,10 +48,27 @@ class TransferLogModel extends _StorageBaseAbstract {
   @override
   void _saveKey() {
     _valueMap['type'] = type;
+    _valueMap['time'] = time;
+    _valueMap['blockHeight'] = blockHeight;
+    _valueMap['memo'] = memo;
+    _valueMap['hash'] = hash;
+    _valueMap['status'] = status;
+    _valueMap['items'] = items;
+    _valueMap['fee'] = fee;
+    _valueMap['rawLog'] = rawLog;
   }
   @override
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
+    type = source['type']??'';
+    time = source['time'];
+    blockHeight = source['blockHeight']??0;
+    memo = source['memo']??'';
+    hash = source['hash']??'';
+    status = source['status']??TransferLogStatusEnum.success;
+    items = source['items']??[];
+    fee = source['fee']??TokenModel();
+    rawLog = source['rawLog']??'';
   }
 }
 
@@ -78,10 +95,16 @@ class TransferLogItemModel extends _StorageBaseAbstract {
 
   @override
   void _saveKey() {
+    _valueMap['formAddress'] = formAddress;
+    _valueMap['toAddress'] = toAddress;
+    _valueMap['coin'] = coin;
   }
   @override
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
+    formAddress = source['formAddress']??'';
+    toAddress = source['toAddress']??'';
+    coin = source['coin']??TokenModel();
   }
 }
 

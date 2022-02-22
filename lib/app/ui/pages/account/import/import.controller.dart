@@ -126,7 +126,7 @@ class AccountImportPageController extends GetxController {
     state._importLoading.toggle();
     LLoading.dismiss();
     LToast.success('SuccessWithImport'.tr);
-    Get.offAllNamed(PlugRoutesNames.walletHome);
+    Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
   }
 
   // 判断助记词是否可用

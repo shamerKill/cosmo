@@ -22,6 +22,8 @@ import 'package:plug/app/ui/pages/account/import/import.binding.dart';
 import 'package:plug/app/ui/pages/account/import/import.page.dart';
 import 'package:plug/app/ui/pages/chain/backup-pledge/backup-pledge.binding.dart';
 import 'package:plug/app/ui/pages/chain/backup-pledge/backup-pledge.page.dart';
+import 'package:plug/app/ui/pages/chain/create-token/create-token.binding.dart';
+import 'package:plug/app/ui/pages/chain/create-token/create-token.page.dart';
 import 'package:plug/app/ui/pages/chain/exchange/exchange.binding.dart';
 import 'package:plug/app/ui/pages/chain/exchange/exchange.page.dart';
 import 'package:plug/app/ui/pages/chain/export/export.binding.dart';

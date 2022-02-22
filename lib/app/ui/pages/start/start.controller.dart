@@ -49,7 +49,7 @@ class StartPageController extends GetxController with GetTickerProviderStateMixi
     // Get.offAllNamed('/example');
     // 判断是否拥有账户信息
     if (accountController.state.hadAccount) {
-      Get.offAllNamed(PlugRoutesNames.walletHome);
+      Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
     } else {
       Get.offAllNamed(PlugRoutesNames.fristOpenWallet);
     }

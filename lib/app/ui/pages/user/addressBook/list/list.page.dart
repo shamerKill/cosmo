@@ -18,17 +18,20 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            LAppBar.defaultHeaderTextWidget('地址簿'.tr),
-            LButton(
-              radius: true,
-              height: appTheme.sizes.basic * 56,
-              onPressed: controller.onCreateAddress,
-              child: const Icon(Icons.add),
-            ),
-          ],
-        ),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              LAppBar.defaultHeaderTextWidget('地址簿'.tr),
+              Obx(() => Visibility(
+                visible: !state.isSelect,
+                child: LButton(
+                  radius: true,
+                  height: appTheme.sizes.basic * 56,
+                  onPressed: controller.onCreateAddress,
+                  child: const Icon(Icons.add),
+                )
+              )),
+            ],
+          ),
       ),
       singleScroll: true,
       body: Obx(() => Column(
@@ -36,7 +39,7 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.padding),
           ),
-          for (var _item in state.addressList)
+          for (var _item in controller.dataAddress.state.addressList)
             InkWell(
               splashColor: appTheme.colors.transparent,
               onTap: () => controller.onEditAddress(_item.address),

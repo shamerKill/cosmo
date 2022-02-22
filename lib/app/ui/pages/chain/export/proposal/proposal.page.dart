@@ -20,19 +20,19 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-        LInput(
-          inputHeight: appTheme.sizes.basic * 80,
-          radiusCircular: true,
-          fillColor: appTheme.colors.pageBackgroundColor,
-          hintText: '搜索提案ID/标题'.tr,
-          textInputAction: TextInputAction.search,
-          textController: state.searchController,
-          onSubmitted: controller.onSearchProposal,
-          prefixIcon: Icon(
-            Icons.search_outlined,
-            size: appTheme.sizes.iconSize * 0.9,
-          ),
-        ),
+        // LInput(
+        //   inputHeight: appTheme.sizes.basic * 80,
+        //   radiusCircular: true,
+        //   fillColor: appTheme.colors.pageBackgroundColor,
+        //   hintText: '搜索提案ID/标题'.tr,
+        //   textInputAction: TextInputAction.search,
+        //   textController: state.searchController,
+        //   onSubmitted: controller.onSearchProposal,
+        //   prefixIcon: Icon(
+        //     Icons.search_outlined,
+        //     size: appTheme.sizes.iconSize * 0.9,
+        //   ),
+        // ),
         Padding(
           padding: EdgeInsets.only(
             top: appTheme.sizes.paddingSmall,
@@ -41,10 +41,11 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
           child: Text('提案列表'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontWeight: FontWeight.bold, fontSize: appTheme.sizes.fontSizeBig)),
         ),
         Expanded(
-          child: LScrollView(
+          child: Obx(() => LScrollView(
             refreshController: controller.proposalsRefreshController,
-            onRefresh: controller.onGetData,
-            child: Obx(() => Column(
+            onRefresh: controller.onRefresh,
+            onLoading: state.nowPage == 0 ? null : controller.onLoad,
+            child: Column(
               children: [
                 for (ProposalCardInfo _item in state.proposalList)
                   Stack(
@@ -77,6 +78,7 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
                                       children: [
                                         Expanded(
                                           child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text('#${_item.id} ${_item.title}', style: const TextStyle(fontWeight: FontWeight.bold)),
                                               Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),

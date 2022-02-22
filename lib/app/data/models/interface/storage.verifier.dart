@@ -21,7 +21,7 @@ class VerifierModel extends _StorageBaseAbstract {
   /// 节点头像
   String get avatar => _avatar;
   set avatar (String value) { _avatar = value; _saveKey(); }
-  String _avatar = '${Env.envConfig.assets.verifierAvatarUrl}/default/image.png';
+  String _avatar = '';
   /// 节点昵称
   String get nickName => _nickName;
   set nickName (String value) { _nickName = value; _saveKey(); }
@@ -39,13 +39,13 @@ class VerifierModel extends _StorageBaseAbstract {
   set cutRate (String value) { _cutRate = value; _saveKey(); }
   String _cutRate = '';
   /// 全部委托数量
-  String? get allPledged => _allPledged;
-  set allPledged (String? value) { _allPledged = value; _saveKey(); }
-  String? _allPledged = '';
+  String get allPledged => _allPledged;
+  set allPledged (String value) { _allPledged = value; _saveKey(); }
+  String _allPledged = '';
   /// 最小质押数量
-  String? get minPledgeVolume => _minPledgeVolume;
-  set minPledgeVolume (String? value) { _minPledgeVolume = value; _saveKey(); }
-  String? _minPledgeVolume = '';
+  String get minPledgeVolume => _minPledgeVolume;
+  set minPledgeVolume (String value) { _minPledgeVolume = value; _saveKey(); }
+  String _minPledgeVolume = '';
 
   VerifierModel._(): super();
   factory VerifierModel() => create();
@@ -73,7 +73,7 @@ class VerifierModel extends _StorageBaseAbstract {
       case 'verifierStatusEnum.invalid': status = VerifierStatusEnum.invalid; break;
       default: status = VerifierStatusEnum.running; break;
     }
-    avatar = source['avatar']??'${Env.envConfig.assets.verifierAvatarUrl}/default/image.png';
+    avatar = source['avatar'];
     avatar = source['nickName']??'';
     avatar = source['address']??'';
     avatar = source['yieldRate']??'';
@@ -103,21 +103,21 @@ class VerifierModel extends _StorageBaseAbstract {
 /// 已质押节点模型
 class UserVerifierModel extends VerifierModel {
   /// 已委托数量
-  String? get pledged => _pledged;
-  set pledged (String? value) { _pledged = value; _saveKey(); }
-  String? _pledged;
+  String get pledged => _pledged;
+  set pledged (String value) { _pledged = value; _saveKey(); }
+  String _pledged = '';
   /// 奖励数量
-  String? get reward => _reward;
-  set reward (String? value) { _reward = value; _saveKey(); }
-  String? _reward;
+  String get reward => _reward;
+  set reward (String value) { _reward = value; _saveKey(); }
+  String _reward = '';
   /// 转质押锁定中数量
-  String? get rePledging => _rePledging;
-  set rePledging (String? value) { _rePledging = value; _saveKey(); }
-  String? _rePledging;
+  String get rePledging => _rePledging;
+  set rePledging (String value) { _rePledging = value; _saveKey(); }
+  String _rePledging = '';
   /// 赎回锁定中数量
-  String? get redeeming => _redeeming;
-  set redeeming (String? value) { _redeeming = value; _saveKey(); }
-  String? _redeeming;
+  String get redeeming => _redeeming;
+  set redeeming (String value) { _redeeming = value; _saveKey(); }
+  String _redeeming = '';
 
 
 

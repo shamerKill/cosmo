@@ -39,7 +39,7 @@ class LVerifierStatusNode extends StatelessWidget {
           child: Row(
             children: [
               Icon(
-                IconData(verifier.status == VerifierStatusEnum.running ? 0xe81e : 0xe60c, fontFamily: 'plugIcon'),
+                verifier.status == VerifierStatusEnum.running ? const IconData(0xe81e, fontFamily: 'plugIcon') : const IconData(0xe60c, fontFamily: 'plugIcon'),
                 color: appTheme.colors.hightColor,
                 size: appTheme.sizes.basic * 20.0,
               ),
@@ -104,6 +104,7 @@ class LVerifierCard extends StatelessWidget {
                 width: appTheme.sizes.basic * 50.0,
                 height: appTheme.sizes.basic * 50.0,
                 url: verifier.avatar,
+                bgColor: StringTool.stringToColor(verifier.address),
                 isRadius: true,
               ),
               Expanded(

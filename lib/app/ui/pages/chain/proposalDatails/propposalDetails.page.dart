@@ -195,23 +195,23 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                   tabs: [
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Text('${'all'.tr}(${state.allHashTotalLength})'),
+                      child: Obx(() => Text('${'all'.tr}(${state.allHashTotalLength})')),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Text('${'agree'.tr}(${state.agreeHashTotalLength})'),
+                      child: Obx(() => Text('${'agree'.tr}(${state.agreeHashTotalLength})')),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Text('${'reject'.tr}(${state.rejectHashTotalLength})'),
+                      child: Obx(() => Text('${'reject'.tr}(${state.rejectHashTotalLength})')),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Text('${'veto'.tr}(${state.vetoHashTotalLength})'),
+                      child: Obx(() => Text('${'veto'.tr}(${state.vetoHashTotalLength})')),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Text('${'abandon'.tr}(${state.abandonHashTotalLength})'),
+                      child: Obx(() => Text('${'abandon'.tr}(${state.abandonHashTotalLength})')),
                     ),
                   ],
                 ),
@@ -224,46 +224,46 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                   child: TabBarView(
                     controller: controller.listTabController,
                     children: [
-                      Column(
+                      Obx(() => Column(
                         children: [
                           for (var value in state.allHashList)
                             _ProposalVoterItem(value),
                           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'All'),
+                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'ALL'),
                         ],
-                      ),
-                      Column(
+                      )),
+                      Obx(() => Column(
                         children: [
-                          for (var value in state.allHashList)
+                          for (var value in state.agreeHashList)
                             _ProposalVoterItem(value),
                           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'All'),
+                          _ProposalVoterRow(getList: controller.getList, nowPage: state.agreeHashPage, allPageTotal: state.agreeHashTotalPage, type: 'AGREE'),
                         ],
-                      ),
-                      Column(
+                      )),
+                      Obx(() => Column(
                         children: [
-                          for (var value in state.allHashList)
+                          for (var value in state.rejectHashList)
                             _ProposalVoterItem(value),
                           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'All'),
+                          _ProposalVoterRow(getList: controller.getList, nowPage: state.rejectHashPage, allPageTotal: state.rejectHashTotalPage, type: 'REJECT'),
                         ],
-                      ),
-                      Column(
+                      )),
+                      Obx(() => Column(
                         children: [
-                          for (var value in state.allHashList)
+                          for (var value in state.vetoHashList)
                             _ProposalVoterItem(value),
                           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'All'),
+                          _ProposalVoterRow(getList: controller.getList, nowPage: state.vetoHashPage, allPageTotal: state.rejectHashTotalPage, type: 'VETO'),
                         ],
-                      ),
-                      Column(
+                      )),
+                      Obx(() => Column(
                         children: [
-                          for (var value in state.allHashList)
+                          for (var value in state.abandonHashList)
                             _ProposalVoterItem(value),
                           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'All'),
+                          _ProposalVoterRow(getList: controller.getList, nowPage: state.abandonHashPage, allPageTotal: state.abandonHashTotalPage, type: 'ABANDON'),
                         ],
-                      ),
+                      )),
                     ]
                   ),
                 ),
@@ -437,7 +437,7 @@ class _ProposalVoterRow extends StatelessWidget {
         _ProposalPageIconButton(
           icon: Icons.navigate_next,
           onPressed: () {
-            getList(allPageTotal + 1, type);
+            getList(nowPage + 1, type);
           },
         ),
         Padding(padding: EdgeInsets.only(left: appTheme.sizes.padding)),

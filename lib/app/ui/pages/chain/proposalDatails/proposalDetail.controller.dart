@@ -1,7 +1,13 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/provider/data.base-coin.dart';
+import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/pages/chain/export/proposal/proposal.controller.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/number.dart';
 
 // 投票内容
 class _ProposalCardInfo {
@@ -150,37 +156,75 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
   ChainProposalDetailsPageState state = ChainProposalDetailsPageState();
   TabController? listTabController;
 
+  DataCoinsController dataCoins = Get.find();
+  DataAccountController dataAccount = Get.find();
+
   @override
   onInit() {
     super.onInit();
+    listTabController = TabController(length: 5, vsync: this);
+  }
+
+  @override
+  onReady() {
     String? id = Get.parameters['id'];
     if (id == null) return Get.back();
+    state.baseCoinInfo = dataCoins.state.baseCoin;
     _initGetData(id);
-    state.baseCoinInfo.symbol = 'plugcn';
-    state.baseCoinInfo.scale = 6;
-    listTabController = TabController(length: 5, vsync: this);
   }
   
 
   // 获取信息
   _initGetData(String id) async {
+    var res = await Future.wait([
+      httpToolApp.getChainProposalDetail(id),
+      httpToolApp.getChainProposalDetailTally(id),
+      httpToolApp.getChainProposalDetailProposer(id),
+    ]);
+    var resultData = res[0].data;
+    var resultTally = res[1];
+    var resultProposer = res[2];
+    double memYesVolume = double.parse(resultTally.data['tally']['yes']);
+    double memNoVolume = double.parse(resultTally.data['tally']['no']);
+    double memAbstainVolume = double.parse(resultTally.data['tally']['abstain']);
+    double memVetoVolume = double.parse(resultTally.data['tally']['no_with_veto']);
+    double memAllVolume = memYesVolume + memNoVolume + memAbstainVolume + memVetoVolume;
+    EnumProposalStatus memStatus = (() {
+      switch (resultData['status']) {
+        case 'PROPOSAL_STATUS_UNSPECIFIED': return EnumProposalStatus.unspecified;
+        case 'PROPOSAL_STATUS_DEPOSIT_PERIOD': return EnumProposalStatus.deposit;
+        case 'PROPOSAL_STATUS_VOTING_PERIOD': return EnumProposalStatus.votingPeriod;
+        case 'PROPOSAL_STATUS_PASSED': return EnumProposalStatus.passed;
+        case 'PROPOSAL_STATUS_REJECTED': return EnumProposalStatus.rejected;
+        case 'PROPOSAL_STATUS_FAILED': return EnumProposalStatus.failed;
+        default: return EnumProposalStatus.unspecified;
+      }
+    })();
+    double memAllAmount = (() {
+      double allAmount = 0;
+      for (int i = 0; i < resultData['total_deposit'].length; i++) {
+        allAmount += double.tryParse(resultData['total_deposit'][i]['amount'])??0;
+      }
+      return allAmount;
+    })();
     state.proposalInfo
       ..id = int.parse(id)
-      ..title = 'Loweing Liquidity Pool crea tion Fee'
-      ..status = EnumProposalStatus.passed
-      ..sender = 'gx16kly35dsfxqd44q5y22xfy84aqgre656kl80qx'
-      ..startBondVolume = '64000000'
-      ..allBondVolume = '64000000'
-      ..subimtStartTime = DateTime.tryParse('2021-09-08 00:45:46')
-      ..fundEndTime = DateTime.tryParse('2021-09-08 00:45:46')
-      ..vetingStartTime = DateTime.tryParse('2021-09-08 00:45:46')
-      ..vetingEndTime = DateTime.tryParse('2021-09-08 00:45:46')
-      ..description = '这是一项提案，旨在为集线器上的 IBC 包含一项新功能，该功能允许 ICS20 传输的多跳数据包路由。通过附加一个中间地址和最终目的地的端口/通道标识符，客户端将能够一次概述多个传输。'
-      ..totalBanalceVolume = '94098320457822'
-      ..agreeVolume = '93972118631452'
-      ..rejectVolume = '5868023811'
-      ..abandonVolume = '35822547113'
-      ..vetoVolume = '2711033962';
+      ..title = resultData['content']['title']
+      ..status = memStatus
+      ..sender = resultProposer.data['result']['proposer']
+      ..startBondVolume = NumberTool.amountToBalance(resultData['total_deposit'][0]['amount'])
+      ..allBondVolume = NumberTool.amountToBalance('$memAllAmount')
+      ..subimtStartTime = DateTime.parse(resultData['submit_time'])
+      ..fundEndTime = DateTime.parse(resultData['deposit_end_time'])
+      ..vetingStartTime = DateTime.parse(resultData['voting_start_time'])
+      ..vetingEndTime = DateTime.parse(resultData['voting_end_time'])
+      ..description = resultData['content']['description']
+      ..totalBanalceVolume = NumberTool.amountToBalance('$memAllVolume')
+      ..agreeVolume = NumberTool.amountToBalance('$memYesVolume')
+      ..rejectVolume = NumberTool.amountToBalance('$memNoVolume')
+      ..abandonVolume = NumberTool.amountToBalance('$memAbstainVolume')
+      ..vetoVolume = NumberTool.amountToBalance('$memVetoVolume');
+    state._proposalInfo.refresh();
       getList(1, 'ALL');
       getList(1, 'AGREE');
       getList(1, 'REJECT');
@@ -190,32 +234,119 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
   }
   getList(int page, String type) async {
     if (type == 'ALL') {
-      state.allHashList.addAll(_formatListData());
+      if (page > state.allHashTotalPage) return;
+      state.allHashList.clear();
+      state.allHashList.addAll(await _getAllVoteList(page));
     }
     if (type == 'AGREE') {
-      state.agreeHashList.addAll(_formatListData());
+      if (page > state.agreeHashTotalPage) return;
+      state.agreeHashList.clear();
+      state.agreeHashList.addAll(await _getAgreeVoteList(page));
     }
     if (type == 'REJECT') {
-      state.rejectHashList.addAll(_formatListData());
+      if (page > state.rejectHashTotalPage) return;
+      state.rejectHashList.clear();
+      state.rejectHashList.addAll(await _getRejectVoteList(page));
     }
     if (type == 'VETO') {
-      state.vetoHashList.addAll(_formatListData());
+      if (page > state.vetoHashTotalPage) return;
+      state.vetoHashList.clear();
+      state.vetoHashList.addAll(await _getVetoVoteList(page));
     }
     if (type == 'ABANDON') {
-      state.abandonHashList.addAll(_formatListData());
+      if (page > state.abandonHashTotalPage) return;
+      state.abandonHashList.clear();
+      state.abandonHashList.addAll(await _getAbandonVoteList(page));
     }
     if (type == 'SUPPORTER') {
-      state.depositsHashList.addAll(_formatListData());
+      state.depositsHashList.clear();
+      state.depositsHashList.addAll(await _getDepositsList(page));
     }
   }
-  List<HashInfo> _formatListData() {
-    return [
-      HashInfo(userAddress: 'gx15cycwdv3hyhdcvd8y8qrjmtd052g7rguq4czm3', hash: '0x258D52576E6936B0C98B93A65296E94EDF6CCC4E7C1EBAA1826BB2850D9DFCE3', dateTime: '2021-10-14 14:58:00', choosed: EnumOptionStatus.agree, amount: '20000.00'),
-      HashInfo(userAddress: 'gx15cycwdv3hyhdcvd8y8qrjmtd052g7rguq4czm3', hash: '0x258D52576E6936B0C98B93A65296E94EDF6CCC4E7C1EBAA1826BB2850D9DFCE3', dateTime: '2021-10-14 14:58:00', choosed: EnumOptionStatus.abandon, amount: '20000.00'),
-      HashInfo(userAddress: 'gx15cycwdv3hyhdcvd8y8qrjmtd052g7rguq4czm3', hash: '0x258D52576E6936B0C98B93A65296E94EDF6CCC4E7C1EBAA1826BB2850D9DFCE3', dateTime: '2021-10-14 14:58:00', choosed: EnumOptionStatus.veto, amount: '20000.00'),
-      HashInfo(userAddress: 'gx15cycwdv3hyhdcvd8y8qrjmtd052g7rguq4czm3', hash: '0x258D52576E6936B0C98B93A65296E94EDF6CCC4E7C1EBAA1826BB2850D9DFCE3', dateTime: '2021-10-14 14:58:00', choosed: EnumOptionStatus.reject, amount: '20000.00'),
-      HashInfo(userAddress: 'gx15cycwdv3hyhdcvd8y8qrjmtd052g7rguq4czm3', hash: '0x258D52576E6936B0C98B93A65296E94EDF6CCC4E7C1EBAA1826BB2850D9DFCE3', dateTime: '2021-10-14 14:58:00', choosed: EnumOptionStatus.agree, amount: '20000.00'),
-    ];
+  Future<List<HashInfo>> _getDepositsList(int page) async {
+    var result = await httpToolApp.getChainProposalDetailDeposits(state.proposalInfo.id.toString());
+    List<HashInfo> _list = [];
+    for (var item in result.data['deposits']) {
+      var allAmount = 0.0;
+      for (var j = 0; j < item['amount'].length; j++) {
+        allAmount += double.tryParse(item['amount'][j]['amount'])??0;
+      }
+      _list.add(HashInfo(
+        userAddress: item['depositor'],
+        hash: '',
+        dateTime: '',
+        amount: NumberTool.amountToBalance('$allAmount')
+      ));
+    }
+    return _list;
+  }
+  Future<List<HashInfo>> _getAllVoteList(int page) async {
+    LLoading.showLoading();
+    var result = await _getVoteList(page);
+    LLoading.dismiss();
+    return result;
+  }
+  _getAgreeVoteList(int page) async {
+    LLoading.showLoading();
+    var result = await _getVoteList(page, type: 'VOTE_OPTION_YES');
+    LLoading.dismiss();
+    return result;
+  }
+  _getRejectVoteList(int page) async {
+    LLoading.showLoading();
+    var result = await _getVoteList(page, type: 'VOTE_OPTION_NO');
+    LLoading.dismiss();
+    return result;
+  }
+  _getVetoVoteList(int page) async {
+    LLoading.showLoading();
+    var result = await _getVoteList(page, type: 'VOTE_OPTION_NO_WITH_VETO');
+    LLoading.dismiss();
+    return result;
+  }
+  _getAbandonVoteList(int page) async {
+    LLoading.showLoading();
+    var result = await _getVoteList(page, type: 'VOTE_OPTION_ABSTAIN');
+    LLoading.dismiss();
+    return result;
+  }
+  Future<List<HashInfo>> _getVoteList(int page, { String? type }) async {
+    var result = await httpToolApp.getChainProposalDetailVotes(state.proposalInfo.id.toString(), page, type: type, limit: 5);
+    int totalValue = int.tryParse(result.data['pagination']['total'])??0;
+    if (totalValue == 0) return [];
+    int totalPage = (totalValue / 5).ceil();
+    List<HashInfo> memList = [];
+    for (int i = 0; i < result.data['tx_responses'].length; i++) {
+      var item = result.data['tx_responses'][i];
+      memList.add(HashInfo(
+        userAddress: item['tx']['body']['messages'][0]['voter'],
+        hash: item['txhash'],
+        dateTime: DateUtil.formatDate(DateTime.tryParse(item['timestamp'])),
+        choosed: _mapOptionStatus[item['tx']['body']['messages'][0]['option']],
+      ));
+    }
+    if (type == null) {
+      state.allHashTotalLength = totalValue;
+      state.allHashTotalPage = totalPage;
+      state.allHashPage = page;
+    } else if (type == 'VOTE_OPTION_YES') {
+      state.agreeHashTotalLength = totalValue;
+      state.agreeHashTotalPage = totalPage;
+      state.agreeHashPage = page;
+    } else if (type == 'VOTE_OPTION_NO') {
+      state.rejectHashTotalLength = totalValue;
+      state.rejectHashTotalPage = totalPage;
+      state.rejectHashPage = page;
+    } else if (type == 'VOTE_OPTION_NO_WITH_VETO') {
+      state.vetoHashTotalLength = totalValue;
+      state.vetoHashTotalPage = totalPage;
+      state.vetoHashPage = page;
+    } else if (type == 'VOTE_OPTION_ABSTAIN') {
+      state.abandonHashTotalLength = totalValue;
+      state.abandonHashTotalPage = totalPage;
+      state.abandonHashPage = page;
+    }
+    return memList;
   }
 
 

@@ -76,14 +76,10 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   Timer? _timer;
 
   @override
-  onInit() {
-    super.onInit();
-    initAccountStorage();
-    _initAnimationController();
-  }
-  @override
   onReady() {
     super.onReady();
+    initAccountStorage();
+    _initAnimationController();
     _checkBackup();
   }
   @override
@@ -103,16 +99,16 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
         httpToolApp.getAccountTransferLength(state.accountInfo.address),
       ])
     );
+    LLoading.dismiss();
     // 更改币种余额
     var _tokensResult = result.sublist(0, state.accountInfo.tokenList.length);
     for (var i = 0; i < _tokensResult.length; i++) {
-      state.accountInfo.tokenList[i].amount = _tokensResult[i]!.data;
+      state.accountInfo.tokenList[i].amount = _tokensResult[i]?.data??'';
     }
     state._accountInfo.refresh();
     // 更改交易次数
     var _otherResult = result.sublist(state.accountInfo.tokenList.length);
     state.accountTransTime = _otherResult[0];
-    LLoading.dismiss();
   }
   // 判断账户是否有基础币，如果没有加入并储存
   _checkAndInsertAccountBaseCoin() {
@@ -210,7 +206,8 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   }
   // 监听侧边栏
   onDrawerChanged(bool? type) {
-    if (type == true && state.accountList.isEmpty) {
+    if (type == true) {
+      state.accountList.clear();
       state.accountList.addAll(dataAccountController.state.accountsList);
     } else if (type == false) {
       state.drawerSelected = '';

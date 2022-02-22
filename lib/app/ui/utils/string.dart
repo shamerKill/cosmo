@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -76,5 +77,11 @@ class StringTool {
       case VerifierStatusEnum.jailing: return '监禁中';
       case VerifierStatusEnum.invalid: return '已失效';
     }
+  }
+  // 创建随机数
+  static String getRandomStr() {
+    var time = DateTime.now().toIso8601String();
+    var random = Random().nextInt(10000);
+    return '$time-$random';
   }
 }

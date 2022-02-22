@@ -110,7 +110,7 @@ class AccountAdminPageController extends GetxController {
     dataAccountController.state.memMnemonic = null;
     dataAccountController.state.memAddress = null;
     if (_doType == 'remove' && dataAccountController.removeAccount(state.accountInfo)) {
-      Get.offAllNamed(PlugRoutesNames.walletHome);
+      Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
     }
   }
 }

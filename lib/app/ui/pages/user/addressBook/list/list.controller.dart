@@ -1,29 +1,24 @@
 import 'package:get/get.dart';
-import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.address.dart';
 import 'package:plug/app/routes/routes.dart';
 
 class UserAddressBookListPageState {
-  // 地址簿列表
-  final RxList<AddressModel> addressList = RxList();
+  final Rx<bool> _isSelect = false.obs;
+  bool get isSelect => _isSelect.value;
+  set isSelect (bool value) => _isSelect.value = value;
 }
 
 class UserAddressBookListPageController extends GetxController {
   UserAddressBookListPageController();
   UserAddressBookListPageState state = UserAddressBookListPageState();
 
+  DataAddressController dataAddress = Get.find();
+
   @override
-  void onInit() {
-    super.onInit();
-    for (int i = 1; i < 10; i++) {
-      state.addressList.add(
-        AddressModel()
-        ..id = i
-        ..name = '地址$i'
-        ..address = 'gx1dxz3ywcq9nah6qyaav2quwctztst0yvyl8g04$i'
-        ..remarks = '备注$i'
-      );
-    }
+  onReady() {
+    if (Get.arguments == 'select') state.isSelect = true;
   }
+  
 
   // 创建地址
   onCreateAddress() {
@@ -31,6 +26,8 @@ class UserAddressBookListPageController extends GetxController {
   }
   // 修改地址
   onEditAddress(String address) {
+    // 选中地址
+    if (state.isSelect) return Get.back(result: address);
     Get.toNamed(
       PlugRoutesNames.userAddressBookEdit,
       arguments: {

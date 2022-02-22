@@ -3,9 +3,9 @@ part of './interface.dart';
 /// 地址簿模型
 class AddressModel extends _StorageBaseAbstract {
   /// id
-  int get id => _id;
-  set id (int value) { _id = value; _saveKey(); }
-  int _id = 0;
+  String get id => _id;
+  set id (String value) { _id = value; _saveKey(); }
+  String _id = '';
   /// 名称
   String get name => _name;
   set name (String value) { _name = value; _saveKey(); }
@@ -36,6 +36,6 @@ class AddressModel extends _StorageBaseAbstract {
     name = source['name']??'';
     remarks = source['remarks']??'';
     address = source['address']??'';
-    id = source['id']??0;
+    id = source['id']??'';
   }
 }

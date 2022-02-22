@@ -1,7 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
+import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:alan/proto/cosmos/gov/v1beta1/gov.pb.dart' as gov;
 
 enum EnumProposalStatus {
   votingPeriod, // 投票中
@@ -61,41 +70,62 @@ class ChainExportProposalPageController extends GetxController {
 
   RefreshController proposalsRefreshController = RefreshController();
 
+  DataCoinsController dataCoins = Get.find();
+  DataAccountController dataAccount = Get.find();
+
   @override
-  onInit() {
-    super.onInit();
+  onReady() {
     onGetData();
   }
 
   // 获取内容
   Future<void> onGetData() async{
-    state.proposalList.addAll([
-      ProposalCardInfo(
-        status: EnumProposalStatus.votingPeriod, id: 1, title: 'Loweing Liquidity Poaol creation Fee',
-        needVotingRate: '10.00', passedVolumeForVoting: 8010.00, rejectedVolumeForVoting: 9090.00,
-        abandonVolumeForVoting: 9902, closeTime: DateTime.now(),
-      ),
-      ProposalCardInfo(
-        status: EnumProposalStatus.passed, id: 2, title: 'Loweing Liquidity Pool creation Fee',
-        needVotingRate: '10.00', passedVolumeForVoting: 8010.00, rejectedVolumeForVoting: 900.00,
-        abandonVolumeForVoting: 9902, closeTime: DateTime.now(),
-      ),
-      ProposalCardInfo(
-        status: EnumProposalStatus.rejected, id: 3, title: 'Loweing Liquidity Pool creation Fee',
-        needVotingRate: '10.00', passedVolumeForVoting: 8010.00, rejectedVolumeForVoting: 9090.00,
-        abandonVolumeForVoting: 902, closeTime: DateTime.now(),
-      ),
-      ProposalCardInfo(
-        status: EnumProposalStatus.votingPeriod, id: 4, title: 'Loweing Liquidity Pool creation Fee',
-        needVotingRate: '10.00', passedVolumeForVoting: 8010.00, rejectedVolumeForVoting: 9090.00,
-        abandonVolumeForVoting: 9902, closeTime: DateTime.now(),
-      ),
-      ProposalCardInfo(
-        status: EnumProposalStatus.votingPeriod, id: 4, title: 'Loweing Liquidity Pool creation Fee',
-        needVotingRate: '10.00', passedVolumeForVoting: 8010.00, rejectedVolumeForVoting: 9090.00,
-        abandonVolumeForVoting: 9902, closeTime: DateTime.now(),
-      ),
+    int _limit = 5;
+    var res = await Future.wait([
+      httpToolApp.getChainProposalsList(state.nowPage, limit: _limit),
+      httpToolApp.getTokenSupply(dataCoins.state.baseCoin.minUnit),
     ]);
+    var result = res[0];
+    var tokenSupply = res[1];
+    if (result.status != 0) return;
+    if (result.data.length < _limit) state.nowPage = 0;
+    for (var item in result.data) {
+      double yesVolume = double.parse(item['final_tally_result']['yes']);
+      double noVolume = double.parse(item['final_tally_result']['no']);
+      double abstainVolume = double.parse(item['final_tally_result']['abstain']);
+      double vetoVolume = double.parse(item['final_tally_result']['no_with_veto']);
+      double votingRate = (yesVolume + noVolume + abstainVolume + vetoVolume) / int.parse(tokenSupply.data??'1') * 100;
+      state.proposalList.add(ProposalCardInfo(
+        status: (() {
+          switch (item['status']) {
+            case 'PROPOSAL_STATUS_UNSPECIFIED': return EnumProposalStatus.unspecified;
+            case 'PROPOSAL_STATUS_DEPOSIT_PERIOD': return EnumProposalStatus.deposit;
+            case 'PROPOSAL_STATUS_VOTING_PERIOD': return EnumProposalStatus.votingPeriod;
+            case 'PROPOSAL_STATUS_PASSED': return EnumProposalStatus.passed;
+            case 'PROPOSAL_STATUS_REJECTED': return EnumProposalStatus.rejected;
+            case 'PROPOSAL_STATUS_FAILED': return EnumProposalStatus.failed;
+            default: return EnumProposalStatus.unspecified;
+          }
+        })(),
+        id: int.parse(item['proposal_id']),
+        title: item['content']['title'],
+        needVotingRate: votingRate.toStringAsFixed(2),
+        passedVolumeForVoting: yesVolume,
+        rejectedVolumeForVoting: noVolume,
+        abandonVolumeForVoting: abstainVolume,
+        closeTime: DateTime.parse(item['voting_end_time']),
+      ));
+    }
+  }
+
+  Future<void> onLoad() async {
+    state.nowPage++;
+    await onGetData();
+  }
+  Future<void> onRefresh() async {
+    state.nowPage = 1;
+    state.proposalList.clear();
+    await onGetData();
   }
 
   // 搜索内容
@@ -112,15 +142,44 @@ class ChainExportProposalPageController extends GetxController {
     state.proposalList.refresh();
   }
   // 弃权
-  onAbandon(ProposalCardInfo info) {
-  }
-  // 否决
-  onReject(ProposalCardInfo info) {
-  }
-  // 赞同
-  onAgree(ProposalCardInfo info) {
-  }
+  onAbandon(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_ABSTAIN);
   // 反对
-  onVeto(ProposalCardInfo info) {
+  onReject(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_NO);
+  // 赞同
+  onAgree(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_YES);
+  // 否决
+  onVeto(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_NO_WITH_VETO);
+  _proposalPrompt(ProposalCardInfo info, gov.VoteOption type) async {
+    String s = '';
+    switch(type) {
+      case gov.VoteOption.VOTE_OPTION_ABSTAIN: s = '弃权'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_NO: s = '反对'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_YES: s = '赞同'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_NO_WITH_VETO: s = '否决'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_UNSPECIFIED: s = '否决'.tr; break;
+    }
+    var _type = await LBottomSheet.promptBottomSheet(
+      title: '投票提示'.tr,
+      message: Text('发送$s票: #'.tr + info.id.toString()),
+    );
+    if (_type != true) return;
+    var _pass = await LBottomSheet.passwordBottomSheet();
+    if (_pass == null) return;
+    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
+    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
+    Get.focusScope?.unfocus();
+    LLoading.showBgLoading();
+    var _fee = await httpToolServer.getChainFee();
+    var result = await WalletTool.proposalVote(
+      mnemonic: mnemonicList,
+      proposalId: info.id.toString(),
+      option: type,
+      gasAll: NumberTool.balanceToAmount(_fee.data??'0.0002'),
+    );
+    LLoading.dismiss();
+    if (result.status == -10001) return LToast.error('ErrorWithProposalCallback'.tr);
+    if (result.status == -10002) return LToast.error('ErrorWithProposalTimeout'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithProposalUnkown'.tr);
+    LToast.success('SuccessWithProposal'.tr);
   }
 }

@@ -173,6 +173,12 @@ class PlugPages {
       page: () => const ChainVerifiersPage(),
       binding: ChainVerifiersPageBinding(),
     ),
+    /// 生态-创建代币
+    GetPage(
+      name: PlugRoutesNames.chainCreateToken,
+      page: () => const ChainCreateTokenPage(),
+      binding: ChainCreateTokenPageBinding(),
+    ),
     /// 社区-首页
     GetPage(
       name: PlugRoutesNames.dappExhibition,

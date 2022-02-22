@@ -21,10 +21,10 @@ GET {{baseUri}}/token/tokens/{{baseDenom.response.body.params.issue_token_base_f
 # GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer='{{address}}'&pagination.limit=1
 
 ### 获取交易记录/发送
-GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.sender='{{address}}'&pagination.limit=1&pagination.offset=1
+GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.sender='{{address}}'&pagination.limit=10&pagination.offset=0
 
 ### 获取交易记录/接收
-GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.recipient='{{address}}'&pagination.limit=1
+GET {{baseUri}}/cosmos/tx/v1beta1/txs?events=message.module='bank'&events=transfer.recipient='{{address}}'&pagination.limit=10
 
 ### 获取所有币种
 GET {{baseUri}}/token/tokens
@@ -36,8 +36,14 @@ GET {{baseUri}}/cosmos/staking/v1beta1/delegations/{{address}}
 # @name allDelegatorNodes
 GET {{baseUri}}/cosmos/distribution/v1beta1/delegators/{{address}}/validators
 
+### 获取账户单个节点质押
+GET {{baseUri}}/cosmos/staking/v1beta1/delegators/{{address}}/validators/{{allDelegatorNodes.response.body.validators[0]}}
+
 ### 获取账户质押奖励
 GET {{baseUri}}/cosmos/distribution/v1beta1/delegators/{{address}}/rewards
+
+### 获取账户单个节点质押奖励
+GET {{baseUri}}/cosmos/distribution/v1beta1/delegators/{{address}}/rewards/{{allDelegatorNodes.response.body.validators[0]}}
 
 ### 获取账户单个节点取消质押状态
 GET {{baseUri}}/cosmos/staking/v1beta1/delegators/{{address}}/unbonding_delegations
@@ -47,3 +53,9 @@ GET {{baseUri}}/cosmos/staking/v1beta1/validators/{{allDelegatorNodes.response.b
 
 ### 查询验证者信息
 GET {{baseUri}}/cosmos/staking/v1beta1/validators/{{allDelegatorNodes.response.body.validators[0]}}
+
+### 获取所有节点
+GET {{baseUri}}/cosmos/staking/v1beta1/validators?pagination.limit=5
+
+### 获取账户所有节点转质押状态
+GET {{baseUri}}/cosmos/staking/v1beta1/delegators/{{address}}/redelegations

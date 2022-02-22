@@ -45,9 +45,9 @@ class LLogsItemView extends GetView {
               ),
               Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall / 2)),
               Icon(
-                IconData(item.status == TransferLogStatusEnum.success ? 0xe81e : (
-                  item.status == TransferLogStatusEnum.fail ? 0xe60c : 0xe815
-                ), fontFamily: 'plugIcon'),
+                item.status == TransferLogStatusEnum.success ? const IconData(0xe81e, fontFamily: 'plugIcon') : (
+                  item.status == TransferLogStatusEnum.fail ? const IconData(0xe60c, fontFamily: 'plugIcon') : const IconData(0xe815, fontFamily: 'plugIcon')
+                ),
                 size: appTheme.sizes.iconSize / 1.5,
                 color: item.status == TransferLogStatusEnum.success ? appTheme.colors.primaryColor : (
                   item.status == TransferLogStatusEnum.fail ? appTheme.colors.errorColor : appTheme.colors.textGrayBig
@@ -70,13 +70,13 @@ class LLogsItemViewController extends GetxController {
 
   Widget getIcon(TransferLogTypeEnum type) {
     Color bgColor = appTheme.colors.primaryColor;
-    int iconPoint = 0xe6f6;
+    IconData iconPoint = const IconData(0xe6f6, fontFamily: 'plugIcon');
     if (type == TransferLogTypeEnum.receive) { // 转入
       bgColor = StringTool.stringToColor('0');
-      iconPoint = 0xe6f6;
+      iconPoint = const IconData(0xe6f6, fontFamily: 'plugIcon');
     } else if (type == TransferLogTypeEnum.send) { // 转出
       bgColor = StringTool.stringToColor('1');
-      iconPoint = 0xe6f7;
+      iconPoint = const IconData(0xe6f7, fontFamily: 'plugIcon');
     }
     return Container(
       width: appTheme.sizes.basic * 60.0,
@@ -86,15 +86,14 @@ class LLogsItemViewController extends GetxController {
         borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 60.0)),
       ),
       child: Icon(
-        IconData(iconPoint, fontFamily: 'plugIcon'),
+        iconPoint,
         color: appTheme.colors.hightColor,
         size: appTheme.sizes.iconSize,
       ),
     );
   }
-  // TODO: 交易分类
   Widget getTitle(TransferLogModel item) {
-    if (item.type == TransferLogTypeEnum.receive) {
+    if (item.type == TransferLogTypeEnum.send) {
       return Text.rich(
         TextSpan(
           children: [
@@ -106,7 +105,7 @@ class LLogsItemViewController extends GetxController {
           ]
         ),
       );
-    } if (item.type == TransferLogTypeEnum.send) {
+    } if (item.type == TransferLogTypeEnum.receive) {
       return Text.rich(
         TextSpan(
           children: [
@@ -119,6 +118,6 @@ class LLogsItemViewController extends GetxController {
         ),
       );
     }
-    return Text('');
+    return const Text('');
   }
 }

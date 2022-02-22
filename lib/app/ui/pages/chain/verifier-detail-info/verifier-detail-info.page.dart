@@ -9,6 +9,7 @@ import 'package:plug/app/ui/components/view/verifierCard.component.dart';
 import 'package:plug/app/ui/pages/chain/verifier-detail-info/verifier-detail-info.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageController> {
   const ChainVerifierDetailInfoPage({Key? key}) : super(key: key);
@@ -29,26 +30,27 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                 border: Border.all(color: appTheme.colors.borderColor),
                 borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 50)),
               ),
-              child: LViewImage(
+              child: Obx(() => LViewImage(
                 width: appTheme.sizes.basic * 50.0,
                 height: appTheme.sizes.basic * 50.0,
                 url: state.verifierInfo.avatar,
+                bgColor: StringTool.stringToColor(state.verifierInfo.address),
                 isRadius: true,
-              ),
+              )),
             ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall, right: appTheme.sizes.paddingSmall),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Text(
+                  child: Obx(() => Text(
                     state.verifierInfo.nickName,
                     style: TextStyle(color: appTheme.colors.textBlackBig, fontWeight: FontWeight.bold)
-                  ),
+                  )),
                 ),
               ),
             ),
-            LVerifierStatusNode(verifier: state.verifierInfo,),
+            Obx(() => LVerifierStatusNode(verifier: state.verifierInfo)),
           ],
         ),
       ),
@@ -81,68 +83,68 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     DottedLine(dashColor: appTheme.colors.borderColor,),
                   ],
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                    Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
-                    Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                    Obx(() => Text('${state.verifierInfo.yieldRate}%')),
-                    Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                    DottedLine(dashColor: appTheme.colors.borderColor,),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+                //     Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                //     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
+                //     Obx(() => Text('${state.verifierInfo.yieldRate}%')),
+                //     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+                //     DottedLine(dashColor: appTheme.colors.borderColor,),
+                //   ],
+                // ),
                 Obx(() => Visibility(
-                  visible: state.verifierInfo.reward != null,
+                  visible: state.verifierInfo.reward != '',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                       Text('收益'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.reward??'')) + ' ' + state.baseCoinInfo.symbol),
+                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.reward)) + ' ' + state.baseCoinInfo.symbol),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                       DottedLine(dashColor: appTheme.colors.borderColor,),
                     ],
                   ),
                 )),
                 Obx(() => Visibility(
-                  visible: state.verifierInfo.pledged != null,
+                  visible: state.verifierInfo.pledged != '',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                       Text('我的质押'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged??'')) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
+                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged)) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                       DottedLine(dashColor: appTheme.colors.borderColor,),
                     ],
                   ),
                 )),
                 Obx(() => Visibility(
-                  visible: state.verifierInfo.rePledging != null,
+                  visible: state.verifierInfo.rePledging != '',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                       Text('转质押数量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.rePledging??'')) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
+                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.rePledging)) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                       DottedLine(dashColor: appTheme.colors.borderColor,),
                     ],
                   ),
                 )),
                 Obx(() => Visibility(
-                  visible: state.verifierInfo.redeeming != null,
+                  visible: state.verifierInfo.redeeming != '',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                       Text('赎回中数量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.redeeming??'')) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
+                      Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.redeeming)) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                       DottedLine(dashColor: appTheme.colors.borderColor,),
                     ],
@@ -154,7 +156,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                     Text('节点质押总量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                    Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged??'')) + ' ' + state.baseCoinInfo.symbol)),
+                    Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged)) + ' ' + state.baseCoinInfo.symbol)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                     DottedLine(dashColor: appTheme.colors.borderColor,),
                   ],
@@ -165,7 +167,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                     Text('节点最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                    Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume??'')) + ' ' + state.baseCoinInfo.symbol)),
+                    Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume)) + ' ' + state.baseCoinInfo.symbol)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                     DottedLine(dashColor: appTheme.colors.borderColor,),
                   ],
