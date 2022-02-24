@@ -40,6 +40,7 @@ class AccountImportPage extends GetView<AccountImportPageController> {
                 disabled: state.importLoading,
                 textController: controller.passwordController,
                 visibilityPass: state.passwordShow,
+                hintText: 'passwordFormatTip'.tr,
                 keyboardType: TextInputType.visiblePassword,
                 passOnPress: () => controller.togglePasswordView('password'),
               )),

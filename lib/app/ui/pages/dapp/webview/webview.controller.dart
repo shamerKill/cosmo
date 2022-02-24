@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
@@ -47,7 +49,9 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
   late Animation<double> _animation;
   late AnimationController _animationController;
   // 定时器
-  List<Timer> timersConstrollers = [];
+  List<Timer> timersControllers = [];
+  // 获取收藏Dapp/最近的Dapp
+  DataDappAddressController dataDappAddress = Get.find();
 
   @override
   onInit() {
@@ -67,7 +71,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
   }
   @override
   onClose() {
-    for (var timer in timersConstrollers) {
+    for (var timer in timersControllers) {
       timer.cancel();
     }
   }
@@ -75,7 +79,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
   // 监听获取当前webview是否有历史
   _watchHistory() {
     Timer.periodic(const Duration(milliseconds: 100), (Timer timeController) async {
-      timersConstrollers.add(timeController);
+      timersControllers.add(timeController);
       if (state.webviewController == null) return;
       bool memCanGoBack = await state.webviewController!.canGoBack();
       state.webviewHasHistory = memCanGoBack;
@@ -107,11 +111,12 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
   onWebviewFinished(String link) async {
     if (state.webviewController == null) return;
     state.link = link;
-    state.title = await state.webviewController!.getTitle()??'';
+    state.title = await state.webviewController?.getTitle()??'';
     String? _description = await state.webviewController?.runJavascriptReturningResult('document.getElementsByName(\'description\')[0].content');
     if (_description != null) state.description = _description;
     String? _logo = await state.webviewController?.runJavascriptReturningResult('(function(){var list=document.getElementsByTagName("link");for(var i=0;i<list.length;i++){var item=list[i];if(/icon/.test(item.getAttribute("rel")))return item.href}})()');
-    if (_logo != null) state.logo = _logo;
+    if (_logo != null) state.logo = _logo.replaceAll('"', '').replaceAll("'", '');
+    _finishDappLatelyList();
   }
   // webview加载进度
   onWebviewProgress(int progress) {
@@ -282,5 +287,20 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
     if (state.webProgress != 1.0) return LToast.info('未加载完成');
     LToast.success('收藏成功');
     Get.back();
+  }
+  // 完善处理当前地址历史
+  _finishDappLatelyList() {
+    var index = dataDappAddress.state.dappLatelyList.indexWhere((item) => item.address == state.link);
+    var ele = DappModel();
+    ele.logo = state.logo;
+    ele.title = state.title;
+    ele.description = state.description;
+    ele.address = state.link;
+    if (index >= 0) {
+      dataDappAddress.state.dappLatelyList.replaceRange(index, index + 1, [ele]);
+    } else {
+      dataDappAddress.state.dappLatelyList.insert(0, ele);
+    }
+    dataDappAddress.saveData();
   }
 }

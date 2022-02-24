@@ -63,4 +63,13 @@ class NumberTool {
     }
     return Decimal.fromInt(ceil ? (scalInt * input).ceil() : (scalInt * input).floor()).toString();
   }
+  static String numMul(String one, String two, { scale = 2}) {
+    try {
+      double douOne = double.parse(one);
+      double douTwo = double.parse(two);
+      return (douOne * douTwo).toStringAsFixed(scale);
+    } catch (e) {
+      return '';
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.address.dart';
+import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/string.dart';
@@ -31,10 +32,10 @@ class UserAddressBookEditPageController extends GetxController {
 
   @override
   onReady() {
-    if (Get.arguments != null && Get.arguments['address'] is String) {
+    if (Get.arguments != null && Get.arguments['id'] is String) {
       state.isEdit = true;
       for (var item in dataAddress.state.addressList) {
-        if (item.address == Get.arguments['address']) {
+        if (item.id == Get.arguments['id']) {
           state.addressInfo = item;
           break;
         }
@@ -72,7 +73,9 @@ class UserAddressBookEditPageController extends GetxController {
     }
   }
   // 扫码
-  onScanQr() {
-    print('扫码');
+  onScanQr() async {
+    var address = await Get.toNamed(PlugRoutesNames.walletQrScanner, parameters: { 'result': 'true' });
+    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('非Plug Chain合法地址'.tr);
+    addressController.text = address;
   }
 }

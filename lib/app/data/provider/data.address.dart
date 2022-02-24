@@ -3,14 +3,9 @@ import 'dart:convert';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
-import 'package:plug/app/ui/utils/http.dart';
 
 class DataAddressState {
   String get baseCoinName => 'ADDRESSLISTNAME';
-  // 是否已经初始化
-  final Rx<bool> _isInit = false.obs;
-  bool get isInit => _isInit.value;
-  set isInit (bool value) => _isInit.value = value;
   // 地址簿
   RxList<AddressModel> addressList = RxList();
 }

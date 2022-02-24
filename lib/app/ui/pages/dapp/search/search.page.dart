@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -46,7 +47,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
               splashColor: appTheme.colors.transparent,
               child: Padding(
                 padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall, top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
-                child: Obx(() => Text(state.searchHadData ? '确定'.tr : '取消'.tr, style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeBig))),
+                child: Text('取消'.tr, style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeBig)),
               ),
             ),
           ],
@@ -82,7 +83,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
       singleScroll: true,
       body: Obx(() => Column(
         children: [
-          for (String _item in state.searchList)
+          for (DappModel _item in controller.dataDappAddress.state.dappLatelyList)
             Padding(
               padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall * 0.8),
               child: InkWell(
@@ -96,7 +97,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
                       child: Container(
                         color: appTheme.colors.transparent,
                         child: Text(
-                          _item,
+                          _item.address,
                           softWrap: true,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -105,7 +106,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
                     ),
                     Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
                     InkWell(
-                      onTap: () => controller.onDeleteHistory(_item),
+                      onTap: () => controller.onDeleteHistory(_item.address),
                       child: Padding(
                         padding: EdgeInsets.all(appTheme.sizes.paddingSmall / 2),
                         child: Icon(

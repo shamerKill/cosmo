@@ -26,6 +26,8 @@ class StringTool {
     String result = address.replaceRange(startLen, address.length - endLen, '...');
     return result;
   }
+  // 获取网络地址的local
+  static String getNetLocal(String address) => Uri.tryParse(address)?.host??'';
   // 根据字符串选择颜色
   static Color stringToColor(String str) {
     const List<Color> tokenBgList = [
@@ -84,4 +86,30 @@ class StringTool {
     var random = Random().nextInt(10000);
     return '$time-$random';
   }
+  // 判断是否是cosmo链接
+  static bool checkCosmoLink(String link) {
+    RegExp reg = RegExp(r"^cosmo:.*$");
+    return reg.hasMatch(link);
+  }
+  // 将cosmo链接接取成对象
+  static Map<String, dynamic> formatCosmoLink(String link) {
+    Map<String, dynamic> result = {};
+    var _link = link.replaceFirst(r"cosmo:", "");
+    try {
+      result = json.decode(_link);
+    } catch(e) {}
+    return result;
+  }
+  // 判断是否是plug chain地址
+  static bool checkChainAddress(String address) {
+    RegExp reg = RegExp(r"^gx[0-9a-zA-Z]{39}$");
+    return reg.hasMatch(address);
+  }
+  // 判断是否是网址
+  static bool checkNetAddress(String link) {
+    RegExp reg = RegExp(r"^http(s?)://.*$");
+    return reg.hasMatch(link);
+  }
+  /// 检测邮箱
+  static bool checkEmail(String email) => RegExp(r"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$").hasMatch(email);
 }

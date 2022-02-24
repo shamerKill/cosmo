@@ -42,7 +42,7 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
           for (var _item in controller.dataAddress.state.addressList)
             InkWell(
               splashColor: appTheme.colors.transparent,
-              onTap: () => controller.onEditAddress(_item.address),
+              onTap: () => controller.onEditAddress(_item),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: appTheme.colors.borderColor)),

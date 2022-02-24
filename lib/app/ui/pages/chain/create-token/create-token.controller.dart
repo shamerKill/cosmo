@@ -60,7 +60,7 @@ class ChainCreateTokenPageController extends GetxController {
   // 获取手续费
   _getFee() async {
     var result = await httpToolServer.getChainFee();
-    state.fee = result.data;
+    state.fee = result.data??'';
   }
   symbolFeeFocus(bool type) {
     if (type == false) _getTokenCreateFee();
@@ -125,7 +125,7 @@ class ChainCreateTokenPageController extends GetxController {
   // 开始发行
   createToken() async {
     if (
-      coinNameTextController.text == '' || coinSymbolTextController.text == '' || coinTotalVolumeTextController.text == '' || state.createFee == '' || state.isLoading
+      coinNameTextController.text == '' || !RegExp(r'^[az][a-z0-9]{2 ,7}$').hasMatch(coinSymbolTextController.text) || coinTotalVolumeTextController.text == '' || state.createFee == '' || state.isLoading
     ) return LToast.warning('信息有误'.tr);
     var _pass = await LBottomSheet.passwordBottomSheet();
     if (_pass == null) return;

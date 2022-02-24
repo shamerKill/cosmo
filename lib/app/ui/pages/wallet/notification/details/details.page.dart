@@ -18,7 +18,7 @@ class WalletNotificationDetailsPage extends GetView<WalletNotificationDetailsPag
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
         title: Obx(() => LAppBar.defaultHeaderTextWidget(state.notificationInfo.title)),
-        description: Obx(() => Text(StringTool.formatTime(state.notificationInfo.time), style: Get.textTheme.bodyText1)),
+        description: Obx(() => Text(state.notificationInfo.time??'', style: Get.textTheme.bodyText1)),
       ),
       body: Obx(() => state.notificationContext == '' ? Container() : WebView(
         initialUrl: state.notificationContext,

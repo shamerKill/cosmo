@@ -30,6 +30,7 @@ class AccountCreatePage extends GetView<AccountCreateController> {
             child: Obx(() => LInput(
               labelText: 'inputPassword'.tr,
               disabled: state.createLoading,
+              hintText: 'passwordFormatTip'.tr,
               textController: controller.passwordController,
               visibilityPass: state.passwordShow,
               keyboardType: TextInputType.visiblePassword,

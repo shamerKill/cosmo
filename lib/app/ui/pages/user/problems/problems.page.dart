@@ -39,11 +39,11 @@ class UserProblemsPage extends GetView<UserProblemsPageController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('标题'.tr),
+          Text('邮箱'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
-            hintText: '请输入标题'.tr,
-            textController: controller.titleController,
+            hintText: '请输入邮箱'.tr,
+            textController: controller.emailController,
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Text('描述'.tr),
@@ -78,7 +78,7 @@ class UserProblemsPage extends GetView<UserProblemsPageController> {
                     ),
                   ),
                 ),
-              if (state.picList.length < 6)
+              if (state.picList.isEmpty)
                 InkWell(
                   onTap: controller.onSelectPicture,
                   child: Container(

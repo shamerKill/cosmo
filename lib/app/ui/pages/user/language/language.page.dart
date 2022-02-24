@@ -45,7 +45,7 @@ class UserLanguagePage extends GetView<UserLanguagePageController> {
                   children: [
                     Text(plugTranslation.localToString(_item)),
                     if (state.nowLanguage == _item.toLanguageTag())
-                      Icon(const IconData(0xe81e, fontFamily: 'PlugIcon'), size: appTheme.sizes.iconSize * 0.8)
+                      Icon(const IconData(0xe81e, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.8)
                   ],
                 ),
               ),

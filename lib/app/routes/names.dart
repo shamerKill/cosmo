@@ -87,4 +87,6 @@ abstract class PlugRoutesNames {
   static const userAbout = '/userAbout';
   // 我的-问题反馈
   static const userProblems = '/userProblems';
+  // 钱包-扫描二维码
+  static const walletQrScanner = '/walletQrScanner';
 }

@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.dapp-address.dart';
+import 'package:plug/app/routes/routes.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class DappSearchPageState {
   // 搜索框是否有值
   final Rx<bool> _searchHadData = false.obs;
   bool get searchHadData => _searchHadData.value;
   set searchHadData (bool value) => _searchHadData.value = value;
-  // 搜索历史
-  final RxList<String> searchList = RxList();
 }
 
 class DappSearchPageController extends GetxController {
@@ -15,24 +20,18 @@ class DappSearchPageController extends GetxController {
   DappSearchPageState state = DappSearchPageState();
   // 搜索框
   TextEditingController searchController = TextEditingController();
+  // 获取收藏Dapp/最近的Dapp
+  DataDappAddressController dataDappAddress = Get.find();
 
 
   @override
   onInit() {
     super.onInit();
     searchController.addListener(_onSearchInputHadData);
-    _getSearchHistory();
   }
   @override
   onClose() {
     searchController.removeListener(_onSearchInputHadData);
-  }
-
-  // 获取搜索历史
-  _getSearchHistory() {
-    state.searchList.add('plugcn');
-    state.searchList.add('https://www.baidu.com/index.html');
-    state.searchList.add('https://www.plugchain.info');
   }
 
   // 搜索框是否有搜索值
@@ -46,29 +45,36 @@ class DappSearchPageController extends GetxController {
 
   // 取消搜索
   onSearchBtn() {
-    if (state.searchHadData == true) {
-      onSearchData(searchController.text);
-    } else {
-      Get.back();
-    }
+    Get.back();
   }
   // 搜索
   onSearchData(String data) {
-    _onAddHistory(searchController.text);
+    if (StringTool.checkNetAddress(data)) {
+      _onAddHistory(data);
+      Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode(data))});
+    } else {
+      LToast.warning('网址错误'.tr);
+    }
   }
   // 点击历史搜索
-  onClickHistory(String data) {
-    searchController.text = data;
+  onClickHistory(DappModel data) {
+    searchController.text = data.address;
   }
   // 删除搜索历史
-  onDeleteHistory(String item) {
-    state.searchList.remove(item);
+  onDeleteHistory(String address) {
+    dataDappAddress.state.dappLatelyList.removeWhere((item) => item.address == address);
+    dataDappAddress.saveData();
   }
   // 添加搜索历史
-  _onAddHistory(String item) {
-    if (state.searchList.contains(item)) {
-      state.searchList.remove(item);
+  _onAddHistory(String address) {
+    var index = dataDappAddress.state.dappLatelyList.indexWhere((item) => item.address == address);
+    var ele = DappModel();
+    if (index >= 0) {
+      dataDappAddress.state.dappLatelyList.removeAt(index);
+    } else {
+      ele.address = address;
+      ele.title = address;
     }
-    state.searchList.insert(0, item);
+    dataDappAddress.state.dappLatelyList.insert(0, ele);
   }
 }

@@ -49,7 +49,7 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
                       children: [
                         Text(_item.name),
                         if (state.nowNetId == _item.id)
-                          Icon(const IconData(0xe81e, fontFamily: 'PlugIcon'), size: appTheme.sizes.iconSize * 0.8)
+                          Icon(const IconData(0xe81e, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.8)
                       ],
                     ),
                   ),
@@ -80,7 +80,7 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
                       children: [
                         Text(_item.name),
                         if (state.nowNetId == _item.id)
-                          Icon(const IconData(0xe81e, fontFamily: 'PlugIcon'), size: appTheme.sizes.iconSize * 0.8)
+                          Icon(const IconData(0xe81e, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.8)
                       ],
                     ),
                   ),

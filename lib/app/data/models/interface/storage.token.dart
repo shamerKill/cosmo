@@ -38,6 +38,10 @@ class TokenModel extends _StorageBaseAbstract {
   String get remarks => _remarks;
   set remarks (String value) { _remarks = value; _saveKey(); }
   String _remarks = '';
+  /// 币种单价
+  String get price => _price;
+  set price (String value) { _price = value; _saveKey(); }
+  String _price = '';
   /// 数量
   String get amount => _amount;
   set amount (String value) { _amount = value; _saveKey(); }
@@ -64,6 +68,7 @@ class TokenModel extends _StorageBaseAbstract {
     _valueMap['remarks'] = remarks;
     _valueMap['amount'] = amount;
     _valueMap['logo'] = logo;
+    _valueMap['price'] = price;
   }
   @override
   void setData(String sourceStr) {
@@ -79,5 +84,6 @@ class TokenModel extends _StorageBaseAbstract {
     remarks = source['remarks']??'';
     amount = source['amount']??'';
     logo = source['logo']??'';
+    price = source['price']??'';
   }
 }

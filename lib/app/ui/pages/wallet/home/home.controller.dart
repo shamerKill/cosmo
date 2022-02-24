@@ -13,11 +13,12 @@ import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
 import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/number.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class BasicHomePageState {
   // 消息提醒
-  final Rx<bool> _hadNewsTip = true.obs;
+  final Rx<bool> _hadNewsTip = false.obs;
   bool get hadNewsTip => _hadNewsTip.value;
   set hadNewsTip (bool value) => _hadNewsTip.value = value;
 
@@ -109,6 +110,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     // 更改交易次数
     var _otherResult = result.sublist(state.accountInfo.tokenList.length);
     state.accountTransTime = _otherResult[0];
+    _getAccountPrice();
   }
   // 判断账户是否有基础币，如果没有加入并储存
   _checkAndInsertAccountBaseCoin() {
@@ -119,6 +121,22 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       );
     }
     state.accountInfo = dataAccountController.state.nowAccount!;
+  }
+  // 获取账户价值
+  _getAccountPrice() async {
+    double num = 0.0;
+    var result = await Future.wait([
+      for (var token in state.accountInfo.tokenList)
+        httpToolServer.getCoinPrice(token.minUnit)
+    ]);
+    for (var i = 0; i < state.accountInfo.tokenList.length; i++) {
+      var token = state.accountInfo.tokenList[i];
+      if (result[i].status != 0 || result[i].data == null) break;
+      token.price = '${result[i].data['price']}';
+      num += double.tryParse(NumberTool.numMul(NumberTool.amountToBalance(token.amount, scale: token.scale), token.price))??0;
+    }
+    state._accountInfo.refresh();
+    state.accountAssetsPrice = num.toString();
   }
   // 检查是否需要备份
   _checkBackup() async {
@@ -143,7 +161,9 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     Get.toNamed(PlugRoutesNames.walletNotification);
   }
   // 扫码
-  goToScan () {}
+  goToScan () {
+    Get.toNamed(PlugRoutesNames.walletQrScanner);
+  }
   // 复制地址
   onCopyAddress() {
     FlutterClipboard.copy(state.accountInfo.address).then(( value ) => LToast.success('SuccessWithCopy'.tr));

@@ -66,7 +66,7 @@ class UserAccountListPage extends GetView<UserAccountListPageController> {
                           ),
                         ),
                         Icon(
-                          const IconData(0xe815, fontFamily: 'PlugIcon'),
+                          const IconData(0xe815, fontFamily: 'plugIcon'),
                           color: appTheme.colors.hightColor
                         ),
                       ],
@@ -91,7 +91,7 @@ class UserAccountListPage extends GetView<UserAccountListPageController> {
                 children: [
                   Text('addWallet'.tr),
                   Icon(
-                    const IconData(0xe6d6, fontFamily: 'PlugIcon'),
+                    const IconData(0xe6d6, fontFamily: 'plugIcon'),
                     color: appTheme.colors.textGray
                   ),
                 ],

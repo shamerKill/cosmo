@@ -275,6 +275,12 @@ class _HttpToolApp extends UriTool {
       _defaultSetUri('/token/fee/$symbol')
     ).then((res) => res);
   }
+  // 获取交易详情
+  Future<HttpToolResponse> getChainLogDetail(String hash) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('/cosmos/tx/v1beta1/txs/$hash')
+    ).then((res) => res);
+  }
 
   // 获取账户质押列表
   TokenModel _resFormatToToken(dynamic _token) {
@@ -309,6 +315,42 @@ class _HttpToolServer extends UriTool {
     return HttpToolClient.getHttp(
       _defaultSetUri('/rpc/tx_fee')
     );
+  }
+  /// 获取公告列表
+  Future<HttpToolResponse> getNotificationList(int page, { limit = 10 }) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('news/list', queryParameters: { 'page': page.toString(), 'limit': limit.toString() })
+    );
+  }
+  /// 获取公告详情
+  Future<HttpToolResponse> getNotificationDetail(String id) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('news/detail', queryParameters: { 'id': id })
+    );
+  }
+  /// 获取代币价值
+  Future<HttpToolResponse> getCoinPrice(String coin) {
+    return HttpToolClient.getHttp(
+      _defaultSetUri('rpc/coin_price', queryParameters: { 'coin': coin })
+    );
+  }
+  /// 提交问题
+  Future<HttpToolResponse> postProblems(FormData data) {
+    return HttpToolClient.postHttp(
+      _defaultSetUri('rpc/desk/submit'), data: data
+    );
+  }
+  /// dapp列表分类
+  Future<HttpToolResponse> getDappTypes() {
+    return HttpToolClient.getHttp(_defaultSetUri('rpc/dapp/type', queryParameters: { 'page': '1', 'limit': '10000'}));
+  }
+  /// dapp列表
+  Future<HttpToolResponse> getDappList(String type) {
+    return HttpToolClient.getHttp(_defaultSetUri('rpc/dapp', queryParameters: { 'type': type, 'page': '1', 'limit': '10000'}));
+  }
+  /// dapp广告图
+  Future<HttpToolResponse> getDappAdPic() {
+    return HttpToolClient.getHttp(_defaultSetUri('rpc/swap/image'));
   }
 }
 _HttpToolServer httpToolServer = _HttpToolServer();

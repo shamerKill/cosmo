@@ -59,3 +59,6 @@ GET {{baseUri}}/cosmos/staking/v1beta1/validators?pagination.limit=5
 
 ### 获取账户所有节点转质押状态
 GET {{baseUri}}/cosmos/staking/v1beta1/delegators/{{address}}/redelegations
+
+### 获取hash
+GET {{baseUri}}/cosmos/tx/v1beta1/txs/829CC440F7CF49F527F5E9AC85E534A0185E3ECBC7AE7B9C3E5BB7D0B9D6328A

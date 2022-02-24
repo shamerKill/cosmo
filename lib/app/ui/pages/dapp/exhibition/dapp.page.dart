@@ -142,7 +142,7 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                           scrollDirection: Axis.horizontal,
                           child: Obx(() => Row(
                             children: [
-                              for (DappModel _item in state.collectList)
+                              for (DappModel _item in controller.dataDappAddress.state.dappCollectList)
                                 _LocalDappItem(item: _item, goToDapp: controller.onGoToDapp)
                             ],
                           )),
@@ -151,7 +151,7 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                           scrollDirection: Axis.horizontal,
                           child: Obx(() => Row(
                             children: [
-                              for (DappModel _item in state.latelyList)
+                              for (DappModel _item in controller.dataDappAddress.state.dappLatelyList)
                                 _LocalDappItem(item: _item, goToDapp: controller.onGoToDapp)
                             ],
                           )),
@@ -269,7 +269,9 @@ class _LocalDappItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.8),
-              child: Text(StringTool.hideAddressCenter(item.title, startLen: 3, endLen: 0)),
+              child: Text(StringTool.hideAddressCenter(
+                item.title == '' ? StringTool.getNetLocal(item.address) : item.title, startLen: 10, endLen: 0
+              ), style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall)),
             ),
           ],
         ),

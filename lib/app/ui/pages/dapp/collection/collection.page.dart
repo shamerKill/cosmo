@@ -39,11 +39,11 @@ class DappCollectionPage extends GetView<DappCollectionPageController> {
         child: Obx(() => ReorderableListView(
           onReorder: controller.onReorder,
           children: [
-            for (DappModel _item in state.collectList)
+            for (DappModel _item in controller.dataDappAddress.state.dappCollectList)
               _DappCollectionListItem(
                 key: Key(_item.address + _item.title),
                 dapp: _item,
-                onDelete: () => controller.onDeleteItem(state.collectList.indexOf(_item)),
+                onDelete: () => controller.onDeleteItem(controller.dataDappAddress.state.dappCollectList.indexOf(_item)),
               ),
           ],
         )),

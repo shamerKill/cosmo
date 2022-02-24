@@ -48,7 +48,7 @@ class DappModel extends _StorageBaseAbstract {
     description = source['description']??'';
     address = source['address']??'';
     id = source['id']??0;
-  permissions = source['permissions']??[];
+    permissions = source['permissions'] != null ? source['permissions'].map<String>((item) => '$item').toList() : [];
   }
 }
 

@@ -1,40 +1,30 @@
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 
 class DappCollectionPageState {
-  // 收藏Dapp
-  final RxList<DappModel> collectList = RxList<DappModel>();
 }
 
 class DappCollectionPageController extends GetxController {
   DappCollectionPageController();
   DappCollectionPageState state = DappCollectionPageState();
 
-  @override
-  onInit() {
-    super.onInit();
-    for (int i = 0; i < 10; i++) {
-      state.collectList.add(
-        DappModel()..address = 'https://www.baidu.com'
-          ..id = i
-          ..logo = 'https://www.baidu.com/favicon.ico'
-          ..description = '百度一下你就知道$i'
-          ..title = '百度搜索$i'
-      );
-    }
-  }
+  // 获取收藏Dapp/最近的Dapp
+  DataDappAddressController dataDappAddress = Get.find();
 
   onReorder(int oldIndex, int newIndex) {
-    var _token = state.collectList.removeAt(oldIndex);
+    var _token = dataDappAddress.state.dappCollectList.removeAt(oldIndex);
     if (newIndex >= oldIndex) {
-      state.collectList.insert(newIndex - 1, _token);
+      dataDappAddress.state.dappCollectList.insert(newIndex - 1, _token);
     } else {
-      state.collectList.insert(newIndex, _token);
+      dataDappAddress.state.dappCollectList.insert(newIndex, _token);
     }
+    dataDappAddress.saveData();
   }
   onDeleteItem(int index) {
-    state.collectList.removeAt(index);
+    dataDappAddress.state.dappCollectList.removeAt(index);
+    dataDappAddress.saveData();
     LToast.success('删除成功'.tr);
   }
 }

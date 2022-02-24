@@ -259,6 +259,12 @@ class PlugPages {
       page: () => const UserProblemsPage(),
       binding: UserProblemsPageBinding(),
     ),
+    /// 我的-扫描二维码
+    GetPage(
+      name: PlugRoutesNames.walletQrScanner,
+      page: () => const WalletQrScannerPage(),
+      binding: WalletQrScannerPageBinding(),
+    ),
     // ExamplePage
     if (Env.envConfig.type != EnvType.release) GetPage(name: '/example', page: () => const ExamplePage(), binding: ExamplePageBinding()),
   ];

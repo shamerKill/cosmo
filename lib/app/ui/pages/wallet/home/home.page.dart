@@ -71,15 +71,15 @@ class BasicHomePage extends GetView<BasicHomePageController> {
         children: [
           IconButton(
             onPressed: controller.onTapMenu,
-            icon: const Icon(IconData(0xe62d, fontFamily: 'PlugIcon')),
-            color: appTheme.colors.textBlack,
+            icon: const Icon(IconData(0xe62d, fontFamily: 'plugIcon')),
+            color: appTheme.colors.textGray,
           ),
           Expanded(flex: 1, child: Container()),
           IconButton(
             onPressed: controller.goToNewsList,
             icon: Stack(
               children: [
-                const Icon(IconData(0xe6e6, fontFamily: 'PlugIcon')),
+                const Icon(IconData(0xe6e6, fontFamily: 'plugIcon')),
                 Positioned(
                   right: appTheme.sizes.basic * 2,
                   top: 2,
@@ -98,7 +98,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
           ),
           IconButton(
             onPressed: controller.goToScan,
-            icon: const Icon(IconData(0xe6de, fontFamily: 'PlugIcon')),
+            icon: const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
             color: appTheme.colors.textBlack,
           ),
         ],
@@ -131,7 +131,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                           Text('管理'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
                           Padding(
                             padding: EdgeInsets.only(left: appTheme.sizes.fontSize * 0.2),
-                            child: Icon(const IconData(0xe6da, fontFamily: 'PlugIcon'), size: appTheme.sizes.fontSize),
+                            child: Icon(const IconData(0xe6da, fontFamily: 'plugIcon'), size: appTheme.sizes.fontSize),
                           ),
                         ],
                       ),
@@ -175,7 +175,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                   ),
                                 ),
                                 Icon(
-                                  _item.address == state.accountInfo.address ? const IconData(0xe81e, fontFamily: 'PlugIcon') : const IconData(0xe815, fontFamily: 'PlugIcon'),
+                                  _item.address == state.accountInfo.address ? const IconData(0xe81e, fontFamily: 'plugIcon') : const IconData(0xe815, fontFamily: 'plugIcon'),
                                   color: appTheme.colors.hightColor
                                 ),
                               ],
@@ -199,7 +199,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                             children: [
                               Text('addWallet'.tr),
                               Icon(
-                                const IconData(0xe6d6, fontFamily: 'PlugIcon'),
+                                const IconData(0xe6d6, fontFamily: 'plugIcon'),
                                 color: appTheme.colors.textGray
                               ),
                             ],
@@ -315,7 +315,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                 Obx(() => LAnimationView(randomKey: false, child: Transform.rotate(
                                   angle: math.pi/2 * (state.hideInfo ? 1 : -1),
                                   child: Icon(
-                                    const IconData(0xe60a, fontFamily: 'PlugIcon'),
+                                    const IconData(0xe60a, fontFamily: 'plugIcon'),
                                     color: appTheme.colors.hightColor,
                                     size: appTheme.sizes.fontSize,
                                   ),
@@ -375,7 +375,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                 IconButton(
                   onPressed: controller.onAddToken,
                   icon: Icon(
-                    const IconData(0xe6d6, fontFamily: 'PlugIcon'),
+                    const IconData(0xe6d6, fontFamily: 'plugIcon'),
                     color: appTheme.colors.textGray
                   ),
                   padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall, top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
@@ -422,7 +422,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                             LAnimationView(
                               randomKey: false,
                               child: Text(
-                                state.hideInfo ? NumberTool.getNumberLenStar(6) : '≈\r\$${NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.amount, scale: _item.scale))}',
+                                state.hideInfo ? NumberTool.getNumberLenStar(6) : '≈\r\$${NumberTool.formatNumberStr(NumberTool.numMul(NumberTool.amountToBalance(_item.amount, scale: _item.scale), _item.price))}',
                                 style: Get.textTheme.bodyText1,
                               ),
                             ),

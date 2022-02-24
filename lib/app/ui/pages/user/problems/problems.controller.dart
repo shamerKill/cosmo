@@ -1,11 +1,16 @@
 import 'dart:io';
+import 'package:dio/dio.dart' as dio;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
+import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class UserProblemsPageState {
   // 截图地址
@@ -16,13 +21,31 @@ class UserProblemsPageController extends GetxController {
   UserProblemsPageController();
   UserProblemsPageState state = UserProblemsPageState();
   // 标题
-  TextEditingController titleController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   // 描述
   TextEditingController descController = TextEditingController();
 
   // 提交问题反馈
-  onSubmitProblems() {
-
+  onSubmitProblems() async {
+    Get.focusScope?.unfocus();
+    if (!StringTool.checkEmail(emailController.text) || descController.text == '' || state.picList.isEmpty) return LToast.warning('请检查数据'.tr);
+    var type = await LBottomSheet.promptBottomSheet(title: '是否需要提交问题?'.tr);
+    if (type != true) return;
+    LLoading.showLoading();
+    dio.FormData _formData = dio.FormData.fromMap({
+      'email': emailController.text,
+      'content': descController.text,
+      'images': await dio.MultipartFile.fromFile(state.picList[0]),
+    });
+    var result = await httpToolServer.postProblems(_formData);
+    LLoading.dismiss();
+    if (result.status != 0) {
+      LToast.warning(result.message);
+    }
+    LToast.success('反馈成功'.tr);
+    emailController.text = '';
+    descController.text = '';
+    state.picList.clear();
   }
   // 选择图片
   onSelectPicture() {

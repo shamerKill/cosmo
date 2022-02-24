@@ -11,9 +11,9 @@ class NotificationModel extends _StorageBaseAbstract {
   set title (String value) { _title = value; _saveKey(); }
   String _title = '';
   /// 时间
-  DateTime? get time => _time;
-  set time (DateTime? value) { _time = value; _saveKey(); }
-  DateTime? _time;
+  String? get time => _time;
+  set time (String? value) { _time = value; _saveKey(); }
+  String? _time;
   /// 内容
   List<String> get context => _context;
   set context (List<String> value) { _context = value; _saveKey(); }
@@ -25,9 +25,9 @@ class NotificationModel extends _StorageBaseAbstract {
   set template (int value) { _template = value; _saveKey(); }
   int _template = 0;
   /// 是否已读
-  bool get readed => _readed;
-  set readed (bool value) { _readed = value; _saveKey(); }
-  bool _readed = false;
+  bool get read => _read;
+  set read (bool value) { _read = value; _saveKey(); }
+  bool _read = false;
 
   NotificationModel._(): super();
   factory NotificationModel() => create();
@@ -40,14 +40,16 @@ class NotificationModel extends _StorageBaseAbstract {
     _valueMap['time'] = time;
     _valueMap['context'] = context;
     _valueMap['template'] = template;
+    _valueMap['read'] = read;
   }
   @override
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
     id = source['id']??'';
     title = source['title']??'';
-    time = source['time'] != null ? DateTime.tryParse(source['time']) : null;
+    time = source['time']??'';
     context = source['context']??[];
     template = source['template']??'';
+    read = source['read']??'';
   }
 }

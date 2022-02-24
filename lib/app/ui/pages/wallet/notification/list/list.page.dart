@@ -22,8 +22,8 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
         actions: Obx(() => LAnimationView(
           randomKey: false, 
           child: TextButton(
-            onPressed: state.isAllReaded ? null : controller.onAllReaded,
-            child: Text('全部已读', style: state.isAllReaded ? Get.textTheme.bodyText1 : null,),
+            onPressed: state.isAllRead ? null : controller.onAllRead,
+            child: Text('全部已读', style: state.isAllRead ? Get.textTheme.bodyText1 : null,),
           ),
         )),
       ),
@@ -35,7 +35,7 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
       ),
       basicBackgroundColor: true,
       body: LScrollView(
-        refreshController: controller.notifRefreshController,
+        refreshController: controller.notificationRefreshController,
         onRefresh: controller.onRefresh,
         onLoading: controller.onLoading,
         child: Obx(() => LAnimationView(
@@ -63,14 +63,14 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
                           Text(
                             _item.title,
                             style: TextStyle(
-                              color: _item.readed ? null : appTheme.colors.primaryColor,
+                              color: _item.read ? null : appTheme.colors.primaryColor,
                             ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)
                           ),
                           Text(
-                            StringTool.formatTime(_item.time),
+                            _item.time??'',
                             style: Get.textTheme.bodyText1,
                           ),
                         ],
@@ -79,7 +79,7 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
                     Padding(
                       padding: EdgeInsets.only(left: appTheme.sizes.padding),
                     ),
-                    if (_item.readed == false) Container(
+                    if (_item.read == false) Container(
                       width: appTheme.sizes.paddingSmall / 2,
                       height: appTheme.sizes.paddingSmall / 2,
                       decoration: BoxDecoration(

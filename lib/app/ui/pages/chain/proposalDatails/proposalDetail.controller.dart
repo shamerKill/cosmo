@@ -149,12 +149,19 @@ class ChainProposalDetailsPageState {
   final RxList<HashInfo> abandonHashList = RxList();
   // 存款人列表
   final RxList<HashInfo> depositsHashList = RxList();
+  // 投票页面高度
+  final Rx<double> _vetoTabViewHeight = 0.0.obs;
+  double get vetoTabViewHeight => _vetoTabViewHeight.value;
+  set vetoTabViewHeight (double value) => _vetoTabViewHeight.value = value;
 }
 
 class ChainProposalDetailsPageController extends GetxController with GetTickerProviderStateMixin {
   ChainProposalDetailsPageController();
   ChainProposalDetailsPageState state = ChainProposalDetailsPageState();
   TabController? listTabController;
+
+  // 高度Key
+  GlobalKey vetoTitleKey = GlobalKey();
 
   DataCoinsController dataCoins = Get.find();
   DataAccountController dataAccount = Get.find();
@@ -171,6 +178,14 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
     if (id == null) return Get.back();
     state.baseCoinInfo = dataCoins.state.baseCoin;
     _initGetData(id);
+    _getVetoHeight();
+  }
+
+  // 获取高度
+  _getVetoHeight() {
+    var _height = vetoTitleKey.currentContext?.size?.height??0.0;
+    if (_height == 0.0) return Future.delayed(const Duration(milliseconds: 1000), _getVetoHeight);
+    state.vetoTabViewHeight = _height * 14.0;
   }
   
 

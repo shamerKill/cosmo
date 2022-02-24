@@ -11,21 +11,21 @@ class LToast {
     // FToast().init(Get.context!).showToast(
     //   child: Text('123123')
     // );
-    Fluttertoast.showToast(
+    return Fluttertoast.showToast(
       msg: message,
       gravity: ToastGravity.CENTER,
       fontSize: appTheme.sizes.fontSize,
     );
   }
   static error(String message) {
-    Fluttertoast.showToast(
+    return Fluttertoast.showToast(
       msg: message,
       gravity: ToastGravity.TOP,
       fontSize: appTheme.sizes.fontSize,
     );
   }
-  static warning(String message) {
-    Fluttertoast.showToast(
+  static Future<void> warning(String message) {
+    return Fluttertoast.showToast(
       msg: message,
       gravity: ToastGravity.TOP,
       fontSize: appTheme.sizes.fontSize,
@@ -33,7 +33,7 @@ class LToast {
   }
 
   static info(String message) {
-    Fluttertoast.showToast(
+    return Fluttertoast.showToast(
       msg: message,
       gravity: ToastGravity.TOP,
       fontSize: appTheme.sizes.fontSize,
@@ -41,7 +41,7 @@ class LToast {
   }
 
   static log(String message) {
-    Fluttertoast.showToast(
+    return Fluttertoast.showToast(
       msg: message,
       gravity: ToastGravity.TOP,
       fontSize: appTheme.sizes.fontSize,

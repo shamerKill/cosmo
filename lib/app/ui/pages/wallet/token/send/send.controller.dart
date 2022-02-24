@@ -9,6 +9,7 @@ import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
+import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 
 class WalletTokenSendPageState {
@@ -51,6 +52,11 @@ class WalletTokenSendPageController extends GetxController {
         state.tokenInfo = _item;
       }
     }
+    if (state.tokenInfo.minUnit != token) {
+      LToast.warning('您未将该资产添加到您的账户。('.tr + token + ')'.tr);
+      return Get.back();
+    }
+    _checkUriParameters();
     LLoading.showBgLoading();
     await _getInit();
     LLoading.dismiss();
@@ -59,6 +65,13 @@ class WalletTokenSendPageController extends GetxController {
   @override
   onClose() {
     LLoading.dismiss();
+  }
+  // 判断链接内参数
+  _checkUriParameters() {
+    var address = Get.parameters['address'];
+    var volume = Get.parameters['volume'];
+    if (address != null) addressController.text = address;
+    if (volume != null) volumeController.text = volume;
   }
 
   _getInit() async {
@@ -76,7 +89,6 @@ class WalletTokenSendPageController extends GetxController {
     state.fee = _fee?.data??'0.0002';
   }
 
-
   // 前往地址簿
   onGoToAddressList() async {
     dynamic address = await Get.toNamed(PlugRoutesNames.userAddressBookList, arguments: 'select');
@@ -85,7 +97,10 @@ class WalletTokenSendPageController extends GetxController {
     }
   }
   // 扫码事件
-  onScanQr() {
+  onScanQr() async {
+    var address = await Get.toNamed(PlugRoutesNames.walletQrScanner, parameters: { 'result': 'true' });
+    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('非Plug Chain合法地址'.tr);
+    addressController.text = address;
   }
   // 全部划转
   onAllSend() {

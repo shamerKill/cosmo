@@ -191,7 +191,6 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
   }
   // 前往详情页
   onGoToDetail(String hash) {
-    print(hash);
     Get.toNamed(PlugRoutesNames.walletTokenLogsDetail(hash));
   }
 }

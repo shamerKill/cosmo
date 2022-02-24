@@ -133,7 +133,7 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                   child: Row(
                     children: [
                       Container(
-                        height: 60, width: 5,
+                        height: appTheme.sizes.basic * 80.0, width: appTheme.sizes.basic * 5.0,
                         decoration: BoxDecoration(color: color),
                       ),
                       Padding(
@@ -170,6 +170,7 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
             }),
           ),
           Padding(
+            key: controller.vetoTitleKey,
             padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
             child: Text(
               'vote'.tr,
@@ -218,8 +219,8 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                 Padding(
                   padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
                 ),
-                SizedBox(
-                  height: appTheme.sizes.basic * 1080.0,
+                Obx(() => state.vetoTabViewHeight == 0.0 ? Container() : SizedBox(
+                  height: state.vetoTabViewHeight,
                   width: appTheme.sizes.infinity,
                   child: TabBarView(
                     controller: controller.listTabController,
@@ -266,7 +267,7 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                       )),
                     ]
                   ),
-                ),
+                )),
               ],
             ),
           ),

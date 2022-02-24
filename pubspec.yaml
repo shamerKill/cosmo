@@ -76,6 +76,12 @@ dependencies:
   flutter_screenshot_switcher: ^2.1.0
   # https://pub.flutter-io.cn/packages/dio
   dio: ^4.0.4
+  # https://pub.flutter-io.cn/packages/flutter_qr_reader
+  flutter_qr_reader: ^1.0.5
+  # https://pub.flutter-io.cn/packages/permission_handler
+  permission_handler: ^9.2.0
+  # https://pub.dev/packages/http_parser
+  http_parser: ^4.0.0
 
 dev_dependencies:
   flutter_test:

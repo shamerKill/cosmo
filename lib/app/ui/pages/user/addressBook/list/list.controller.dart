@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.address.dart';
 import 'package:plug/app/routes/routes.dart';
 
@@ -25,13 +26,13 @@ class UserAddressBookListPageController extends GetxController {
     Get.toNamed(PlugRoutesNames.userAddressBookEdit);
   }
   // 修改地址
-  onEditAddress(String address) {
+  onEditAddress(AddressModel item) {
     // 选中地址
-    if (state.isSelect) return Get.back(result: address);
+    if (state.isSelect) return Get.back(result: item.address);
     Get.toNamed(
       PlugRoutesNames.userAddressBookEdit,
       arguments: {
-        'address': address
+        'id': item.id
       }
     );
   }
