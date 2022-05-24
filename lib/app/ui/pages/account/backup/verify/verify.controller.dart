@@ -68,7 +68,7 @@ class AccountBackupVerifyPageController extends GetxController {
       dataAccountController.addAccount(dataAccountController.state.memAccount!..createTime = null);
       dataAccountController.state.memAccount = null;
     } if (dataAccountController.state.memAddress != null) {
-      dataAccountController.updataAccount(dataAccountController.getAccountFromAddress(dataAccountController.state.memAddress!)!..createTime = null);
+      dataAccountController.updateAccount(dataAccountController.getAccountFromAddress(dataAccountController.state.memAddress!)!..createTime = null);
     }
     dataAccountController.state.memMnemonic = null;
       Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);

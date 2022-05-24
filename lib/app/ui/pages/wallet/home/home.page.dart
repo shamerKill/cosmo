@@ -63,18 +63,41 @@ class BasicHomePage extends GetView<BasicHomePageController> {
       ));
     }
 
-
-    return LScaffold(
-      scaffoldKey: controller.scaffoldKey,
+    return Obx(() => LScaffold(
+      scaffoldKey: state.scaffoldKey,
       statusBar: LAppBar.defaultStatus(),
       headerBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
             onPressed: controller.onTapMenu,
             icon: const Icon(IconData(0xe62d, fontFamily: 'plugIcon')),
             color: appTheme.colors.textGray,
           ),
-          Expanded(flex: 1, child: Container()),
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall, vertical: appTheme.sizes.paddingSmall / 3),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.padding)),
+                    border: Border.all(color: appTheme.colors.primaryColor),
+                    color: state.hideInfo ? appTheme.colors.primaryColor.withOpacity(0.1) : null,
+                  ),
+                  child: Opacity(
+                    opacity: state.hideInfo ? 0 : 1,
+                    child: Text(
+                      StringTool.accountTypeToString(state.accountInfo.accountType),
+                      style: TextStyle(color: appTheme.colors.primaryColor,
+                    )),
+                  ),
+                ),
+              ],
+            ),
+          ),
           IconButton(
             onPressed: controller.goToNewsList,
             icon: Stack(
@@ -253,7 +276,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('balance'.tr),
+                                    Obx(() => Text((state.accountInfo.tokenList.isEmpty ? '' : state.accountInfo.tokenList.first.symbol) + 'balance'.tr)),
                                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall / 2)),
                                     Obx(() {
                                       var _balance = state.accountInfo.tokenList.isEmpty ? '' : NumberTool.amountToBalance(state.accountInfo.tokenList.first.amount, scale: state.accountInfo.tokenList.first.scale);
@@ -290,7 +313,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text('bumberOfTransactions'.tr),
+                                    Text('numberOfTransactions'.tr),
                                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                                     Obx(() => LAnimationView(randomKey: false, child: Text('${state.accountTransTime}'))),
                                   ],
@@ -438,6 +461,6 @@ class BasicHomePage extends GetView<BasicHomePageController> {
         ),
       ),
       bottomNavigationBar: const LBottomNavigation(),
-    );
+    ));
   }
 }

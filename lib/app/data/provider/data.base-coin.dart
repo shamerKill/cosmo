@@ -1,7 +1,7 @@
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 
 class DataCoinsState {
   String get baseCoinName => 'BASECOINNAME';

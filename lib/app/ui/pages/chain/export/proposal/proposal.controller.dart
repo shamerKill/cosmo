@@ -6,7 +6,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -165,10 +165,13 @@ class ChainExportProposalPageController extends GetxController {
     if (_type != true) return;
     var _pass = await LBottomSheet.passwordBottomSheet();
     if (_pass == null) return;
-    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
-    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
-    Get.focusScope?.unfocus();
     LLoading.showBgLoading();
+    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
+    if (mnemonicList == null) {
+      LLoading.dismiss();
+      return LToast.warning('密码输入错误'.tr);
+    }
+    Get.focusScope?.unfocus();
     var _fee = await httpToolServer.getChainFee();
     var result = await WalletTool.proposalVote(
       mnemonic: mnemonicList,

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "27875029",
+      "name": "核心",
+      "font_class": "hexin",
+      "unicode": "e823",
+      "unicode_decimal": 59427
+    },
+    {
+      "icon_id": "27875030",
+      "name": "核心-wxz",
+      "font_class": "hexin-wxz",
+      "unicode": "e824",
+      "unicode_decimal": 59428
+    },
+    {
       "icon_id": "8817897",
       "name": "增加添加加号",
       "font_class": "zengjiatianjiajiahao",

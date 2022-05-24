@@ -112,7 +112,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
     if (state.webviewController == null) return;
     state.link = link;
     state.title = await state.webviewController?.getTitle()??'';
-    String? _description = await state.webviewController?.runJavascriptReturningResult('document.getElementsByName(\'description\')[0].content');
+    String? _description = await state.webviewController?.runJavascriptReturningResult('var __descList = document.getElementsByName(\'description\'); if (__descList.length !== 0) { __descList[0].content; }');
     if (_description != null) state.description = _description;
     String? _logo = await state.webviewController?.runJavascriptReturningResult('(function(){var list=document.getElementsByTagName("link");for(var i=0;i<list.length;i++){var item=list[i];if(/icon/.test(item.getAttribute("rel")))return item.href}})()');
     if (_logo != null) state.logo = _logo.replaceAll('"', '').replaceAll("'", '');
@@ -150,14 +150,86 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
   // 更多工具
   onShowMoreTool() async {
     await LBottomSheet.baseBottomSheet(
-      child: Container(
+      child: WebViewMoreTool(
+        onShare: _onShare,
+        onCopyLink: _onCopyLink,
+        onRefresh: _onRefresh,
+        onCollection: _onCollection,
+      ),
+    );
+  }
+  // 分享
+  _onShare() {
+    if (state.webProgress != 1.0) return LToast.info('未加载完成');
+    LToast.error('暂不支持分享');
+    Get.back();
+  }
+  // 复制链接
+  _onCopyLink() async {
+    String? link = await state.webviewController?.currentUrl();
+    if (link == null) return;
+    FlutterClipboard.copy(link);
+    LToast.success('复制成功');
+    Get.back();
+  }
+  // 刷新
+  _onRefresh() {
+    state.webviewController?.reload();
+    Get.back();
+  }
+  // 收藏
+  _onCollection() async {
+    if (state.webProgress != 1.0) return LToast.info('未加载完成');
+    var index = dataDappAddress.state.dappCollectList.indexWhere((item) => item.address == state.link);
+    if (index >= 0) LToast.warning('已添加收藏');
+    var ele = DappModel();
+    ele.logo = state.logo;
+    ele.title = state.title;
+    ele.description = state.description;
+    ele.address = state.link;
+    dataDappAddress.state.dappCollectList.add(ele);
+    dataDappAddress.saveData();
+    LToast.success('收藏成功');
+    Get.back();
+  }
+  // 完善处理当前地址历史
+  _finishDappLatelyList() {
+    var index = dataDappAddress.state.dappLatelyList.indexWhere((item) => item.address == state.link);
+    if (index < 0) return;
+    var ele = dataDappAddress.state.dappLatelyList[index];
+    ele.logo = state.logo == '' ? ele.logo : state.logo;
+    ele.title = state.logo == '' ? ele.logo : state.title;
+    ele.description = state.logo == '' ? ele.logo : state.description;
+    ele.address = state.logo == '' ? ele.logo : state.link;
+    dataDappAddress.state.dappLatelyList.replaceRange(index, index + 1, [ele]);
+    dataDappAddress.saveData();
+  }
+}
+
+class WebViewMoreTool extends StatelessWidget {
+  const WebViewMoreTool(
+    {
+      required this.onShare,
+      required this.onCopyLink,
+      required this.onRefresh,
+      required this.onCollection,
+      Key? key
+    }
+  ) : super(key: key);
+  final void Function() onShare;
+  final void Function() onCopyLink;
+  final void Function() onRefresh;
+  final void Function() onCollection;
+  @override
+  Widget build(context) {
+    return Container(
         padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
               InkWell(
-                onTap: _onShare,
+                onTap: onShare,
                 child: Column(
                   children: [
                     Container(
@@ -182,7 +254,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
               ),
               Padding(padding: EdgeInsets.only(right: appTheme.sizes.padding)),
               InkWell(
-                onTap: _onCopyLink,
+                onTap: onCopyLink,
                 child: Column(
                   children: [
                     Container(
@@ -207,7 +279,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
               ),
               Padding(padding: EdgeInsets.only(right: appTheme.sizes.padding)),
               InkWell(
-                onTap: _onRefresh,
+                onTap: onRefresh,
                 child: Column(
                   children: [
                     Container(
@@ -232,7 +304,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
               ),
               Padding(padding: EdgeInsets.only(right: appTheme.sizes.padding)),
               InkWell(
-                onTap: _onCollection,
+                onTap: onCollection,
                 child: Column(
                   children: [
                     Container(
@@ -259,48 +331,6 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
             ],
           ),
         ),
-      ),
-    );
-  }
-  // 分享
-  _onShare() {
-    if (state.webProgress != 1.0) return LToast.info('未加载完成');
-    print('${state.link}, ${state.title}, ${state.logo}, ${state.description}');
-    LToast.success('分享成功');
-    Get.back();
-  }
-  // 复制链接
-  _onCopyLink() async {
-    String? link = await state.webviewController?.currentUrl();
-    if (link == null) return;
-    FlutterClipboard.copy(link);
-    LToast.success('复制成功');
-    Get.back();
-  }
-  // 刷新
-  _onRefresh() {
-    state.webviewController?.reload();
-    Get.back();
-  }
-  // 收藏
-  _onCollection() async {
-    if (state.webProgress != 1.0) return LToast.info('未加载完成');
-    LToast.success('收藏成功');
-    Get.back();
-  }
-  // 完善处理当前地址历史
-  _finishDappLatelyList() {
-    var index = dataDappAddress.state.dappLatelyList.indexWhere((item) => item.address == state.link);
-    var ele = DappModel();
-    ele.logo = state.logo;
-    ele.title = state.title;
-    ele.description = state.description;
-    ele.address = state.link;
-    if (index >= 0) {
-      dataDappAddress.state.dappLatelyList.replaceRange(index, index + 1, [ele]);
-    } else {
-      dataDappAddress.state.dappLatelyList.insert(0, ele);
-    }
-    dataDappAddress.saveData();
+      );
   }
 }

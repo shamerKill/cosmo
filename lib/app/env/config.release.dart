@@ -3,6 +3,8 @@ part of './env.dart';
 class _AssetsConfigRelease implements _AssetsConfig {
   @override
   String verifierAvatarUrl = 'https://api.plugchain.network/static';
+  @override
+  String accountDefaultPre = 'cosmo';
 }
 
 class _ChainInfoRelease implements _ChainInfo {
@@ -10,13 +12,19 @@ class _ChainInfoRelease implements _ChainInfo {
   String appChainId = 'plugchain-test';
   @override
   String addressPrefix = 'gx';
+  @override
+  int pvmChainId = 520;
 }
 
 class _UrlInfoRelease implements _UrlInfo {
   @override
-  String backEndSite = 'https://api.plugchain.network/static';
+  String backEndSite = 'https://wallet.plugchain.network';
   @override
-  String chainToolRpcUrl = 'https://api.plugchain.network/static';
+  String chainToolRpcUrl = 'https://api.plugchain.network/rawrpc';
   @override
-  String chainInfoRpcUrl = 'https://api.plugchain.network/static';
+  String chainInfoRpcUrl = 'https://api.plugchain.network/rawapi';
+  @override
+  String chainMoreRpcUrl = 'https://wallet.plugchain.network/web_rpc';
+  @override
+  String chainPvmRpcUrl = 'https://wallet.plugchain.network/ethraw/';
 }

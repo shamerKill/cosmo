@@ -13,17 +13,23 @@ import 'package:alan/proto/cosmos/distribution/v1beta1/tx.pb.dart' as distributi
 import 'package:alan/proto/google/protobuf/any.pb.dart' as $1;
 import 'package:encrypt/encrypt.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:get/instance_manager.dart';
 import 'package:grpc/grpc.dart' as grpc;
 import 'package:http/http.dart' as http;
 import 'package:alan/proto/cosmos/crypto/secp256k1/export.dart' as secp256;
-import 'package:plug/app/config/config.chain.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
+import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/env/env.dart';
+import 'package:plug/app/ui/utils/evm/evmWallet.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:protobuf/protobuf.dart';
-import 'package:plug/protobuf/token/tx.pb.dart' as tokenTx;
-import 'package:plug/protobuf/liquidity/v1beta1/tx.pb.dart' as liquidityTx;
+import 'package:plug/protobuf/chain/token/tx.pb.dart' as tokenTx;
+import 'package:plug/protobuf/chain/liquidity/v1beta1/tx.pb.dart' as liquidityTx;
+import 'package:plug/protobuf/chain/signer/v1beta1/signer.pb.dart' as secp2561;
 
 
 List<int> errorCode = [
@@ -33,25 +39,37 @@ List<int> errorCode = [
 
 class SelfAuthQuerier extends alan.AuthQuerier {
   final alan.Wallet wallet;
+  enumAccountType addressType;
 
   SelfAuthQuerier({
     required auth.QueryClient client,
     required this.wallet,
+    required this.addressType,
   }) : super(client: client);
 
   @override
-  factory SelfAuthQuerier.build(alan.Wallet wallet, grpc.ClientChannel channel) {
-    return SelfAuthQuerier(client: auth.QueryClient(channel), wallet: wallet);
+  factory SelfAuthQuerier.build(alan.Wallet wallet, grpc.ClientChannel channel, { enumAccountType? addressType }) {
+    return SelfAuthQuerier(client: auth.QueryClient(channel), wallet: wallet, addressType: addressType??enumAccountType.prc10);
   }
   @override
   Future<alan.AccountI?> getAccountData(String address) async {
-    final secp256Key = secp256.PubKey.create()..key = wallet.publicKey;
-    $1.Any pubKey = alan.Codec.serialize(secp256Key);
+    $1.Any pubKey;
+    if (addressType == enumAccountType.prc20) {
+      // 短公钥
+      var secp256Key = secp2561.PubKey.create()..key = (wallet as NewWallet).comPublicKeyBytes;
+      pubKey = alan.Codec.serialize(secp256Key);
+    } else {
+      // 长公钥
+      var secp256Key = secp256.PubKey.create()..key = wallet.publicKey;
+      pubKey = alan.Codec.serialize(secp256Key);
+    }
     var accountResult = await httpToolApp.getAccountChainInfo(address);
     String accountNumber = '0';
     String sequence = '0';
-    if (accountResult?.data["account_number"] != '') accountNumber = '${accountResult?.data["account_number"]}';
-    if (accountResult?.data["sequence"] != '') sequence = '${accountResult?.data["sequence"]}';
+    if (accountResult != null) {
+      if (accountResult.data["account_number"] != '') accountNumber = '${accountResult.data["account_number"]}';
+      if (accountResult.data["sequence"] != '') sequence = '${accountResult.data["sequence"]}';
+    }
     return alan.BaseAccount(
       authPb.BaseAccount(
         address: wallet.bech32Address,
@@ -72,14 +90,14 @@ class SelfNodeQuerier extends alan.QueryHelper implements alan.NodeQuerier {
   }
   Future<alan.NodeInfo> getNodeInfo(String lcdEndpoint) async {
     return alan.NodeInfo(
-      network: (await httpToolChain.getChainInfo()).data['data'],
+      network: Env.envConfig.chainInfo.appChainId,
     );
   }
 }
 
 class WalletTool {
   static final _networkInfo = alan.NetworkInfo.fromSingleHost(
-    bech32Hrp: ConfigChainData.addressPrex,
+    bech32Hrp: Env.envConfig.chainInfo.addressPrefix,
     host: '',
   );
   static Future<HttpToolResponse> _createAndSendMsg (
@@ -93,11 +111,20 @@ class WalletTool {
     }
   ) async {
     DataCoinsController dataCoins = Get.find();
-    var signer = alan.TxSigner(
-      nodeQuerier: SelfNodeQuerier.build(http.Client()),
-      authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel),
-    );
-    var tx = await signer.createAndSign(
+    DataAccountController dataAccountController = Get.find();
+    alan.TxSigner signer;
+    if (dataAccountController.state.nowAccount?.accountType == enumAccountType.prc20) {
+      signer = alan.TxSigner(
+        nodeQuerier: SelfNodeQuerier.build(http.Client()),
+        authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel, addressType: enumAccountType.prc20),
+      );
+    } else {
+      signer = alan.TxSigner(
+        nodeQuerier: SelfNodeQuerier.build(http.Client()),
+        authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel),
+      );
+    }
+    alan.Tx tx = await signer.createAndSign(
       wallet,
       msgs,
       memo: memo,
@@ -110,9 +137,13 @@ class WalletTool {
         ],
       ),
     );
-    var config = alan.DefaultTxConfig.create();
-    var encoder = config.txEncoder();
-    var request = base64.encode(encoder(tx));
+    String entryTx(alan.Tx tx) {
+      var config = alan.DefaultTxConfig.create();
+      var encoder = config.txEncoder();
+      var request = base64.encode(encoder(tx));
+      return request;
+    }
+    String request = await foundation.compute(entryTx, tx);
     HttpToolResponse result = await _walletSendFetch('broadcast_tx_async', { 'tx': request }, noWait: noWait);
     return result;
   }
@@ -124,7 +155,7 @@ class WalletTool {
       'params': params,
     });
     return HttpToolClient.postHttp(
-      Uri.parse(ConfigChainData.webRawRpcUrl),
+      Uri.parse(Env.envConfig.urlInfo.chainMoreRpcUrl),
       data: data,
     );
   }
@@ -164,9 +195,16 @@ class WalletTool {
     return compute.future;
   }
   // 创建账户助记词
-  static List<String> creaetMnemonic () => alan.Bip39.generateMnemonic();
+  static List<String> createMnemonic () => alan.Bip39.generateMnemonic();
   // 解压助记词
   static alan.Wallet walletForMnemonic (List<String> mnemonic) => alan.Wallet.derive(mnemonic, _networkInfo);
+  static NewWallet walletForMnemonicPrc20(List<String> mnemonic) {
+    return NewWallet.derive(mnemonic, networkInfo: _networkInfo);
+  }
+  /// 检查助记词
+  static bool checkMnemonic (List<String> mnemonic) {
+    return alan.Bip39.validateMnemonic(mnemonic);
+  }
   /// 加密
   static encryptMnemonic (List<String> mnemonic, String pass) {
     String keyPass = pass;
@@ -180,20 +218,25 @@ class WalletTool {
     return encrypted.base64;
   }
   /// 解压
-  static List<String>? decryptMnemonic(String raw, String pass) {
-    String keyPass = pass;
-    while (keyPass.length < 32) {
-      keyPass += '0';
+  static FutureOr<List<String>?> decryptMnemonic(String raw, String pass) {
+    List<String>? decrypt(String joinPass) {
+      List<String> joinPassList = joinPass.split('____________');
+      String raw = joinPassList[0];
+      String keyPass = joinPassList[1];
+      while (keyPass.length < 32) {
+        keyPass += '0';
+      }
+      final key = Key.fromUtf8(keyPass);
+      final fernet = Fernet(key);
+      final encrypter = Encrypter(fernet);
+      try {
+        final mnemonic = encrypter.decrypt(Encrypted.fromBase64(raw));
+        return mnemonic.split('_');
+      } catch (err) {
+        return null;
+      }
     }
-    final key = Key.fromUtf8(keyPass);
-    final fernet = Fernet(key);
-    final encrypter = Encrypter(fernet);
-    try {
-      final mnemonic = encrypter.decrypt(Encrypted.fromBase64(raw));
-      return mnemonic.split('_');
-    } catch (err) {
-      return null;
-    }
+    return foundation.compute(decrypt, '${raw}____________$pass');
   }
   // 赎回收益
   static Future<HttpToolResponse> withReward({

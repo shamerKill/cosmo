@@ -65,7 +65,7 @@ class AccountAdminVerifyPageController extends GetxController {
     String? resultMnemonic;
     if (state.type == 0) {
       try {
-        var mnemonic = WalletTool.decryptMnemonic(state.accountInfo.stringifyRaw, passwordController.text);
+        var mnemonic = await WalletTool.decryptMnemonic(state.accountInfo.stringifyRaw, passwordController.text);
         if (mnemonic != null) resultMnemonic = mnemonic.join(' ');
       } catch (e) {
         LToast.error('ErrorWithPasswordInput'.tr);

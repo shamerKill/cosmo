@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: token/tx.proto
+//  source: plug-proto/prc10/tx.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields,deprecated_member_use_from_same_package
@@ -110,3 +110,30 @@ const MsgTransferOwnerTokenResponse$json = const {
 
 /// Descriptor for `MsgTransferOwnerTokenResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List msgTransferOwnerTokenResponseDescriptor = $convert.base64Decode('Ch1Nc2dUcmFuc2Zlck93bmVyVG9rZW5SZXNwb25zZQ==');
+const $core.Map<$core.String, $core.dynamic> MsgServiceBase$json = const {
+  '1': 'Msg',
+  '2': const [
+    const {'1': 'IssueToken', '2': '.plugchain.prc10.MsgIssueToken', '3': '.plugchain.prc10.MsgIssueTokenResponse'},
+    const {'1': 'MintToken', '2': '.plugchain.prc10.MsgMintToken', '3': '.plugchain.prc10.MsgMintTokenResponse'},
+    const {'1': 'EditToken', '2': '.plugchain.prc10.MsgEditToken', '3': '.plugchain.prc10.MsgEditTokenResponse'},
+    const {'1': 'BurnToken', '2': '.plugchain.prc10.MsgBurnToken', '3': '.plugchain.prc10.MsgBurnTokenResponse'},
+    const {'1': 'TransferOwnerToken', '2': '.plugchain.prc10.MsgTransferOwnerToken', '3': '.plugchain.prc10.MsgTransferOwnerTokenResponse'},
+  ],
+};
+
+@$core.Deprecated('Use msgServiceDescriptor instead')
+const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> MsgServiceBase$messageJson = const {
+  '.plugchain.prc10.MsgIssueToken': MsgIssueToken$json,
+  '.plugchain.prc10.MsgIssueTokenResponse': MsgIssueTokenResponse$json,
+  '.plugchain.prc10.MsgMintToken': MsgMintToken$json,
+  '.plugchain.prc10.MsgMintTokenResponse': MsgMintTokenResponse$json,
+  '.plugchain.prc10.MsgEditToken': MsgEditToken$json,
+  '.plugchain.prc10.MsgEditTokenResponse': MsgEditTokenResponse$json,
+  '.plugchain.prc10.MsgBurnToken': MsgBurnToken$json,
+  '.plugchain.prc10.MsgBurnTokenResponse': MsgBurnTokenResponse$json,
+  '.plugchain.prc10.MsgTransferOwnerToken': MsgTransferOwnerToken$json,
+  '.plugchain.prc10.MsgTransferOwnerTokenResponse': MsgTransferOwnerTokenResponse$json,
+};
+
+/// Descriptor for `Msg`. Decode as a `google.protobuf.ServiceDescriptorProto`.
+final $typed_data.Uint8List msgServiceDescriptor = $convert.base64Decode('CgNNc2cSVAoKSXNzdWVUb2tlbhIeLnBsdWdjaGFpbi5wcmMxMC5Nc2dJc3N1ZVRva2VuGiYucGx1Z2NoYWluLnByYzEwLk1zZ0lzc3VlVG9rZW5SZXNwb25zZRJRCglNaW50VG9rZW4SHS5wbHVnY2hhaW4ucHJjMTAuTXNnTWludFRva2VuGiUucGx1Z2NoYWluLnByYzEwLk1zZ01pbnRUb2tlblJlc3BvbnNlElEKCUVkaXRUb2tlbhIdLnBsdWdjaGFpbi5wcmMxMC5Nc2dFZGl0VG9rZW4aJS5wbHVnY2hhaW4ucHJjMTAuTXNnRWRpdFRva2VuUmVzcG9uc2USUQoJQnVyblRva2VuEh0ucGx1Z2NoYWluLnByYzEwLk1zZ0J1cm5Ub2tlbholLnBsdWdjaGFpbi5wcmMxMC5Nc2dCdXJuVG9rZW5SZXNwb25zZRJsChJUcmFuc2Zlck93bmVyVG9rZW4SJi5wbHVnY2hhaW4ucHJjMTAuTXNnVHJhbnNmZXJPd25lclRva2VuGi4ucGx1Z2NoYWluLnByYzEwLk1zZ1RyYW5zZmVyT3duZXJUb2tlblJlc3BvbnNl');

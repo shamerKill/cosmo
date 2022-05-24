@@ -3,9 +3,10 @@ library plug_translation;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/instance_manager.dart';
 import 'dart:ui' show window;
+import 'package:get/get.dart';
+
+import 'package:plug/app/data/provider/data.config.dart';
 
 
 class _PlugTranslation extends Translations {
@@ -21,15 +22,15 @@ class _PlugTranslation extends Translations {
 
   @override
   Map<String, Map<String, String>> get keys => {
-    'en_US': enUS,
-    'zh_CN': zhHans,
+    'en-US': enUS,
+    'zh-CN': zhHans,
   };
 }
 
 class _InitTranslation {
   _PlugTranslation? translations;
-  Locale fallbackLocale = const Locale('en', 'US');
-  Locale nowLocale = const Locale('en', 'US');
+  Rx<Locale> fallbackLocale = const Locale('en', 'US').obs;
+  Rx<Locale> nowLocale = const Locale('en', 'US').obs;
   List<Locale> localList = [
     const Locale('zh', 'CN'),
     const Locale('en', 'US'),
@@ -51,8 +52,11 @@ class _InitTranslation {
     }
   }
   _setDefaultLocal() async {
-    if (window.locale.languageCode == 'zh') {
-      nowLocale = localList[0];
+    DataConfigController appConfig = Get.put(DataConfigController());
+    if (appConfig.state.config.languageType is Locale) {
+      nowLocale.value = appConfig.state.config.languageType!;
+    } else if (window.locale.languageCode == 'zh') {
+      nowLocale.value = localList[0];
     }
   }
   String localToString(Locale language) {

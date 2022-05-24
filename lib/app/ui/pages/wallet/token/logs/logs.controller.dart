@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -74,7 +76,7 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
       token = await httpToolApp.getCoinInfo(minUnit);
     }
     var resultAmount = await httpToolApp.getAccountBalance(state.accountInfo.address, minUnit);
-    if (token != null) token.amount = resultAmount?.data;
+    if (token != null) token.amount = resultAmount?.data??'';
     if (token == null) return Get.back();
     state.tokenInfo = token;
     state._tokenInfo.refresh();
@@ -93,48 +95,56 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
   ) async {
     HttpToolResponse? result;
     if (type == WalletTokenLogsPageTabType.send) {
-      result = await httpToolApp.getAccountSenderList(
+      result = await httpToolServer.getAccountSenderList(
         dataAccount.state.nowAccount?.address??'',
+        state.tokenInfo.minUnit,
         page: state.logsPageSend,
         limit: 10
       );
     } else if (type == WalletTokenLogsPageTabType.receive) {
-      result = await httpToolApp.getAccountRecipientList(
+      result = await httpToolServer.getAccountRecipientList(
         dataAccount.state.nowAccount?.address??'',
+        state.tokenInfo.minUnit,
         page: state.logsPageReceive,
         limit: 10
       );
     }
     if (result == null) return;
     if (type == WalletTokenLogsPageTabType.send) {
-      if (result.data == null || result.data['tx_responses'].length < 10) {
+      if (result.data == null || result.data['data'].length < 10) {
         state.logsPageSend = 0;
       } else {
         state.logsPageSend++;
       }
     }
     if (type == WalletTokenLogsPageTabType.receive) {
-      if (result.data == null || result.data['tx_responses'].length < 10) {
+      if (result.data == null || result.data['data'].length < 10) {
         state.logsPageReceive = 0;
       } else {
         state.logsPageReceive++;
       }
     }
     if (result.data == null) return;
-    for (var res in result.data['tx_responses']) {
+    for (var res in result.data['data']) {
+      var _tx = res['Tx'];
+      var _msg = json.decode(res['Msg'])['value'];
+      var amounts = _msg['amount'];
+      if (amounts is! Iterable) amounts = [amounts];
+      // FIXME: 多类型判断
+      if (_tx['type'] != 'Transfer') break;
       TransferLogModel _item = TransferLogModel()
-        ..blockHeight = int.parse(res['height'])
-        ..hash = res['txhash']
-        ..status = (res['code'] == 0 ? TransferLogStatusEnum.success : TransferLogStatusEnum.fail)
+        ..blockHeight = _tx['height']
+        ..hash = _tx['hash']
+        ..status = (_tx['code'] == 0 ? TransferLogStatusEnum.success : TransferLogStatusEnum.fail)
         ..type = (type == WalletTokenLogsPageTabType.send ? TransferLogTypeEnum.send : TransferLogTypeEnum.receive)
-        ..time = DateTime.parse(res['timestamp'])
+        ..time = DateTime.parse(_tx['create_time'])
         ..items = [
-          for (var _res in res['tx']['body']['messages'])
-            TransferLogItemModel()..toAddress = _res['to_address']
-              ..formAddress = _res['from_address']
+          for (var _res in amounts)
+            TransferLogItemModel()..toAddress = _msg['to_address']
+              ..formAddress = _msg['from_address']
               ..coin = (
-                TokenModel()..amount=_res['amount'][0]['amount']
-                            ..minUnit=_res['amount'][0]['denom']
+                TokenModel()..amount=_res['amount']
+                            ..minUnit=_res['denom']
                             ..scale=state.tokenInfo.scale
               )
         ];

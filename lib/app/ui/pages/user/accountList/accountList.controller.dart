@@ -36,6 +36,6 @@ class UserAccountListPageController extends GetxController {
   }
   // 添加账户
   onAddAccount() {
-    Get.toNamed(PlugRoutesNames.fristOpenWallet);
+    Get.toNamed(PlugRoutesNames.firstOpenWallet);
   }
 }

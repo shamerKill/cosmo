@@ -77,7 +77,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                       children: [
                         Text('版本更新'.tr),
                         if (state.hadUpdate == '')
-                          Text('暂无版本更新', style: Get.textTheme.bodyText1)
+                          Text('已是最新版本'.tr, style: Get.textTheme.bodyText1)
                         else 
                           Row(
                             children: [
@@ -125,24 +125,28 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                     ],
                   ),
                 ),
-                Container(
-                  height: appTheme.sizes.basic,
-                  width: appTheme.sizes.infinity,
-                  color: appTheme.colors.borderColor,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Twitter'.tr),
-                      Obx(() => SelectableText(
-                        state.twitterSite,
-                        style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
-                      )),
-                    ],
-                  ),
-                ),
+                Obx(() => state.twitterSite == '' ? Container() : Column(
+                  children: [
+                    Container(
+                      height: appTheme.sizes.basic,
+                      width: appTheme.sizes.infinity,
+                      color: appTheme.colors.borderColor,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Twitter'.tr),
+                          Obx(() => SelectableText(
+                            state.twitterSite,
+                            style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
+                          )),
+                        ],
+                      ),
+                    )
+                  ],
+                )),
               ],
             ),
           ),

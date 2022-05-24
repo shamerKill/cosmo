@@ -77,7 +77,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
             child: state.showType == 0 ? LInput(
               textController: controller.searchTextController,
               onSubmitted: controller.onSearch,
-              hintText: '搜索代币名称',
+              hintText: '搜索代币名称/合约地址',
               textInputAction: TextInputAction.search,
               prefixIcon: Icon(Icons.search, color: appTheme.colors.textGray),
             ) : SizedBox(

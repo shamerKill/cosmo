@@ -45,8 +45,8 @@ class PlugRoot extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: plugTranslation.localList,
-          locale: plugTranslation.nowLocale,
-          fallbackLocale: plugTranslation.fallbackLocale,
+          locale: plugTranslation.nowLocale.value,
+          fallbackLocale: plugTranslation.fallbackLocale.value,
           enableLog: !Env.envConfig.isRelease,
         ),
       );

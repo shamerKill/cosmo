@@ -34,11 +34,11 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
         ),
       ),
       basicBackgroundColor: true,
-      body: LScrollView(
+      body: Obx(() => LScrollView(
         refreshController: controller.notificationRefreshController,
         onRefresh: controller.onRefresh,
-        onLoading: controller.onLoading,
-        child: Obx(() => LAnimationView(
+        onLoading: state.page == 0 ? null : controller.onLoading,
+        child: LAnimationView(
           child: Column(
             children: state.listNotification.map((_item) => InkWell(
               onTap: () => controller.onToDetail(_item.id),
@@ -97,8 +97,8 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
               ),
             )).toList(),
           ),
-        )),
-      ),
+        ),
+      )),
     );
   }
 }

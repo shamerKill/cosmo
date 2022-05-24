@@ -1,15 +1,16 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/env/env.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/verify.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
-import 'package:plug/app/config/config.chain.dart';
 
 class AccountImportPageState {
   final Rx<bool> _passwordShow = false.obs;
@@ -31,6 +32,16 @@ class AccountImportPageState {
   final Rx<bool> _importLoading = false.obs;
   bool get importLoading => _importLoading.value;
   set importLoading (bool value) => _importLoading.value = value;
+
+  // 账户类型列表
+  final RxList<enumAccountType> accountTypeList = RxList([
+    enumAccountType.prc20,
+    enumAccountType.prc10,
+  ]);
+  // 账户类型选择
+  final Rx<enumAccountType> _accountType = enumAccountType.prc20.obs;
+  enumAccountType get accountType => _accountType.value;
+  set accountType (enumAccountType value) => _accountType.value = value;
 }
 
 class AccountImportPageController extends GetxController {
@@ -60,7 +71,7 @@ class AccountImportPageController extends GetxController {
     rePasswordController.removeListener(_checkGanImport);
   }
 
-  toogleAgreement(bool? type) {
+  toggleAgreement(bool? type) {
     state.agreement = type??state.agreement;
     _checkGanImport();
   }
@@ -68,8 +79,14 @@ class AccountImportPageController extends GetxController {
     if (type == 'password') state._passwordShow.toggle();
     if (type == 'rePassword') state._rePasswordShow.toggle();
   }
-  goToUserAgreement() => Get.toNamed('');
-  goToUserPrivacy() => Get.toNamed('');
+  // 切换账户类型
+  switchAccountType(int type) {
+    state.accountType = state.accountTypeList[type];
+  }
+  // 用户协议
+  goToUserAgreement() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode('https://www.plugchain.network/v2/userAgreemen'))});
+  // 隐私保护
+  goToUserPrivacy() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode('https://www.plugchain.network/v2/privacyAgreemen'))});
   // 判断是否可以导入
   _checkGanImport() {
     if (
@@ -110,18 +127,18 @@ class AccountImportPageController extends GetxController {
   // 进行导入
   processImport() async {
     List<String> mnemonic = mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
-    if (!_checkMnemonic(mnemonic)) {
+    if (!WalletTool.checkMnemonic(mnemonic)) {
       return LToast.error('ErrorWithMnemonicInput'.tr);
     }
     state._importLoading.toggle();
     LLoading.showBgLoading();
     await Future.delayed(const Duration(seconds: 2));
-    var newWallet = WalletTool.walletForMnemonic(mnemonic);
     AccountModel createdAccount = AccountModel();
-    createdAccount..address = newWallet.bech32Address
-      ..nickName = '${ConfigChainData.dappNicknamePrex}-import-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
+    createdAccount..address = _getAccountAddress(mnemonic)
+      ..nickName = '${Env.envConfig.assets.accountDefaultPre}-import-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
       ..stringifyRaw = WalletTool.encryptMnemonic(mnemonic, passwordController.text)
-      ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1;
+      ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1
+      ..accountType = state.accountType;
     dataAccountController.addAccount(createdAccount);
     state._importLoading.toggle();
     LLoading.dismiss();
@@ -135,5 +152,15 @@ class AccountImportPageController extends GetxController {
     if (mnemonic.length == 16) return true;
     if (mnemonic.length == 24) return true;
     return false;
+  }
+
+  String _getAccountAddress(List<String> mnemonic) {
+    // 创建20账户
+    if (state.accountType == enumAccountType.prc20) {
+      return WalletTool.walletForMnemonicPrc20(mnemonic).bech32Address;
+    } else {
+      // 创建10账户
+      return WalletTool.walletForMnemonic(mnemonic).bech32Address;
+    }
   }
 }

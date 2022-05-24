@@ -1,6 +1,5 @@
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
-import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 
@@ -17,7 +16,7 @@ class StartPageState {
 class StartPageController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _controller;
-  final int _animationTimeMillisseconds = 1000;
+  final int _animationTimeMilliseconds = 1000;
   final double _beginValue = 0.0;
   final double _endValue = 10.0;
 
@@ -27,21 +26,25 @@ class StartPageController extends GetxController with GetTickerProviderStateMixi
   @override
   void onInit() {
     super.onInit();
+    bool _isGoTo = false;
     _controller = AnimationController(
-        duration: Duration(milliseconds: _animationTimeMillisseconds), vsync: this);
+        duration: Duration(milliseconds: _animationTimeMilliseconds), vsync: this);
     _animation = Tween(begin: _beginValue, end: _endValue).animate(_controller)
       ..addListener(() {
         state.bgOpacity = _animation.value / _endValue;
         state.logoBottomPadding = _animation.value * 20;
-        if (_animation.value == _endValue) _toPage();
+        if (_animation.value == _endValue && !_isGoTo) {
+          _isGoTo = true;
+          _toPage();
+        }
       });
     _controller.forward();
   }
 
   @override
   void onClose() {
-    super.onClose();
     _controller.dispose();
+    super.onClose();
   }
 
   _toPage() async {
@@ -51,7 +54,7 @@ class StartPageController extends GetxController with GetTickerProviderStateMixi
     if (accountController.state.hadAccount) {
       Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
     } else {
-      Get.offAllNamed(PlugRoutesNames.fristOpenWallet);
+      Get.offAllNamed(PlugRoutesNames.firstOpenWallet);
     }
   }
 }

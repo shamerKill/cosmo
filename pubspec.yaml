@@ -62,8 +62,6 @@ dependencies:
   dotted_line: ^3.1.0
   # https://pub.flutter-io.cn/packages/flutter_svg
   flutter_svg: ^1.0.0
-  # https://pub.flutter-io.cn/packages/package_info_plus
-  package_info_plus: ^1.3.0
   # https://pub.flutter-io.cn/packages/image_picker
   image_picker: ^0.8.4+4
   # https://pub.flutter-io.cn/packages/get_storage
@@ -82,6 +80,18 @@ dependencies:
   permission_handler: ^9.2.0
   # https://pub.dev/packages/http_parser
   http_parser: ^4.0.0
+  # https://pub.flutter-io.cn/packages/pretty_json
+  pretty_json: ^2.0.0
+  # https://pub.flutter-io.cn/packages/open_file
+  open_file: ^3.2.1
+  # https://pub.flutter-io.cn/packages/package_info_plus
+  package_info_plus: ^1.4.0
+  # https://pub.flutter-io.cn/packages/dart_bech32
+  dart_bech32: ^2.0.0
+  # https://pub.flutter-io.cn/packages/web3dart
+  web3dart: ^2.3.5
+  # https://pub.flutter-io.cn/packages/local_auth
+  local_auth: ^2.0.2
 
 dev_dependencies:
   flutter_test:

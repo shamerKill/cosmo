@@ -34,28 +34,7 @@ class UserNetworkPageController extends GetxController {
   // 获取网络列表
   Future<void> _getNetList() async {
     LLoading.showBgLoading(text: '网络获取中'.tr);
-    await Future.wait(
-      [Future.delayed(const Duration(milliseconds: 1000)), Future.delayed(const Duration(milliseconds: 500))]
-    );
     LLoading.dismiss();
-    for (int i = 0; i < 3; i++) {
-      state.mainNetList.add(
-        NetWorkModel()
-          ..id = i
-          ..name = '主网$i.0'
-          ..addressList = ['https://api.plugchain.network']
-          ..type = 0
-      );
-    }
-    for (int i = 1; i < 5; i++) {
-      state.testNetList.add(
-        NetWorkModel()
-          ..id = i + 3
-          ..name = '测试网$i.0'
-          ..addressList = ['https://api.plugchain.network']
-          ..type = 0
-      );
-    }
   }
   // 更改当前网络
   exchangeNoNet(int id, { required NetWorkModel network }) async {
@@ -70,9 +49,7 @@ class UserNetworkPageController extends GetxController {
     );
     if (result != true) return;
     LLoading.showBgLoading();
-    await Future.delayed(const Duration(milliseconds: 1000));
     state.nowNetId = id;
-    print(network.toJson());
     LLoading.dismiss();
   }
 }

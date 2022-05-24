@@ -7,7 +7,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -80,6 +80,8 @@ class ChainVerifierDetailPageController extends GetxController {
         httpToolApp.getAccountUnDelegateData(dataAccount.state.nowAccount!.address),
         // 获取转质押数据
         httpToolApp.getAccountReDelegateData(dataAccount.state.nowAccount!.address),
+        // 获取节点头像
+        httpToolServer.getChainVerifierAvatar([dataAccount.state.nowAccount!.address]),
       ]);
       // 奖励
       if (_res[0] != null && _res[0]?.status == 0 && _res[0]!.data != null && _res[0]!.data['rewards'] != null) {
@@ -132,6 +134,10 @@ class ChainVerifierDetailPageController extends GetxController {
           }
         }
       }
+      // 节点头像
+      if (_res[4] != null && _res[4]?.status == 0 && _res[4]!.data != null) {
+        state.verifierInfo.avatar = _res[4]!.data[state.verifierInfo.address]??'';
+      }
     }
     state._verifierInfo.refresh();
   }
@@ -147,9 +153,12 @@ class ChainVerifierDetailPageController extends GetxController {
     var password = await LBottomSheet.passwordBottomSheet();
     // 解压账户
     if (password == null) return;
-    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
-    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
     LLoading.showBgLoading();
+    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
+    if (mnemonicList == null) {
+      LLoading.dismiss();
+      return LToast.warning('密码输入错误'.tr);
+    }
     var fee = await httpToolServer.getChainFee();
     var result = await WalletTool.withReward(
       mnemonic: mnemonicList,

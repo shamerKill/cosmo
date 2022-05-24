@@ -8,7 +8,6 @@ import 'package:plug/app/ui/components/view/verifierCard.component.dart';
 import 'package:plug/app/ui/pages/chain/export/delegate/delegate.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
-import 'package:plug/app/ui/utils/string.dart';
 
 class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController> {
   const ChainExportDelegatePage({Key? key}) : super(key: key);

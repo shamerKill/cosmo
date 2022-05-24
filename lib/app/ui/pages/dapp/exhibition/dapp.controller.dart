@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/routes/routes.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 
 class DappExhibitionPageState {
   // banner图
@@ -50,7 +50,7 @@ class DappExhibitionPageController extends GetxController with GetTickerProvider
   _getBanner() async {
     var result = await httpToolServer.getDappAdPic();
     // 获取远程dapp列表
-    state.topBanner = result.data['value'];
+    state.topBanner = result.data?['value']??'';
   }
   // 初始化local tabbar
   _initTabBar() async {

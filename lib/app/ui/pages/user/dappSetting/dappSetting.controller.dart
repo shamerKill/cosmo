@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/provider/data.config.dart';
+import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class UserDappSettingPageState {
   // 是否开启安全模式
@@ -10,16 +13,25 @@ class UserDappSettingPageState {
   final Rx<bool> _safeMode = false.obs;
   bool get safeMode => _safeMode.value;
   set safeMode (bool value) => _safeMode.value = value;
+  // webview controller
+  // webview控制器
+  final Rx<WebViewController?> _webviewController = Rx(null);
+  WebViewController? get webviewController => _webviewController.value;
+  set webviewController (WebViewController? value) => _webviewController.value = value;
 }
 
 class UserDappSettingPageController extends GetxController {
   UserDappSettingPageController();
   UserDappSettingPageState state = UserDappSettingPageState();
 
+  DataDappAddressController dataDappAddress = Get.find();
+  DataConfigController dataConfig = Get.find();
+
   @override
   onInit() {
     super.onInit();
     // 获取安全模式
+    state.safeMode = dataConfig.state.config.safeDappView;
   }
   @override
   onClose() {
@@ -58,6 +70,7 @@ class UserDappSettingPageController extends GetxController {
       state.safeMode = false;
       LToast.success('安全模式已关闭'.tr);
     }
+    dataConfig.upSafeViewType(state.safeMode);
     LLoading.dismiss();
   }
   // 清理网络缓存
@@ -66,7 +79,10 @@ class UserDappSettingPageController extends GetxController {
       title: '是否清空网络缓存?',
     );
     if (result != true) return;
+    if (state.webviewController == null) return LToast.error('清理失败'.tr);
     LLoading.showBgLoading();
+    state.webviewController?.clearCache();
+    await WebView.platform.clearCookies();
     await Future.delayed(const Duration(milliseconds: 1000));
     LLoading.dismiss();
     LToast.success('缓存清理成功'.tr);
@@ -78,6 +94,15 @@ class UserDappSettingPageController extends GetxController {
     );
     if (result != true) return;
     LLoading.showBgLoading();
+    for (var dapp in dataDappAddress.state.dappCollectList) {
+      dapp.permissions = [];
+    }
+    for (var dapp in dataDappAddress.state.dappLatelyList) {
+      dapp.permissions = [];
+    }
+    dataDappAddress.state.dappCollectList.refresh();
+    dataDappAddress.state.dappLatelyList.refresh();
+    dataDappAddress.saveData();
     await Future.delayed(const Duration(milliseconds: 1000));
     LLoading.dismiss();
     LToast.success('DAPP授权清理成功'.tr);

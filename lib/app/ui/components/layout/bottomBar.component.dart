@@ -19,16 +19,16 @@ class LBottomNavigation extends GetView {
           label: _item.label.tr,
           activeIcon: _item.activeIcon,
         )).toList(),
-        selectedIconTheme: IconThemeData(size: appTheme.sizes.iconSize * 0.8),
-        unselectedIconTheme: IconThemeData(size: appTheme.sizes.iconSize * 0.9),
+        selectedIconTheme: IconThemeData(size: appTheme.sizes.iconSize * 0.7),
+        unselectedIconTheme: IconThemeData(size: appTheme.sizes.iconSize * 0.8),
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: TextStyle(fontSize: appTheme.sizes.fontSize, height: 2),
+        selectedLabelStyle: TextStyle(fontSize: appTheme.sizes.fontSizeSmall, height: 1.8),
         unselectedLabelStyle: TextStyle(fontSize: appTheme.sizes.fontSizeSmall, color: appTheme.colors.textGray),
         unselectedItemColor: appTheme.colors.textGray,
         backgroundColor: appTheme.colors.pageBackgroundColor,
         currentIndex: state.selectedIndex,
         fixedColor: appTheme.colors.primaryColor,
-        onTap: controller.changeSelectd,
+        onTap: controller.changeSwitch,
       ),
     ));
   }
@@ -47,15 +47,15 @@ class LBottomNavigationState {
       route: PlugRoutesNames.walletHome,
     ),
     _BottomItem(
-      icon: const Icon(IconData(0xe812, fontFamily: 'plugIcon')),
-      activeIcon: const Icon(IconData(0xe814, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_ecology',
+      icon: const Icon(IconData(0xe824, fontFamily: 'plugIcon')),
+      activeIcon: const Icon(IconData(0xe824, fontFamily: 'plugIcon')),
+      label: '核心',
       route: PlugRoutesNames.chainExport,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe818, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe819, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_community',
+      label: '浏览',
       route: PlugRoutesNames.dappExhibition,
     ),
     _BottomItem(
@@ -86,7 +86,7 @@ class LBottomNavigationController extends GetxController {
       state.selectedIndex = 3;
     }
   }
-  changeSelectd(int? type) {
+  changeSwitch(int? type) {
     if (type != null && type != state.selectedIndex) {
       state.selectedIndex = type;
       Get.offAndToNamed(state.tabItems[type].route);

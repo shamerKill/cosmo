@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:clipboard/clipboard.dart';
@@ -7,12 +6,13 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
+import 'package:plug/app/data/provider/data.config.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -57,28 +57,34 @@ class BasicHomePageState {
   
   // 提示备份显示内容
   final RxList<Widget> tipBackupView = RxList<Widget>();
+
+  // 桌面侧滑的key
+  final Rx<GlobalKey<ScaffoldState>> _scaffoldKey = GlobalKey<ScaffoldState>().obs;
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey.value;
+  set scaffoldKey (GlobalKey<ScaffoldState> value) => _scaffoldKey.value = value;
 }
 
-BasicHomePageState _baseHomePageState = BasicHomePageState();
 class BasicHomePageController extends GetxController with GetTickerProviderStateMixin {
   BasicHomePageController();
 
   RefreshController accountRefreshController = RefreshController();
 
-  BasicHomePageState state = _baseHomePageState;
   final DataAccountController dataAccountController = Get.find();
   final DataCoinsController dataCoinsController = Get.find();
+  final DataConfigController dataAppConfig = Get.find();
+
+  BasicHomePageState state = BasicHomePageState();
 
   late Animation<double> _infoAnimation;
   late AnimationController _infoAnimationController;
   bool close = false;
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   Timer? _timer;
 
   @override
   onReady() {
     super.onReady();
+    _hideInit();
     initAccountStorage();
     _initAnimationController();
     _checkBackup();
@@ -90,13 +96,20 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     close = true;
   }
 
+  // 初始化显示隐藏
+  _hideInit() async {
+    await Future.delayed(const Duration(milliseconds: 10));
+    onInfoHide(type: dataAppConfig.state.config.homeValueHide);
+  }
+
   // 获取当前账户信息
   Future<void> initAccountStorage() async {
     _checkAndInsertAccountBaseCoin();
     LLoading.showLoading();
     var result = await Future.wait<dynamic>(
-      state.accountInfo.tokenList.map<Future<dynamic>>((token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.minUnit)).toList()
-      ..addAll([
+      state.accountInfo.tokenList.map<Future<dynamic>>(
+        (token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.minUnit)
+      ).toList()..addAll([
         httpToolApp.getAccountTransferLength(state.accountInfo.address),
       ])
     );
@@ -116,7 +129,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   _checkAndInsertAccountBaseCoin() {
     var type = dataAccountController.checkAccountHadCoin(dataAccountController.state.nowAccount!.address, dataCoinsController.state.baseCoin.minUnit);
     if (!type) {
-      dataAccountController.updataAccount(
+      dataAccountController.updateAccount(
         dataAccountController.state.nowAccount!..tokenList.insert(0, dataCoinsController.state.baseCoin),
       );
     }
@@ -127,7 +140,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     double num = 0.0;
     var result = await Future.wait([
       for (var token in state.accountInfo.tokenList)
-        httpToolServer.getCoinPrice(token.minUnit)
+        httpToolServer.getCoinPrice(token.type == enumTokenType.prc20 ? token.contractAddress : token.minUnit)
     ]);
     for (var i = 0; i < state.accountInfo.tokenList.length; i++) {
       var token = state.accountInfo.tokenList[i];
@@ -154,7 +167,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   }
   // 菜单
   onTapMenu () {
-    scaffoldKey.currentState?.openDrawer();
+    state.scaffoldKey.currentState?.openDrawer();
   }
   // 消息
   goToNewsList () {
@@ -202,6 +215,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       if (state.hideInfo == type) return;
       state.hideInfo = type;
     }
+    dataAppConfig.upHomeHide(state.hideInfo);
     _infoAnimationController.forward(from: 0.0);
   }
   // 添加代币
@@ -239,7 +253,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   }
   // 切换账户
   onChangeAccount(String _address) async {
-    scaffoldKey.currentState?.openEndDrawer();
+    state.scaffoldKey.currentState?.openEndDrawer();
     if (!dataAccountController.exchangeAccount(_address)) return;
     state.accountInfo = dataAccountController.state.nowAccount!;
     await initAccountStorage();
@@ -247,12 +261,12 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   }
   // 管理账户
   onAdminAccount(String _address) {
-    scaffoldKey.currentState?.openEndDrawer();
+    state.scaffoldKey.currentState?.openEndDrawer();
     Get.toNamed(PlugRoutesNames.accountAdmin(_address));
   }
   // 添加账户
   onAddAccount() {
     Get.back();
-    Get.toNamed(PlugRoutesNames.fristOpenWallet);
+    Get.toNamed(PlugRoutesNames.firstOpenWallet);
   }
 }

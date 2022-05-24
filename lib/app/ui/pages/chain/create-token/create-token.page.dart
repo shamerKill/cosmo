@@ -56,7 +56,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
                   child: LInput(
                     textController: controller.coinSymbolTextController,
                     focusNode: controller.coinSymbolFocusNode,
-                    hintText: '3-8位字母开头字符',
+                    hintText: '3-8位小写字母开头字符',
                   ),
                 ),
               ],

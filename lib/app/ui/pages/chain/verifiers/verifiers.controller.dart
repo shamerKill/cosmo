@@ -4,7 +4,7 @@ import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainVerifiersPageState {
@@ -76,6 +76,11 @@ class ChainVerifiersPageController extends GetxController {
             ..minPledgeVolume = _item['min_self_delegation']
         );
       }
+    }
+    // 获取节点头像
+    var avatarList = await httpToolServer.getChainVerifierAvatar(list.map((e) => e.address).toList());
+    for (var element in list) {
+      element.avatar = avatarList?.data[element.address]??'';
     }
     return list;
   }

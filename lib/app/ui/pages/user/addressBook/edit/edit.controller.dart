@@ -60,6 +60,7 @@ class UserAddressBookEditPageController extends GetxController {
     }
     Get.focusScope?.unfocus();
     LToast.success('保存成功');
+    Get.back();
   }
   // 删除
   onRemove() async {

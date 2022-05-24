@@ -6,7 +6,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletTokenListPageState {
@@ -31,6 +31,10 @@ class WalletTokenListPageState {
   final Rx<int> _allTokenPage = 1.obs;
   int get allTokenPage => _allTokenPage.value;
   set allTokenPage (int value) => _allTokenPage.value = value;
+  // 是否在请求中
+  final Rx<bool> _fetchLoading = false.obs;
+  bool get fetchLoading => _fetchLoading.value;
+  set fetchLoading (bool value) => _fetchLoading.value = value;
 }
 
 class WalletTokenListPageController extends GetxController with GetTickerProviderStateMixin {
@@ -59,6 +63,10 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     tabBarController.addListener(_onToggleList);
     getTokenRemoteList();
     _getLocalTokenList();
+    state._fetchLoading.listen((_type) {
+      if (_type) LLoading.showBgLoading();
+      if (!_type) LLoading.dismiss();
+    });
   }
   @override
   onClose() {
@@ -85,18 +93,34 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
   }
   // 搜索
   onSearch(String? text) async {
+    if (text == null) return null;
+    if (text == '') return getTokenRemoteList();
+    state.fetchLoading = true;
+    httpToolServer.searchTokenInfo(text).then(
+      (res) {
+        if (res.status == 0) {
+          state.allTokenList..clear()..add(res.data['token']);
+        } else {
+          LToast.info('未找到代币'.tr);
+        }
+      }
+    ).whenComplete(() => state.fetchLoading = false);
   }
   // 获取远程代币列表
   Future<dynamic> getTokenRemoteList() async {
+    if (state.fetchLoading) return null;
     if (state.allTokenPage == 0) return null;
+    state.fetchLoading = true;
     return httpToolApp.getChainTokensList(state.allTokenPage, limit: 10)
       .then((res) {
+        if (res.status != 0) return state.allTokenPage = 0;
         state.allTokenPage++;
         if (res.data.length < 10) {
           state.allTokenPage = 0;
         }
         return res.data.forEach((_item) => state.allTokenList.add(_item));
-      });
+      })
+      .whenComplete(() => state.fetchLoading = false);
   }
   // 获取当前账户
   _getLocalTokenList() {
@@ -119,11 +143,11 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     } else {
       state.accountInfo.tokenList.add(token);
     }
-    LLoading.showBgLoading();
-    accountController.updataAccount(state.accountInfo);
+    state.fetchLoading = true;
+    accountController.updateAccount(state.accountInfo);
     state.allTokenList.refresh();
     await Future.delayed(const Duration(milliseconds: 500));
-    LLoading.dismiss();
+    state.fetchLoading = false;
   }
   // 我的代币列表移除当前代币
   onLocalRemoveToken(TokenModel token) async {
@@ -134,7 +158,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     if (result != true) return;
     var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
     state.accountInfo.tokenList.removeAt(_index);
-    accountController.updataAccount(state.accountInfo);
+    accountController.updateAccount(state.accountInfo);
     state._accountInfo.refresh();
     LToast.success('移除代币成功');
   }
@@ -146,7 +170,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     } else {
       state.accountInfo.tokenList.insert(newIndex + 1, _token);
     }
-    accountController.updataAccount(state.accountInfo);
+    accountController.updateAccount(state.accountInfo);
   }
   // 一键获取所有资产
   onGetUserAllAssets() async {
@@ -155,7 +179,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
       message: Text('是否从云端获取所有资产列表?'.tr),
     );
     if (result != true) return;
-    LLoading.showBgLoading();
+    state.fetchLoading = true;
     var tokenList = await httpToolApp.getAccountAllBalance(state.accountInfo.address);
     for (var i = 0; i < tokenList?.data.length; i++) {
       var _item = tokenList?.data[i];
@@ -165,12 +189,13 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
       }
     }
     state._accountInfo.refresh();
-    accountController.updataAccount(state.accountInfo);
-    LLoading.dismiss();
+    accountController.updateAccount(state.accountInfo);
+    state.fetchLoading = false;
   }
   // 前往代币详情页面
   onGoToDetail(TokenModel token) async {
-    await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
+    if (token.type == enumTokenType.prc10) await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
+    if (token.type == enumTokenType.prc20) await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.contractAddress));
     _getLocalTokenList();
   }
 }

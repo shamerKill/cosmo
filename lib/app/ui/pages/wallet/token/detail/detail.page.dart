@@ -1,6 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -101,6 +102,30 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: appTheme.sizes.padding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('代币类型', style: Get.textTheme.bodyText1),
+                      Obx(() => LAnimationView(child: Text(StringTool.tokenTypeToString(state.tokenInfo.type)))),
+                    ],
+                  ),
+                ),
+                Obx(() => state.tokenInfo.type == enumTokenType.prc20 ? (
+                  Padding(
+                    padding: EdgeInsets.only(top: appTheme.sizes.padding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('合约地址', style: Get.textTheme.bodyText1),
+                        Obx(() => LAnimationView(child: SelectableText(
+                          state.tokenInfo.contractAddress, style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
+                        ))),
+                      ],
+                    ),
+                  )
+                ) : Container())
               ],
             ),
           ),

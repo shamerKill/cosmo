@@ -13,7 +13,7 @@ class UserAboutPageState {
   String get appVersion => _appVersion.value;
   set appVersion (String value) => _appVersion.value = value;
   // 是否有新的版本更新
-  final Rx<String> _hadUpdate = '1.2.3'.obs;
+  final Rx<String> _hadUpdate = ''.obs;
   String get hadUpdate => _hadUpdate.value;
   set hadUpdate (String value) => _hadUpdate.value = value;
   // 官网
@@ -34,8 +34,7 @@ class UserAboutPageController extends GetxController {
   onInit() {
     super.onInit();
     _getVersion();
-    state.webSite = 'https://zh.plugchain.info';
-    state.twitterSite = '@plugchainclub';
+    state.webSite = 'https://www.plugchain.info';
   }
 
   _getVersion() async {

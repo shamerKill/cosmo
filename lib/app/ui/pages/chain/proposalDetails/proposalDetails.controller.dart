@@ -6,7 +6,7 @@ import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/pages/chain/export/proposal/proposal.controller.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/number.dart';
 
 // 投票内容

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/pages/chain/export/proposal/proposal.controller.dart';
-import 'package:plug/app/ui/pages/chain/proposalDatails/proposalDetail.controller.dart';
+import 'package:plug/app/ui/pages/chain/proposalDetails/proposalDetails.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:plug/app/translation/translation.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/bottomBar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -148,42 +149,45 @@ class UserMyPage extends GetView<UserMyPageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('指纹登录'.tr),
-                      Obx(() => Switch(
+                      Obx(() => state.canTouch ? Switch(
                         value: state.enableTouch,
                         onChanged: controller.onToggleTouch,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ) : Padding(
+                        padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5, bottom: appTheme.sizes.paddingSmall * 0.5),
+                        child: Text('不支持'.tr, style: TextStyle(color: appTheme.colors.textGray),),
                       )),
                     ],
                   ),
                 ),
-                Container(
-                  height: appTheme.sizes.basic,
-                  width: appTheme.sizes.infinity,
-                  color: appTheme.colors.borderColor.withOpacity(0.6),
-                ),
-                InkWell(
-                  onTap: controller.onGoToNetwork,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: appTheme.sizes.padding,
-                      bottom: appTheme.sizes.padding,
-                      left: appTheme.sizes.padding,
-                      right: appTheme.sizes.padding,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('网络切换'.tr),
-                        Row(
-                          children: [
-                            Obx(() => Text(state.network, style: TextStyle(color: appTheme.colors.primaryColor))),
-                            Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // Container(
+                //   height: appTheme.sizes.basic,
+                //   width: appTheme.sizes.infinity,
+                //   color: appTheme.colors.borderColor.withOpacity(0.6),
+                // ),
+                // InkWell(
+                //   onTap: controller.onGoToNetwork,
+                //   child: Padding(
+                //     padding: EdgeInsets.only(
+                //       top: appTheme.sizes.padding,
+                //       bottom: appTheme.sizes.padding,
+                //       left: appTheme.sizes.padding,
+                //       right: appTheme.sizes.padding,
+                //     ),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Text('网络切换'.tr),
+                //         Row(
+                //           children: [
+                //             Obx(() => Text(state.network, style: TextStyle(color: appTheme.colors.primaryColor))),
+                //             Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                //           ],
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 Container(
                   height: appTheme.sizes.basic,
                   width: appTheme.sizes.infinity,
@@ -199,7 +203,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                         Text('语言切换'.tr),
                         Row(
                           children: [
-                            Obx(() => Text(state.language, style: TextStyle(color: appTheme.colors.primaryColor))),
+                            Obx(() => Text(plugTranslation.localToString(state.language), style: TextStyle(color: appTheme.colors.primaryColor))),
                             Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                           ],
                         ),
@@ -220,14 +224,17 @@ class UserMyPage extends GetView<UserMyPageController> {
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('使用指南'.tr),
-                      Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
-                    ],
+                InkWell(
+                  onTap: controller.onGoToUseHelper,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('使用指南'.tr),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -235,14 +242,17 @@ class UserMyPage extends GetView<UserMyPageController> {
                   width: appTheme.sizes.infinity,
                   color: appTheme.colors.borderColor.withOpacity(0.4),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('用户协议'.tr),
-                      Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
-                    ],
+                InkWell(
+                  onTap: controller.onGoToAgreement,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('用户协议'.tr),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                      ],
+                    ),
                   ),
                 ),
                 Container(

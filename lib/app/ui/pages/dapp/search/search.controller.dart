@@ -52,6 +52,7 @@ class DappSearchPageController extends GetxController {
     if (StringTool.checkNetAddress(data)) {
       _onAddHistory(data);
       Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode(data))});
+      searchController.text = '';
     } else {
       LToast.warning('网址错误'.tr);
     }
@@ -70,7 +71,7 @@ class DappSearchPageController extends GetxController {
     var index = dataDappAddress.state.dappLatelyList.indexWhere((item) => item.address == address);
     var ele = DappModel();
     if (index >= 0) {
-      dataDappAddress.state.dappLatelyList.removeAt(index);
+      ele = dataDappAddress.state.dappLatelyList.removeAt(index);
     } else {
       ele.address = address;
       ele.title = address;

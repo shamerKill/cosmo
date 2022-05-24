@@ -5,6 +5,7 @@ import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/pages/user/dappSetting/dappSetting.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class UserDappSettingPage extends GetView<UserDappSettingPageController> {
   const UserDappSettingPage({Key? key}) : super(key: key);
@@ -26,6 +27,15 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            width: appTheme.sizes.zero,
+            height: appTheme.sizes.zero,
+            child: WebView(
+              onWebViewCreated: (WebViewController webviewController) async {
+                state.webviewController = webviewController;
+              },
+            ),
+          ),
           Padding(padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding)),
           Container(
             decoration: BoxDecoration(

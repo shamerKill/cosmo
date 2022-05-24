@@ -1,5 +1,10 @@
 part of './interface.dart';
 
+enum enumAccountType {
+  prc10,
+  prc20
+}
+
 /// 账户模型
 class AccountModel extends _StorageBaseAbstract {
   /// 账户地址
@@ -31,6 +36,10 @@ class AccountModel extends _StorageBaseAbstract {
   List<UserVerifierModel> get verifierList => _verifierList;
   set verifierList (List<UserVerifierModel> value) { _verifierList = value; _saveKey(); }
   List<UserVerifierModel> _verifierList = [];
+  /// 地址类型 prc10或者prc20
+  enumAccountType get accountType => _accountType;
+  set accountType (enumAccountType value) { _accountType = value; _saveKey(); }
+  enumAccountType _accountType = enumAccountType.prc20;
   
 
   AccountModel._(): super();
@@ -46,6 +55,7 @@ class AccountModel extends _StorageBaseAbstract {
     _valueMap['createTime'] = createTime;
     _valueMap['tokenList'] = tokenList;
     _valueMap['verifierList'] = verifierList;
+    _valueMap['accountType'] = StringTool.accountTypeToString(accountType);
   }
   @override
   void setData(String sourceStr) {
@@ -55,6 +65,7 @@ class AccountModel extends _StorageBaseAbstract {
     stringifyRaw = source['stringifyRaw']??'';
     weight = source['weight']??'';
     createTime = source['createTime'] != null ? DateTime.tryParse(source['createTime']) : null;
+    accountType = StringTool.accountStringToType(source['accountType']);
     tokenList = (source['tokenList']??[]).map<TokenModel>((dynamic item) => TokenModel()..setData(item)).toList();
     verifierList = (source['verifierList']??[]).map<UserVerifierModel>((dynamic item) => UserVerifierModel()..setData(item)).toList();
   }

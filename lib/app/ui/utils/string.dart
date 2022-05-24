@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:dart_bech32/dart_bech32.dart' as bech32;
+import 'package:web3dart/crypto.dart' as crypto;
 
 import 'package:flutter/material.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
@@ -97,7 +99,9 @@ class StringTool {
     var _link = link.replaceFirst(r"cosmo:", "");
     try {
       result = json.decode(_link);
-    } catch(e) {}
+    } catch(e) {
+      result = {};
+    }
     return result;
   }
   // 判断是否是plug chain地址
@@ -112,4 +116,25 @@ class StringTool {
   }
   /// 检测邮箱
   static bool checkEmail(String email) => RegExp(r"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$").hasMatch(email);
+  /// 账户类型切换
+  static String accountTypeToString (enumAccountType type) => type == enumAccountType.prc10 ? 'PRC10' : 'PRC20'; 
+  static enumAccountType accountStringToType (String? str) => str == 'PRC20' ? enumAccountType.prc20 : enumAccountType.prc10;
+  /// 代币类型切换
+  static String tokenTypeToString (enumTokenType type) => type == enumTokenType.prc10 ? 'PRC10' : 'PRC20'; 
+  static enumTokenType tokenStringToType (String? str) => str == 'PRC20' ? enumTokenType.prc20 : enumTokenType.prc10;
+  // hex转bech32
+  static String hexToBech32(String hexAddress) {
+    return bech32.bech32.encode(
+      bech32.Decoded(
+        prefix: 'gx',
+        words: bech32.bech32.toWords(
+          crypto.hexToBytes(hexAddress)
+        ),
+      )
+    );
+  }
+  // bech32转hex
+  static String bech32ToHex(String bech32Address) {
+    return '0x' + crypto.bytesToHex(bech32.bech32.fromWords(bech32.bech32.decode(bech32Address, 1023).words));
+  }
 }

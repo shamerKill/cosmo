@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:clipboard/clipboard.dart';
+import 'package:pretty_json/pretty_json.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 
 class WalletTokenLogsDetailPageState {
   // 交易详情
@@ -115,7 +117,7 @@ class WalletTokenLogsDetailPageController extends GetxController {
       ..memo = result['tx']['body']['memo']
       ..fee = fee
       ..items = transferList
-      ..rawLog = result['raw_log'];
+      ..rawLog = prettyJson(json.decode(result['raw_log']), indent: 2);
     _setTitle();
     LLoading.dismiss();
   }

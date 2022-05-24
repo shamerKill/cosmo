@@ -4,6 +4,7 @@ import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -95,15 +96,20 @@ class ChainExportDelegatePageController extends GetxController {
     for (var _item in rewardInfo?.data['total']) {
       _rewardVal += int.parse(NumberTool.getNumberInt(_item['amount']));
     }
-
     // 获取节点基本信息
-    var result = await Future.wait(state.myDelegatedVerifiesList.map((_ele) => httpToolApp.getChainVerifierInfo(_ele.address)).toList());
-    for (var i = 0; i < result.length; i++) {
-      var resVerifier = result[i];
+    var result = await Future.wait([
+      httpToolServer.getChainVerifierAvatar(state.myDelegatedVerifiesList.map((_ele) => _ele.address).toList()),
+      Future.wait(state.myDelegatedVerifiesList.map((_ele) => httpToolApp.getChainVerifierInfo(_ele.address)).toList()),
+    ]);
+    var result$0 = (result[0] as HttpToolResponse).data;
+    var result$1 = (result[1] as List<HttpToolResponse?>);
+    for (var i = 0; i < result$1.length; i++) {
+      var resVerifier = result$1[i];
       var verifier = state.myDelegatedVerifiesList[i];
       verifier
         ..setStatus(resVerifier?.data['validator']['status'])
-        ..nickName = resVerifier?.data['validator']['description']['moniker'];
+        ..nickName = resVerifier?.data['validator']['description']['moniker']
+        ..avatar = result$0[verifier.address]??'';
     }
 
     state.delegatingAmount = _delegatingAmount.toString();

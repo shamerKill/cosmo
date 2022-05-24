@@ -5,7 +5,7 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.notification-id.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletNotificationListPageState {
@@ -62,7 +62,7 @@ class WalletNotificationListPageController extends GetxController {
   }
   // 添加
   Future<void> onLoading() async {
-    state.page += 1;
+    state.page = state.page + 1;
     await onGetNoticeList();
   }
 

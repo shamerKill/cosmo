@@ -6,7 +6,7 @@ abstract class PlugRoutesNames {
   /// 广告页
   static const advertisement = '/advertisement';
   /// 首次进入页面(无地址)
-  static const fristOpenWallet = '/fristOpenWallet';
+  static const firstOpenWallet = '/firstOpenWallet';
   /// 创建账户页面
   static const accountCreate = '/accountCreate';
   /// 导入地址页面

@@ -2,8 +2,9 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
+import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 
 class WalletTokenDetailPageState {
   // 当前代币详情
@@ -29,18 +30,30 @@ class WalletTokenDetailPageController extends GetxController {
 
   @override
   onReady() {
-    String? minUnit = Get.parameters['token'];
-    if (minUnit == null) return Get.back();
-    if (minUnit == dataCoins.state.baseCoin.minUnit) state.showButton = false; 
-    _getToken(minUnit);
+    String? tokenId = Get.parameters['token'];
+    if (tokenId == null) return Get.back();
+    if (tokenId == dataCoins.state.baseCoin.minUnit) state.showButton = false;
+    if (tokenId.startsWith(Env.envConfig.chainInfo.addressPrefix) && tokenId.length == 41) {
+      _getTokenPrc20(tokenId);
+    } else {
+      _getTokenPrc10(tokenId);
+    }
   }
 
   // 获取币种
-  _getToken(String minUnit) async {
+  _getTokenPrc10(String tokenId) async {
     LLoading.showLoading();
-    var _token = dataAccount.state.nowAccount?.tokenList.firstWhereOrNull((_token) => _token.minUnit == minUnit);
+    var _token = dataAccount.state.nowAccount?.tokenList.firstWhereOrNull((_token) => _token.minUnit == tokenId);
     if (_token != null) state.isAdd = true;
-    _token ??= await httpToolApp.getCoinInfo(minUnit);
+    _token ??= await httpToolApp.getCoinInfo(tokenId);
+    if (_token != null) state.tokenInfo = _token;
+    LLoading.dismiss();
+  }
+  _getTokenPrc20(String tokenId) async {
+    LLoading.showLoading();
+    var _token = dataAccount.state.nowAccount?.tokenList.firstWhereOrNull((_token) => _token.contractAddress == tokenId);
+    if (_token != null) state.isAdd = true;
+    _token ??= (await httpToolServer.searchTokenInfo(tokenId)).data['token'];
     if (_token != null) state.tokenInfo = _token;
     LLoading.dismiss();
   }
@@ -56,11 +69,11 @@ class WalletTokenDetailPageController extends GetxController {
       var _index = dataAccount.state.nowAccount?.tokenList.indexWhere((_item) => _item.minUnit == state.tokenInfo.minUnit);
       if (_index != null) {
         _account.tokenList.removeAt(_index);
-        dataAccount.updataAccount(_account);
+        dataAccount.updateAccount(_account);
       }
     } else {
       _account.tokenList.add(state.tokenInfo);
-      dataAccount.updataAccount(_account);
+      dataAccount.updateAccount(_account);
     }
     state._isAdd.toggle();
     LLoading.dismiss();

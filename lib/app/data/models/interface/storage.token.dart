@@ -1,5 +1,10 @@
 part of './interface.dart';
 
+enum enumTokenType {
+  prc10,
+  prc20
+}
+
 /// 代币模型
 class TokenModel extends _StorageBaseAbstract {
   /// 代币单位/简称
@@ -50,6 +55,15 @@ class TokenModel extends _StorageBaseAbstract {
   String get logo => _logo;
   set logo (String value) { _logo = value; _saveKey(); }
   String _logo = '';
+  /// 币种类型
+  enumTokenType get type => _type;
+  set type (enumTokenType value) { _type = value; _saveKey(); }
+  enumTokenType _type = enumTokenType.prc10;
+  /// 合约地址
+  String get contractAddress => _contractAddress;
+  set contractAddress (String value) { _contractAddress = value; _saveKey(); }
+  String _contractAddress = '';
+  
 
   TokenModel._(): super();
   factory TokenModel() => create();
@@ -68,7 +82,8 @@ class TokenModel extends _StorageBaseAbstract {
     _valueMap['remarks'] = remarks;
     _valueMap['amount'] = amount;
     _valueMap['logo'] = logo;
-    _valueMap['price'] = price;
+    _valueMap['type'] = StringTool.tokenTypeToString(type);
+    _valueMap['contractAddress'] = contractAddress;
   }
   @override
   void setData(String sourceStr) {
@@ -85,5 +100,7 @@ class TokenModel extends _StorageBaseAbstract {
     amount = source['amount']??'';
     logo = source['logo']??'';
     price = source['price']??'';
+    type = StringTool.tokenStringToType(source['accountType']);
+    contractAddress = source['contractAddress']??'';
   }
 }

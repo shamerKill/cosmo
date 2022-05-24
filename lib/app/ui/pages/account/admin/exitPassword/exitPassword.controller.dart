@@ -91,7 +91,7 @@ class AccountExitPasswordPageController extends GetxController {
     await Future.delayed(const Duration(seconds: 2));
     if (dataAccountController.state.memMnemonic == null) return Get.back();
     state.accountInfo.stringifyRaw = WalletTool.encryptMnemonic(dataAccountController.state.memMnemonic!, passwordController.text);
-    if (!dataAccountController.updataAccount(state.accountInfo)) return LToast.error('修改失败'.tr);
+    if (!dataAccountController.updateAccount(state.accountInfo)) return LToast.error('修改失败'.tr);
     LToast.error('修改成功'.tr);
     state._createLoading.toggle();
     LLoading.dismiss();

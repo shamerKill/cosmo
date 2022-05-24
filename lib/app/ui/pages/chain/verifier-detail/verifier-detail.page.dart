@@ -168,7 +168,7 @@ class ChainVerifierDetailPage extends GetView<ChainVerifierDetailPageController>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('节点最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                      Text('有效自我委托量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                       Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume)) + ' ' + state.baseCoinInfo.symbol)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),

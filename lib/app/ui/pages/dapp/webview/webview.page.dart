@@ -92,19 +92,16 @@ class DappWebviewPage extends GetView<DappWebviewPageController> {
         )),
       )),
       padding: EdgeInsets.all(appTheme.sizes.zero),
-      body: WillPopScope(
-        onWillPop: controller.onWillPop,
-        child: WebView(
-          initialUrl: state.link,
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebResourceError: controller.onWebviewError,
-          onPageStarted: controller.onWebviewStarted,
-          onWebViewCreated: controller.onWebviewCreated,
-          onPageFinished: controller.onWebviewFinished,
-          onProgress: controller.onWebviewProgress,
-          gestureNavigationEnabled: true,
-          navigationDelegate: controller.onNavigationDelegate,
-        ),
+      body: WebView(
+        initialUrl: state.link,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebResourceError: controller.onWebviewError,
+        onPageStarted: controller.onWebviewStarted,
+        onWebViewCreated: controller.onWebviewCreated,
+        onPageFinished: controller.onWebviewFinished,
+        onProgress: controller.onWebviewProgress,
+        gestureNavigationEnabled: true,
+        navigationDelegate: controller.onNavigationDelegate,
       ),
     );
   }

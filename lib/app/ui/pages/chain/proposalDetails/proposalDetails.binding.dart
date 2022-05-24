@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:plug/app/ui/pages/chain/proposalDatails/proposalDetail.controller.dart';
+import 'package:plug/app/ui/pages/chain/proposalDetails/proposalDetails.controller.dart';
 
 class ChainProposalDetailsPageBinding implements Bindings {
   @override

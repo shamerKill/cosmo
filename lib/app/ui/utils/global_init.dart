@@ -4,7 +4,6 @@ import 'package:plug/app/data/provider/data.init.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/translation/translation.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:plug/app/ui/utils/http.dart';
 
 class UtilGlobalInit {
   static init () async {
@@ -13,8 +12,8 @@ class UtilGlobalInit {
       await _openSuperFPS();
     }
     await _changeSystemPerferred();
-    await plugTranslation.init();
     await DataInitState.onInit();
+    await plugTranslation.init();
   }
   // 修改头部背景
   static _changeSystemUI() async {

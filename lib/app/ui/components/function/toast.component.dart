@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:plug/app/ui/theme/theme.dart';
-import 'package:get/get.dart';
 
 var _print = print;
 

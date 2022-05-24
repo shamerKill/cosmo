@@ -69,7 +69,7 @@ class WalletQrScannerPageController extends GetxController {
       return false;
     }
     if (!status.isGranted) {
-      LToast.warning('ErrorWithpermissionCamera'.tr);
+      LToast.warning('ErrorWithPermissionCamera'.tr);
       return false;
     }
     state.isApplied = false;

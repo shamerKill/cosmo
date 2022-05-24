@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:plug/app/routes/routes.dart';
 
-class AccountChossePageState {
+class AccountChoosePageState {
 }
 
-class AccountChossePageController extends GetxController {
-  AccountChossePageController();
-  AccountChossePageState state = AccountChossePageState();
+class AccountChoosePageController extends GetxController {
+  AccountChoosePageController();
+  AccountChoosePageState state = AccountChoosePageState();
   createWallet() {
     Get.toNamed(PlugRoutesNames.accountCreate);
   }

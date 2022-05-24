@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/account/chosse/chosse.controller.dart';
+import 'package:plug/app/ui/pages/account/choose/choose.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
-class AccountChossePage extends GetView<AccountChossePageController> {
-  const AccountChossePage({Key? key}) : super(key: key);
+class AccountChoosePage extends GetView<AccountChoosePageController> {
+  const AccountChoosePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    AccountChossePageState state = controller.state;
+    AccountChoosePageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),

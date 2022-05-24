@@ -7,7 +7,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -76,12 +76,15 @@ class ChainRePledgePageController extends GetxController {
       httpToolServer.getChainFee(),
       // 获取奖励
       httpToolApp.getAccountRewardData(dataAccount.state.nowAccount!.address, vAddress: state.verifierInfo.address),
+      // 获取节点头像
+      httpToolServer.getChainVerifierAvatar([state.verifierInfo.address]),
     ]);
     var _verifierInfo = result[0];
     var _accountDelegate = result[1];
     var _balance = result[2];
     var _fee = result[3];
     var _reward = result[4];
+    var _avatar = result[5];
     if (_verifierInfo != null && _verifierInfo.status == 0 && _verifierInfo.data != null) {
       state.verifierInfo..nickName = _verifierInfo.data['validator']['description']['moniker']
         ..setStatus(_verifierInfo.data['validator']['status'])
@@ -114,6 +117,10 @@ class ChainRePledgePageController extends GetxController {
         }
       }
     }
+    // 节点头像
+    if (_avatar != null && _avatar.status == 0 && _avatar.data != null) {
+      state.verifierInfo.avatar = _avatar.data[state.verifierInfo.address]??'';
+    }
     state.feeAmount = _fee!.data??'0.0002';
     state._verifierInfo.refresh();
     state._baseCoin.refresh();
@@ -136,6 +143,11 @@ class ChainRePledgePageController extends GetxController {
             ..minPledgeVolume = _item['min_self_delegation']
         );
       }
+    }
+    // 获取节点头像
+    var avatarList = await httpToolServer.getChainVerifierAvatar(list.map((e) => e.address).toList());
+    for (var element in list) {
+      element.avatar = avatarList?.data[element.address]??'';
     }
     state.allVerifiers.addAll(list);
   }
@@ -165,11 +177,14 @@ class ChainRePledgePageController extends GetxController {
     ) return LToast.warning('数量输入有误'.tr);
     String? pass = await LBottomSheet.passwordBottomSheet();
     if (pass == null) return;
-    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, pass);
-    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
+    LLoading.showBgLoading();
+    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, pass);
+    if (mnemonicList == null) {
+      LLoading.dismiss();
+      return LToast.warning('密码输入错误'.tr);
+    }
     Get.focusScope?.unfocus();
     state.pledgeLoading = true;
-    LLoading.showBgLoading();
     var result = await WalletTool.reDelegate(
       mnemonic: mnemonicList,
       validatorSrcAddress: state.verifierInfo.address,

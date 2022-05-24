@@ -8,7 +8,7 @@ import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 
@@ -124,16 +124,20 @@ class ChainCreateTokenPageController extends GetxController {
   }
   // 开始发行
   createToken() async {
+    if (!RegExp(r'^[az][a-z0-9]{2,7}$').hasMatch(coinSymbolTextController.text)) return LToast.warning('简称仅可使用小写字母和数字'.tr);
     if (
       coinNameTextController.text == '' || !RegExp(r'^[az][a-z0-9]{2 ,7}$').hasMatch(coinSymbolTextController.text) || coinTotalVolumeTextController.text == '' || state.createFee == '' || state.isLoading
     ) return LToast.warning('信息有误'.tr);
     var _pass = await LBottomSheet.passwordBottomSheet();
     if (_pass == null) return;
-    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
-    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
+    LLoading.showLoading();
+    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
+    if (mnemonicList == null) {
+      LLoading.dismiss();
+      return LToast.warning('密码输入错误'.tr);
+    }
     Get.focusScope?.unfocus();
     state.isLoading = true;
-    LLoading.showLoading();
     var result = await WalletTool.createToken(
       mnemonic: mnemonicList,
       name: coinNameTextController.text,
@@ -156,7 +160,7 @@ class ChainCreateTokenPageController extends GetxController {
     if (result.status == 8) return LToast.error('ErrorWithCoinSymbolRepeat'.tr);
     if (result.status != 0) return LToast.error('ErrorWithSendUnkown'.tr);
     LToast.success('SuccessWithSend'.tr);
-    dataAccount.updataAccount(
+    dataAccount.updateAccount(
       dataAccount.state.nowAccount!..tokenList.add(
         TokenModel()
           ..symbol = coinSymbolTextController.text

@@ -11,9 +11,9 @@ class PlugPages {
     ),
     /// 首次进入页面(无地址)
     GetPage(
-      name: PlugRoutesNames.fristOpenWallet,
-      page: () => const AccountChossePage(),
-      binding: AccountChossePageBinding(),
+      name: PlugRoutesNames.firstOpenWallet,
+      page: () => const AccountChoosePage(),
+      binding: AccountChoosePageBinding(),
     ),
     /// 创建账户
     GetPage(

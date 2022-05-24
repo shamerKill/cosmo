@@ -4,8 +4,10 @@ import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
+import 'package:plug/app/ui/components/view/switch.component.dart';
 import 'package:plug/app/ui/pages/account/import/import.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 // TODO: 助记词数量
 class AccountImportPage extends GetView<AccountImportPageController> {
@@ -56,6 +58,22 @@ class AccountImportPage extends GetView<AccountImportPageController> {
                 passOnPress: () => controller.togglePasswordView('rePassword'),
               )),
             ),
+            Padding(
+              padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text('账户类型 :'.tr),
+                  ),
+                  Obx(() => LSwitchView(
+                    selectList: state.accountTypeList.map((item) => StringTool.accountTypeToString(item)),
+                    change: controller.switchAccountType,
+                    selected: state.accountTypeList.indexOf(state.accountType),
+                  ))
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -65,7 +83,7 @@ class AccountImportPage extends GetView<AccountImportPageController> {
             children: [
               Obx(() => Checkbox(
                 value: state.agreement,
-                onChanged: controller.toogleAgreement,
+                onChanged: controller.toggleAgreement,
               )),
               Expanded(
                 flex: 1,

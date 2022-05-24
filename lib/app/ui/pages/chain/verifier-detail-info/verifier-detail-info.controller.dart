@@ -3,7 +3,7 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/data/services/net.services.dart';
 
 class ChainVerifierDetailInfoPageState {
   // 验证者信息
@@ -57,6 +57,8 @@ class ChainVerifierDetailInfoPageController extends GetxController {
       httpToolApp.getAccountUnDelegateData(dataAccount.state.nowAccount!.address),
       // 获取转质押数据
       httpToolApp.getAccountReDelegateData(dataAccount.state.nowAccount!.address),
+      // 获取节点头像
+      httpToolServer.getChainVerifierAvatar([dataAccount.state.nowAccount!.address]),
     ]);
     // 奖励
     if (_res[0] != null && _res[0]?.status == 0 && _res[0]!.data != null && _res[0]!.data['rewards'] != null) {
@@ -108,6 +110,10 @@ class ChainVerifierDetailInfoPageController extends GetxController {
           break;
         }
       }
+    }
+    // 节点头像
+    if (_res[4] != null && _res[4]?.status == 0 && _res[4]!.data != null) {
+      state.verifierInfo.avatar = _res[4]!.data[state.verifierInfo.address]??'';
     }
     state._verifierInfo.refresh();
   }

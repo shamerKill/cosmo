@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
+import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
@@ -122,11 +122,14 @@ class WalletTokenSendPageController extends GetxController {
     ) return LToast.warning('数量输入有误'.tr);
     String? password = await LBottomSheet.passwordBottomSheet();
     if (password == null) return;
-    var mnemonicList = WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
-    if (mnemonicList == null) return LToast.warning('密码输入错误'.tr);
+    LLoading.showLoading();
+    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
+    if (mnemonicList == null) {
+      LLoading.dismiss();
+      return LToast.warning('密码输入错误'.tr);
+    }
     Get.focusScope?.unfocus();
     state.sendLoadding = true;
-    LLoading.showLoading();
     var result = await WalletTool.transfer(
       mnemonic: mnemonicList,
       toAddress: addressController.text,
