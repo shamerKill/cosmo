@@ -35,11 +35,6 @@ class BasicHomePageState {
   AccountModel get accountInfo => _accountInfo.value;
   set accountInfo (AccountModel value) => _accountInfo.value = value;
 
-  // 账户交易次数
-  final Rx<int> _accountTransTime = 0.obs;
-  int get accountTransTime => _accountTransTime.value;
-  set accountTransTime (int value) => _accountTransTime.value = value;
-
   // 账户价值
   final Rx<String> _accountAssetsPrice = ''.obs;
   String get accountAssetsPrice => _accountAssetsPrice.value;
@@ -108,21 +103,15 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     LLoading.showLoading();
     var result = await Future.wait<dynamic>(
       state.accountInfo.tokenList.map<Future<dynamic>>(
-        (token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.minUnit)
-      ).toList()..addAll([
-        httpToolApp.getAccountTransferLength(state.accountInfo.address),
-      ])
+        (token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.type == enumTokenType.prc10 ? token.minUnit : token.contractAddress)
+      ).toList()
     );
     LLoading.dismiss();
     // 更改币种余额
-    var _tokensResult = result.sublist(0, state.accountInfo.tokenList.length);
-    for (var i = 0; i < _tokensResult.length; i++) {
-      state.accountInfo.tokenList[i].amount = _tokensResult[i]?.data??'';
+    for (var i = 0; i < result.length; i++) {
+      state.accountInfo.tokenList[i].amount = result[i]?.data??'';
     }
     state._accountInfo.refresh();
-    // 更改交易次数
-    var _otherResult = result.sublist(state.accountInfo.tokenList.length);
-    state.accountTransTime = _otherResult[0];
     _getAccountPrice();
   }
   // 判断账户是否有基础币，如果没有加入并储存
@@ -224,8 +213,11 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     initAccountStorage();
   }
   // 我的代币详情
-  onToTokenPage(String token) async {
-    await Get.toNamed(PlugRoutesNames.walletTokenLogs(token));
+  onToTokenPage(TokenModel token) async {
+    await Get.toNamed(PlugRoutesNames.walletTokenLogs(
+      token.type == enumTokenType.prc10 ?
+        token.minUnit : token.contractAddress
+    ));
     initAccountStorage();
   }
   // 前往备份

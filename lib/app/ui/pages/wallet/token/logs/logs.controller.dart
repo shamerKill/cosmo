@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/ui/utils/http.dart';
+import 'package:plug/app/ui/utils/string.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletTokenLogsPageState {
@@ -62,7 +62,9 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
   void onReady() {
     String? token = Get.parameters['token'];
     if (token == null) return Get.back();
-    _initTokenInfo(token);
+    if (!StringTool.checkChainAddress(token)) {
+      _initTokenInfo(token);
+    }
   }
 
   // 获取token
@@ -127,7 +129,11 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
     if (result.data == null) return;
     for (var res in result.data['data']) {
       var _tx = res['Tx'];
-      var _msg = json.decode(res['Msg'])['value'];
+      var _msg = json.decode(res['Msg']);
+      if (_msg['@type'] != null && RegExp(r'MsgWithdrawDelegatorReward').hasMatch(_msg['@type'])) {
+        print(_msg);
+      }
+      continue;
       var amounts = _msg['amount'];
       if (amounts is! Iterable) amounts = [amounts];
       // FIXME: 多类型判断

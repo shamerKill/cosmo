@@ -8,13 +8,17 @@ class HttpToolResponse {
   late String message;
   String? path;
   HttpToolResponse (
-    Map<String, dynamic>? value,
+    dynamic value,
     {
       String? path
     }
   ) {
     if (value != null) {
-      if (value['status'] == null) {
+      if (value is! Map) {
+        data = value;
+        status = 0;
+        message = 'ok';
+      } else if (value['status'] == null) {
         data = value;
         status = 0;
         message = 'ok';

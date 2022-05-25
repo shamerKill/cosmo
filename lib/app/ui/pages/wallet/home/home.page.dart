@@ -310,14 +310,6 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                     ))),
                                   ],
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text('numberOfTransactions'.tr),
-                                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                                    Obx(() => LAnimationView(randomKey: false, child: Text('${state.accountTransTime}'))),
-                                  ],
-                                ),
                               ],
                             ),
                           ),
@@ -410,7 +402,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
               children: state.accountInfo.tokenList.map((_item) => Padding(
                 padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
                 child: InkWell(
-                  onTap: () => controller.onToTokenPage(_item.minUnit),
+                  onTap: () => controller.onToTokenPage(_item),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
                     decoration: BoxDecoration(

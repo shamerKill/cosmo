@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:plug/app/env/env.dart';
+import 'package:plug/app/ui/utils/evm/evmClient.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:web3dart/web3dart.dart' as web3;
 import 'package:plug/app/ui/utils/http.dart';
@@ -48,6 +49,10 @@ class _HttpToolApp extends UriTool {
   }
   /// 获取账户币种余额
   Future<HttpToolResponse?> getAccountBalance(String address, String minUnit) {
+    if (StringTool.checkChainAddress(minUnit)) {
+      return EvmClient.getContractBalance(StringTool.bech32ToHex(minUnit), StringTool.bech32ToHex(address))
+        .then((res) => HttpToolResponse(res.toString()));
+    }
     return HttpToolClient.getHttp(customUri('/cosmos/bank/v1beta1/balances/$address/by_denom', queryParameters: { 'denom': minUnit }))
       .then(
         (res) => res..data = res.data == null ? null : res.data['balance']['amount'],

@@ -100,7 +100,7 @@ class TokenModel extends _StorageBaseAbstract {
     amount = source['amount']??'';
     logo = source['logo']??'';
     price = source['price']??'';
-    type = StringTool.tokenStringToType(source['accountType']);
+    type = StringTool.tokenStringToType(source['type']);
     contractAddress = source['contractAddress']??'';
   }
 }
