@@ -173,12 +173,16 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
   }
 
   @override
-  onReady() {
+  onReady() async {
     String? id = Get.parameters['id'];
     if (id == null) return Get.back();
     state.baseCoinInfo = dataCoins.state.baseCoin;
-    _initGetData(id);
-    _getVetoHeight();
+    try {
+      await _initGetData(id);
+      _getVetoHeight();
+    } catch (e) {
+      Get.back();
+    }
   }
 
   // 获取高度
@@ -240,14 +244,16 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
       ..abandonVolume = NumberTool.amountToBalance('$memAbstainVolume')
       ..vetoVolume = NumberTool.amountToBalance('$memVetoVolume');
     state._proposalInfo.refresh();
-      getList(1, 'ALL');
-      getList(1, 'AGREE');
-      getList(1, 'REJECT');
-      getList(1, 'VETO');
-      getList(1, 'ABANDON');
-      getList(1, 'SUPPORTER');
+    await Future.wait([
+      getList(1, 'ALL'),
+      getList(1, 'AGREE'),
+      getList(1, 'REJECT'),
+      getList(1, 'VETO'),
+      getList(1, 'ABANDON'),
+      getList(1, 'SUPPORTER'),
+    ]);
   }
-  getList(int page, String type) async {
+  Future<void> getList(int page, String type) async {
     if (type == 'ALL') {
       if (page > state.allHashTotalPage) return;
       state.allHashList.clear();

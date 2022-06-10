@@ -137,7 +137,7 @@ class ChainExportProposalPageController extends GetxController {
     Get.toNamed(PlugRoutesNames.chainProposalDetails('${info.id}'));
   }
   // 展开/关闭操作框
-  onToogleFunc(ProposalCardInfo info) {
+  onToggleFunc(ProposalCardInfo info) {
     info.isOpenFunc = !info.isOpenFunc;
     state.proposalList.refresh();
   }

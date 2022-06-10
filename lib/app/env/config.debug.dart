@@ -9,7 +9,7 @@ class _AssetsConfigDebug implements _AssetsConfig {
 
 class _ChainInfoDebug implements _ChainInfo {
   @override
-  String appChainId = 'plugchain-test';
+  String appChainId = 'plugchain_520-1';
   @override
   String addressPrefix = 'gx';
   @override

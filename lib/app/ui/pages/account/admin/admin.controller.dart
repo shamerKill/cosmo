@@ -5,8 +5,10 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
+import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
+import 'package:plug/app/ui/theme/theme.dart';
 
 class AccountAdminPageState {
   // 已选择账户
@@ -42,6 +44,7 @@ class AccountAdminPageController extends GetxController {
   _getAccountData(String _address) {
     state.accountInfo = dataAccountController.getAccountFromAddress(_address)!;
     state.useAccountInfo = dataAccountController.state.nowAccount!;
+    state._accountInfo.refresh();
   }
   // 复制地址
   onCopyAddress() {
@@ -78,12 +81,38 @@ class AccountAdminPageController extends GetxController {
       ),
     );
   }
+  // 修改名称
+  onEditAccountName() {
+    TextEditingController _controller = TextEditingController(text: state.accountInfo.nickName);
+    LBottomSheet.baseBottomSheet(
+      child: SizedBox(
+        width: Get.size.width * 0.8,
+        child: LInput(
+          textController: _controller,
+          autoFocus: true,
+          textInputAction: TextInputAction.done,
+          onSubmitted: (String? value) {
+            if (value == null || value.isEmpty) {
+              LToast.error('账户名字不能为空'.tr);
+              return;
+            } else if (dataAccountController.updateAccountName(state.accountInfo.address, value)) {
+              LToast.success('修改成功'.tr);
+              _getAccountData(state.accountInfo.address);
+              Get.back();
+            } else {
+              LToast.success('修改失败'.tr);
+            }
+          },
+        ),
+      ),
+    );
+  }
   // 移除账户
   onRemoveAccount() async {
     if ((await LBottomSheet.promptBottomSheet(
       title: '移除提示'.tr,
       message: Text('是否需要移除账户: ${state.accountInfo.nickName} ?'.tr),
-    )) != true) return; 
+    )) != true) return;
     _doType = 'remove';
     LBottomSheet.baseBottomSheet(
       showClose: false,

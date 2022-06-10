@@ -125,6 +125,29 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
             ),
           ),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
+          InkWell(
+            onTap: controller.onEditAccountName,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
+              decoration: BoxDecoration(
+                color: appTheme.colors.pageBackgroundColor,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text('修改账户名称'.tr),
+                  ),
+                  Icon(
+                    const IconData(0xe658, fontFamily: 'plugIcon'),
+                    size: appTheme.sizes.fontSizeSmall,
+                    color: appTheme.colors.textGray,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
           if (state.accountInfo.address != state.useAccountInfo.address) InkWell(
             onTap: controller.onRemoveAccount,
             child: Container(

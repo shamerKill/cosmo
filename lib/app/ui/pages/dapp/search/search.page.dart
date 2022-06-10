@@ -26,7 +26,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
           children: [
             Expanded(
               child: LInput(
-                autofocus: true,
+                autoFocus: true,
                 inputHeight: appTheme.sizes.basic * 80,
                 radiusCircular: true,
                 textController: controller.searchController,

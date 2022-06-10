@@ -39,8 +39,8 @@ class _HttpToolApp extends UriTool {
         onError: (e) => null,
       );
   }
-  /// 获取账户所有代币信息
-  Future<HttpToolResponse?> getAccountAllBalance(String address) {
+  /// 获取账户所有10代币信息
+  Future<HttpToolResponse?> getAccountPrc10AllBalance(String address) {
     return HttpToolClient.getHttp(customUri('/cosmos/bank/v1beta1/balances/$address'))
       .then(
         (res) => res..data = res.data['balances'],
@@ -168,7 +168,7 @@ class _HttpToolApp extends UriTool {
   // 提案投票详情
   Future<HttpToolResponse> getChainProposalDetailVotes(String id, int page, { String? type, limit = 10 }) {
     var events = [
-      'message.action=\'vote\'',
+      'message.action=\'/cosmos.gov.v1beta1.MsgVote\'',
       'proposal_vote.proposal_id=$id',
     ];
     if (type != null) events.add('proposal_vote.option=\'$type\'');
@@ -256,19 +256,11 @@ class _HttpToolServer extends UriTool {
   Future<HttpToolResponse> getVersion() {
     return HttpToolClient.getHttp(customUri('rpc/swap/image'));
   }
-  // 获取账户发送记录
-  Future<HttpToolResponse?> getAccountSenderList(String address, String coin, { page = 1, limit = 10 }) {
+  // 获取账户记录
+  Future<HttpToolResponse?> getAccountLogsList(String address, String coin, { page = 1, limit = 10 }) {
     return HttpToolClient.getHttp(
       customUri('rpc/new/txs', queryParameters: {
-        'page': '$page', 'limit': '$limit', 'address': address, 'coin': coin, 'class': 'out'
-      })
-    );
-  }
-  // 获取账户接收记录
-  Future<HttpToolResponse?> getAccountRecipientList(String address, String coin, { page = 1, limit = 10 }) {
-    return HttpToolClient.getHttp(
-      customUri('rpc/new/txs', queryParameters: {
-        'page': '$page', 'limit': '$limit', 'address': address, 'coin': coin, 'class': 'in'
+        'page': '$page', 'limit': '$limit', 'address': address, 'coins': coin
       })
     );
   }
@@ -301,16 +293,36 @@ class _HttpToolServer extends UriTool {
   }
   // 搜索prc20代币信息
   Future<HttpToolResponse> searchToken20Info(String tokenAddress) {
-    return HttpToolClient.getHttp(customUri('rpc/swap/erc20/coin', queryParameters: { 'contract': tokenAddress }))
+    var _memAddress = tokenAddress;
+    if (StringTool.checkChainAddress(tokenAddress)) _memAddress = StringTool.bech32ToHex(tokenAddress);
+    return HttpToolClient.getHttp(customUri('rpc/swap/erc20/coin', queryParameters: { 'contract': _memAddress }))
       .then(
         (res) => res.status != 0 ?
                   HttpToolResponse(null) :
-                  HttpToolResponse({'token': _resFormatToToken(res.data, contractAddress: StringTool.hexToBech32(tokenAddress), type: enumTokenType.prc20)}),
+                  HttpToolResponse({'token': _resFormatToToken(res.data, contractAddress: StringTool.hexToBech32(_memAddress), type: enumTokenType.prc20)}),
         onError: (e) => null,
       );
   }
 }
 _HttpToolServer httpToolServer = _HttpToolServer();
+
+// 浏览器其他信息
+class _BrowserToolServer extends UriTool {
+  _BrowserToolServer() : super(ConfigChainData.browserInfoRpcUrl);
+  // 获Q取账户所有20代币信息
+  Future<HttpToolResponse?> getAccountPrc20AllBalance(String address) {
+    return HttpToolClient.getHttp(customUri('v2/api/pvmApi/address/token', queryParameters: {
+      'address': address,
+      'from': '1',
+      'amount': '9999',
+    }))
+      .then(
+        (res) => res..data = res.data['data']['List'],
+        onError: (e) => null,
+      );
+  }
+}
+_BrowserToolServer browserToolServer = _BrowserToolServer();
 
 
 

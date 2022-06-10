@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/bottomBar.component.dart';
@@ -191,7 +192,16 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(_item.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, color: appTheme.colors.hightColor)),
+                                      Row(
+                                        children: [
+                                          Text(_item.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, color: appTheme.colors.hightColor)),
+                                          Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+                                          Text(
+                                            '(' + StringTool.accountTypeToString(_item.accountType) + ')',
+                                            style: TextStyle(color: appTheme.colors.hightColor, fontSize: appTheme.sizes.fontSizeSmall),
+                                          ),
+                                        ],
+                                      ),
                                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
                                       Text(StringTool.hideAddressCenter(_item.address, startLen: 10), style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall, color: appTheme.colors.hightColor)),
                                     ],
@@ -413,7 +423,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                       children: [
                         LViewImage(
                           url: _item.logo,
-                          bgColor: StringTool.stringToColor(_item.symbol),
+                          bgColor: StringTool.stringToColor(_item.type == enumTokenType.prc20 ? _item.contractAddress : _item.minUnit),
                           width: appTheme.sizes.basic * 60,
                           height: appTheme.sizes.basic * 60,
                           isRadius: true,

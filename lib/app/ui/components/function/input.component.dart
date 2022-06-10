@@ -22,7 +22,7 @@ class LInput extends StatelessWidget {
     this.keyboardType,
     this.maxLength,
     this.focusNode,
-    this.autofocus = false,
+    this.autoFocus = false,
     this.textAlign,
     this.hintText,
     this.inputHeight,
@@ -56,7 +56,7 @@ class LInput extends StatelessWidget {
   final int? maxLength;
   final bool? hidBorder;
   final bool? radiusCircular;
-  final bool autofocus;
+  final bool autoFocus;
   final Color? fillColor;
   final TextAlign? textAlign;
   final FocusNode? focusNode;
@@ -88,7 +88,7 @@ class LInput extends StatelessWidget {
         textAlign: textAlign??TextAlign.start,
         textInputAction: textInputAction??TextInputAction.next,
         onSubmitted: onSubmitted,
-        autofocus: autofocus,
+        autofocus: autoFocus,
         decoration: InputDecoration(
           fillColor: fillColor,
           contentPadding: EdgeInsets.only(

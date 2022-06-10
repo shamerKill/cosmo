@@ -161,7 +161,7 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
                                         size: 28,
                                         color: _item.isOpenFunc ? appTheme.colors.textGray : appTheme.colors.primaryColor,
                                       ),
-                                      onTap: () => controller.onToogleFunc(_item),
+                                      onTap: () => controller.onToggleFunc(_item),
                                     ) :
                                     Text(
                                       (_item.status == EnumProposalStatus.deposit ? '' : 'complete'.tr),

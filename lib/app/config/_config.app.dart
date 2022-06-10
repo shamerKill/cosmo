@@ -5,6 +5,8 @@ class ConfigChainData {
   static String chainId = 'plugchain_520-1';
   // 服务器接口地址
   static String serverInfoRpcUrl = 'https://wallet.plugchain.network';
+  // 浏览器服务器接口地址
+  static String browserInfoRpcUrl = 'https://www.plugchain.network';
   // static String serverInfoRpcUrl = 'http://192.168.3.22:3333';
   // 1317接口地址
   // static String appInfoRpcUrl = 'http://47.243.114.57:1317';

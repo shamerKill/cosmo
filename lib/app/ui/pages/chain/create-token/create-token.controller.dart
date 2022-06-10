@@ -83,7 +83,7 @@ class ChainCreateTokenPageController extends GetxController {
   }
   // 修改精度
   onExchangeScale() async {
-    var oldScale = int.parse(coinScaleVolumeTextController.text);
+    var oldScale = BigInt.parse(coinScaleVolumeTextController.text);
     Get.focusScope?.unfocus();
     LBottomSheet.baseBottomSheet(
       showClose: false,
@@ -93,12 +93,12 @@ class ChainCreateTokenPageController extends GetxController {
         successCallBack: (int type) {
           coinScaleVolumeTextController.text = scaleList[type];
           if (coinTotalVolumeTextController.text != '') {
-            num total = int.parse(coinTotalVolumeTextController.text);
-            var scale = int.parse(scaleList[type]);
+            BigInt total = BigInt.parse(coinTotalVolumeTextController.text);
+            var scale = BigInt.parse(scaleList[type]);
             if (scale > oldScale) {
-              total = total * pow(10, scale - oldScale);
+              total = total * BigInt.from(pow(10, (scale - oldScale).toInt()));
             } else if (scale < oldScale) {
-              total = total / pow(10, oldScale - scale);
+              total = total ~/ BigInt.from(pow(10, (oldScale - scale).toInt()));
             }
             coinTotalVolumeTextController.text = NumberTool.getNumberInt(total.toString());
           }
@@ -158,7 +158,7 @@ class ChainCreateTokenPageController extends GetxController {
     if (result.status == 6) return LToast.error('ErrorWithCoinInitSupply'.tr);
     if (result.status == 7) return LToast.error('ErrorWithCoinScale'.tr);
     if (result.status == 8) return LToast.error('ErrorWithCoinSymbolRepeat'.tr);
-    if (result.status != 0) return LToast.error('ErrorWithSendUnkown'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithSendUnknown'.tr);
     LToast.success('SuccessWithSend'.tr);
     dataAccount.updateAccount(
       dataAccount.state.nowAccount!..tokenList.add(

@@ -128,7 +128,7 @@ class ChainExchangePage extends GetView<ChainExchangePageController> {
                         keyboardType: TextInputType.number,
                         textController: controller.sendInputController,
                         onChanged: controller.onListenInputVolume,
-                        autofocus: true,
+                        autoFocus: true,
                       ),
                     ),
                     Text('——', style: TextStyle(fontWeight: FontWeight.bold, color: appTheme.colors.textGray)),

@@ -98,7 +98,7 @@ class SelfNodeQuerier extends alan.QueryHelper implements alan.NodeQuerier {
 class WalletTool {
   static final _networkInfo = alan.NetworkInfo.fromSingleHost(
     bech32Hrp: Env.envConfig.chainInfo.addressPrefix,
-    host: '',
+    host: Env.envConfig.urlInfo.chainInfoRpcUrl,
   );
   static Future<HttpToolResponse> _createAndSendMsg (
     alan.Wallet wallet,
@@ -137,13 +137,9 @@ class WalletTool {
         ],
       ),
     );
-    String entryTx(alan.Tx tx) {
-      var config = alan.DefaultTxConfig.create();
-      var encoder = config.txEncoder();
-      var request = base64.encode(encoder(tx));
-      return request;
-    }
-    String request = await foundation.compute(entryTx, tx);
+    var config = alan.DefaultTxConfig.create();
+    var encoder = config.txEncoder();
+    var request = base64.encode(encoder(tx));
     HttpToolResponse result = await _walletSendFetch('broadcast_tx_async', { 'tx': request }, noWait: noWait);
     return result;
   }
@@ -332,7 +328,7 @@ class WalletTool {
     $fixnum.Int64? gasLimit,
     bool? noWait,
   }) async {
-    gasLimit ??= 400000.toInt64();
+    gasLimit ??= 200000.toInt64();
     var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
     var message = bank.MsgSend.create()
       ..fromAddress = wallet.bech32Address

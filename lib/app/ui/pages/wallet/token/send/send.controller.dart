@@ -26,9 +26,9 @@ class WalletTokenSendPageState {
   String get fee => _fee.value;
   set fee (String value) => _fee.value = value;
   // 发送中
-  final Rx<bool> _sendLoadding = false.obs;
-  bool get sendLoadding => _sendLoadding.value;
-  set sendLoadding (bool value) => _sendLoadding.value = value;
+  final Rx<bool> _sendLoading = false.obs;
+  bool get sendLoading => _sendLoading.value;
+  set sendLoading (bool value) => _sendLoading.value = value;
 }
 
 class WalletTokenSendPageController extends GetxController {
@@ -85,6 +85,7 @@ class WalletTokenSendPageController extends GetxController {
     var _fee = result[1];
     if (_balance != null && _balance.status == 0) {
       state.tokenInfo.amount = _balance.data;
+      state._tokenInfo.refresh();
     }
     state.fee = _fee?.data??'0.0002';
   }
@@ -129,7 +130,7 @@ class WalletTokenSendPageController extends GetxController {
       return LToast.warning('密码输入错误'.tr);
     }
     Get.focusScope?.unfocus();
-    state.sendLoadding = true;
+    state.sendLoading = true;
     var result = await WalletTool.transfer(
       mnemonic: mnemonicList,
       toAddress: addressController.text,
@@ -137,11 +138,11 @@ class WalletTokenSendPageController extends GetxController {
       gasAll: NumberTool.balanceToAmount(state.fee),
       denom: state.tokenInfo.minUnit,
     );
-    state.sendLoadding = false;
+    state.sendLoading = false;
     LLoading.dismiss();
     if (result.status == -10001) return LToast.error('ErrorWithSendCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithSendTimeout'.tr);
-    if (result.status != 0) return LToast.error('ErrorWithSendUnkown'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithSendUnknown'.tr);
     LToast.success('SuccessWithSend'.tr);
     addressController.text = '';
     volumeController.text = '';

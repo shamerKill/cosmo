@@ -109,6 +109,15 @@ class StringTool {
     RegExp reg = RegExp(r"^gx[0-9a-zA-Z]{39}$");
     return reg.hasMatch(address);
   }
+  // 判断是否是hex地址
+  static bool checkHexAddress(String address) {
+    RegExp reg = RegExp(r"^0x[0-9a-zA-Z]{40}$");
+    return reg.hasMatch(address);
+  }
+  // 判断是否是plug/hex地址
+  static bool checkAddress(String address) {
+    return checkChainAddress(address) || checkHexAddress(address);
+  }
   // 判断是否是网址
   static bool checkNetAddress(String link) {
     RegExp reg = RegExp(r"^http(s?)://.*$");

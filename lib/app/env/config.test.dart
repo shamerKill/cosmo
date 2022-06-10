@@ -9,7 +9,7 @@ class _AssetsConfigTest implements _AssetsConfig {
 
 class _ChainInfoTest implements _ChainInfo {
   @override
-  String appChainId = 'plugchain-test';
+  String appChainId = 'plugchain_520-1';
   @override
   String addressPrefix = 'gx';
   @override

@@ -308,7 +308,7 @@
 	"ErrorWithRePledgeUnkown": "转让错误",
 	"ErrorWithSendCallback": "发送错误，请检查应用版本",
 	"ErrorWithSendTimeout": "30s内未发送成功",
-	"ErrorWithSendUnkown": "发送错误",
+	"ErrorWithSendUnknown": "发送错误",
 	"ErrorWithPledgeCallback": "质押错误，请检查应用版本",
 	"ErrorWithPledgeTimeout": "30s内未质押成功",
 	"ErrorWithPledgeUnkown": "质押错误",

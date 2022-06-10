@@ -142,6 +142,15 @@ flutter:
     - assets/images/logo_icon.png
     - assets/images/page_exchange_to.png
     - assets/images/page_exchange_wallet.png
+    - assets/images/log_icon/transfer.png
+    - assets/images/log_icon/verifier.png
+    - assets/images/log_icon/report.png
+    - assets/images/log_icon/delegate.png
+    - assets/images/log_icon/allowance.png
+    - assets/images/log_icon/proposal.png
+    - assets/images/log_icon/contract.png
+    - assets/images/log_icon/prc10.png
+    - assets/images/log_icon/pool.png
     # svg
     - assets/svg/my_account.svg
     - assets/svg/my_address.svg

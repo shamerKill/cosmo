@@ -118,13 +118,13 @@ class ChainBackupPledgePageController extends GetxController {
       volume: _unPledgeValue,
       gasAll: NumberTool.balanceToAmount(state.feeAmount),
     );
+    LLoading.dismiss();
     if (result.status == -10001) return LToast.error('ErrorWithRedeemCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithRedeemTimeout'.tr);
     if (result.status != 0) return LToast.error('ErrorWithRedeemUnkown'.tr);
     LToast.success('SuccessWithRedeem'.tr);
     pledgeController.text = '0';
     _initData();
-    LLoading.dismiss();
     state.pledgeLoading = false;
   }
 }

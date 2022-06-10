@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -35,7 +36,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
                     children: [
                       Obx(() => LViewImage(
                         url: state.tokenInfo.logo,
-                        bgColor: StringTool.stringToColor(state.tokenInfo.symbol),
+                        bgColor: StringTool.stringToColor(state.tokenInfo.type == enumTokenType.prc20 ? state.tokenInfo.contractAddress : state.tokenInfo.minUnit),
                         width: appTheme.sizes.basic * 60,
                         height: appTheme.sizes.basic * 60,
                         isRadius: true,
@@ -93,90 +94,23 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
               height: appTheme.sizes.padding,
               color: appTheme.colors.borderColor,
             ),
-            TabBar(
-              controller: controller.tabController,
-              labelColor: appTheme.colors.primaryColor,
-              unselectedLabelColor: appTheme.colors.textGray,
-              indicatorColor: appTheme.colors.primaryColor,
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              tabs: [
-                // Padding(
-                //   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                //   child: Text('全部'.tr),
-                // ),
-                Padding(
-                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('转出'.tr),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('转入'.tr),
-                ),
-              ],
-            ),
-            Container(
-              width: appTheme.sizes.infinity,
-              height: appTheme.sizes.basic,
-              color: appTheme.colors.borderColor.withOpacity(0.8),
-            ),
           ],
         ),
       ),
       padding: EdgeInsets.all(appTheme.sizes.zero),
-      body: TabBarView(
-        controller: controller.tabController,
-        children: [
-          // 全部
-          // LScrollView(
-          //   refreshController: controller.allRefreshController,
-          //   onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.all),
-          //   onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.all),
-          //   child: Obx(() => Column(
-          //     children: state.transferLogsAll.map((_item) => InkWell(
-          //       onTap: () => controller.onGoToDetail(_item.hash),
-          //       child: LAnimationView(
-          //         child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
-          //       ),
-          //     )).toList(),
-          //   )),
-          // ),
-          // 转出
-          Obx(() => LScrollView(
-            refreshController: controller.sendRefreshController,
-            onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.send),
-            onLoading: state.logsPageSend == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.send),
-            child: Column(
-              children: [
-                for (var _item in state.transferLogsSend)
-                  InkWell(
-                    onTap: () => controller.onGoToDetail(_item.hash),
-                    child: LAnimationView(
-                      child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
-                    ),
-                  ),
-              ],
+      body: Obx(() => LScrollView(
+        refreshController: controller.allRefreshController,
+        onRefresh: () => controller.onRefresh(),
+        onLoading: state.logsPageAll == 0 ? null : () => controller.onLoading(),
+        child: Column(
+          children: state.transferLogsAll.map((_item) => InkWell(
+            onTap: () => controller.onGoToDetail(_item),
+            child: LAnimationView(
+              child: LLogsItemView(item: _item, key: Key(_item.hash + 'log_items'),), randomKey: false, vKey: Key(_item.toJson()),
             ),
-          )),
-          // 转入
-          Obx(() => LScrollView(
-            refreshController: controller.receiveRefreshController,
-            onRefresh: () => controller.onRefresh(WalletTokenLogsPageTabType.receive),
-            onLoading: state.logsPageReceive == 0 ? null : () => controller.onLoading(WalletTokenLogsPageTabType.receive),
-            child: Column(
-              children: [
-                for (var _item in state.transferLogsReceive)
-                  InkWell(
-                    onTap: () => controller.onGoToDetail(_item.hash),
-                    child: LAnimationView(
-                      child: LLogsItemView(item: _item), randomKey: false, vKey: Key(_item.toJson()),
-                    ),
-                  ),
-              ],
-            ),
-          )),
-        ],
-      ),
+          )).toList(),
+        ),
+      )),
     );
   }
 }

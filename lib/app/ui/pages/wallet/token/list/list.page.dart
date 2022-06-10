@@ -134,7 +134,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                   children: [
                     for (TokenModel _item in state.accountInfo.tokenList)
                       if (state.accountInfo.tokenList.indexOf(_item) != 0) _WalletTokenListItem(
-                        key: Key(_item.minUnit + _item.symbol),
+                        key: Key(_item.minUnit + _item.symbol + _item.contractAddress),
                         token: _item,
                         onPressed: () => controller.onGoToDetail(_item),
                         icons: Row(
@@ -194,7 +194,7 @@ class _WalletTokenListItem extends StatelessWidget {
           children: [
             LViewImage(
               url: token.logo,
-              bgColor: StringTool.stringToColor(token.minUnit),
+              bgColor: StringTool.stringToColor(token.type == enumTokenType.prc20 ? token.contractAddress : token.minUnit),
               width: appTheme.sizes.basic * 60,
               height: appTheme.sizes.basic * 60,
               isRadius: true,

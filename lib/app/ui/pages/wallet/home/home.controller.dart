@@ -123,6 +123,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       );
     }
     state.accountInfo = dataAccountController.state.nowAccount!;
+    onDrawerSelect(state.accountInfo.address);
   }
   // 获取账户价值
   _getAccountPrice() async {

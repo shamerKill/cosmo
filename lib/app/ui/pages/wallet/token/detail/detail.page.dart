@@ -28,7 +28,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
           children: [
             Obx(() => LViewImage(
               url: state.tokenInfo.logo,
-              bgColor: StringTool.stringToColor(state.tokenInfo.minUnit),
+              bgColor: StringTool.stringToColor(state.tokenInfo.type == enumTokenType.prc20 ? state.tokenInfo.contractAddress : state.tokenInfo.minUnit),
               width: appTheme.sizes.basic * 80,
               height: appTheme.sizes.basic * 80,
               isRadius: true,
@@ -62,16 +62,18 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: appTheme.sizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('发行总量', style: Get.textTheme.bodyText1),
-                      Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.maxSupply))))),
-                    ],
-                  ),
-                ),
+                  Obx(() => state.tokenInfo.type == enumTokenType.prc10 ? (
+                  Padding(
+                    padding: EdgeInsets.only(top: appTheme.sizes.padding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('发行总量', style: Get.textTheme.bodyText1),
+                        Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.maxSupply))))),
+                      ],
+                    ),
+                  )
+                ) : Container()),
                 Padding(
                   padding: EdgeInsets.only(top: appTheme.sizes.padding),
                   child: Row(
@@ -82,16 +84,18 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: appTheme.sizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('增发状态', style: Get.textTheme.bodyText1),
-                      Obx(() => LAnimationView(child: Text(state.tokenInfo.mintable ? '可增发' : '不可增发'))),
-                    ],
-                  ),
-                ),
+                Obx(() => state.tokenInfo.type == enumTokenType.prc10 ? (
+                  Padding(
+                    padding: EdgeInsets.only(top: appTheme.sizes.padding),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('增发状态', style: Get.textTheme.bodyText1),
+                        Obx(() => LAnimationView(child: Text(state.tokenInfo.mintable ? '可增发' : '不可增发'))),
+                      ],
+                    ),
+                  )
+                ) : Container()),
                 Padding(
                   padding: EdgeInsets.only(top: appTheme.sizes.padding),
                   child: Row(

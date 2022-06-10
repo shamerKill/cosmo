@@ -308,7 +308,7 @@
 	"ErrorWithRePledgeUnkown": "Transfer error",
 	"ErrorWithSendCallback": "Sending error, please check the app version",
 	"ErrorWithSendTimeout": "Sending timeout",
-	"ErrorWithSendUnkown": "Send Error",
+	"ErrorWithSendUnknown": "Send Error",
 	"ErrorWithPledgeCallback": "Stake error, please check the app version",
 	"ErrorWithPledgeTimeout": "Staking timeout",
 	"ErrorWithPledgeUnkown": "Stake error",

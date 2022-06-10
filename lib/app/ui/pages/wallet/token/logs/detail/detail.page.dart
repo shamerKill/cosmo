@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/animation.component.dart';
@@ -71,37 +74,8 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 数量
-              _WalletTokenLogsDeeailItem(
-                title: 'transferAllVolumeWithAll'.tr,
-                child: Obx(() => Text(
-                  state.logDetail.items.isEmpty ? '' :
-                    (
-                      NumberTool.amountToBalance(state.logDetail.items.first.coin.amount, scale: state.logDetail.items.first.coin.scale)
-                      + '\r' +
-                      state.logDetail.items.first.coin.symbol
-                    )
-                  , style: TextStyle(color: appTheme.colors.textBlackBig),
-                )),
-              ),
-              // 发送方
-              _WalletTokenLogsDeeailItem(
-                title: 'senderInTransfer'.tr,
-                child: Obx(() => SelectableText(
-                  state.logDetail.items.isEmpty ? '' : state.logDetail.items.first.formAddress
-                  , style: TextStyle(color: appTheme.colors.primaryColor),
-                )),
-              ),
-              // 接收方
-              _WalletTokenLogsDeeailItem(
-                title: 'receiverInTransfer'.tr,
-                child: Obx(() => SelectableText(
-                  state.logDetail.items.isEmpty ? '' : state.logDetail.items.first.toAddress
-                  , style: TextStyle(color: appTheme.colors.primaryColor),
-                )),
-              ),
               // 手续费
-              _WalletTokenLogsDeeailItem(
+              _WalletTokenLogsDetailItem(
                 title: 'fee'.tr,
                 child: Obx(() => Text(
                   NumberTool.amountToBalance(state.logDetail.fee.amount, scale: state.logDetail.fee.scale)
@@ -110,7 +84,7 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
                 )),
               ),
               // 交易区块
-              _WalletTokenLogsDeeailItem(
+              _WalletTokenLogsDetailItem(
                 title: 'transferInBlockHeight'.tr,
                 child: Obx(() => SelectableText(
                   state.logDetail.blockHeight.toString()
@@ -118,7 +92,7 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
                 )),
               ),
               // 交易哈希
-              _WalletTokenLogsDeeailItem(
+              _WalletTokenLogsDetailItem(
                 title: 'hash'.tr,
                 copyCallback: () => controller.onCopyText(state.logDetail.hash),
                 child: Obx(() => SelectableText(
@@ -126,22 +100,26 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
                   , style: TextStyle(color: appTheme.colors.primaryColor),
                 )),
               ),
-              // 原始数据
-              _WalletTokenLogsDeeailItem(
-                title: 'transferAtRawLog'.tr,
-                hidBorder: true,
-                copyCallback: () => controller.onCopyText(state.logDetail.rawLog),
-                child: Obx(() => Container(
-                  height: appTheme.sizes.basic * 200,
-                  padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                    color: appTheme.colors.pageBackgroundColorBasic,
-                  ),
-                  child: SingleChildScrollView(
-                    child: SelectableText(state.logDetail.rawLog),
-                  ),
+              // 交易详情
+              _WalletTokenLogsDetailItem(
+                title: '交易信息'.tr,
+                child: Obx(() => SelectableText(
+                  state.logDetail.blockHeight.toString()
+                  , style: TextStyle(color: appTheme.colors.primaryColor),
                 )),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: appTheme.sizes.padding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    LButton(
+                      onPressed: controller.goToDetail,
+                      height: appTheme.sizes.buttonHeight * 0.8,
+                      child: Text('查看详情'.tr),
+                    )
+                  ],
+                ),
               ),
             ],
           ),
@@ -152,8 +130,8 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
 }
 
 
-class _WalletTokenLogsDeeailItem extends StatelessWidget {
-  const _WalletTokenLogsDeeailItem({
+class _WalletTokenLogsDetailItem extends StatelessWidget {
+  const _WalletTokenLogsDetailItem({
     Key? key,
     required this.title,
     required this.child,

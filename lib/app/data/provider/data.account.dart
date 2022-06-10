@@ -82,6 +82,20 @@ class DataAccountController extends GetxController {
     }
     return false;
   }
+  // 更新账户名称
+  bool updateAccountName(String _address, String _nickName) {
+    for (var _item in state.accountsList) {
+      if (_item.nickName == _nickName) return false;
+    }
+    for (var _item in state.accountsList) {
+      if (_item.address == _address) {
+        _item.nickName = _nickName;
+        saveAccounts();
+        return true;
+      }
+    }
+    return false;
+  }
   // 移除账户
   bool removeAccount(AccountModel _account) {
     var _index = state.accountsList.indexWhere((element) => element.address == _account.address);

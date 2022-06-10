@@ -43,7 +43,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
           Obx(() => LInput(
             hintText: '扫描或粘贴钱包地址'.tr,
             textController: controller.addressController,
-            disabled: state.sendLoadding,
+            disabled: state.sendLoading,
             suffixIcon: IconButton(
               icon: const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
               onPressed: controller.onScanQr,
@@ -57,7 +57,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
             hintText: '转账数量'.tr,
             textController: controller.volumeController,
             onlyNumber: true,
-            disabled: state.sendLoadding,
+            disabled: state.sendLoading,
             suffixIcon: Padding(
               padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall),
               child: Column(
@@ -87,7 +87,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
                 )),
               ),
               InkWell(
-                onTap: state.sendLoadding ? null : controller.onAllSend,
+                onTap: state.sendLoading ? null : controller.onAllSend,
                 child: Padding(
                   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
                   child: Text('全部划转'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
@@ -103,7 +103,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
         ],
       ),
       footer: Obx(() => LButton(
-        onPressed: state.sendLoadding ? null : controller.onSend,
+        onPressed: state.sendLoading ? null : controller.onSend,
         child: Text('确认转账'.tr),
       )),
     );

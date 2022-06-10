@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/data/services/data.services.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
@@ -128,7 +129,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
   }
   // 判断是否已添加有当前代币
   bool checkTokenIsAdd(String minUnit) {
-    return state.accountInfo.tokenList.where((_token) => _token.minUnit == minUnit).isNotEmpty;
+    return state.accountInfo.tokenList.where((_token) => _token.minUnit == minUnit || _token.contractAddress == minUnit).isNotEmpty;
   }
   // 添加/删除当前代币
   onToggleToken(TokenModel token) async {
@@ -180,12 +181,26 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     );
     if (result != true) return;
     state.fetchLoading = true;
-    var tokenList = await httpToolApp.getAccountAllBalance(state.accountInfo.address);
-    for (var i = 0; i < tokenList?.data.length; i++) {
-      var _item = tokenList?.data[i];
-      if (!checkTokenIsAdd(_item['denom'])) {
-        var token = await httpToolApp.getCoinInfo(_item['denom']);
-        if (token != null) state.accountInfo.tokenList.add(token..amount=_item['amount']);
+    // prc10代币
+    var tokenList10 = await httpToolApp.getAccountPrc10AllBalance(state.accountInfo.address);
+    // prc20代币
+    var tokenList20 = await browserToolServer.getAccountPrc20AllBalance(state.accountInfo.address);
+    if (tokenList10?.data != null) {
+      for (var i = 0; i < tokenList10?.data.length; i++) {
+        var _item = tokenList10?.data[i];
+        if (!checkTokenIsAdd(_item['denom'])) {
+          var token = await dataToolServer.getTokenInfo(_item['denom']);
+          state.accountInfo.tokenList.add(token..amount=_item['amount']);
+        }
+      }
+    }
+    if (tokenList20?.data != null) {
+      for (var i = 0; i < tokenList20?.data.length; i++) {
+        var _item = tokenList20?.data[i];
+        if (!checkTokenIsAdd(_item['Conract'])) {
+          var token = await dataToolServer.getTokenInfo(_item['Conract']);
+          state.accountInfo.tokenList.add(token..amount=_item['Num']);
+        }
       }
     }
     state._accountInfo.refresh();
