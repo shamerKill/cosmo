@@ -68,7 +68,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
                     children: [
                       Expanded(
                         child: LButton(
-                          child: Text('转账'.tr, style: TextStyle(color: appTheme.colors.textBlack)),
+                          child: Text('send'.tr, style: TextStyle(color: appTheme.colors.textBlack)),
                           onPressed: controller.onToSend,
                           radius: true,
                           contrast: true,
@@ -78,7 +78,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
                       Padding(padding: EdgeInsets.only(left: appTheme.sizes.padding)),
                       Expanded(
                         child: LButton(
-                          child: Text('收款'.tr, style: TextStyle(color: appTheme.colors.textBlack)),
+                          child: Text('receive'.tr, style: TextStyle(color: appTheme.colors.textBlack)),
                           onPressed: controller.onToReceive,
                           radius: true,
                           contrast: true,
@@ -106,7 +106,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
           children: state.transferLogsAll.map((_item) => InkWell(
             onTap: () => controller.onGoToDetail(_item),
             child: LAnimationView(
-              child: LLogsItemView(item: _item, key: Key(_item.hash + 'log_items'),), randomKey: false, vKey: Key(_item.toJson()),
+              child: LLogsItemView(item: _item, key: Key(_item.hash + 'log_items' + _item.rawLog.toString()),), randomKey: false, vKey: Key(_item.toJson()),
             ),
           )).toList(),
         ),

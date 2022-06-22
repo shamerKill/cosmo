@@ -125,12 +125,6 @@ class PlugPages {
       binding: ChainExportPageBinding(),
       transition: Transition.fadeIn,
     ),
-    /// 生态-兑换
-    GetPage(
-      name: PlugRoutesNames.chainExchange(':tokenList'),
-      page: () => const ChainExchangePage(),
-      binding: ChainExchangePageBinding(),
-    ),
     /// 生态-质押详情-转账
     GetPage(
       name: PlugRoutesNames.chainPledgeTransfer(':address'),

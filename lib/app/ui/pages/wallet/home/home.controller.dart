@@ -101,6 +101,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   Future<void> initAccountStorage() async {
     _checkAndInsertAccountBaseCoin();
     LLoading.showLoading();
+    httpToolApp.getAccountSenderList(state.accountInfo.address);
     var result = await Future.wait<dynamic>(
       state.accountInfo.tokenList.map<Future<dynamic>>(
         (token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.type == enumTokenType.prc10 ? token.minUnit : token.contractAddress)
@@ -250,7 +251,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     if (!dataAccountController.exchangeAccount(_address)) return;
     state.accountInfo = dataAccountController.state.nowAccount!;
     await initAccountStorage();
-    LToast.success('切换成功');
+    LToast.success('SuccessWithSwitch'.tr);
   }
   // 管理账户
   onAdminAccount(String _address) {

@@ -49,7 +49,7 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
           ),
           LButton(
             width: appTheme.sizes.infinity,
-            child: Text('backupTipSure'.tr),
+            child: Text('backupTipAtNowSure'.tr),
             onPressed: controller.backupNow,
           ),
           Padding(
@@ -57,7 +57,7 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
             child: LButton(
               contrast: true,
               width: appTheme.sizes.infinity,
-              child: Text('backupTipLate'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+              child: Text('backupTipAtLate'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
               onPressed: controller.backupLate,
             ),
           ),

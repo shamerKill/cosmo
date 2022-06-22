@@ -37,9 +37,9 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                       child: Text.rich(
                         TextSpan(
                           children: [
-                            TextSpan(text: '代币列表'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSize * 1.5)),
+                            TextSpan(text: 'tokensList'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSize * 1.5)),
                             TextSpan(text: '\r/\r', style: TextStyle(color: appTheme.colors.textGray)),
-                            TextSpan(text: '已添加'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                            TextSpan(text: 'added'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                           ]
                         ),
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -52,9 +52,9 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                       child: Text.rich(
                         TextSpan(
                           children: [
-                            TextSpan(text: '代币列表'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                            TextSpan(text: 'tokensList'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                             TextSpan(text: '\r/\r', style: TextStyle(color: appTheme.colors.textGray)),
-                            TextSpan(text: '已添加'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSize * 1.5)),
+                            TextSpan(text: 'added'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSize * 1.5)),
                           ]
                         ),
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -66,7 +66,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
             ),
             Obx(() => LAnimationView(
               randomKey: false,
-              child: state.showType == 0 ? Container() : Text('删除/长按排序'.tr, style: Get.textTheme.bodyText1),
+              child: state.showType == 0 ? Container() : Text('tapDeleteFunction'.tr, style: Get.textTheme.bodyText1),
             )),
           ],
         ),
@@ -77,14 +77,14 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
             child: state.showType == 0 ? LInput(
               textController: controller.searchTextController,
               onSubmitted: controller.onSearch,
-              hintText: '搜索代币名称/合约地址',
+              hintText: 'searchTokenHint',
               textInputAction: TextInputAction.search,
               prefixIcon: Icon(Icons.search, color: appTheme.colors.textGray),
             ) : SizedBox(
               height: appTheme.sizes.inputHeight,
               width: appTheme.sizes.infinity,
               child: TextButton(
-                child: Text('一键自动获取所有资产'.tr, textAlign: TextAlign.left),
+                child: Text('quickGetAssert'.tr, textAlign: TextAlign.left),
                 onPressed: controller.onGetUserAllAssets,
               ),
             ),

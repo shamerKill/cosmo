@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/utils/evm/evmClient.dart';
 import 'package:plug/app/ui/utils/string.dart';
-import 'package:web3dart/web3dart.dart' as web3;
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/config/_config.app.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
@@ -309,7 +308,7 @@ _HttpToolServer httpToolServer = _HttpToolServer();
 // 浏览器其他信息
 class _BrowserToolServer extends UriTool {
   _BrowserToolServer() : super(ConfigChainData.browserInfoRpcUrl);
-  // 获Q取账户所有20代币信息
+  // 获取账户所有20代币信息
   Future<HttpToolResponse?> getAccountPrc20AllBalance(String address) {
     return HttpToolClient.getHttp(customUri('v2/api/pvmApi/address/token', queryParameters: {
       'address': address,
@@ -318,6 +317,26 @@ class _BrowserToolServer extends UriTool {
     }))
       .then(
         (res) => res..data = res.data['data']['List'],
+        onError: (e) => null,
+      );
+  }
+  // 获取prc20代币列表
+  Future<HttpToolResponse?> getAccountPrc20TokenLogs(String address, String contract, { page = 1, limit = 10 }) {
+    return HttpToolClient.getHttp(customUri('v2/api/pvmApi/address/transferList', queryParameters: {
+      'from': '$page', 'amount': '$limit', 'address': address, 'token': contract
+    }))
+      .then(
+        (res) => res,
+        onError: (e) => null,
+      );
+  }
+  // 获取prc20交易记录详情
+  Future<HttpToolResponse?> getPrc20TokenLogDetail(String hex) {
+    return HttpToolClient.getHttp(customUri('v2/api/pvmApi/address/transfer', queryParameters: {
+      'hex': hex
+    }))
+      .then(
+        (res) => res,
         onError: (e) => null,
       );
   }

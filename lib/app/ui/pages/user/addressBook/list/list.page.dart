@@ -20,7 +20,7 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
         title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              LAppBar.defaultHeaderTextWidget('地址簿'.tr),
+              LAppBar.defaultHeaderTextWidget('addressesBook'.tr),
               Obx(() => Visibility(
                 visible: !state.isSelect,
                 child: LButton(
@@ -80,7 +80,7 @@ class UserAddressBookListPage extends GetView<UserAddressBookListPageController>
                         color: appTheme.colors.pageBackgroundColorBasic,
                         borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius / 2)),
                       ),
-                      child: Text('备注：'.tr + _item.remarks, style: Get.textTheme.bodyText1),
+                      child: Text('remark'.tr + ': ' + _item.remarks, style: Get.textTheme.bodyText1),
                     ),
                   ],
                 ),

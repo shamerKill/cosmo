@@ -19,7 +19,7 @@ class AccountAdminVerifyPage extends GetView<AccountAdminVerifyPageController> {
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
         title: Obx(() => LAppBar.defaultHeaderTextWidget(
-          ['密码验证'.tr, '助记词验证'.tr][state.type]
+          ['verifyByPassword'.tr, 'verifyByMnemonic'.tr][state.type]
         )),
       ),
       singleScroll: true,
@@ -56,7 +56,7 @@ class AccountAdminVerifyPage extends GetView<AccountAdminVerifyPageController> {
         )
       )),
       footer: LButton(
-        child: Text('验证'.tr),
+        child: Text('verification'.tr),
         disabled: state.verifyLoading,
         onPressed: controller.onVerifyCallBack,
       ),

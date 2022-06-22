@@ -102,6 +102,7 @@ class DappWebviewPage extends GetView<DappWebviewPageController> {
         onProgress: controller.onWebviewProgress,
         gestureNavigationEnabled: true,
         navigationDelegate: controller.onNavigationDelegate,
+        javascriptChannels: {controller.webviewFunction()},
       ),
     );
   }

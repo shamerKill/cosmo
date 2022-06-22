@@ -57,7 +57,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('全称', style: Get.textTheme.bodyText1),
+                      Text('tokenName'.tr, style: Get.textTheme.bodyText1),
                       Obx(() => LAnimationView(child: Text(state.tokenInfo.name))),
                     ],
                   ),
@@ -68,7 +68,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('发行总量', style: Get.textTheme.bodyText1),
+                        Text('tokenTotalSupply'.tr, style: Get.textTheme.bodyText1),
                         Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.maxSupply))))),
                       ],
                     ),
@@ -79,7 +79,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('精度', style: Get.textTheme.bodyText1),
+                      Text('tokenScale'.tr, style: Get.textTheme.bodyText1),
                       Obx(() => LAnimationView(child: Text(state.tokenInfo.scale.toString()))),
                     ],
                   ),
@@ -90,8 +90,8 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('增发状态', style: Get.textTheme.bodyText1),
-                        Obx(() => LAnimationView(child: Text(state.tokenInfo.mintable ? '可增发' : '不可增发'))),
+                        Text('tokenMintType'.tr, style: Get.textTheme.bodyText1),
+                        Obx(() => LAnimationView(child: Text(state.tokenInfo.mintable ? 'mint' : 'notMint'))),
                       ],
                     ),
                   )
@@ -101,7 +101,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('拥有数量', style: Get.textTheme.bodyText1),
+                      Text('hadVolume'.tr, style: Get.textTheme.bodyText1),
                       Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount))))),
                     ],
                   ),
@@ -111,7 +111,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('代币类型', style: Get.textTheme.bodyText1),
+                      Text('tokenType'.tr, style: Get.textTheme.bodyText1),
                       Obx(() => LAnimationView(child: Text(StringTool.tokenTypeToString(state.tokenInfo.type)))),
                     ],
                   ),
@@ -122,7 +122,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('合约地址', style: Get.textTheme.bodyText1),
+                        Text('contractAddress'.tr, style: Get.textTheme.bodyText1),
                         Obx(() => LAnimationView(child: SelectableText(
                           state.tokenInfo.contractAddress, style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                         ))),
@@ -143,7 +143,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                 onPressed: controller.onTokenToggle,
                 width: appTheme.sizes.infinity,
                 contrast: state.isAdd,
-                child: Text(state.isAdd ? '移除' : '添加'),
+                child: Text(state.isAdd ? 'delete' : 'add'),
               ),
             ) : Container()),
           ),

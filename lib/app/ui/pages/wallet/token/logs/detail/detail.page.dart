@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
-import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/animation.component.dart';
@@ -45,8 +42,8 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
                     Padding(
                       padding: EdgeInsets.only(left: appTheme.sizes.fontSize / 2),
                       child: Text(
-                        state.logDetail.status == TransferLogStatusEnum.success ? '成功'.tr : (
-                          state.logDetail.status == TransferLogStatusEnum.fail ? '失败'.tr : '等待中'.tr
+                        state.logDetail.status == TransferLogStatusEnum.success ? 'success'.tr : (
+                          state.logDetail.status == TransferLogStatusEnum.fail ? 'fail'.tr : 'waiting'.tr
                         ),
                         style: TextStyle(
                           color: state.logDetail.status == TransferLogStatusEnum.success ? appTheme.colors.primaryColor : (
@@ -74,6 +71,20 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // 交易数量
+              _WalletTokenLogsDetailItem(
+                title: 'volume'.tr,
+                child: Obx(() => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    state.amountVolume.isEmpty ? const Text('----') : Container(),
+                    for (var item in state.amountVolume)
+                      Text(
+                        item.amount + '\r' + item.symbol
+                      ),
+                  ]
+                )),
+              ),
               // 手续费
               _WalletTokenLogsDetailItem(
                 title: 'fee'.tr,
@@ -95,28 +106,33 @@ class WalletTokenLogsDetailPage extends GetView<WalletTokenLogsDetailPageControl
               _WalletTokenLogsDetailItem(
                 title: 'hash'.tr,
                 copyCallback: () => controller.onCopyText(state.logDetail.hash),
-                child: Obx(() => SelectableText(
-                  state.logDetail.hash
-                  , style: TextStyle(color: appTheme.colors.primaryColor),
+                child: Obx(() => Text(
+                  state.logDetail.hash, style: TextStyle(color: appTheme.colors.primaryColor),
                 )),
               ),
               // 交易详情
               _WalletTokenLogsDetailItem(
-                title: '交易信息'.tr,
-                child: Obx(() => SelectableText(
-                  state.logDetail.blockHeight.toString()
-                  , style: TextStyle(color: appTheme.colors.primaryColor),
-                )),
+                title: 'transferInfo'.tr,
+                copyCallback: () => controller.onCopyText(state.showInputText),
+                child: SizedBox(
+                  height: appTheme.sizes.basic * 200.0,
+                  child: SingleChildScrollView(
+                    child: Obx(() => Text(
+                      state.showInputText, style: TextStyle(color: appTheme.colors.primaryColor),
+                    )),
+                  ),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: appTheme.sizes.padding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    LButton(
-                      onPressed: controller.goToDetail,
-                      height: appTheme.sizes.buttonHeight * 0.8,
-                      child: Text('查看详情'.tr),
+                    InkWell(
+                      onTap: controller.goToDetail,
+                      child: Text('goToDetail'.tr, style: TextStyle(
+                        color: appTheme.colors.primaryColor, decoration: TextDecoration.underline, decorationStyle: TextDecorationStyle.dashed,
+                      ),),
                     )
                   ],
                 ),

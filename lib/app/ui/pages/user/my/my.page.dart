@@ -41,7 +41,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                           height: appTheme.sizes.iconSize * 1.2,
                         ),
                         Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                        Text('账户管理'.tr),
+                        Text('accountAdmin'.tr),
                       ],
                     ),
                   ),
@@ -66,7 +66,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                           height: appTheme.sizes.iconSize * 1.2,
                         ),
                         Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                        Text('地址簿'.tr),
+                        Text('addressesBook'.tr),
                       ],
                     ),
                   ),
@@ -91,7 +91,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                           height: appTheme.sizes.iconSize * 1.2,
                         ),
                         Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                        Text('消息中心'.tr),
+                        Text('messagesCenter'.tr),
                       ],
                     ),
                   ),
@@ -106,7 +106,7 @@ class UserMyPage extends GetView<UserMyPageController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('基本设置', style: Get.textTheme.bodyText1),
+          Text('baseSetting'.tr, style: Get.textTheme.bodyText1),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Container(
             decoration: BoxDecoration(
@@ -127,7 +127,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('DAPP设置'.tr),
+                        Text('dappSetting'.tr),
                         Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                       ],
                     ),
@@ -148,14 +148,14 @@ class UserMyPage extends GetView<UserMyPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('指纹登录'.tr),
+                      Text('loginWithFingerprints'.tr),
                       Obx(() => state.canTouch ? Switch(
                         value: state.enableTouch,
                         onChanged: controller.onToggleTouch,
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ) : Padding(
                         padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5, bottom: appTheme.sizes.paddingSmall * 0.5),
-                        child: Text('不支持'.tr, style: TextStyle(color: appTheme.colors.textGray),),
+                        child: Text('notCanUse'.tr, style: TextStyle(color: appTheme.colors.textGray),),
                       )),
                     ],
                   ),
@@ -200,7 +200,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('语言切换'.tr),
+                        Text('languageSwitch'.tr),
                         Row(
                           children: [
                             Obx(() => Text(plugTranslation.localToString(state.language), style: TextStyle(color: appTheme.colors.primaryColor))),
@@ -215,7 +215,7 @@ class UserMyPage extends GetView<UserMyPageController> {
             ),
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-          Text('指南', style: Get.textTheme.bodyText1),
+          Text('guide', style: Get.textTheme.bodyText1),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Container(
             decoration: BoxDecoration(
@@ -231,7 +231,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('使用指南'.tr),
+                        Text('userGuide'.tr),
                         Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                       ],
                     ),
@@ -249,7 +249,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('用户协议'.tr),
+                        Text('userArguments'.tr),
                         Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                       ],
                     ),
@@ -267,7 +267,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('关于我们'.tr),
+                        Text('aboutUs'.tr),
                         Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                       ],
                     ),
@@ -285,7 +285,7 @@ class UserMyPage extends GetView<UserMyPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('问题反馈'.tr),
+                        Text('backProblem'.tr),
                         Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                       ],
                     ),

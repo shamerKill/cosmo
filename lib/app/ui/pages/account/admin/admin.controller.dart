@@ -8,7 +8,6 @@ import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
-import 'package:plug/app/ui/theme/theme.dart';
 
 class AccountAdminPageState {
   // 已选择账户
@@ -63,7 +62,7 @@ class AccountAdminPageController extends GetxController {
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['密码验证'.tr],
+        labelList: ['verifyByPassword'.tr],
         // labelList: ['密码验证', '助记词验证'],
         successCallBack: onVerifyCallBack
       ),
@@ -75,7 +74,7 @@ class AccountAdminPageController extends GetxController {
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['密码验证'.tr],
+        labelList: ['verifyByPassword'.tr],
         // labelList: ['密码验证', '助记词验证'],
         successCallBack: onVerifyCallBack
       ),
@@ -93,14 +92,14 @@ class AccountAdminPageController extends GetxController {
           textInputAction: TextInputAction.done,
           onSubmitted: (String? value) {
             if (value == null || value.isEmpty) {
-              LToast.error('账户名字不能为空'.tr);
+              LToast.error('ErrorWithAccountNotEmpty'.tr);
               return;
             } else if (dataAccountController.updateAccountName(state.accountInfo.address, value)) {
-              LToast.success('修改成功'.tr);
+              LToast.success('SuccessEdit'.tr);
               _getAccountData(state.accountInfo.address);
               Get.back();
             } else {
-              LToast.success('修改失败'.tr);
+              LToast.success('FailEdit'.tr);
             }
           },
         ),
@@ -110,14 +109,14 @@ class AccountAdminPageController extends GetxController {
   // 移除账户
   onRemoveAccount() async {
     if ((await LBottomSheet.promptBottomSheet(
-      title: '移除提示'.tr,
-      message: Text('是否需要移除账户: ${state.accountInfo.nickName} ?'.tr),
+      title: 'deleteTip'.tr,
+      message: Text('deleteDesc'.tr + ' ${state.accountInfo.nickName} ?'),
     )) != true) return;
     _doType = 'remove';
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['密码验证'.tr],
+        labelList: ['verifyByPassword'.tr],
         // labelList: ['密码验证', '助记词验证'],
         successCallBack: onVerifyCallBack
       ),

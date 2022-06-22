@@ -8,7 +8,8 @@ class ChainMessageTool {
     String source
   ) {
     var obj = json.decode(source);
-    String type = obj['type']??obj['@type'];
+    if (obj is Iterable) { obj = obj.first; }
+    String type = (obj['type'] is String) ? obj['type'] : obj['@type'];
     switch (type) {
       case '/cosmos.bank.v1beta1.MsgSend':
         return ModelMsgSend(source);
@@ -111,15 +112,15 @@ class ChainMessageTool {
         return ModelMsgUndelegate(source);
       case 'cosmos-sdk/MsgCreateVestingAccount':
         return ModelMsgCreateVestingAccount(source);
-      case 'x/token/MsgBurnToken':
+      case '/plugchain.token.MsgBurnToken':
         return ModelMsgBurnToken(source);
-      case 'x/token/MsgEditToken':
+      case '/plugchain.token/MsgEditToken':
         return ModelMsgEditToken(source);
-      case 'x/token/MsgIssueToken':
+      case '/plugchain.token/MsgIssueToken':
         return ModelMsgIssueToken(source);
-      case 'x/token/MsgMintToken':
+      case '/plugchain.token/MsgMintToken':
         return ModelMsgMintToken(source);
-      case 'x/token/ModelMsgTransferOwnerToken':
+      case '/plugchain.token/ModelMsgTransferOwnerToken':
         return ModelMsgTransferOwnerToken(source);
       case 'liquidity/MsgCreatePool':
         return ModelMsgCreatePool(source);

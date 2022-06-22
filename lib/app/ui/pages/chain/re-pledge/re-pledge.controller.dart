@@ -174,14 +174,14 @@ class ChainRePledgePageController extends GetxController {
     var douValue = double.tryParse(_rePledgeValue);
     if (
       douValue == null || douValue == 0.0
-    ) return LToast.warning('数量输入有误'.tr);
+    ) return LToast.warning('ErrorWithVolumeInput'.tr);
     String? pass = await LBottomSheet.passwordBottomSheet();
     if (pass == null) return;
     LLoading.showBgLoading();
     var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, pass);
     if (mnemonicList == null) {
       LLoading.dismiss();
-      return LToast.warning('密码输入错误'.tr);
+      return LToast.warning('ErrorWithPasswordInput'.tr);
     }
     Get.focusScope?.unfocus();
     state.pledgeLoading = true;
@@ -196,7 +196,7 @@ class ChainRePledgePageController extends GetxController {
     state.pledgeLoading = false;
     if (result.status == -10001) return LToast.error('ErrorWithRePledgeCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithRePledgeTimeout'.tr);
-    if (result.status != 0) return LToast.error('ErrorWithRePledgeUnkown'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithRePledgeUnKnow'.tr);
     LToast.success('SuccessRePledgeRedeem'.tr);
     pledgeController.text = '0';
   }

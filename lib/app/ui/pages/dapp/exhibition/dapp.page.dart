@@ -108,11 +108,11 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                         tabs: [
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                            child: Text('收藏'.tr),
+                            child: Text('collection'.tr),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                            child: Text('最近'.tr),
+                            child: Text('lately'.tr),
                           ),
                         ],
                       ),
@@ -120,7 +120,7 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                         onTap: controller.onGoToCollection,
                         child: Row(
                           children: [
-                            Text('全部', style: Get.textTheme.bodyText1),
+                            Text('all'.tr, style: Get.textTheme.bodyText1),
                             Icon(
                               Icons.chevron_right_outlined,
                               size: appTheme.sizes.fontSizeSmall,
@@ -174,7 +174,7 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                 ),
               ),
               clipBehavior: Clip.antiAlias,
-              child: state.reomoteDappTab == null ? null
+              child: state.remoteDappTab == null ? null
                 : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -190,7 +190,7 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                       ),
                       child: TabBar(
                         isScrollable: true,
-                        controller: state.reomoteDappTab,
+                        controller: state.remoteDappTab,
                         labelColor: appTheme.colors.textBlack,
                         unselectedLabelColor: appTheme.colors.textGray,
                         indicatorColor: appTheme.colors.textBlack,
@@ -207,7 +207,7 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
                     Expanded(
                       child: TabBarView(
-                        controller: state.reomoteDappTab,
+                        controller: state.remoteDappTab,
                         children: [
                           for (List<DappModel> _list in state.remoteDappList)
                             SingleChildScrollView(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
-import 'package:plug/app/data/models/response/base.dart';
 import 'package:plug/app/data/models/response/msgs.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/services/data.services.dart';
-import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
@@ -96,13 +94,8 @@ class LLogsItemViewController extends GetxController {
     String _descText = '';
     if (_formatData is ModelMsgSend) { // 转账
       for (var _coin in _formatData.amount) {
-        try {
-          TokenModel _token = await dataToolServer.getTokenInfo(_coin.denom);
-          _descText += '${NumberTool.amountToBalance(_coin.amount, scale: _token.scale)} ${_token.symbol} ';
-        } catch(e) {
-          print(e);
-          print(logItem.toJson());
-        }
+        TokenModel _token = await dataToolServer.getTokenInfo(_coin.denom);
+        _descText += '${NumberTool.amountToBalance(_coin.amount, scale: _token.scale)} ${_token.symbol} ';
       }
     } else if (_formatData is ModelMsgMultiSend) { // 多人转账
       for (var _item in _formatData.inputs) {
@@ -130,6 +123,8 @@ class LLogsItemViewController extends GetxController {
     } else if (_formatData is ModelMsgSwapWithinBatch) { // liquidity交易
       TokenModel _token = await dataToolServer.getTokenInfo(_formatData.offerCoin.denom);
       _descText += '${NumberTool.amountToBalance(_formatData.offerCoin.amount, scale: _token.scale)} ${_token.symbol} ';
+    } else if (_formatData is Map && _formatData['type'] == enumTokenType.prc20) { // 合约交易
+      _descText += '${_formatData['amount']} ${_formatData['symbol']} ';
     }
     state.descText = _descText.trimRight();
   }
@@ -173,6 +168,8 @@ class LLogsItemViewController extends GetxController {
       formatData is ModelMsgWithdrawWithinBatch || formatData is ModelMsgSwapWithinBatch
     ) { // liquidity交易池操作
       iconUrl = 'assets/images/log_icon/pool.png';
+    } else if (formatData is Map && formatData['type'] == enumTokenType.prc20) { // 合约交易
+      iconUrl = 'assets/images/log_icon/contract.png';
     }
     return Image(
       width: appTheme.sizes.basic * 60.0,
@@ -189,107 +186,117 @@ class LLogsItemViewController extends GetxController {
     if (_formatData is ModelMsgSend) { // 单对单转账
       if (_formatData.fromAddress == accountAddress) { // 转出
         _titleType = 'right';
-        _titleText = '转账至'.tr + '\r';
+        _titleText = 'transferTo'.tr + '\r';
         _titleAdd = StringTool.hideAddressCenter(_formatData.toAddress, startLen: 4, endLen: 8);
       } else if (_formatData.toAddress == accountAddress) { // 转入
         _titleType = 'left';
-        _titleText = '\r' + '转入'.tr;
+        _titleText = '\r' + 'transferIn'.tr;
         _titleAdd = StringTool.hideAddressCenter(_formatData.fromAddress, startLen: 4, endLen: 8);
       }
     } else if (_formatData is ModelMsgMultiSend) { // 多人转账
       _titleType = 'right';
-      _titleText = '多人转账'.tr + '\r';
+      _titleText = 'multiTransfer'.tr + '\r';
       if (_formatData.inputs.firstWhereOrNull((_item) => _item.address == accountAddress) != null) { // 多人转出
-        _titleAdd = '转出'.tr;
+        _titleAdd = 'transferOut'.tr;
       } else if (_formatData.outputs.firstWhereOrNull((_item) => _item.address == accountAddress) != null) { // 多人转入
-        _titleAdd = '转入'.tr;
+        _titleAdd = 'transferIn'.tr;
       }
     } else if (_formatData is ModelMsgSetWithdrawAddress) { // 设置提现地址
-      _titleText = '设置提现地址'.tr;
+      _titleText = 'setWithdrawAddress'.tr;
     } else if (_formatData is ModelMsgWithdrawDelegatorReward) { // 提取委托奖励
       _titleType = 'right';
-      _titleText = '提取质押奖励'.tr + '\r';
+      _titleText = 'withdrawDelegatorReward'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.validatorAddress, startLen: 0, endLen: 8);
     } else if (_formatData is ModelMsgWithdrawValidatorCommission) { // 提取验证者节点奖励
-      _titleText = '提取验证者节点奖励'.tr;
+      _titleText = 'withdrawValidatorReward'.tr;
     } else if (_formatData is ModelMsgFundCommunityPool) { // 向社区资金池捐赠
-      _titleText = '社区捐赠'.tr;
+      _titleText = 'fundCommunityPool'.tr;
     } else if (_formatData is ModelMsgSubmitEvidence) { // 举报消息
-      _titleText = '交易举报'.tr;
+      _titleText = 'submitEvidence'.tr;
     } else if (_formatData is ModelMsgGrantAllowance) { // 授权用户可用权限
       _titleType = 'right';
-      _titleText = '账户授权'.tr + '\r';
+      _titleText = 'grantAllowance'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.grantee, startLen: 4, endLen: 8);
     } else if (_formatData is ModelMsgRevokeAllowance) { // 撤销用户可用权限
       _titleType = 'right';
-      _titleText = '撤销授权'.tr + '\r';
+      _titleText = 'revokeAllowance'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.grantee, startLen: 4, endLen: 8);
     } else if (_formatData is ModelMsgSubmitProposal) { // 提案申请
-      _titleText = '申请提案'.tr;
+      _titleText = 'submitProposal'.tr;
     } else if (_formatData is ModelMsgVote) { // 进行提案投票
       _titleType = 'right';
-      _titleText = '提案投票'.tr + '\r';
+      _titleText = 'vote'.tr + '\r';
       _titleAdd = 'id:\r' + _formatData.proposalId.toString();
     } else if (_formatData is ModelMsgVoteWeighted) { // 进行提案权重投票
       _titleType = 'right';
-      _titleText = '提案权重投票'.tr + '\r';
+      _titleText = 'voteWeighted'.tr + '\r';
       _titleAdd = 'id:\r' + _formatData.proposalId.toString();
     } else if (_formatData is ModelMsgDeposit) { // 存入提案资金
       _titleType = 'right';
-      _titleText = '存入提案资金'.tr + '\r';
+      _titleText = 'deposit'.tr + '\r';
       _titleAdd = 'id:\r' + _formatData.proposalId.toString();
     } else if (_formatData is ModelMsgUnJail) { // 验证者解禁
-      _titleText = '验证者解禁'.tr;
+      _titleText = 'unJail'.tr;
     } else if (_formatData is ModelMsgCreateValidator) { // 创建验证者
-      _titleText = '创建验证者'.tr;
+      _titleText = 'createValidator'.tr;
     } else if (_formatData is ModelMsgEditValidator) { // 编辑验证者
-      _titleText = '验证者信息修改'.tr;
+      _titleText = 'editValidator'.tr;
     } else if (_formatData is ModelMsgDelegate) { // 验证者委托
       _titleType = 'right';
-      _titleText = '委托质押'.tr + '\r';
+      _titleText = 'delegate'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.validatorAddress, startLen: 0, endLen: 8);
     } else if (_formatData is ModelMsgBeginRedelegate) { // 验证者转质押
       _titleType = 'right';
-      _titleText = '转让质押至'.tr + '\r';
+      _titleText = 'beginReDelegate'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.validatorDstAddress, startLen: 0, endLen: 8);
     } else if (_formatData is ModelMsgUndelegate) { // 验证者取消质押
       _titleType = 'right';
-      _titleText = '取消质押'.tr + '\r';
+      _titleText = 'unDelegate'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.validatorAddress, startLen: 0, endLen: 8);
     } else if (_formatData is ModelMsgCreateVestingAccount) { // 创建投票委托账户
       _titleType = 'right';
-      _titleText = '委托投票'.tr + '\r';
+      _titleText = 'createVestingAccount'.tr + '\r';
       _titleAdd = StringTool.hideAddressCenter(_formatData.toAddress, startLen: 0, endLen: 8);
     } else if (_formatData is ModelMsgEthereumTx) { // 合约交易
-      _titleText = '合约交易'.tr;
+      _titleText = 'ethereumTx'.tr;
     } else if (_formatData is ModelMsgIssueToken) { // 创建prc10代币
       _titleType = 'right';
-      _titleText = '创建代币'.tr + '\r';
+      _titleText = 'issueToken'.tr + '\r';
       _titleAdd = _formatData.symbol;
     } else if (_formatData is ModelMsgMintToken) { // 增发prc10代币
       _titleType = 'right';
-      _titleText = '增发代币'.tr + '\r';
+      _titleText = 'mintToken'.tr + '\r';
       _titleAdd = _formatData.symbol;
     } else if (_formatData is ModelMsgBurnToken) { // 销毁prc10代币
       _titleType = 'right';
-      _titleText = '销毁代币'.tr + '\r';
+      _titleText = 'burnToken'.tr + '\r';
       _titleAdd = _formatData.symbol;
     } else if (_formatData is ModelMsgEditToken) { // 修改prc10代币
       _titleType = 'right';
-      _titleText = '修改代币'.tr + '\r';
+      _titleText = 'editToken'.tr + '\r';
       _titleAdd = _formatData.symbol;
     } else if (_formatData is ModelMsgTransferOwnerToken) { // 转移代币所有权
       _titleType = 'right';
-      _titleText = '代币所有权'.tr + '\r';
+      _titleText = 'transferOwnerToken'.tr + '\r';
       _titleAdd = _formatData.symbol;
     } else if (_formatData is ModelMsgCreatePool) { // 创建liquidity交易池
-      _titleText = '创建交易池'.tr;
+      _titleText = 'createPool'.tr;
     } else if (_formatData is ModelMsgDepositWithinBatch) { // 添加liquidity交易池存款
-      _titleText = '添加交易池存款'.tr;
+      _titleText = 'depositWithinBatch'.tr;
     } else if (_formatData is ModelMsgWithdrawWithinBatch) { // 提取liquidity交易池存款
-      _titleText = '提取交易池存款'.tr;
+      _titleText = 'withdrawWithinBatch'.tr;
     } else if (_formatData is ModelMsgSwapWithinBatch) { // liquidity交易
-      _titleText = 'swap交易'.tr;
+      _titleText = 'swapWithinBatch'.tr;
+    } else if (_formatData is Map && _formatData['type'] == enumTokenType.prc20) { // 合约交易
+      if (_formatData['from'] == accountAddress) {
+        _titleType = 'right';
+        _titleText = 'transferTo'.tr + '\r';
+        _titleAdd = StringTool.hideAddressCenter(_formatData['to'], startLen: 4, endLen: 8);
+      } else if (_formatData['to'] == accountAddress) { // 转入
+        _titleType = 'left';
+        _titleText = '\r' + 'transferIn'.tr;
+        _titleAdd = StringTool.hideAddressCenter(_formatData['from'], startLen: 4, endLen: 8);
+      }
     }
     if (_titleType == 'normal') {
       return Text.rich(

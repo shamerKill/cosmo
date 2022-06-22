@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -42,6 +41,7 @@ class LScrollView extends GetView<_ScrollViewController>  {
         builder: (BuildContext context ,LoadStatus? mode){
           if (controller.isRefreshing.value) return Container();
           Widget body;
+          // TODO: 加载设置
           if(mode==LoadStatus.idle){
             body =  const Text("pull up load");
           }
@@ -57,8 +57,8 @@ class LScrollView extends GetView<_ScrollViewController>  {
           else{
             body = const Text("No more Data");
           }
-          return Container(
-            height: 55.0,
+          return SizedBox(
+            height: appTheme.sizes.basic * 55.0,
             child: Center(child:body),
           );
         },

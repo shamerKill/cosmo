@@ -6,7 +6,6 @@ import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/pages/chain/export/delegate/delegate.page.dart';
 import 'package:plug/app/ui/pages/chain/export/export.controller.dart';
 import 'package:plug/app/ui/pages/chain/export/proposal/proposal.page.dart';
-import 'package:plug/app/ui/pages/chain/export/transaction/transaction.page.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class ChainExportPage extends GetView<ChainExportPageController> {
@@ -33,20 +32,15 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorColor: appTheme.colors.primaryColor,
                 tabs: [
-                  // SizedBox(
-                  //   width: appTheme.sizes.basic * 80,
-                  //   height: appTheme.sizes.basic * 60,
-                  //   child: Center(child: Text('交易'.tr)),
-                  // ),
                   SizedBox(
                     width: appTheme.sizes.basic * 80,
                     height: appTheme.sizes.basic * 60,
-                    child: Center(child: Text('质押'.tr)),
+                    child: Center(child: Text('pledge'.tr)),
                   ),
                   SizedBox(
                     width: appTheme.sizes.basic * 80,
                     height: appTheme.sizes.basic * 60,
-                    child: Center(child: Text('提案'.tr)),
+                    child: Center(child: Text('proposal'.tr)),
                   ),
                 ]
               ),
@@ -64,7 +58,7 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                 ),
                 child: Center(
                   child: Text(
-                    '代币发行'.tr,
+                    'issueToken'.tr,
                     style: TextStyle(
                       color: appTheme.colors.hightColor.withOpacity(0.9),
                       fontSize: appTheme.sizes.fontSizeSmall,
@@ -81,11 +75,6 @@ class ChainExportPage extends GetView<ChainExportPageController> {
       body: TabBarView(
         controller: state.pageTabController,
         children: [
-          // swap交易
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
-          //   child: const ChainExportTransactionPage(),
-          // ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
             child: const ChainExportDelegatePage(),

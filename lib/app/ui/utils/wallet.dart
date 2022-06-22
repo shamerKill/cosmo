@@ -56,7 +56,7 @@ class SelfAuthQuerier extends alan.AuthQuerier {
     $1.Any pubKey;
     if (addressType == enumAccountType.prc20) {
       // 短公钥
-      var secp256Key = secp2561.PubKey.create()..key = (wallet as NewWallet).comPublicKeyBytes;
+      var secp256Key = secp2561.PubKey.create()..key = (wallet as dynamic).comPublicKeyBytes;
       pubKey = alan.Codec.serialize(secp256Key);
     } else {
       // 长公钥
@@ -66,9 +66,15 @@ class SelfAuthQuerier extends alan.AuthQuerier {
     var accountResult = await httpToolApp.getAccountChainInfo(address);
     String accountNumber = '0';
     String sequence = '0';
+    dynamic accountInfo;
+    if (accountResult?.data['@type'] == '/cosmos.auth.v1beta1.BaseAccount') {
+      accountInfo = accountResult?.data;
+    } else {
+      accountInfo = accountResult?.data['base_account'];
+    }
     if (accountResult != null) {
-      if (accountResult.data["account_number"] != '') accountNumber = '${accountResult.data["account_number"]}';
-      if (accountResult.data["sequence"] != '') sequence = '${accountResult.data["sequence"]}';
+      if (accountResult.data["account_number"] != '') accountNumber = '${accountInfo["account_number"]}';
+      if (accountResult.data["sequence"] != '') sequence = '${accountInfo["sequence"]}';
     }
     return alan.BaseAccount(
       authPb.BaseAccount(
@@ -234,6 +240,11 @@ class WalletTool {
     }
     return foundation.compute(decrypt, '${raw}____________$pass');
   }
+  static alan.Wallet getWallet(List<String> mnemonic) {
+    DataAccountController dataAccountController = Get.find();
+    if (dataAccountController.state.nowAccount?.accountType == enumAccountType.prc20) return walletForMnemonicPrc20(mnemonic);
+    return walletForMnemonic(mnemonic);
+  }
   // 赎回收益
   static Future<HttpToolResponse> withReward({
     required List<String> mnemonic,
@@ -243,7 +254,7 @@ class WalletTool {
     $fixnum.Int64? gasLimit,
   }) async {
     gasLimit ??= 400000.toInt64();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     var message = distribution.MsgWithdrawDelegatorReward.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorAddress = validatorAddress;
@@ -260,7 +271,7 @@ class WalletTool {
   }) async {
     gasLimit ??= 400000.toInt64();
     DataCoinsController dataCoins = Get.find();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     var message = staking.MsgUndelegate.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorAddress = validatorAddress
@@ -282,7 +293,7 @@ class WalletTool {
   }) async {
     gasLimit ??= 400000.toInt64();
     DataCoinsController dataCoins = Get.find();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     var message = staking.MsgDelegate.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorAddress = validatorAddress
@@ -305,7 +316,7 @@ class WalletTool {
   }) async {
     gasLimit ??= 400000.toInt64();
     DataCoinsController dataCoins = Get.find();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     var message = staking.MsgBeginRedelegate.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorSrcAddress = validatorSrcAddress
@@ -329,7 +340,7 @@ class WalletTool {
     bool? noWait,
   }) async {
     gasLimit ??= 200000.toInt64();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     var message = bank.MsgSend.create()
       ..fromAddress = wallet.bech32Address
       ..toAddress = toAddress
@@ -349,7 +360,7 @@ class WalletTool {
     $fixnum.Int64? gasLimit,
   }) async {
     gasLimit ??= 400000.toInt64();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     var message = gov.MsgVote.create()
       ..voter = wallet.bech32Address
       ..proposalId = $fixnum.Int64.parseInt(proposalId)
@@ -371,7 +382,7 @@ class WalletTool {
     $fixnum.Int64? gasLimit,
   }) async {
     $fixnum.Int64 gasLimit = 400000.toInt64();
-    var wallet = alan.Wallet.derive(mnemonic, _networkInfo);
+    var wallet = getWallet(mnemonic);
     String memo = '';
     var message = tokenTx.MsgIssueToken.create()
         ..owner = wallet.bech32Address
@@ -383,6 +394,35 @@ class WalletTool {
         ..mintable = mintable
         ..scale = int.parse(scale)
         ;
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // token10 swap
+  static Future<HttpToolResponse> dexPoolExchange({
+    required List<String> mnemonic,
+    required int poolId,
+    required String fromSymbol,
+    required String fromAmount,
+    required String toSymbol,
+    required String feeAmount,
+    required double orderPrice,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) {
+    $fixnum.Int64 gasLimit = 400000.toInt64();
+    var wallet = getWallet(mnemonic);
+    var message = liquidityTx.MsgSwapWithinBatch.create()
+      ..swapRequesterAddress = wallet.bech32Address
+      ..poolId = poolId.toInt64()
+      ..swapTypeId = 1
+      ..offerCoin = (alan.Coin.create()
+                          ..denom = fromSymbol
+                          ..amount = fromAmount)
+      ..demandCoinDenom = toSymbol
+      ..offerCoinFee = (alan.Coin.create()
+                            ..denom=fromSymbol
+                            ..amount=feeAmount)
+      ..orderPrice = NumUtil.multiplyDec(orderPrice, pow(10, 18)).toStringAsFixed(0);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
 }

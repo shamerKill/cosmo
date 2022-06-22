@@ -18,7 +18,7 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('DAPP设置'.tr),
+        title: LAppBar.defaultHeaderTextWidget('dappSetting'.tr),
       ),
       basicBackgroundColor: true,
       padding: EdgeInsets.only(
@@ -50,7 +50,7 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('DAPP安全设置'.tr),
+                Text('dappSafeSetting'.tr),
                 Obx(() => Switch(
                   value: state.safeMode,
                   onChanged: controller.onToggleSafeMode,
@@ -61,7 +61,7 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
-            child: Text('启用安全模式，DAPP每次访问钱包地址时需要获得你的授权'.tr, style: Get.textTheme.bodyText1),
+            child: Text('dappSafeSettingDesc'.tr, style: Get.textTheme.bodyText1),
           ),
           InkWell(
             onTap: controller.onClearNetCache,
@@ -76,7 +76,7 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
                 left: appTheme.sizes.padding,
                 right: appTheme.sizes.paddingSmall,
               ),
-              child: Text('清理网络缓存'.tr, style: TextStyle(color: appTheme.colors.errorColor)),
+              child: Text('clearNetCache'.tr, style: TextStyle(color: appTheme.colors.errorColor)),
             ),
           ),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
@@ -96,13 +96,13 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
                       left: appTheme.sizes.padding,
                       right: appTheme.sizes.paddingSmall,
                     ),
-                    child: Text('清空DAPP授权'.tr, style: TextStyle(color: appTheme.colors.errorColor)),
+                    child: Text('clearDappPermission'.tr, style: TextStyle(color: appTheme.colors.errorColor)),
                   ),
                 ),
               if (!state.safeMode)
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
-                  child: Text('清空授权记录后，已授权的DAPP访问钱包地址时将需要重新获得您的授权'.tr, style: Get.textTheme.bodyText1),
+                  child: Text('clearDappPermissionDesc'.tr, style: Get.textTheme.bodyText1),
                 ),
             ],
           ))

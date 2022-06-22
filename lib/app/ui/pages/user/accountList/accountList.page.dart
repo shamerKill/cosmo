@@ -25,7 +25,7 @@ class UserAccountListPage extends GetView<UserAccountListPageController> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('账户管理'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
+                Text('accountAdmin'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
               ],
             ),
           ),
@@ -89,7 +89,7 @@ class UserAccountListPage extends GetView<UserAccountListPageController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('addWallet'.tr),
+                  Text('addAccount'.tr),
                   Icon(
                     const IconData(0xe6d6, fontFamily: 'plugIcon'),
                     color: appTheme.colors.textGray
@@ -101,7 +101,7 @@ class UserAccountListPage extends GetView<UserAccountListPageController> {
         )),
       )),
       footer: Center(
-        child: Text('最多10个账户', style: Get.textTheme.bodyText1),
+        child: Text('maxAccountLength'.tr, style: Get.textTheme.bodyText1),
       ),
     );
   }

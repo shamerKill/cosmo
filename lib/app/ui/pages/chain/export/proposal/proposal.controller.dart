@@ -127,11 +127,6 @@ class ChainExportProposalPageController extends GetxController {
     state.proposalList.clear();
     await onGetData();
   }
-
-  // 搜索内容
-  onSearchProposal(String text) {
-    print(text);
-  }
   // 前往提案详情
   onGoToProposalDetail(ProposalCardInfo info) {
     Get.toNamed(PlugRoutesNames.chainProposalDetails('${info.id}'));
@@ -152,15 +147,15 @@ class ChainExportProposalPageController extends GetxController {
   _proposalPrompt(ProposalCardInfo info, gov.VoteOption type) async {
     String s = '';
     switch(type) {
-      case gov.VoteOption.VOTE_OPTION_ABSTAIN: s = '弃权'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_NO: s = '反对'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_YES: s = '赞同'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_NO_WITH_VETO: s = '否决'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_UNSPECIFIED: s = '否决'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_ABSTAIN: s = 'abandon'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_NO: s = 'reject'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_YES: s = 'agree'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_NO_WITH_VETO: s = 'veto'.tr; break;
+      case gov.VoteOption.VOTE_OPTION_UNSPECIFIED: s = 'veto'.tr; break;
     }
     var _type = await LBottomSheet.promptBottomSheet(
-      title: '投票提示'.tr,
-      message: Text('发送$s票: #'.tr + info.id.toString()),
+      title: 'voteTip'.tr,
+      message: Text('send' + ' $s: #'.tr + info.id.toString()),
     );
     if (_type != true) return;
     var _pass = await LBottomSheet.passwordBottomSheet();
@@ -169,7 +164,7 @@ class ChainExportProposalPageController extends GetxController {
     var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
     if (mnemonicList == null) {
       LLoading.dismiss();
-      return LToast.warning('密码输入错误'.tr);
+      return LToast.warning('ErrorWithPasswordInput'.tr);
     }
     Get.focusScope?.unfocus();
     var _fee = await httpToolServer.getChainFee();
@@ -182,7 +177,7 @@ class ChainExportProposalPageController extends GetxController {
     LLoading.dismiss();
     if (result.status == -10001) return LToast.error('ErrorWithProposalCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithProposalTimeout'.tr);
-    if (result.status != 0) return LToast.error('ErrorWithProposalUnkown'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithProposalUnKnow'.tr);
     LToast.success('SuccessWithProposal'.tr);
   }
 }

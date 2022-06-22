@@ -33,17 +33,17 @@ class UserNetworkPageController extends GetxController {
 
   // 获取网络列表
   Future<void> _getNetList() async {
-    LLoading.showBgLoading(text: '网络获取中'.tr);
+    LLoading.showBgLoading(text: 'networkFetching'.tr);
     LLoading.dismiss();
   }
   // 更改当前网络
   exchangeNoNet(int id, { required NetWorkModel network }) async {
     if (id == state.nowNetId) return;
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '是否需要切换至当前网络？'.tr,
+      title: 'switchNetworkTip'.tr,
       message: Column(
         children: [
-          Text('切换网络之后部分数据需要手动刷新'.tr, style: Get.textTheme.bodyText1),
+          Text('switchNetworkDesc'.tr, style: Get.textTheme.bodyText1),
         ],
       ),
     );

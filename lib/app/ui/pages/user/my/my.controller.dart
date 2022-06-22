@@ -40,7 +40,7 @@ class UserMyPageController extends GetxController {
   onInit() {
     super.onInit();
     _onTouchInit();
-    state.network = '主网';
+    state.network = 'mainNetwork'.tr;
   }
 
   // 前往账户管理地址列表
@@ -56,11 +56,10 @@ class UserMyPageController extends GetxController {
     if (type == true) {
       try {
         var userRes = await auth.authenticate(
-          localizedReason: '获取指纹'.tr
+          localizedReason: 'getFingerprints'.tr
         );
         if (userRes) state.enableTouch = true;
-      } on PlatformException catch (e) {
-        print(e);
+      } on PlatformException catch (_) {
       }
     } else if (type == false) {
       state.enableTouch = false;
@@ -71,7 +70,7 @@ class UserMyPageController extends GetxController {
   // 前往语言切换
   onGoToLanguage() => Get.toNamed(PlugRoutesNames.userLanguage);
   // 前往使用指南
-  onGoToUseHelper() => LToast.info('功能暂未开启');
+  onGoToUseHelper() => LToast.info('functionalNoHandle'.tr);
   // 前往用户协议
   onGoToAgreement() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode('https://www.plugchain.network/v2/userAgreemen'))});
   // 前往关于我们

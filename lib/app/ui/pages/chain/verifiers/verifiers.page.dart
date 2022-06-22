@@ -8,7 +8,6 @@ import 'package:plug/app/ui/components/view/verifierCard.component.dart';
 import 'package:plug/app/ui/pages/chain/verifiers/verifiers.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
   const ChainVerifiersPage({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('验证者列表'.tr),
+        title: LAppBar.defaultHeaderTextWidget('verifierList'.tr),
         description: Text(''.tr, style: Get.textTheme.bodyText1),
       ),
       basicBackgroundColor: true,
@@ -43,20 +42,6 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                         Row(
                           children: [
-                            // Expanded(
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       LAnimationView(
-                            //         randomKey: false,
-                            //         child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
-                            //       ),
-                            //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                            //       Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
-                            //     ],
-                            //   ),
-                            // ),
-                            // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +51,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                     child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.minPledgeVolume)), style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
                                   ),
                                   Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                  Text('最小质押'.tr, style: Get.textTheme.bodyText1)
+                                  Text('minVolumeForPledge'.tr, style: Get.textTheme.bodyText1)
                                 ],
                               ),
                             ),
@@ -85,7 +70,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                     ),
                                   ),
                                   Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                  Text('总质押'.tr, style: Get.textTheme.bodyText1)
+                                  Text('totalPledgeQuantity'.tr, style: Get.textTheme.bodyText1)
                                 ],
                               ),
                             ),
@@ -99,13 +84,13 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                     child: LAnimationView(
                                       randomKey: false,
                                       child: Text(
-                                        _item.pledged == '' ? '未质押' : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
+                                        _item.pledged == '' ? 'noPledged' : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
                                         style: _item.pledged == '' ? TextStyle(color: appTheme.colors.textGrayBig) : TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
                                       ),
                                     ),
                                   ),
                                   Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                  Text('我的质押'.tr, style: Get.textTheme.bodyText1),
+                                  Text('myPledge'.tr, style: Get.textTheme.bodyText1),
                                 ],
                               ),
                             ),
@@ -127,7 +112,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                 ),
                               ),
                               child: Center(
-                                child: Text('查看详情'.tr, style: Get.textTheme.bodyText1),
+                                child: Text('goToDetail'.tr, style: Get.textTheme.bodyText1),
                               ),
                             ),
                           ),

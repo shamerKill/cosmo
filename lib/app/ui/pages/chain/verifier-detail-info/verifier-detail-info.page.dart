@@ -1,7 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/image.component.dart';
@@ -76,31 +75,20 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                    Text('验证者'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                    Text('verifier'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                     Obx(() => Text(state.verifierInfo.address, style: TextStyle(color: appTheme.colors.primaryColor))),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
                     DottedLine(dashColor: appTheme.colors.borderColor,),
                   ],
                 ),
-                // Column(
-                //   crossAxisAlignment: CrossAxisAlignment.start,
-                //   children: [
-                //     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                //     Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
-                //     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
-                //     Obx(() => Text('${state.verifierInfo.yieldRate}%')),
-                //     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-                //     DottedLine(dashColor: appTheme.colors.borderColor,),
-                //   ],
-                // ),
                 Obx(() => Visibility(
                   visible: state.verifierInfo.reward != '',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('收益'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                      Text('reward'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                       Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.reward)) + ' ' + state.baseCoinInfo.symbol),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
@@ -114,7 +102,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('我的质押'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                      Text('myPledge'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                       Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged)) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
@@ -128,7 +116,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('转质押数量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                      Text('rePledgingVolume'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                       Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.rePledging)) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
@@ -142,7 +130,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('赎回中数量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                      Text('withdrawingVolume'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                       Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.redeeming)) + ' ' + state.baseCoinInfo.symbol, style: TextStyle(color: appTheme.colors.primaryColor)),
                       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
@@ -154,7 +142,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                    Text('节点质押总量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                    Text('pledgedVolumeWithVerifier'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                     Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged)) + ' ' + state.baseCoinInfo.symbol)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
@@ -165,7 +153,7 @@ class ChainVerifierDetailInfoPage extends GetView<ChainVerifierDetailInfoPageCon
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                    Text('有效自我委托量'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+                    Text('minVolumeForPledge'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5)),
                     Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume)) + ' ' + state.baseCoinInfo.symbol)),
                     Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),

@@ -86,13 +86,13 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
               return Obx(() => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getList(title: 'proposaler'.tr, info: state.proposalInfo.sender),
+                  getList(title: 'proposer'.tr, info: state.proposalInfo.sender),
                   getList(title: 'initBound'.tr, info: NumberTool.amountToBalance(state.proposalInfo.startBondVolume)),
                   getList(title: 'allBound'.tr, info: NumberTool.amountToBalance(state.proposalInfo.allBondVolume)),
-                  getList(title: 'submitTime'.tr, info: DateUtil.formatDate(state.proposalInfo.subimtStartTime)),
+                  getList(title: 'submitTime'.tr, info: DateUtil.formatDate(state.proposalInfo.submitStartTime)),
                   getList(title: 'moneyEndTime'.tr, info: DateUtil.formatDate(state.proposalInfo.fundEndTime)),
-                  getList(title: 'proposalStartTime'.tr, info: DateUtil.formatDate(state.proposalInfo.vetingStartTime)),
-                  getList(title: 'proposalEndTime'.tr, info: DateUtil.formatDate(state.proposalInfo.vetingEndTime)),
+                  getList(title: 'proposalStartTime'.tr, info: DateUtil.formatDate(state.proposalInfo.votingStartTime)),
+                  getList(title: 'proposalEndTime'.tr, info: DateUtil.formatDate(state.proposalInfo.votingEndTime)),
                   getList(title: 'proposalDescription'.tr, info: state.proposalInfo.description, textStyle: TextStyle(color: appTheme.colors.textGrayBig)),
                 ],
               ));
@@ -103,9 +103,9 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
             child: Obx(() => Text.rich(
               TextSpan(
                 children: [
-                  TextSpan(text: '${'allPropposalVolume'.tr}: '),
+                  TextSpan(text: '${'totalProposalVolume'.tr}: '),
                   TextSpan(
-                    text: '${NumberTool.formatNumberStr(NumberTool.amountToBalance(state.proposalInfo.totalBanalceVolume, scale: state.baseCoinInfo.scale))} ${state.baseCoinInfo.symbol}',
+                    text: '${NumberTool.formatNumberStr(NumberTool.amountToBalance(state.proposalInfo.totalBalanceVolume, scale: state.baseCoinInfo.scale))} ${state.baseCoinInfo.symbol}',
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall)
                   ),
                 ],
@@ -309,19 +309,19 @@ class _ProposalVoterItem extends StatelessWidget {
   late final Color _statusColor;
 
   _ProposalVoterItem(this.info) {
-    if (info.choosed == EnumOptionStatus.abandon) {
+    if (info.chosen == EnumOptionStatus.abandon) {
       _statusStr = 'abandon'.tr;
       _statusColor = appTheme.colors.proposalAbandon;
     }
-    if (info.choosed == EnumOptionStatus.agree) {
+    if (info.chosen == EnumOptionStatus.agree) {
       _statusStr = 'agree'.tr;
       _statusColor = appTheme.colors.proposalAgree;
     }
-    if (info.choosed == EnumOptionStatus.reject) {
+    if (info.chosen == EnumOptionStatus.reject) {
       _statusStr = 'reject'.tr;
       _statusColor = appTheme.colors.proposalReject;
     }
-    if (info.choosed == EnumOptionStatus.veto) {
+    if (info.chosen == EnumOptionStatus.veto) {
       _statusStr = 'veto'.tr;
       _statusColor = appTheme.colors.errorColor;
     }

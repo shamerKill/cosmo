@@ -92,7 +92,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('总质押数量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('totalPledgeQuantity'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged.toString()))))
                       ],
@@ -103,7 +103,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('我的质押'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('myPledge'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged.toString()))))
                       ],
@@ -123,11 +123,11 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('赎回数量'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('withdrawVolume'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
-                  hintText: '请输入将要质押的数量'.tr,
+                  hintText: 'inputPledgedVolume'.tr,
                   obscureText: true,
                   suffix: Obx(() => Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack))),
                   onlyNumber: true,
@@ -137,7 +137,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                   child: Obx(() => Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(text: '账户余额'.tr),
+                        TextSpan(text: 'accountBalance'.tr),
                         const TextSpan(text: '  '),
                         TextSpan(
                           text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.baseCoin.amount, scale: state.baseCoin.scale)),
@@ -154,18 +154,18 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
+                    'fee'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                   )),
                 ),
-                Text('赎回委托需要等待 21 天。'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.warningColor)),
+                Text('withdrawTipText'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.warningColor)),
                 Padding(
                   padding: EdgeInsets.only(top: appTheme.sizes.padding * 2, bottom: appTheme.sizes.padding),
                   child: Obx(() => LButton(
                     onPressed: controller.onPledgeListener,
                     width: appTheme.sizes.infinity,
                     disabled: state.pledgeLoading,
-                    child: Text('赎回'.tr),
+                    child: Text('withdraw'.tr),
                   )),
                 ),
               ],

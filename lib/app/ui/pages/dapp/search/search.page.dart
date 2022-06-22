@@ -30,7 +30,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
                 inputHeight: appTheme.sizes.basic * 80,
                 radiusCircular: true,
                 textController: controller.searchController,
-                hintText: '搜索项目、币名或输入连接',
+                hintText: 'dappSearchHint'.tr,
                 textInputAction: TextInputAction.search,
                 onSubmitted: controller.onSearchData,
                 prefixIcon: Icon(
@@ -47,7 +47,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
               splashColor: appTheme.colors.transparent,
               child: Padding(
                 padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall, top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
-                child: Text('取消'.tr, style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeBig)),
+                child: Text('cancel'.tr, style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeBig)),
               ),
             ),
           ],
@@ -65,7 +65,7 @@ class DappSearchPage extends GetView<DappSearchPageController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '搜索历史'.tr,
+              'searchLogs'.tr,
               style: TextStyle(
                 color: appTheme.colors.textGray
               )

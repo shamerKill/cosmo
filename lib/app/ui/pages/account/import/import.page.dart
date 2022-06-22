@@ -21,7 +21,7 @@ class AccountImportPage extends GetView<AccountImportPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('importWallet'.tr),
+        title: LAppBar.defaultHeaderTextWidget('importAccount'.tr),
       ),
       singleScroll: true,
       body: Form(
@@ -64,7 +64,7 @@ class AccountImportPage extends GetView<AccountImportPageController> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Text('账户类型 :'.tr),
+                    child: Text('accountType'.tr + ' :'),
                   ),
                   Obx(() => LSwitchView(
                     selectList: state.accountTypeList.map((item) => StringTool.accountTypeToString(item)),
@@ -113,7 +113,7 @@ class AccountImportPage extends GetView<AccountImportPageController> {
             ),
             child: Obx(() => LButton(
               width: appTheme.sizes.infinity,
-              child: Text('startImport'.tr),
+              child: Text('importAccountStart'.tr),
               disabled: state.importLoading,
               onPressed: state.canImport ? controller.importAccount : null,
             )),

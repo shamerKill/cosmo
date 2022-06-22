@@ -22,12 +22,12 @@ class UserAddressBookEditPage extends GetView<UserAddressBookEditPageController>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Obx(() => LAppBar.defaultHeaderTextWidget(state.isEdit ? '修改地址'.tr : '添加地址'.tr)),
+            Obx(() => LAppBar.defaultHeaderTextWidget(state.isEdit ? 'editAddress'.tr : 'addAddress'.tr)),
             LButton(
               radius: true,
               height: appTheme.sizes.basic * 56,
               onPressed: controller.onSave,
-              child: Text('保存'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
+              child: Text('save'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
             ),
           ],
         ),
@@ -38,20 +38,20 @@ class UserAddressBookEditPage extends GetView<UserAddressBookEditPageController>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingBig)),
-          Text('名称'.tr),
+          Text('alias'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
             textController: controller.nameController,
             fillColor: appTheme.colors.pageBackgroundColor,
-            hintText: '请输入名称'.tr,
+            hintText: 'aliasInputHint'.tr,
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-          Text('地址'.tr),
+          Text('address'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
             textController: controller.addressController,
             fillColor: appTheme.colors.pageBackgroundColor,
-            hintText: '请输入地址'.tr,
+            hintText: 'addressInputHint'.tr,
             suffixIcon: IconButton(
               icon: const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
               onPressed: controller.onScanQr,
@@ -59,19 +59,19 @@ class UserAddressBookEditPage extends GetView<UserAddressBookEditPageController>
             ),
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-          Text('备注'.tr),
+          Text('remark'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
             textController: controller.remarksController,
             fillColor: appTheme.colors.pageBackgroundColor,
-            hintText: '请输入备注'.tr,
+            hintText: 'remarkInputHint'.tr,
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
           Obx(() => state.isEdit ? TextButton(
             onPressed: controller.onRemove,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
-              child: Text('删除该地址'.tr, style: TextStyle(color: appTheme.colors.errorColor, fontSize: appTheme.sizes.fontSizeSmall)),
+              child: Text('delete'.tr, style: TextStyle(color: appTheme.colors.errorColor, fontSize: appTheme.sizes.fontSizeSmall)),
             ),
           ) : Container()),
         ],

@@ -20,8 +20,8 @@ class AccountBackupVerifyPage extends GetView<AccountBackupVerifyPageController>
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('backupMnemonicPageTitle'.tr),
-        description: Text('backupMnemonicPageDescription'.tr, style: Get.textTheme.bodyText1),
+        title: LAppBar.defaultHeaderTextWidget('verifyMnemonicList'.tr),
+        description: Text('verifyMnemonicListDesc'.tr, style: Get.textTheme.bodyText1),
       ),
       singleScroll: true,
       body: Column(
@@ -88,7 +88,7 @@ class AccountBackupVerifyPage extends GetView<AccountBackupVerifyPageController>
         ],
       ),
       footer: Obx(() => LButton(
-        child: Text('buttonStep'.tr),
+        child: Text('step'.tr),
         onPressed: state.selectSuccess ? controller.stepFunc : null,
       )),
     );

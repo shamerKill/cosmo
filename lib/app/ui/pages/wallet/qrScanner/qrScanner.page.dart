@@ -17,7 +17,7 @@ class WalletQrScannerPage extends GetView<WalletQrScannerPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('扫描二维码'.tr),
+        title: LAppBar.defaultHeaderTextWidget('scanQrCode'.tr),
       ),
       body: Padding(
         padding: EdgeInsets.only(top: appTheme.sizes.paddingBig),

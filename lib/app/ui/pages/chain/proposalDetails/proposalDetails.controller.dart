@@ -22,12 +22,12 @@ class _ProposalCardInfo {
   String sender = ''; // 发起者
   String startBondVolume = ''; // 初始保证金
   String allBondVolume = ''; // 总保证金
-  DateTime? subimtStartTime; // 发起时间
+  DateTime? submitStartTime; // 发起时间
   DateTime? fundEndTime; // 募资结束时间
-  DateTime? vetingStartTime; // 开始投票时间
-  DateTime? vetingEndTime; // 结束投票时间
+  DateTime? votingStartTime; // 开始投票时间
+  DateTime? votingEndTime; // 结束投票时间
   String description = ''; // 投票描述类型
-  String totalBanalceVolume = ''; // 总投票者持有数量
+  String totalBalanceVolume = ''; // 总投票者持有数量
   String agreeVolume = ''; // 赞同数量
   String rejectVolume = ''; // 反对数量
   String abandonVolume = ''; // 放弃数量
@@ -43,14 +43,14 @@ class HashInfo {
   // 时间
   final String dateTime;
   // 投票类型
-  final EnumOptionStatus? choosed;
+  final EnumOptionStatus? chosen;
   // 投票数量
   final String? amount;
   HashInfo({
     required this.userAddress,
     required this.hash,
     required this.dateTime,
-    this.choosed,
+    this.chosen,
     this.amount,
   });
 }
@@ -233,12 +233,12 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
       ..sender = resultProposer.data['result']['proposer']
       ..startBondVolume = NumberTool.amountToBalance(resultData['total_deposit'][0]['amount'])
       ..allBondVolume = NumberTool.amountToBalance('$memAllAmount')
-      ..subimtStartTime = DateTime.parse(resultData['submit_time'])
+      ..submitStartTime = DateTime.parse(resultData['submit_time'])
       ..fundEndTime = DateTime.parse(resultData['deposit_end_time'])
-      ..vetingStartTime = DateTime.parse(resultData['voting_start_time'])
-      ..vetingEndTime = DateTime.parse(resultData['voting_end_time'])
+      ..votingStartTime = DateTime.parse(resultData['voting_start_time'])
+      ..votingEndTime = DateTime.parse(resultData['voting_end_time'])
       ..description = resultData['content']['description']
-      ..totalBanalceVolume = NumberTool.amountToBalance('$memAllVolume')
+      ..totalBalanceVolume = NumberTool.amountToBalance('$memAllVolume')
       ..agreeVolume = NumberTool.amountToBalance('$memYesVolume')
       ..rejectVolume = NumberTool.amountToBalance('$memNoVolume')
       ..abandonVolume = NumberTool.amountToBalance('$memAbstainVolume')
@@ -343,7 +343,7 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
         userAddress: item['tx']['body']['messages'][0]['voter'],
         hash: item['txhash'],
         dateTime: DateUtil.formatDate(DateTime.tryParse(item['timestamp'])),
-        choosed: _mapOptionStatus[item['tx']['body']['messages'][0]['option']],
+        chosen: _mapOptionStatus[item['tx']['body']['messages'][0]['option']],
       ));
     }
     if (type == null) {
@@ -373,7 +373,7 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
 
   // 转换比例
   String getVolumeRate(String volume) {
-    double allVolume = double.tryParse(state.proposalInfo.totalBanalceVolume)??1;
+    double allVolume = double.tryParse(state.proposalInfo.totalBalanceVolume)??1;
     double douVolume = double.tryParse(volume)??0;
     if (allVolume == 0) allVolume = 1;
     return ((douVolume / allVolume) * 100).toStringAsFixed(4);

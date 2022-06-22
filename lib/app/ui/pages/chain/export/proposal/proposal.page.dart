@@ -3,7 +3,6 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
-import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/layout/scroll.component.dart';
 import 'package:plug/app/ui/pages/chain/export/proposal/proposal.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
@@ -20,25 +19,12 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-        // LInput(
-        //   inputHeight: appTheme.sizes.basic * 80,
-        //   radiusCircular: true,
-        //   fillColor: appTheme.colors.pageBackgroundColor,
-        //   hintText: '搜索提案ID/标题'.tr,
-        //   textInputAction: TextInputAction.search,
-        //   textController: state.searchController,
-        //   onSubmitted: controller.onSearchProposal,
-        //   prefixIcon: Icon(
-        //     Icons.search_outlined,
-        //     size: appTheme.sizes.iconSize * 0.9,
-        //   ),
-        // ),
         Padding(
           padding: EdgeInsets.only(
             top: appTheme.sizes.paddingSmall,
             bottom: appTheme.sizes.paddingSmall,
           ),
-          child: Text('提案列表'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontWeight: FontWeight.bold, fontSize: appTheme.sizes.fontSizeBig)),
+          child: Text('proposalsList'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontWeight: FontWeight.bold, fontSize: appTheme.sizes.fontSizeBig)),
         ),
         Expanded(
           child: Obx(() => LScrollView(
@@ -90,7 +76,7 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
                                                     children: [
                                                       Padding(
                                                         padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.5),
-                                                        child: Text('quorumVolume'.tr, style: Get.textTheme.bodyText1),
+                                                        child: Text('quorum'.tr, style: Get.textTheme.bodyText1),
                                                       ),
                                                       Text('${_item.needVotingRate}%', style: const TextStyle(fontWeight: FontWeight.bold))
                                                     ]
@@ -164,7 +150,7 @@ class ChainExportProposalPage extends GetView<ChainExportProposalPageController>
                                       onTap: () => controller.onToggleFunc(_item),
                                     ) :
                                     Text(
-                                      (_item.status == EnumProposalStatus.deposit ? '' : 'complete'.tr),
+                                      (_item.status == EnumProposalStatus.deposit ? '' : 'ended'.tr),
                                       style: TextStyle(fontSize: 12, color: appTheme.colors.textGray),
                                     )
                                   )

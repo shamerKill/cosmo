@@ -19,8 +19,8 @@ class AccountExitPasswordPage extends GetView<AccountExitPasswordPageController>
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('修改密码'.tr),
-        description: Text('修改密码'.tr, style: Get.textTheme.bodyText1),
+        title: LAppBar.defaultHeaderTextWidget('editPassword'.tr),
+        description: Text('editPassword'.tr, style: Get.textTheme.bodyText1),
       ),
       singleScroll: true,
       body: Column(
@@ -57,7 +57,7 @@ class AccountExitPasswordPage extends GetView<AccountExitPasswordPageController>
             ),
             child: Obx(() => LButton(
               width: appTheme.sizes.infinity,
-              child: Text('修改密码'.tr),
+              child: Text('editPassword'.tr),
               disabled: state.createLoading,
               onPressed: state.canCreate ? controller.createAccount : null,
             )),

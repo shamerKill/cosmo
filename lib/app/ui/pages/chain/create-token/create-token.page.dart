@@ -19,7 +19,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('发行代币'.tr),
+        title: LAppBar.defaultHeaderTextWidget('createToken'.tr),
       ),
       singleScroll: true,
       basicBackgroundColor: true,
@@ -56,7 +56,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
                   child: LInput(
                     textController: controller.coinSymbolTextController,
                     focusNode: controller.coinSymbolFocusNode,
-                    hintText: '3-8位小写字母开头字符'.tr,
+                    hintText: 'tokenSymbolInputHint'.tr,
                   ),
                 ),
               ],
@@ -76,7 +76,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
                     textController: controller.coinTotalVolumeTextController,
                     onlyNumber: true,
                     onlyInt: true,
-                    labelText: '无精度正整数'.tr,
+                    labelText: 'tokenTotalInputHint'.tr,
                   ),
                 ),
               ],
@@ -97,7 +97,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
                     child: LInput(
                       textController: controller.coinScaleVolumeTextController,
                       disabled: true,
-                      labelText: 'tokenScaleInput'.tr,
+                      labelText: 'tokenScaleInputHint'.tr,
                     ),
                   ),
                 ),
@@ -163,7 +163,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.2),
               child: Obx(() => state.isExist ? Text(
-                '代币已存在'.tr,
+                'ErrorWithCoinSymbolRepeat'.tr,
                 style: TextStyle(color: appTheme.colors.errorColor),
               ) : Text(
                 '${'tokenSendFee'.tr}\r\r ${state.createFee} ${controller.dataCoins.state.baseCoin.symbol}',
@@ -173,7 +173,7 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.paddingBig),
             child: LButton(
-              child: Text('开始发行'.tr),
+              child: Text('tokenCreateStart'.tr),
               width: appTheme.sizes.infinity,
               onPressed: controller.createToken,
             ),

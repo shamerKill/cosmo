@@ -21,8 +21,8 @@ class AccountCreatePage extends GetView<AccountCreateController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('createWalletPageTitle'.tr),
-        description: Text('createWalletPageDescription'.tr, style: Get.textTheme.bodyText1),
+        title: LAppBar.defaultHeaderTextWidget('createAccount'.tr),
+        description: Text('createAccountSetPassword'.tr, style: Get.textTheme.bodyText1),
       ),
       singleScroll: true,
       body: Column(
@@ -56,7 +56,7 @@ class AccountCreatePage extends GetView<AccountCreateController> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Text('账户类型 :'.tr),
+                  child: Text('accountType'.tr + ' :'),
                 ),
                 Obx(() => LSwitchView(
                   selectList: state.accountTypeList.map((item) => StringTool.accountTypeToString(item)),
@@ -104,7 +104,7 @@ class AccountCreatePage extends GetView<AccountCreateController> {
             ),
             child: Obx(() => LButton(
               width: appTheme.sizes.infinity,
-              child: Text('startCreateButton'.tr),
+              child: Text('createAccountStart'.tr),
               disabled: state.createLoading,
               onPressed: state.canCreate ? controller.createAccount : null,
             )),

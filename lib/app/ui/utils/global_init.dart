@@ -37,6 +37,6 @@ class UtilGlobalInit {
     try {
       var modes = await FlutterDisplayMode.supported;
       await FlutterDisplayMode.setPreferredMode(modes[1]);
-    } on PlatformException catch (e) {}
+    } on PlatformException catch (_) {}
   }
 }

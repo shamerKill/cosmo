@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
-import 'package:plug/app/data/models/response/msgs.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/services/data.services.dart';
 import 'package:plug/app/routes/routes.dart';
@@ -59,50 +56,59 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
   
   @override
   void onReady() {
-    String? token = Get.parameters['token'];
-    if (token == null) return Get.back();
-    if (StringTool.checkChainAddress(token)) {
-    } else {
-      _initTokenInfo(token);
-    }
+    String? tokenMark = Get.parameters['token'];
+    if (tokenMark == null) return Get.back();
+    _initTokenInfo(tokenMark);
   }
 
   // 获取token
-  _initTokenInfo (String minUnit) async {
+  _initTokenInfo (String tokenMark) async {
     LLoading.showLoading();
     state.accountInfo = dataAccount.state.nowAccount!;
-    var token = dataAccount.state.nowAccount?.tokenList.firstWhere((element) => element.minUnit == minUnit);
+    enumAccountType _tokenType = StringTool.checkChainAddress(tokenMark) ? enumAccountType.prc20 : enumAccountType.prc10;
+    var token = dataAccount.state.nowAccount?.tokenList.firstWhere(
+      (_itemToken) => _tokenType == enumAccountType.prc10 ? _itemToken.minUnit == tokenMark : _itemToken.contractAddress == tokenMark
+    );
     if (token != null) {
       state.tokenInfo = token;
     } else {
-      token = await httpToolApp.getCoinInfo(minUnit);
+      token = _tokenType == enumAccountType.prc10 ?
+        (await httpToolApp.getCoinInfo(tokenMark)) :
+        (await httpToolServer.searchToken20Info(tokenMark)).data?['token'];
     }
-    var resultAmount = await httpToolApp.getAccountBalance(state.accountInfo.address, minUnit);
-    if (token != null) token.amount = resultAmount?.data??'';
+    var resultAmount = await httpToolApp.getAccountBalance(state.accountInfo.address, tokenMark);
     if (token == null) return Get.back();
+    token.amount = resultAmount?.data??'';
     state.tokenInfo = token;
     state._tokenInfo.refresh();
-    await _getTransferLogs();
+    await _getTransferLogs(refresh: true);
     LLoading.dismiss();
   }
   // 获取代币价格
 
   // 获取交易记录
-  Future<void> _getTransferLogs() async {
-    HttpToolResponse? result;
-    result = await httpToolServer.getAccountLogsList(
+  Future<void> _getTransferLogs({ bool refresh = false }) async {
+    if (state.tokenInfo.type == enumTokenType.prc10) return _getTransferLogsPRC10(refresh);
+    if (state.tokenInfo.type == enumTokenType.prc20) return _getTransferLogsPRC20(refresh);
+  }
+  Future<void> _getTransferLogsPRC10(bool refresh) async {
+    if (refresh) state.logsPageAll = 1;
+    HttpToolResponse? result = await httpToolServer.getAccountLogsList(
       dataAccount.state.nowAccount?.address??'',
       state.tokenInfo.minUnit,
       page: state.logsPageAll,
       limit: 10
     );
+    if (refresh) state.transferLogsAll.clear();
     if (result == null) return;
-    if (result.data == null || result.data['data'].length < 10) {
+    if (result.data == null || result.data['data'] is! Iterable) {
+      state.logsPageAll = 0;
+      return;
+    } else if (result.data['data'].length < 10) {
       state.logsPageAll = 0;
     } else {
       state.logsPageAll++;
     }
-    if (result.data == null) return;
     for (var res in result.data['data']) {
       var _tx = res['Tx'];
       var _formatMsg = ChainMessageTool.formatAny(res['Msg']);
@@ -121,23 +127,57 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
       state.transferLogsAll.add(_item);
     }
   }
+  Future<void> _getTransferLogsPRC20(bool refresh) async {
+    if (refresh) state.logsPageAll = 1;
+    HttpToolResponse? result = await browserToolServer.getAccountPrc20TokenLogs(
+      dataAccount.state.nowAccount?.address??'',
+      state.tokenInfo.contractAddress,
+      page: state.logsPageAll,
+      limit: 10
+    );
+    if (refresh) state.transferLogsAll.clear();
+    if (result == null) return;
+    if (result.data == null || result.data['errno'] != 200 || result.data['data'] is! Map || result.data['data']['List'] is! Iterable) {
+      state.logsPageAll = 0;
+      return;
+    } else if (result.data['data']['List'].length < 10) {
+      state.logsPageAll = 0;
+    }  else {
+      state.logsPageAll++;
+    }
+    for (var res in result.data['data']['List']) {
+      var _item = TransferLogModel()
+        ..time = DateTime.parse(res['Date'])
+        ..blockHeight = res['Block']
+        ..hash = res['Hex']
+        ..status = res['Status'] == 'success' ? TransferLogStatusEnum.success : TransferLogStatusEnum.fail
+        // 交易数量
+        ..rawLog = {
+          'type': enumTokenType.prc20,
+          'from': res['From'],
+          'to': res['To'],
+          'amount': res['Balance'],
+          'symbol': state.tokenInfo.symbol,
+        };
+      // 获取交易手续费
+      state.transferLogsAll.add(_item);
+    }
+  }
 
   // 转账
   onToSend() async {
-    await Get.toNamed(PlugRoutesNames.walletTokenSend(state.tokenInfo.minUnit));
+    await Get.toNamed(PlugRoutesNames.walletTokenSend(state.tokenInfo.type == enumTokenType.prc10 ? state.tokenInfo.minUnit : state.tokenInfo.contractAddress));
     _refreshData();
   }
   // 收款
   onToReceive() async {
-    await Get.toNamed(PlugRoutesNames.walletTokenReceive(state.tokenInfo.minUnit));
+    await Get.toNamed(PlugRoutesNames.walletTokenReceive(state.tokenInfo.type == enumTokenType.prc10 ? state.tokenInfo.minUnit : state.tokenInfo.contractAddress));
     _refreshData();
   }
 
   // 刷新
   Future<void> onRefresh() async {
-    state.transferLogsAll.clear();
-    state.logsPageAll = 1;
-    await _getTransferLogs();
+    await _getTransferLogs(refresh: true);
     refresh();
   }
   // 加载更多
@@ -148,12 +188,13 @@ class WalletTokenLogsPageController extends GetxController with GetTickerProvide
   onGoToDetail(TransferLogModel item) async {
     dataToolServer.setMemTransferLogItem(item);
     await Get.toNamed(PlugRoutesNames.walletTokenLogsDetail(item.hash));
-    _refreshData();
   }
   // 刷新页面
   _refreshData() {
     if (state.tokenInfo.type == enumTokenType.prc10) {
       _initTokenInfo(state.tokenInfo.minUnit);
+    } else {
+      _initTokenInfo(state.tokenInfo.contractAddress);
     }
   }
 }

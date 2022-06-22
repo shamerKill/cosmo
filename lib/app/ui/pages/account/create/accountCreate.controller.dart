@@ -111,7 +111,7 @@ class AccountCreateController extends GetxController {
     List<String> newMnemonic = WalletTool.createMnemonic();
     AccountModel createdAccount = AccountModel();
     createdAccount..address = _getAccountAddress(newMnemonic)
-      ..nickName = '${Env.envConfig.assets.accountDefaultPre}-create-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
+      ..nickName = '${Env.envConfig.assets.accountDefaultPre}-${'create'.tr}-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
       ..stringifyRaw = WalletTool.encryptMnemonic(newMnemonic, passwordController.text)
       ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1
       ..createTime = DateTime.now()

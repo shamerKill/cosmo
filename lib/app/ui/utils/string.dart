@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:dart_bech32/dart_bech32.dart' as bech32;
+import 'package:get/get.dart';
 import 'package:web3dart/crypto.dart' as crypto;
 
 import 'package:flutter/material.dart';
@@ -76,10 +77,10 @@ class StringTool {
   // 根据节点状态返回文字
   static String getVerifierStatus(VerifierStatusEnum status) {
     switch (status) {
-      case VerifierStatusEnum.running: return '运行中';
-      case VerifierStatusEnum.offLine: return '已离线';
-      case VerifierStatusEnum.jailing: return '监禁中';
-      case VerifierStatusEnum.invalid: return '已失效';
+      case VerifierStatusEnum.running: return 'verifierNodeRunning'.tr;
+      case VerifierStatusEnum.offLine: return 'verifierNodeOffline'.tr;
+      case VerifierStatusEnum.jailing: return 'verifierNodeJailing'.tr;
+      case VerifierStatusEnum.invalid: return 'verifierNodeInvalid'.tr;
     }
   }
   // 创建随机数
@@ -126,10 +127,10 @@ class StringTool {
   /// 检测邮箱
   static bool checkEmail(String email) => RegExp(r"^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$").hasMatch(email);
   /// 账户类型切换
-  static String accountTypeToString (enumAccountType type) => type == enumAccountType.prc10 ? 'PRC10' : 'PRC20'; 
+  static String accountTypeToString (enumAccountType? type) => type == enumAccountType.prc20 ? 'PRC20' : 'PRC10';
   static enumAccountType accountStringToType (String? str) => str == 'PRC20' ? enumAccountType.prc20 : enumAccountType.prc10;
   /// 代币类型切换
-  static String tokenTypeToString (enumTokenType type) => type == enumTokenType.prc10 ? 'PRC10' : 'PRC20'; 
+  static String tokenTypeToString (enumTokenType? type) => type == enumTokenType.prc20 ? 'PRC20' : 'PRC10'; 
   static enumTokenType tokenStringToType (String? str) => str == 'PRC20' ? enumTokenType.prc20 : enumTokenType.prc10;
   // hex转bech32
   static String hexToBech32(String hexAddress) {
@@ -145,5 +146,15 @@ class StringTool {
   // bech32转hex
   static String bech32ToHex(String bech32Address) {
     return '0x' + crypto.bytesToHex(bech32.bech32.fromWords(bech32.bech32.decode(bech32Address, 1023).words));
+  }
+  // 任意地址转bech32
+  static String anyToBech32(String address) {
+    if (checkAddress(address)) return address;
+    return hexToBech32(address);
+  }
+  // 任意地址转hex
+  static String anyToHex(String address) {
+    if (checkHexAddress(address)) return address;
+    return bech32ToHex(address);
   }
 }

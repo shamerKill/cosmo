@@ -135,7 +135,7 @@ class AccountImportPageController extends GetxController {
     await Future.delayed(const Duration(seconds: 2));
     AccountModel createdAccount = AccountModel();
     createdAccount..address = _getAccountAddress(mnemonic)
-      ..nickName = '${Env.envConfig.assets.accountDefaultPre}-import-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
+      ..nickName = '${Env.envConfig.assets.accountDefaultPre}-${'import'.tr}-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
       ..stringifyRaw = WalletTool.encryptMnemonic(mnemonic, passwordController.text)
       ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1
       ..accountType = state.accountType;

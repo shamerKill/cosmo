@@ -141,7 +141,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                   Obx(() => TextButton(
                     onPressed: (state.drawerSelected != '' && state.accountInfo.address != state.drawerSelected) ? () => controller.onChangeAccount(state.drawerSelected) : null,
                     child: Text(
-                      'selectToNowWallet'.tr,
+                      'selectToNowAccount'.tr,
                       style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall, color: (state.drawerSelected != '' && state.accountInfo.address != state.drawerSelected) ? null : appTheme.colors.textGray)
                     ),
                   )),
@@ -152,7 +152,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('管理'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
+                          Text('accountAdmin'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
                           Padding(
                             padding: EdgeInsets.only(left: appTheme.sizes.fontSize * 0.2),
                             child: Icon(const IconData(0xe6da, fontFamily: 'plugIcon'), size: appTheme.sizes.fontSize),
@@ -230,7 +230,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('addWallet'.tr),
+                              Text('addAccount'.tr),
                               Icon(
                                 const IconData(0xe6d6, fontFamily: 'plugIcon'),
                                 color: appTheme.colors.textGray
@@ -244,7 +244,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                 ),
               ),
               Center(
-                child: Text('最多10个账户', style: Get.textTheme.bodyText1),
+                child: Text('maxAccountLength'.tr, style: Get.textTheme.bodyText1),
               ),
             ],
           ),
@@ -335,7 +335,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Obx(() => LAnimationView(randomKey: false, child: Text(state.hideInfo ? '一键显示' : '一键隐藏', style: TextStyle(color: appTheme.colors.hightColor)))),
+                                Obx(() => LAnimationView(randomKey: false, child: Text(state.hideInfo ? 'quickShow' : 'quickHide', style: TextStyle(color: appTheme.colors.hightColor)))),
                                 Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
                                 Obx(() => LAnimationView(randomKey: false, child: Transform.rotate(
                                   angle: math.pi/2 * (state.hideInfo ? 1 : -1),
@@ -431,7 +431,16 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                         Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
                         Expanded(
                           flex: 1,
-                          child: Text(_item.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(_item.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig)),
+                              Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.2)),
+                              Text(
+                                '(' + StringTool.tokenTypeToString(_item.type) + ')', style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall, color: appTheme.colors.primaryColor.withOpacity(0.5))
+                              ),
+                            ],
+                          ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.config.dart';
 import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
@@ -25,6 +26,7 @@ class UserDappSettingPageController extends GetxController {
   UserDappSettingPageState state = UserDappSettingPageState();
 
   DataDappAddressController dataDappAddress = Get.find();
+  DataAccountController dataAccount = Get.find<DataAccountController>();
   DataConfigController dataConfig = Get.find();
 
   @override
@@ -42,25 +44,29 @@ class UserDappSettingPageController extends GetxController {
   onToggleSafeMode(bool? type) async {
     if (state.safeMode == false) {
       bool? result = await LBottomSheet.promptBottomSheet(
-        title: '是否开启安全模式?',
+        title: 'dappSafeModeTip'.tr,
         message: Column(
           children: [
-            Text('开启安全模式下，DAPP将无法重复使用您的授权'.tr),
-            Text('开启安全模式后，每次进入DAPP都需要进行授权'.tr),
+            Text('dappSafeModeDesc_1'.tr),
+            Text('dappSafeModeDesc_2'.tr),
+            Text('dappSafeModeDesc_3'.tr),
           ],
         ),
       );
       if (result != true) return;
       LLoading.showBgLoading();
+      var nowAccount = dataAccount.state.nowAccount;
+      nowAccount?.dappPermissionList.clear();
+      dataAccount.updateAccount(nowAccount);
       await Future.delayed(const Duration(milliseconds: 500));
       state.safeMode = true;
-      LToast.success('安全模式已开启'.tr);
+      LToast.success('SuccessWithSafeModeOpen'.tr);
     } else {
       bool? result = await LBottomSheet.promptBottomSheet(
-        title: '是否关闭安全模式?',
+        title: 'dappCloseSafeModeTip'.tr,
         message: Column(
           children: [
-            Text('关闭安全模式后，DAPP可重复使用您的授权，无需每次进入重复授权'.tr),
+            Text('dappCloseSafeModeDesc_1'.tr),
           ],
         ),
       );
@@ -68,7 +74,7 @@ class UserDappSettingPageController extends GetxController {
       LLoading.showBgLoading();
       await Future.delayed(const Duration(milliseconds: 500));
       state.safeMode = false;
-      LToast.success('安全模式已关闭'.tr);
+      LToast.success('SuccessWithSafeModeClose'.tr);
     }
     dataConfig.upSafeViewType(state.safeMode);
     LLoading.dismiss();
@@ -76,35 +82,34 @@ class UserDappSettingPageController extends GetxController {
   // 清理网络缓存
   onClearNetCache() async {
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '是否清空网络缓存?',
+      title: 'clearNetCacheTip'.tr,
     );
     if (result != true) return;
-    if (state.webviewController == null) return LToast.error('清理失败'.tr);
-    LLoading.showBgLoading();
-    state.webviewController?.clearCache();
-    await WebView.platform.clearCookies();
-    await Future.delayed(const Duration(milliseconds: 1000));
+    if (state.webviewController == null) return LToast.error('ErrorWithClear'.tr);
+    try {
+      LLoading.showBgLoading();
+      state.webviewController?.clearCache();
+      await WebView.platform.clearCookies();
+      await Future.delayed(const Duration(milliseconds: 1000));
+    } catch (_) {
+      LLoading.dismiss();
+      return LToast.error('ErrorWithNoClear'.tr);
+    }
     LLoading.dismiss();
-    LToast.success('缓存清理成功'.tr);
+    LToast.success('SuccessWithClearDapp'.tr);
   }
   // 清理DAPP授权
   onClearDappPermission() async {
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '是否清空DAPP授权?',
+      title: 'clearDappPermissionTip'.tr,
     );
     if (result != true) return;
     LLoading.showBgLoading();
-    for (var dapp in dataDappAddress.state.dappCollectList) {
-      dapp.permissions = [];
-    }
-    for (var dapp in dataDappAddress.state.dappLatelyList) {
-      dapp.permissions = [];
-    }
-    dataDappAddress.state.dappCollectList.refresh();
-    dataDappAddress.state.dappLatelyList.refresh();
-    dataDappAddress.saveData();
+    var nowAccount = dataAccount.state.nowAccount;
+    nowAccount?.dappPermissionList.clear();
+    dataAccount.updateAccount(nowAccount);
     await Future.delayed(const Duration(milliseconds: 1000));
     LLoading.dismiss();
-    LToast.success('DAPP授权清理成功'.tr);
+    LToast.success('SuccessWithClearDappPermission'.tr);
   }
 }

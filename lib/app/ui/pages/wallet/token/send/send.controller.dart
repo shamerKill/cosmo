@@ -8,6 +8,8 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/evm/evmClient.dart';
+import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
@@ -44,16 +46,16 @@ class WalletTokenSendPageController extends GetxController {
 
   @override
   void onReady() async {
-    String? token = Get.parameters['token'];
-    if (dataAccount.state.nowAccount == null || token == null) return Get.back();
+    String? tokenIndent = Get.parameters['token'];
+    if (dataAccount.state.nowAccount == null || tokenIndent == null) return Get.back();
     state.accountInfo = dataAccount.state.nowAccount!;
     for (var _item in state.accountInfo.tokenList) {
-      if (_item.minUnit == token) {
+      if (_item.minUnit == tokenIndent || _item.contractAddress == tokenIndent) {
         state.tokenInfo = _item;
       }
     }
-    if (state.tokenInfo.minUnit != token) {
-      LToast.warning('您未将该资产添加到您的账户。('.tr + token + ')'.tr);
+    if (state.tokenInfo.minUnit != tokenIndent && state.tokenInfo.contractAddress != tokenIndent) {
+      LToast.warning('sendWarningTip'.tr + '(' + tokenIndent + ')');
       return Get.back();
     }
     _checkUriParameters();
@@ -77,7 +79,7 @@ class WalletTokenSendPageController extends GetxController {
   _getInit() async {
     var result = await Future.wait([
       // 账户余额
-      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, state.tokenInfo.minUnit),
+      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, state.tokenInfo.type == enumAccountType.prc10 ? state.tokenInfo.minUnit : state.tokenInfo.contractAddress),
       // 手续费
       httpToolServer.getChainFee(),
     ]);
@@ -100,7 +102,7 @@ class WalletTokenSendPageController extends GetxController {
   // 扫码事件
   onScanQr() async {
     var address = await Get.toNamed(PlugRoutesNames.walletQrScanner, parameters: { 'result': 'true' });
-    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('非Plug Chain合法地址'.tr);
+    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('ErrorWithAddressType'.tr);
     addressController.text = address;
   }
   // 全部划转
@@ -115,29 +117,43 @@ class WalletTokenSendPageController extends GetxController {
   // 确认转账
   onSend() async {
     Get.focusScope?.unfocus();
-    if (addressController.text == '') return LToast.warning('地址输入有误'.tr);
+    if (addressController.text == '') return LToast.warning('ErrorWithAddressInput'.tr);
     var _transferValue = NumberTool.balanceToAmount(volumeController.text);
     var douValue = double.tryParse(_transferValue);
     if (
       douValue == null || douValue == 0.0
-    ) return LToast.warning('数量输入有误'.tr);
+    ) return LToast.warning('ErrorWithVolumeInput'.tr);
     String? password = await LBottomSheet.passwordBottomSheet();
     if (password == null) return;
     LLoading.showLoading();
     var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
     if (mnemonicList == null) {
       LLoading.dismiss();
-      return LToast.warning('密码输入错误'.tr);
+      return LToast.warning('ErrorWithPasswordInput'.tr);
     }
     Get.focusScope?.unfocus();
     state.sendLoading = true;
-    var result = await WalletTool.transfer(
-      mnemonic: mnemonicList,
-      toAddress: addressController.text,
-      volume: NumberTool.balanceToAmount(volumeController.text, scale: state.tokenInfo.scale),
-      gasAll: NumberTool.balanceToAmount(state.fee),
-      denom: state.tokenInfo.minUnit,
-    );
+    HttpToolResponse result;
+    if (state.tokenInfo.type == enumTokenType.prc10) {
+      result = await WalletTool.transfer(
+        mnemonic: mnemonicList,
+        toAddress: addressController.text,
+        volume: NumberTool.balanceToAmount(volumeController.text, scale: state.tokenInfo.scale),
+        gasAll: NumberTool.balanceToAmount(state.fee),
+        denom: state.tokenInfo.minUnit,
+      );
+    } else {
+      result = await EvmClient(mnemonic: mnemonicList).sendAsync(
+        StringTool.anyToHex(state.tokenInfo.contractAddress),
+        EvmClient.toolFormatContractData(
+          'transfer(address,uint256)',
+          [
+            StringTool.anyToHex(addressController.text),
+            EvmClient.toolFormatVolumeToHex(double.tryParse(volumeController.text)??0, scale: state.tokenInfo.scale),
+          ],
+        ),
+      );
+    }
     state.sendLoading = false;
     LLoading.dismiss();
     if (result.status == -10001) return LToast.error('ErrorWithSendCallback'.tr);

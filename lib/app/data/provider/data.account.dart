@@ -72,7 +72,8 @@ class DataAccountController extends GetxController {
     return null;
   }
   // 更新账户处理
-  bool updateAccount(AccountModel _account) {
+  bool updateAccount(AccountModel? _account) {
+    if (_account == null) return false;
     for (var _item in state.accountsList) {
       if (_item.address == _account.address) {
         _item.setData(_account.toJson());

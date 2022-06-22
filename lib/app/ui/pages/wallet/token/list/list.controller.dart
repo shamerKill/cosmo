@@ -102,7 +102,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
         if (res.status == 0) {
           state.allTokenList..clear()..add(res.data['token']);
         } else {
-          LToast.info('未找到代币'.tr);
+          LToast.info('tokenNotFind'.tr);
         }
       }
     ).whenComplete(() => state.fetchLoading = false);
@@ -135,8 +135,8 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
   onToggleToken(TokenModel token) async {
     if (checkTokenIsAdd(token.minUnit)) {
       bool? result = await LBottomSheet.promptBottomSheet(
-        title: '提示'.tr,
-        message: Text('是否移除当前代币:'.tr +  token.symbol + '?'),
+        title: 'tip'.tr,
+        message: Text('deleteTokenTip'.tr +  token.symbol + '?'),
       );
       if (result != true) return;
       var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
@@ -153,15 +153,15 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
   // 我的代币列表移除当前代币
   onLocalRemoveToken(TokenModel token) async {
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '提示'.tr,
-      message: Text('是否移除当前代币:'.tr +  token.symbol + '?'),
+      title: 'tip'.tr,
+      message: Text('deleteTokenTip'.tr +  token.symbol + '?'),
     );
     if (result != true) return;
     var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
     state.accountInfo.tokenList.removeAt(_index);
     accountController.updateAccount(state.accountInfo);
     state._accountInfo.refresh();
-    LToast.success('移除代币成功');
+    LToast.success('SuccessWithDeleteToken'.tr);
   }
   // 我的代币列表排序
   onUserAssetsReorder (int oldIndex, int newIndex) {
@@ -176,8 +176,8 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
   // 一键获取所有资产
   onGetUserAllAssets() async {
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '提示'.tr,
-      message: Text('是否从云端获取所有资产列表?'.tr),
+      title: 'tip'.tr,
+      message: Text('getAssertTip'.tr),
     );
     if (result != true) return;
     state.fetchLoading = true;
@@ -197,8 +197,8 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     if (tokenList20?.data != null) {
       for (var i = 0; i < tokenList20?.data.length; i++) {
         var _item = tokenList20?.data[i];
-        if (!checkTokenIsAdd(_item['Conract'])) {
-          var token = await dataToolServer.getTokenInfo(_item['Conract']);
+        if (!checkTokenIsAdd(_item['Contract'])) {
+          var token = await dataToolServer.getTokenInfo(_item['Contract']);
           state.accountInfo.tokenList.add(token..amount=_item['Num']);
         }
       }

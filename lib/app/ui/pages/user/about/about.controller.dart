@@ -49,10 +49,10 @@ class UserAboutPageController extends GetxController {
   onUpdateVersion() async {
     if (state.hadUpdate == '') return;
     bool? result = await LBottomSheet.promptBottomSheet(
-      title: '更新提示'.tr,
+      title: 'updateTip'.tr,
       message: Column(
         children: [
-          Text('是否前往浏览器下载新版本？'.tr),
+          Text('updateTipDesc'.tr),
         ]
       ),
     );

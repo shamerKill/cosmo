@@ -5,6 +5,7 @@ import 'package:plug/app/data/models/response/base.dart';
 
 _decodeMsg (String source) {
   var _obj = json.decode(source);
+  if (_obj is Iterable) { _obj = _obj.first; }
   return _obj['value']??_obj;
 }
 List<ModelCoin> _decodeCoinList (List<dynamic> amounts) => amounts.map((item) => ModelCoin(
@@ -427,7 +428,7 @@ class ModelMsgEditToken {
     var obj = _decodeMsg(source);
     symbol = obj['symbol'];
     name = obj['name'];
-    maxSupply = int.parse(obj['maxSupply'].toString());
+    maxSupply = int.parse((obj['maxSupply'] ?? obj['max_supply']).toString());
     owner = obj['owner'];
     msgType = obj['@type']??obj['type']??'';
   }
@@ -441,9 +442,9 @@ class ModelMsgBurnToken {
   late final String owner;
   ModelMsgBurnToken(String source) {
     var obj = _decodeMsg(source);
-    symbol = obj['symbol'];
-    amount = int.parse(obj['amount'].toString());
-    owner = obj['owner'];
+    symbol = obj['symbol']??'';
+    amount = int.parse((obj['amount']??0).toString());
+    owner = obj['owner']??'';
     msgType = obj['@type']??obj['type']??'';
   }
 }

@@ -38,6 +38,7 @@ class CheckUpdateApp {
   checkVersion(void Function() callbackFunc) async {
     this.callbackFunc = callbackFunc;
     var result = await httpToolServer.getVersion();
+    // TODO: 获取更新
     return print(result);
     if (result.status == 200) {
       var random = Random(DateTime.now().microsecondsSinceEpoch).nextInt(10000).toString();

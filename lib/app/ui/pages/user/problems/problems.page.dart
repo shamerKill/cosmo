@@ -23,12 +23,12 @@ class UserProblemsPage extends GetView<UserProblemsPageController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            LAppBar.defaultHeaderTextWidget('问题反馈'.tr),
+            LAppBar.defaultHeaderTextWidget('backProblem'.tr),
             LButton(
               radius: true,
               height: appTheme.sizes.basic * 56,
               onPressed: controller.onSubmitProblems,
-              child: Text('提交'.tr),
+              child: Text('submit'.tr),
             ),
           ],
         ),
@@ -39,23 +39,23 @@ class UserProblemsPage extends GetView<UserProblemsPageController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('邮箱'.tr),
+          Text('email'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
-            hintText: '请输入邮箱'.tr,
+            hintText: 'emailInputHint'.tr,
             textController: controller.emailController,
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-          Text('描述'.tr),
+          Text('description'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
-            hintText: '请输入您遇到的问题'.tr,
+            hintText: 'problemInputHint'.tr,
             textController: controller.descController,
             maxLines: 5,
             inputHeight: appTheme.sizes.inputHeight * 3,
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-          Text('上传截图'.tr),
+          Text('updateScreenshot'.tr),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Obx(() => Wrap(
             spacing: appTheme.sizes.paddingSmall,

@@ -40,6 +40,10 @@ class AccountModel extends _StorageBaseAbstract {
   enumAccountType get accountType => _accountType;
   set accountType (enumAccountType value) { _accountType = value; _saveKey(); }
   enumAccountType _accountType = enumAccountType.prc20;
+  /// 账户储存的dapp权限列表
+  List<DappModel> get dappPermissionList => _dappPermissionList;
+  set dappPermissionList (List<DappModel> value) { _dappPermissionList = value; _saveKey(); }
+  List<DappModel> _dappPermissionList = [];
   
 
   AccountModel._(): super();
@@ -56,6 +60,7 @@ class AccountModel extends _StorageBaseAbstract {
     _valueMap['tokenList'] = tokenList;
     _valueMap['verifierList'] = verifierList;
     _valueMap['accountType'] = StringTool.accountTypeToString(accountType);
+    _valueMap['dappPermissionList'] = dappPermissionList;
   }
   @override
   void setData(String sourceStr) {
@@ -68,5 +73,6 @@ class AccountModel extends _StorageBaseAbstract {
     accountType = StringTool.accountStringToType(source['accountType']);
     tokenList = (source['tokenList']??[]).map<TokenModel>((dynamic item) => TokenModel()..setData(item)).toList();
     verifierList = (source['verifierList']??[]).map<UserVerifierModel>((dynamic item) => UserVerifierModel()..setData(item)).toList();
+    dappPermissionList = (source['dappPermissionList']??[]).map<DappModel>((dynamic item) => DappModel()..setData(item)).toList();
   }
 }

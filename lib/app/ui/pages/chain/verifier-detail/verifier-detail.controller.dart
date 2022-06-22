@@ -148,7 +148,7 @@ class ChainVerifierDetailPageController extends GetxController {
   }
   // 赎回收益
   onBackReward() async {
-    var promptType = await LBottomSheet.promptBottomSheet(title: '赎回提示'.tr, message: Text('是否需要赎回全部收益?'.tr));
+    var promptType = await LBottomSheet.promptBottomSheet(title: 'withdrawTipTitle'.tr, message: Text('withdrawTipText_1'.tr));
     if (promptType != true) return;
     var password = await LBottomSheet.passwordBottomSheet();
     // 解压账户
@@ -157,7 +157,7 @@ class ChainVerifierDetailPageController extends GetxController {
     var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
     if (mnemonicList == null) {
       LLoading.dismiss();
-      return LToast.warning('密码输入错误'.tr);
+      return LToast.warning('ErrorWithPasswordInput'.tr);
     }
     var fee = await httpToolServer.getChainFee();
     var result = await WalletTool.withReward(
@@ -167,7 +167,7 @@ class ChainVerifierDetailPageController extends GetxController {
     );
     if (result.status == -10001) return LToast.error('ErrorWithRedeemRewardCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithRedeemRewardTimeout'.tr);
-    if (result.status != 0) return LToast.error('ErrorWithRedeemRewardUnkown'.tr);
+    if (result.status != 0) return LToast.error('ErrorWithRedeemRewardUnKnow'.tr);
     LToast.success('SuccessWithRewardRedeem'.tr);
     LLoading.dismiss();
     onRefresh();
@@ -182,7 +182,6 @@ class ChainVerifierDetailPageController extends GetxController {
   }
   // 刷新加载
   Future<void> onRefresh() async {
-    print(123);
     await _getData();
   }
 }

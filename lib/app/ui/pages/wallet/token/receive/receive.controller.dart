@@ -28,7 +28,7 @@ class WalletTokenReceivePageController extends GetxController {
     state.accountInfo = dataAccount.state.nowAccount!;
     state._accountInfo.refresh();
     for (var _item in state.accountInfo.tokenList) {
-      if (_item.minUnit == token) {
+      if (_item.minUnit == token || _item.contractAddress == token) {
         state.tokenInfo = _item;
       }
     }
@@ -37,7 +37,7 @@ class WalletTokenReceivePageController extends GetxController {
 
   // 分享操作
   onShare() {
-    LToast.warning('暂不支持分享'.tr);
+    LToast.warning('canNotShare'.tr);
   }
   // 复制操作
   onCopy() {

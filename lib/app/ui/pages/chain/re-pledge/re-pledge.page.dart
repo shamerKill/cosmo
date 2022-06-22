@@ -77,23 +77,12 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
               ),
               child: Row(
                 children: [
-                  // Expanded(
-                  //   flex: 1,
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text('年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                  //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                  //       Text(state.verifierInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
-                  //     ],
-                  //   ),
-                  // ),
                   Expanded(
                     flex: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('质押中数量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('pledgingVolume'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged.toString()))))
                       ],
@@ -104,7 +93,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('质押奖励'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('pledgedReward'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.reward.toString()))))
                       ],
@@ -124,11 +113,11 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('转让数量'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('rePledgedVolume'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
-                  hintText: '请输入将要质押的数量'.tr,
+                  hintText: 'rePledgedInputHint'.tr,
                   obscureText: true,
                   suffix: Obx(() => Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack))),
                   onlyNumber: true,
@@ -138,7 +127,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                   child: Obx(() => Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(text: '账户余额'.tr),
+                        TextSpan(text: 'accountBalance'.tr),
                         const TextSpan(text: '  '),
                         TextSpan(
                           text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.baseCoin.amount, scale: state.baseCoin.scale)),
@@ -155,7 +144,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
+                    'fee'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                   )),
                 )
@@ -166,7 +155,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
             width: appTheme.sizes.infinity,
             padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
             color: appTheme.colors.pageBackgroundColorBasic,
-            child: Text('选择质押节点'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+            child: Text('verifierList'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           Expanded(
             flex: 1,
@@ -202,20 +191,6 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                                   Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                                   Row(
                                     children: [
-                                      // Expanded(
-                                      //   child: Column(
-                                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       LAnimationView(
-                                      //         randomKey: false,
-                                      //         child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
-                                      //       ),
-                                      //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                      //       Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -225,7 +200,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                                               child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.minPledgeVolume)), style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
                                             ),
                                             Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                            Text('最小质押'.tr, style: Get.textTheme.bodyText1)
+                                            Text('minVolumeForPledge'.tr, style: Get.textTheme.bodyText1)
                                           ],
                                         ),
                                       ),
@@ -245,7 +220,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                                               ),
                                             ),
                                             Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                            Text('总质押'.tr, style: Get.textTheme.bodyText1)
+                                            Text('pledgedVolumeWithVerifier'.tr, style: Get.textTheme.bodyText1)
                                           ],
                                         ),
                                       ),
@@ -287,7 +262,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                                           ),
                                         ),
                                         child: Center(
-                                          child: Text('查看详情'.tr, style: Get.textTheme.bodyText1),
+                                          child: Text('goToDetail'.tr, style: Get.textTheme.bodyText1),
                                         ),
                                       ),
                                     ),

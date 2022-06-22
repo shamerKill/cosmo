@@ -41,7 +41,7 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
           child:  LButton(
             width: appTheme.sizes.infinity,
             onPressed: Get.back,
-            child: Text('notScreenshotsTipIAmKown'.tr),
+            child: Text('IAmKnown'.tr),
           ),
         ),
       ],
@@ -51,7 +51,7 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('backupMnemonicListTitle'.tr),
+        title: LAppBar.defaultHeaderTextWidget('backupMnemonicList'.tr),
         description: Column(
           children: [
             LDesTipView(text: 'backupMnemonicInfoTip_1'.tr),
@@ -117,8 +117,8 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
         onPressed: state.backupTimeDown == 0 ? controller.backupStep : null,
         child: LAnimationView(child: Text(
           state.backupTimeDown == 0 ?
-          'backupMnemonicSuccess'.tr :
-          '${'backupMnemonicLoading'.tr}(${state.backupTimeDown}s)',
+          'backupMnemonicSure'.tr :
+          '${'backupMnemonicWaiting'.tr}(${state.backupTimeDown}s)',
         )),
       )),
     );

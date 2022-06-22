@@ -73,17 +73,9 @@ class AccountAdminVerifyPageController extends GetxController {
     }
     LLoading.dismiss();
     state.verifyLoading = false;
-    if (state.type == 1) return LToast.error('不支持助记词验证'.tr);
+    if (state.type == 1) return LToast.error('notSupportedMnemonic'.tr);
     // 助记词列表
     if (resultMnemonic == null) return LToast.error('ErrorWithPasswordInput'.tr);
     Get.back<String?>(result: resultMnemonic);
-  }
-
-  // 判断助记词是否可用
-  _checkMnemonic(List<String> mnemonic) {
-    if (mnemonic.length == 12) return true;
-    if (mnemonic.length == 16) return true;
-    if (mnemonic.length == 24) return true;
-    return false;
   }
 }

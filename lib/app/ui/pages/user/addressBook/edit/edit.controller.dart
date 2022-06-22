@@ -48,7 +48,7 @@ class UserAddressBookEditPageController extends GetxController {
 
   // 保存
   onSave() {
-    if (addressController.text == '') return LToast.warning('地址输入有误'.tr);
+    if (addressController.text == '') return LToast.warning('ErrorWithAddressInput'.tr);
     state.addressInfo.name = nameController.text;
     state.addressInfo.remarks = remarksController.text;
     state.addressInfo.address = addressController.text;
@@ -59,14 +59,14 @@ class UserAddressBookEditPageController extends GetxController {
       dataAddress.addAddress(state.addressInfo);
     }
     Get.focusScope?.unfocus();
-    LToast.success('保存成功');
+    LToast.success('SuccessWithSave'.tr);
     Get.back();
   }
   // 删除
   onRemove() async {
     bool? type = await LBottomSheet.promptBottomSheet(
-      title: '删除提示'.tr,
-      message: Text('是否删除当前地址？'.tr),
+      title: 'deleteTip'.tr,
+      message: Text('deleteAddressBookDesc'.tr),
     );
     if (type == true) {
       dataAddress.removeAddress(state.addressInfo);
@@ -76,7 +76,7 @@ class UserAddressBookEditPageController extends GetxController {
   // 扫码
   onScanQr() async {
     var address = await Get.toNamed(PlugRoutesNames.walletQrScanner, parameters: { 'result': 'true' });
-    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('非Plug Chain合法地址'.tr);
+    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('ErrorWithAddressType'.tr);
     addressController.text = address;
   }
 }

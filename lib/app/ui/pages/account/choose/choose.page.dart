@@ -65,12 +65,12 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('createWalletPageTitle'.tr, style: TextStyle(
+                                Text('createAccount'.tr, style: TextStyle(
                                   fontSize: appTheme.sizes.fontSizeBig,
                                   fontWeight: FontWeight.w600,
                                 )),
                                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
-                                Text('createWalletInFirst'.tr, style: TextStyle(
+                                Text('createAccountStart'.tr, style: TextStyle(
                                   fontSize: appTheme.sizes.fontSize,
                                   fontWeight: FontWeight.w400,
                                   color: appTheme.colors.textGray,
@@ -109,12 +109,12 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('importWallet'.tr, style: TextStyle(
+                                Text('importAccount'.tr, style: TextStyle(
                                   fontSize: appTheme.sizes.fontSizeBig,
                                   fontWeight: FontWeight.w600,
                                 )),
                                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
-                                Text('hadWallet'.tr, style: TextStyle(
+                                Text('hadAccount'.tr, style: TextStyle(
                                   fontSize: appTheme.sizes.fontSize,
                                   fontWeight: FontWeight.w400,
                                   color: appTheme.colors.textGray,

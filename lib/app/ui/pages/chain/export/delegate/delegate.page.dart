@@ -47,7 +47,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('验证者列表'.tr, style: TextStyle(color: appTheme.colors.hightColor)),
+                        Text('verifierList'.tr, style: TextStyle(color: appTheme.colors.hightColor)),
                         Padding(padding: EdgeInsets.only(right: appTheme.sizes.basic * 5.0)),
                         Icon(
                           const IconData(0xe60a, fontFamily: 'plugIcon'),
@@ -71,8 +71,8 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('质押中'.tr, style: Get.textTheme.bodyText1),
-                        Text('赎回中'.tr, style: Get.textTheme.bodyText1),
+                        Text('pledgingVolume'.tr, style: Get.textTheme.bodyText1),
+                        Text('withdrawingVolume'.tr, style: Get.textTheme.bodyText1),
                       ],
                     ),
                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
@@ -111,7 +111,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('质押奖励'.tr, style: Get.textTheme.bodyText1),
+                        Text('pledgedReward'.tr, style: Get.textTheme.bodyText1),
                         Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.rewardedAmount, scale: state.tokenInfo.scale))), randomKey: false,)),
                       ],
                     ),
@@ -126,7 +126,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
             top: appTheme.sizes.padding,
             bottom: appTheme.sizes.padding,
           ),
-          child: Text('已质押列表'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
+          child: Text('verifierListByPledged'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
         ),
         Expanded(
           child: LScrollView(
@@ -173,7 +173,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                                       ),
                                     ),
                                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                    Text('我的质押'.tr, style: Get.textTheme.bodyText1)
+                                    Text('myPledge'.tr, style: Get.textTheme.bodyText1)
                                   ],
                                 ),
                               ),
@@ -193,7 +193,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                                       ),
                                     ),
                                     Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                    Text('当前收益'.tr, style: Get.textTheme.bodyText1)
+                                    Text('rewardedVolumeByPledged'.tr, style: Get.textTheme.bodyText1)
                                   ],
                                 ),
                               ),
@@ -215,7 +215,7 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                                   ),
                                 ),
                                 child: Center(
-                                  child: Text('查看详情'.tr, style: Get.textTheme.bodyText1),
+                                  child: Text('goToDetail'.tr, style: Get.textTheme.bodyText1),
                                 ),
                               ),
                             ),

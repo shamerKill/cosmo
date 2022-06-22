@@ -17,7 +17,7 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('网络切换'.tr),
+        title: LAppBar.defaultHeaderTextWidget('networkSwitch'.tr),
       ),
       basicBackgroundColor: true,
       singleScroll: true,
@@ -30,7 +30,7 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
               vertical: appTheme.sizes.padding,
               horizontal: appTheme.sizes.padding,
             ),
-            child: Text('主网'.tr, style: Get.textTheme.bodyText1),
+            child: Text('mainNetwork'.tr, style: Get.textTheme.bodyText1),
           ),
           Obx(() => Column(
             children: [
@@ -61,7 +61,7 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
               vertical: appTheme.sizes.padding,
               horizontal: appTheme.sizes.padding,
             ),
-            child: Text('测试网'.tr, style: Get.textTheme.bodyText1),
+            child: Text('testNetwork'.tr, style: Get.textTheme.bodyText1),
           ),
           Obx(() => Column(
             children: [

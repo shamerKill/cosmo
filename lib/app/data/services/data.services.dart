@@ -15,24 +15,26 @@ class _DataToolServer {
   }
   _initMemTokenList() {
     for (TokenModel item in dataAccount.state.nowAccount?.tokenList??[]) {
-      _memTokenList.add(item);
+      _memTokenList.add(
+        TokenModel()..setData(item.toJson())
+      );
     }
   }
   /// 获取代币信息
   Future<TokenModel> getTokenInfo(String _ident) async {
     for (TokenModel item in _memTokenList) {
       if (item.minUnit == _ident || item.contractAddress == _ident) {
-        return item;
+        return TokenModel()..setData(item.toJson());
       }
     }
     if (StringTool.checkAddress(_ident)) {
       var _token = (await httpToolServer.searchToken20Info(_ident)).data?['token'];
-      _memTokenList.add(_token);
-      return _token;
+      _memTokenList.add(TokenModel()..setData(_token.toJson()));
+      return TokenModel()..setData(_token.toJson());
     } else {
       var _token = (await httpToolServer.searchToken10Info(_ident)).data?['token'];
-      _memTokenList.add(_token);
-      return _token;
+      _memTokenList.add(TokenModel()..setData(_token.toJson()));
+      return TokenModel()..setData(_token.toJson());
     }
   }
 

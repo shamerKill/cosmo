@@ -38,22 +38,68 @@ class EvmClient {
     }
   }
   // 合约函数处理
+  static Uint8List toolFormatContractDataPackage(
+    String contractName,
+    List<String> abiList,
+    List<dynamic> argsList,
+  ) {
+    return ContractFunction(
+      contractName,
+      abiList.map((item) => FunctionParameter('', parseAbiType(item))).toList()
+    ).encodeCall(argsList.map((item) {
+      return _tryFormatData(item);
+    }).toList());
+  }
+  static dynamic _tryFormatData(dynamic input) {
+    if (input is List) {
+      return input.map((item) => _tryFormatData(item)).toList();
+    }
+    try {
+      return EthereumAddress.fromHex(input);
+    } catch (e) {
+      try {
+        return BigInt.parse(input);
+      } catch (e) {
+        try {
+          return BigInt.from(input);
+        } catch (e) {
+          return input;
+        }
+      }
+    }
+  }
+  // 合约函数处理
   static Uint8List toolFormatContractData(
     String callFunc, // 函数方法
     List? callArgs, // 函数参数
   ) {
     List _callArgs = [callFunc];
-    _callArgs.addAll(callArgs??[]);
+    callArgs?.forEach((element) {
+      if (element is List) {
+        var isAddressList = false;
+        if (element[0].startsWith('0x')) isAddressList = true;
+        if (isAddressList) {
+          _callArgs.add('64');
+        } else {
+          _callArgs.add('32');
+        }
+        _callArgs.add(element.length.toString());
+        for (var item in element) { _callArgs.add(item); }
+      } else {
+        _callArgs.add(element);
+      }
+    });
     List<int> dataArr = [];
     for (int i = 0; i < _callArgs.length; i++) {
       List<int> _item;
-      var n = int.tryParse(_callArgs[i]);
-      if (_callArgs[i].startsWith('0x')) {
-        _item = List.from(hexToBytes(_callArgs[i]));
+      var _memArg = _callArgs[i];
+      var n = int.tryParse(_memArg);
+      if (_memArg.startsWith('0x')) {
+        _item = List.from(hexToBytes(_memArg));
       } else if (n != null) {
         _item = List.from(intToBytes(BigInt.from(n)));
       } else {
-        _item = List.from(keccakUtf8(_callArgs[i]));
+        _item = List.from(keccakUtf8(_memArg));
       }
       if (i > 0) {
         while (_item.length < 32) {

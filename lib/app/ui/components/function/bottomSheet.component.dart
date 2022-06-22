@@ -99,7 +99,7 @@ class LBottomSheet {
                       LButton(
                         width: appTheme.sizes.infinity,
                         height: appTheme.sizes.buttonHeight * 0.9,
-                        child: Text('确认'.tr),
+                        child: Text('sure'.tr),
                         onPressed: () => Get.back(result: passwordController.text),
                       ),
                     ],
@@ -133,7 +133,7 @@ class LBottomSheet {
                   child: LButton(
                     contrast: true,
                     height: appTheme.sizes.buttonHeight * 0.8,
-                    child: Text('取消'.tr),
+                    child: Text('cancel'.tr),
                     onPressed: () => Get.back(result: false),
                   ),
                 ),
@@ -141,7 +141,7 @@ class LBottomSheet {
                 Expanded(
                   child: LButton(
                     height: appTheme.sizes.buttonHeight * 0.8,
-                    child: Text('确定'.tr),
+                    child: Text('sure'.tr),
                     onPressed: () => Get.back(result: true),
                   ),
                 ),

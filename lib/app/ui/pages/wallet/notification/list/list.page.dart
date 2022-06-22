@@ -6,8 +6,6 @@ import 'package:plug/app/ui/components/layout/scroll.component.dart';
 import 'package:plug/app/ui/components/view/animation.component.dart';
 import 'package:plug/app/ui/pages/wallet/notification/list/list.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
-import 'package:plug/app/ui/utils/string.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class WalletNotificationListPage extends GetView<WalletNotificationListPageController> {
   const WalletNotificationListPage({Key? key}) : super(key: key);
@@ -23,14 +21,14 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
           randomKey: false, 
           child: TextButton(
             onPressed: state.isAllRead ? null : controller.onAllRead,
-            child: Text('全部已读', style: state.isAllRead ? Get.textTheme.bodyText1 : null,),
+            child: Text('allRead', style: state.isAllRead ? Get.textTheme.bodyText1 : null,),
           ),
         )),
       ),
       titleBar: LAppBar.defaultTitle(
         title: Padding(
           padding: EdgeInsets.only(bottom: appTheme.sizes.padding),
-          child: LAppBar.defaultHeaderTextWidget('通知中心'.tr),
+          child: LAppBar.defaultHeaderTextWidget('messagesCenter'.tr),
         ),
       ),
       basicBackgroundColor: true,

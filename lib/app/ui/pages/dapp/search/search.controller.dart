@@ -54,7 +54,7 @@ class DappSearchPageController extends GetxController {
       Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode(data))});
       searchController.text = '';
     } else {
-      LToast.warning('网址错误'.tr);
+      LToast.warning('ErrorWithInputSite'.tr);
     }
   }
   // 点击历史搜索

@@ -61,8 +61,8 @@ class WalletQrScannerPageController extends GetxController {
     }
     if (status.isRestricted) {
       var type = await LBottomSheet.promptBottomSheet(
-        title: '您拒绝了授权应用照相机权限'.tr,
-        message: Text('请前往设置开启权限?'.tr),
+        title: 'rejectCameraPermission'.tr,
+        message: Text('openUserSetting'.tr),
       );
       if (type == true) openAppSettings();
       state.isApplied = true;
@@ -88,8 +88,8 @@ class WalletQrScannerPageController extends GetxController {
       if (StringTool.checkNetAddress(result) && !state.isGetResultBack) {
         // 网络
         var type = await LBottomSheet.promptBottomSheet(
-          title: '提示'.tr,
-          message: Text('扫描到网址，是否前往？'.tr),
+          title: 'tip'.tr,
+          message: Text('scanWithWebsite'.tr),
         );
         if (type == true) {
           return Get.offAndToNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode(result)) });
@@ -100,15 +100,15 @@ class WalletQrScannerPageController extends GetxController {
         if (_checkResultJson(data)) {
           return;
         } else {
-          await LToast.warning('非官方二维码'.tr);
+          await LToast.warning('noWalletLink'.tr);
           state.warningQrCode.add(result);
           return startScan();
         }
       } else if (StringTool.checkChainAddress(result) && !state.isGetResultBack) {
         // 账户地址
         var type = await LBottomSheet.promptBottomSheet(
-          title: '提示'.tr,
-          message: Text('扫描到Plug Chain地址，是否复制到粘贴板？'.tr),
+          title: 'tip'.tr,
+          message: Text('scanWithCopyAddress'.tr),
         );
         if (type == true) {
           onCopyAddress(result);
@@ -126,7 +126,7 @@ class WalletQrScannerPageController extends GetxController {
       if (status.isDenied || status.isPermanentlyDenied) {
         status = await Permission.photos.request();
       }
-      if (!(status.isGranted || status.isLimited)) return LToast.warning('您拒绝了相册权限'.tr);
+      if (!(status.isGranted || status.isLimited)) return LToast.warning('ErrorWithPermissionCamera'.tr);
       state.isGetPermission = false;
       scanController?.stopCamera();
       final ImagePicker _picker = ImagePicker();

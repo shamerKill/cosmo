@@ -76,23 +76,12 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
               ),
               child: Row(
                 children: [
-                  // Expanded(
-                  //   flex: 1,
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text('预计年化收益率'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                  //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                  //       Text(state.veriferInfo.yieldRate + '%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold))
-                  //     ],
-                  //   ),
-                  // ),
                   Expanded(
                     flex: 1,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('节点质押总量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('pledgedVolumeWithVerifier'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged.toString()))))
                       ],
@@ -103,7 +92,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('最小质押量'.tr, style: TextStyle(color: appTheme.colors.textGray)),
+                        Text('minVolumeForPledge'.tr, style: TextStyle(color: appTheme.colors.textGray)),
                         Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
                         Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.minPledgeVolume.toString()))))
                       ],
@@ -123,11 +112,11 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('质押数量'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('pledgeQuantity'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
-                  hintText: '请输入将要质押的数量'.tr,
+                  hintText: 'pledgeInputHint'.tr,
                   obscureText: true,
                   suffix: Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack)),
                   onlyNumber: true,
@@ -137,7 +126,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                   child: Obx(() => Text.rich(
                     TextSpan(
                       children: [
-                        TextSpan(text: '可质押数量'.tr),
+                        TextSpan(text: 'canUseVolume'.tr),
                         const TextSpan(text: '  '),
                         TextSpan(
                           text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.baseCoin.amount, scale: state.baseCoin.scale)),
@@ -154,7 +143,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    '手续费'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
+                    'fee'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
                     style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
                   )),
                 ),
@@ -166,9 +155,9 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                   ),
                   child: Column(
                     children: [
-                      Obx(() => Text('委托 ${state.baseCoin.symbol} 给验证节点可以随时赎回，但赎回委托需要等待 21 天。'.tr, style: Get.textTheme.bodyText1)),
+                      Obx(() => Text('pledgeTipList_1_1'.tr + ' ${state.baseCoin.symbol} ' + 'pledgeTipList_1_2'.tr, style: Get.textTheme.bodyText1)),
                       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      Text('如果验证节点行为不端将可能会被罚没部分委托代币，比如验证节点双重签名、经常性离线。为了规避风险，请认真选择合格的验证节点。'.tr, style: Get.textTheme.bodyText1),
+                      Text('pledgeTipList_2'.tr, style: Get.textTheme.bodyText1),
                     ],
                   ),
                 ),
@@ -178,7 +167,7 @@ class ChainPledgeTransferPage extends GetView<ChainPledgeTransferPageController>
                     onPressed: controller.onPledgeListener,
                     width: appTheme.sizes.infinity,
                     disabled: state.pledgeLoading,
-                    child: Text('质押'.tr),
+                    child: Text('pledge'.tr),
                   )),
                 ),
               ],

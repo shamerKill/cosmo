@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.dapp-address.dart';
+import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 
 class DappCollectionPageState {
@@ -22,9 +22,13 @@ class DappCollectionPageController extends GetxController {
     }
     dataDappAddress.saveData();
   }
-  onDeleteItem(int index) {
+  onDeleteItem(int index) async {
+    var res = await LBottomSheet.promptBottomSheet(
+      title: 'deleteCollectionTip'.tr,
+    );
+    if (res != true) return;
     dataDappAddress.state.dappCollectList.removeAt(index);
     dataDappAddress.saveData();
-    LToast.success('删除成功'.tr);
+    LToast.success('SuccessWithDelete'.tr);
   }
 }

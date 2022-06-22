@@ -20,7 +20,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('转账'.tr),
+        title: LAppBar.defaultHeaderTextWidget('transfer'.tr),
         description: Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
       ),
       singleScroll: true,
@@ -30,18 +30,18 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('接收地址', style: TextStyle(color: appTheme.colors.textBlackBig)),
+              Text('receiveAddress'.tr, style: TextStyle(color: appTheme.colors.textBlackBig)),
               InkWell(
                 onTap: controller.onGoToAddressList,
                 child: Padding(
                   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('地址簿', style: TextStyle(color: appTheme.colors.primaryColor)),
+                  child: Text('addressesBook'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
                 ),
               ),
             ],
           ),
           Obx(() => LInput(
-            hintText: '扫描或粘贴钱包地址'.tr,
+            hintText: 'addAccountAddress'.tr,
             textController: controller.addressController,
             disabled: state.sendLoading,
             suffixIcon: IconButton(
@@ -51,10 +51,10 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
             ),
           )),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
-          Text('转账数量', style: TextStyle(color: appTheme.colors.textBlackBig)),
+          Text('transferVolume', style: TextStyle(color: appTheme.colors.textBlackBig)),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Obx(() => LInput(
-            hintText: '转账数量'.tr,
+            hintText: 'transferVolume'.tr,
             textController: controller.volumeController,
             onlyNumber: true,
             disabled: state.sendLoading,
@@ -76,7 +76,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
                 child: Obx(() => Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(text: '可转数量'.tr),
+                      TextSpan(text: 'canUseTransferVolume'.tr),
                       const TextSpan(text: '\r\r'),
                       TextSpan(
                         text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)) + '\r' + state.tokenInfo.symbol,
@@ -90,7 +90,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
                 onTap: state.sendLoading ? null : controller.onAllSend,
                 child: Padding(
                   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('全部划转'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
+                  child: Text('allSend'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
                 ),
               ),
             ],
@@ -99,12 +99,12 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
             padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
             child: DottedLine(dashColor: appTheme.colors.borderColor,),
           ),
-          Obx(() => Text('手续费'.tr + '\r\r${NumberTool.formatNumberStr(state.fee)}\r${state.tokenInfo.symbol}')),
+          Obx(() => Text('fee'.tr + '\r\r${NumberTool.formatNumberStr(state.fee)}\r${controller.dataCoins.state.baseCoin.symbol}')),
         ],
       ),
       footer: Obx(() => LButton(
         onPressed: state.sendLoading ? null : controller.onSend,
-        child: Text('确认转账'.tr),
+        child: Text('send'.tr),
       )),
     );
   }

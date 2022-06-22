@@ -16,15 +16,15 @@ class DappExhibitionPageState {
   final RxList<DappRemoteTypeModel> remoteDappType = RxList<DappRemoteTypeModel>();
   // 远程Dapp列表
   final RxList<List<DappModel>> remoteDappList = RxList<List<DappModel>>();
-  // 远程dapp列表tabbar
-  final Rx<TabController?> _reomoteDappTab = Rx<TabController?>(null);
-  TabController? get reomoteDappTab => _reomoteDappTab.value;
-  set reomoteDappTab (TabController? value) => _reomoteDappTab.value = value;
-  // 搜藏/最近tabbar
+  // 远程dapp列表tabBar
+  final Rx<TabController?> _remoteDappTab = Rx<TabController?>(null);
+  TabController? get remoteDappTab => _remoteDappTab.value;
+  set remoteDappTab (TabController? value) => _remoteDappTab.value = value;
+  // 搜藏/最近tabBar
   final Rx<TabController?> _localDappTab = Rx<TabController?>(null);
   TabController? get localDappTab => _localDappTab.value;
   set localDappTab (TabController? value) => _localDappTab.value = value;
-  // 搜藏/最近tabbar index
+  // 搜藏/最近tabBar index
   final Rx<int> _localDappTabIndex = 0.obs;
   int get localDappTabIndex => _localDappTabIndex.value;
   set localDappTabIndex (int value) => _localDappTabIndex.value = value;
@@ -52,7 +52,7 @@ class DappExhibitionPageController extends GetxController with GetTickerProvider
     // 获取远程dapp列表
     state.topBanner = result.data?['value']??'';
   }
-  // 初始化local tabbar
+  // 初始化local tabBar
   _initTabBar() async {
     state.localDappTab = TabController(
       vsync: this,
@@ -88,7 +88,7 @@ class DappExhibitionPageController extends GetxController with GetTickerProvider
             ..title = _i['name']
       ]);
     }
-    state.reomoteDappTab = TabController(
+    state.remoteDappTab = TabController(
       vsync: this,
       length: state.remoteDappType.length
     );

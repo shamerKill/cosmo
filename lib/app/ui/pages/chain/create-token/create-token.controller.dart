@@ -43,7 +43,7 @@ class ChainCreateTokenPageController extends GetxController {
   // 精度列表
   static List<String> scaleList = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
   // 可增发列表
-  static List<String> mintableList = ['是'.tr, '否'.tr];
+  static List<String> mintableList = ['yes'.tr, 'no'.tr];
   
   
   DataCoinsController dataCoins = Get.find();
@@ -124,17 +124,17 @@ class ChainCreateTokenPageController extends GetxController {
   }
   // 开始发行
   createToken() async {
-    if (!RegExp(r'^[az][a-z0-9]{2,7}$').hasMatch(coinSymbolTextController.text)) return LToast.warning('简称仅可使用小写字母和数字'.tr);
+    if (!RegExp(r'^[az][a-z0-9]{2,7}$').hasMatch(coinSymbolTextController.text)) return LToast.warning('tokenCreateSymbolTip'.tr);
     if (
       coinNameTextController.text == '' || !RegExp(r'^[az][a-z0-9]{2 ,7}$').hasMatch(coinSymbolTextController.text) || coinTotalVolumeTextController.text == '' || state.createFee == '' || state.isLoading
-    ) return LToast.warning('信息有误'.tr);
+    ) return LToast.warning('ErrorWithInputData'.tr);
     var _pass = await LBottomSheet.passwordBottomSheet();
     if (_pass == null) return;
     LLoading.showLoading();
     var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
     if (mnemonicList == null) {
       LLoading.dismiss();
-      return LToast.warning('密码输入错误'.tr);
+      return LToast.warning('ErrorWithPasswordInput'.tr);
     }
     Get.focusScope?.unfocus();
     state.isLoading = true;

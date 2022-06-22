@@ -43,25 +43,25 @@ class LBottomNavigationState {
     _BottomItem(
       icon: const Icon(IconData(0xe811, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe813, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_wallet',
+      label: 'tabBarLabel_wallet',
       route: PlugRoutesNames.walletHome,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe824, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe824, fontFamily: 'plugIcon')),
-      label: '核心',
+      label: 'tabBarLabel_core',
       route: PlugRoutesNames.chainExport,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe818, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe819, fontFamily: 'plugIcon')),
-      label: '浏览',
+      label: 'tabBarLabel_extension',
       route: PlugRoutesNames.dappExhibition,
     ),
     _BottomItem(
       icon: const Icon(IconData(0xe81c, fontFamily: 'plugIcon')),
       activeIcon: const Icon(IconData(0xe81d, fontFamily: 'plugIcon')),
-      label: 'tabbarLabel_my',
+      label: 'tabBarLabel_setting',
       route: PlugRoutesNames.userMy,
     ),
   ];

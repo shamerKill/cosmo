@@ -58,7 +58,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('版本日志'.tr),
+                      Text('versionUpdateLogs'.tr),
                       Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
                     ],
                   ),
@@ -75,9 +75,9 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('版本更新'.tr),
+                        Text('versionUpdate'.tr),
                         if (state.hadUpdate == '')
-                          Text('已是最新版本'.tr, style: Get.textTheme.bodyText1)
+                          Text('versionIsLasted'.tr, style: Get.textTheme.bodyText1)
                         else 
                           Row(
                             children: [
@@ -117,7 +117,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('网站'.tr),
+                      Text('website'.tr),
                       Obx(() => SelectableText(
                         state.webSite,
                         style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
@@ -137,7 +137,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Twitter'.tr),
+                          Text('twitter'.tr),
                           Obx(() => SelectableText(
                             state.twitterSite,
                             style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),

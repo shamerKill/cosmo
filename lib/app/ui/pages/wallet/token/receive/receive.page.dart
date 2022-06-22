@@ -18,7 +18,7 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('收款'.tr),
+        title: LAppBar.defaultHeaderTextWidget('receive'.tr),
         description: Padding(
           padding: EdgeInsets.only(top: appTheme.sizes.padding),
           child: Container(
@@ -30,7 +30,7 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
             ),
             child: Center(
               child: Text(
-                '该地址仅支持 Plug Chain 资产，请勿转入其他公链资产'.tr,
+                'receiveTip'.tr,
                 style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
                 textAlign: TextAlign.center,
               ),
@@ -51,7 +51,7 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: appTheme.sizes.padding * 2),
-                child: Obx(() => Text('扫二维码，转入${state.tokenInfo.symbol}', style: Get.textTheme.bodyText1)),
+                child: Obx(() => Text('receiveScanTip'.tr + state.tokenInfo.symbol, style: Get.textTheme.bodyText1)),
               ),
               Obx(() => LQrCodeView(address: state.accountInfo.address, hideTitle: true)),
               Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
@@ -70,7 +70,7 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
                           children: [
                             Icon(const IconData(0xe6df, fontFamily: 'plugIcon'), color: appTheme.colors.textGrayBig, size: appTheme.sizes.inputIconSize),
                             Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
-                            Text('分享'.tr, style: TextStyle(letterSpacing: 2, color: appTheme.colors.textGrayBig)),
+                            Text('share'.tr, style: TextStyle(letterSpacing: 2, color: appTheme.colors.textGrayBig)),
                           ],
                         ),
                       ),
@@ -86,7 +86,7 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
                           children: [
                             Icon(const IconData(0xe6fc, fontFamily: 'plugIcon'), color: appTheme.colors.primaryColor, size: appTheme.sizes.inputIconSize),
                             Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
-                            Text('复制'.tr, style: TextStyle(letterSpacing: 2, color: appTheme.colors.primaryColor)),
+                            Text('copy'.tr, style: TextStyle(letterSpacing: 2, color: appTheme.colors.primaryColor)),
                           ],
                         ),
                       ),

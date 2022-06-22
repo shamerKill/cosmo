@@ -6,7 +6,6 @@ import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/pages/dapp/collection/collection.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
-import 'package:plug/app/ui/utils/string.dart';
 
 class DappCollectionPage extends GetView<DappCollectionPageController> {
   const DappCollectionPage({Key? key}) : super(key: key);
@@ -22,8 +21,8 @@ class DappCollectionPage extends GetView<DappCollectionPageController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            LAppBar.defaultHeaderTextWidget('我的收藏'.tr),
-            Text('删除/排序'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
+            LAppBar.defaultHeaderTextWidget('myCollections'.tr),
+            Text('deleteOrCollection'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
           ],
         ),
         description: Padding(

@@ -103,13 +103,13 @@ class NewWallet extends Wallet {
   }
 
   ECPrivateKey _getPvKey (CipherParameters params) {
-    PrivateKeyParameter pvparams;
+    PrivateKeyParameter prevParams;
     if (params is ParametersWithRandom) {
-      pvparams = params.parameters as PrivateKeyParameter<PrivateKey>;
+      prevParams = params.parameters as PrivateKeyParameter<PrivateKey>;
     } else {
-      pvparams = params as PrivateKeyParameter<PrivateKey>;
+      prevParams = params as PrivateKeyParameter<PrivateKey>;
     }
-    return pvparams.key as ECPrivateKey;
+    return prevParams.key as ECPrivateKey;
   }
 
   ECPrivateKey get _ecPrivateKey {

@@ -1,5 +1,4 @@
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
@@ -26,7 +25,7 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
         backgroundColor: appTheme.colors.pageBackgroundColor,
         title: SizedBox(
           width: appTheme.sizes.infinity,
-          child: LAppBar.defaultHeaderTextWidget('管理账户'.tr),
+          child: LAppBar.defaultHeaderTextWidget('accountAdmin'.tr),
         ),
       ),
       basicBackgroundColor: true,
@@ -82,11 +81,11 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Text('备份账户'.tr),
+                    child: Text('backupAccount'.tr),
                   ),
                   Obx(() => Row(
                     children: [
-                      if (state.accountInfo.createTime != null) Text('未备份'.tr, style: Get.textTheme.bodyText1),
+                      if (state.accountInfo.createTime != null) Text('noBackup'.tr, style: Get.textTheme.bodyText1),
                       Icon(
                         const IconData(0xe658, fontFamily: 'plugIcon'),
                         size: appTheme.sizes.fontSizeSmall,
@@ -100,7 +99,7 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall, horizontal: appTheme.sizes.padding),
-            child: Text('备份账户以便将来恢复账户下的多币种资产'.tr, style: Get.textTheme.bodyText1),
+            child: Text('backupDesc'.tr, style: Get.textTheme.bodyText1),
           ),
           InkWell(
             onTap: controller.onEditPassword,
@@ -113,7 +112,7 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Text('修改密码'.tr),
+                    child: Text('editPassword'.tr),
                   ),
                   Icon(
                     const IconData(0xe658, fontFamily: 'plugIcon'),
@@ -136,7 +135,7 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: Text('修改账户名称'.tr),
+                    child: Text('editAccountName'.tr),
                   ),
                   Icon(
                     const IconData(0xe658, fontFamily: 'plugIcon'),
@@ -156,7 +155,7 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                 color: appTheme.colors.pageBackgroundColor,
               ),
               child: Center(
-                child: Text('移除'.tr, style: TextStyle(color: appTheme.colors.errorColor, fontSize: appTheme.sizes.fontSizeBig)),
+                child: Text('delete'.tr, style: TextStyle(color: appTheme.colors.errorColor, fontSize: appTheme.sizes.fontSizeBig)),
               ),
             ),
           ),
