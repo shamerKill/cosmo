@@ -14,7 +14,15 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
-      headerBar: Get.key.currentState?.canPop() == true ? LAppBar.defaultHeader() : null,
+      headerBar: LAppBar.defaultHeader(
+        actions: InkWell(
+          onTap: controller.onChangeLanguage,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall),
+            child: Text('language'.tr, style: TextStyle(color: appTheme.colors.primaryColor),),
+          ),
+        )
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

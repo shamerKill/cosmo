@@ -13,4 +13,7 @@ class AccountChoosePageController extends GetxController {
   importWallet() {
     Get.toNamed(PlugRoutesNames.accountImport);
   }
+  onChangeLanguage() {
+    Get.toNamed(PlugRoutesNames.userLanguage);
+  }
 }

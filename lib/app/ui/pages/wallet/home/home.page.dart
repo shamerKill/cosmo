@@ -335,7 +335,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Obx(() => LAnimationView(randomKey: false, child: Text(state.hideInfo ? 'quickShow' : 'quickHide', style: TextStyle(color: appTheme.colors.hightColor)))),
+                                Obx(() => LAnimationView(randomKey: false, child: Text(state.hideInfo ? 'quickShow'.tr : 'quickHide'.tr, style: TextStyle(color: appTheme.colors.hightColor)))),
                                 Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
                                 Obx(() => LAnimationView(randomKey: false, child: Transform.rotate(
                                   angle: math.pi/2 * (state.hideInfo ? 1 : -1),

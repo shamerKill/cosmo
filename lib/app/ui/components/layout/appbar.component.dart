@@ -93,9 +93,4 @@ class LAppBar {
       ),
     );
   }
-  // static Widget defaultDescriptionList () {
-  //   return Row(
-
-  //   ),
-  // }
 }

@@ -40,7 +40,6 @@ class UserLanguagePageController extends GetxController {
     Get.updateLocale(language);
     plugTranslation.nowLocale.value = language;
     appConfig.upLocaleType(language);
-    Get.forceAppUpdate();
     state.nowLanguage = language.toLanguageTag();
     await Future.delayed(const Duration(milliseconds: 100));
     LLoading.dismiss();

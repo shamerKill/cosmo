@@ -33,12 +33,12 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                 indicatorColor: appTheme.colors.primaryColor,
                 tabs: [
                   SizedBox(
-                    width: appTheme.sizes.basic * 80,
+                    width: appTheme.sizes.basic * 150,
                     height: appTheme.sizes.basic * 60,
                     child: Center(child: Text('pledge'.tr)),
                   ),
                   SizedBox(
-                    width: appTheme.sizes.basic * 80,
+                    width: appTheme.sizes.basic * 150,
                     height: appTheme.sizes.basic * 60,
                     child: Center(child: Text('proposal'.tr)),
                   ),

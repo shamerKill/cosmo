@@ -24,6 +24,8 @@ class _PlugTranslation extends Translations {
   Map<String, Map<String, String>> get keys => {
     'en-US': enUS,
     'zh-CN': zhHans,
+    'en_US': enUS,
+    'zh_CN': zhHans,
   };
 }
 

@@ -25,6 +25,7 @@ class PlugRoot extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(plugTranslation.nowLocale.value);
     return ScreenUtilInit(
         // 统一设计尺寸
         designSize: const Size(750, 1334),
