@@ -310,6 +310,7 @@
 	"verifierNodeOffline": "Offline",
 	"verifierNodeJailing": "jailing",
 	"verifierNodeInvalid": "Invalid",
+	"exitAppToast": "click again to exit",
 
 	"SuccessWithImport": "Import successfully",
 	"SuccessWithCopy": "Copy successfully",

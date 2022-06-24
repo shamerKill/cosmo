@@ -310,6 +310,7 @@
 	"verifierNodeOffline": "已离线",
 	"verifierNodeJailing": "监禁中",
 	"verifierNodeInvalid": "已失效",
+	"exitAppToast": "再次点击退出",
 
 	"SuccessWithImport": "导入成功",
 	"SuccessWithCopy": "复制成功",
