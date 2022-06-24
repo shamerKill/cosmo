@@ -171,6 +171,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                       padding: EdgeInsets.only(top: appTheme.sizes.padding),
                       child: InkWell(
                         onTap: () => controller.onDrawerSelect(_item.address),
+                        onLongPress: () => controller.onCopyAddress(address: _item.address),
                         child: LAnimationView(
                           randomKey: false,
                           child: Container(

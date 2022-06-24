@@ -44,7 +44,9 @@ class AccountBackupShowPageController extends GetxController {
   @override
   onClose() {
     backTimeTimer?.cancel();
-    FlutterScreenshotSwitcher.enableScreenshots();
+    try {
+      FlutterScreenshotSwitcher.enableScreenshots();
+    } catch (_) {}
     super.onClose();
   }
 
@@ -70,7 +72,11 @@ class AccountBackupShowPageController extends GetxController {
       horizontalPadding: true,
       child: state.screenShotView[0]
     );
-    if (Platform.isAndroid) FlutterScreenshotSwitcher.disableScreenshots();
+    if (Platform.isAndroid) {
+      try {
+        FlutterScreenshotSwitcher.disableScreenshots();
+      } catch (_) {}
+    }
     _startTimer();
   }
 }

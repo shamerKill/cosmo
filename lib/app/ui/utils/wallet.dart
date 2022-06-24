@@ -25,7 +25,6 @@ import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/utils/evm/evmWallet.dart';
 import 'package:plug/app/ui/utils/http.dart';
-import 'package:plug/app/ui/utils/number.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:plug/protobuf/chain/token/tx.pb.dart' as tokenTx;
 import 'package:plug/protobuf/chain/liquidity/v1beta1/tx.pb.dart' as liquidityTx;
@@ -197,7 +196,12 @@ class WalletTool {
     return compute.future;
   }
   // 创建账户助记词
-  static List<String> createMnemonic () => alan.Bip39.generateMnemonic();
+  static List<String> createMnemonic() {
+    var list = alan.Bip39.generateMnemonic();
+    var setList = list.toSet();
+    if (setList.length != list.length) return createMnemonic();
+    return list;
+  }
   // 解压助记词
   static alan.Wallet walletForMnemonic (List<String> mnemonic) => alan.Wallet.derive(mnemonic, _networkInfo);
   static NewWallet walletForMnemonicPrc20(List<String> mnemonic) {

@@ -215,7 +215,7 @@ class UserMyPage extends GetView<UserMyPageController> {
             ),
           ),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
-          Text('guide', style: Get.textTheme.bodyText1),
+          Text('guide'.tr, style: Get.textTheme.bodyText1),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Container(
             decoration: BoxDecoration(

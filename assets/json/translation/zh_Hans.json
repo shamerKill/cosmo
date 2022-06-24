@@ -50,6 +50,8 @@
 	"tabBarLabel_extension": "浏览",
 	"tabBarLabel_setting": "设置",
 
+	"accountPassword": "账户密码",
+	"passwordForget": "忘记密码？",
 	"editPassword": "修改密码",
 	"inputPassword": "输入密码",
 	"inputPasswordAgain": "再次输入密码",
@@ -199,6 +201,7 @@
 	"transferVolume": "转账数量",
 	"canUseTransferVolume": "可转数量",
 	"allSend": "全部划转",
+	"forgetPasswordTip": "请移除后重新导入账户",
 
 	"transferTo": "转账至",
 	"transferIn": "转入",
@@ -309,6 +312,7 @@
 
 	"SuccessWithImport": "导入成功",
 	"SuccessWithCopy": "复制成功",
+	"SuccessWithCopyAddress": "地址复制成功",
 	"SuccessEdit": "修改成功",
 	"SuccessWithCreate": "创建成功",
 	"SuccessWithRedeem": "赎回成功",

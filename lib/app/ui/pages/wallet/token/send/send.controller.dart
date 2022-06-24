@@ -79,7 +79,7 @@ class WalletTokenSendPageController extends GetxController {
   _getInit() async {
     var result = await Future.wait([
       // 账户余额
-      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, state.tokenInfo.type == enumAccountType.prc10 ? state.tokenInfo.minUnit : state.tokenInfo.contractAddress),
+      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, state.tokenInfo.type == enumTokenType.prc10 ? state.tokenInfo.minUnit : state.tokenInfo.contractAddress),
       // 手续费
       httpToolServer.getChainFee(),
     ]);
@@ -155,6 +155,7 @@ class WalletTokenSendPageController extends GetxController {
       );
     }
     state.sendLoading = false;
+    _getInit();
     LLoading.dismiss();
     if (result.status == -10001) return LToast.error('ErrorWithSendCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithSendTimeout'.tr);

@@ -49,7 +49,7 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
           ),
           LButton(
             width: appTheme.sizes.infinity,
-            child: Text('backupTipAtNowSure'.tr),
+            child: Text('backupTipAtNow'.tr),
             onPressed: controller.backupNow,
           ),
           Padding(

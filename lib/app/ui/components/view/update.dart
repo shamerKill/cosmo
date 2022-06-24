@@ -11,7 +11,7 @@ import 'package:open_file/open_file.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';

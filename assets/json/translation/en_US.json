@@ -39,7 +39,7 @@
 	"balance": "balance",
 	"tip": "tip",
 	"added": "added",
-	"success": "sucess",
+	"success": "success",
 	"fail": "fail",
 	"waiting": "wait",
 	"copy": "copy",
@@ -50,6 +50,8 @@
 	"tabBarLabel_extension": "browse",
 	"tabBarLabel_setting": "setting",
 
+	"accountPassword": "Account Password",
+	"passwordForget": "Forget？",
 	"editPassword": "Modifying the password",
 	"inputPassword": "input the password",
 	"inputPasswordAgain": "input the password again",
@@ -199,6 +201,7 @@
 	"transferVolume": "Transfer quantity",
 	"canUseTransferVolume": "The quantity which can be transferred",
 	"allSend": "Send all",
+	"forgetPasswordTip": "Please remove and re import the account",
 
 	"transferTo": "transfer to",
 	"transferIn": "transfer in",
@@ -309,6 +312,7 @@
 
 	"SuccessWithImport": "Import successfully",
 	"SuccessWithCopy": "Copy successfully",
+	"SuccessWithCopyAddress": "Copy address successfully",
 	"SuccessEdit": "Modify successfully",
 	"SuccessWithCreate": "Create successfully",
 	"SuccessWithRedeem": "Redeem successfully",

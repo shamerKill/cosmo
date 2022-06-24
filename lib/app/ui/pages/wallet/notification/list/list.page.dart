@@ -18,10 +18,10 @@ class WalletNotificationListPage extends GetView<WalletNotificationListPageContr
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(
         actions: Obx(() => LAnimationView(
-          randomKey: false, 
+          randomKey: false,
           child: TextButton(
             onPressed: state.isAllRead ? null : controller.onAllRead,
-            child: Text('allRead', style: state.isAllRead ? Get.textTheme.bodyText1 : null,),
+            child: Text('allRead'.tr, style: state.isAllRead ? Get.textTheme.bodyText1 : null,),
           ),
         )),
       ),

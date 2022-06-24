@@ -15,7 +15,7 @@ class LQrCodeView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!hideTitle) Text('walletAddress'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
+          if (!hideTitle) Text('address'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
           Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
           Center(
             child: QrImage(

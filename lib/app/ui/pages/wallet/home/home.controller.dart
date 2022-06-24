@@ -71,7 +71,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   BasicHomePageState state = BasicHomePageState();
 
   late Animation<double> _infoAnimation;
-  late AnimationController _infoAnimationController;
+  late AnimationController? _infoAnimationController;
   bool close = false;
 
   Timer? _timer;
@@ -87,7 +87,8 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   @override
   onClose() {
     _timer?.cancel();
-    _infoAnimationController.dispose();
+    _infoAnimationController?.dispose();
+    _infoAnimationController = null;
     close = true;
   }
 
@@ -169,8 +170,8 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     Get.toNamed(PlugRoutesNames.walletQrScanner);
   }
   // 复制地址
-  onCopyAddress() {
-    FlutterClipboard.copy(state.accountInfo.address).then(( value ) => LToast.success('SuccessWithCopy'.tr));
+  onCopyAddress({ String? address }) {
+    FlutterClipboard.copy(address ?? state.accountInfo.address).then(( value ) => LToast.success('SuccessWithCopyAddress'.tr));
   }
   // 显示二维码
   onShowScan() async {
@@ -188,7 +189,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _infoAnimation = Tween(begin: 0.0, end: 100.0).animate(_infoAnimationController)
+    _infoAnimation = Tween(begin: 0.0, end: 100.0).animate(_infoAnimationController!)
       ..addListener(() {
         if (state.hideInfo) {
           state.infoBoxHeightScale = 100.0 - _infoAnimation.value;
@@ -199,6 +200,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   }
   // 一键隐藏切换
   onInfoHide({bool? type}) {
+    if (_infoAnimationController == null) _initAnimationController();
     if (_infoAnimation.value != 0.0 && _infoAnimation.value != 100.0) return;
     if (type == null) {
       state._hideInfo.toggle();
@@ -207,7 +209,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       state.hideInfo = type;
     }
     dataAppConfig.upHomeHide(state.hideInfo);
-    _infoAnimationController.forward(from: 0.0);
+    _infoAnimationController?.forward(from: 0.0);
   }
   // 添加代币
   onAddToken() async {

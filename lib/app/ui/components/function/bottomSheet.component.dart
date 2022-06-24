@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/provider/data.account.dart';
+import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/function/input.component.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class LBottomSheet {
@@ -50,6 +53,7 @@ class LBottomSheet {
   }
   static Future<String?> passwordBottomSheet() {
     TextEditingController passwordController = TextEditingController();
+
     bool _visiblePassword = false;
     return baseBottomSheet<String>(
       showClose: false,
@@ -65,7 +69,7 @@ class LBottomSheet {
                     alignment: Alignment.center,
                     children: [
                       Text(
-                        'walletPassword'.tr,
+                        'accountPassword'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)
                       ),
@@ -93,7 +97,9 @@ class LBottomSheet {
                         passOnPress: () { setBottomSheetState(() {_visiblePassword =!_visiblePassword;}); },
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          LToast.info('forgetPasswordTip'.tr);
+                        },
                         child: Text('passwordForget'.tr, style: Get.textTheme.bodyText1?.copyWith(fontSize: appTheme.sizes.fontSize)),
                       ),
                       LButton(

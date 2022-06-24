@@ -17,7 +17,7 @@ import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:web3dart/crypto.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_pro/webview_flutter.dart';
 
 // 所有权限列表
 List<String> _permissionListAll = [

@@ -20,7 +20,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
-        title: LAppBar.defaultHeaderTextWidget('transfer'.tr),
+        title: LAppBar.defaultHeaderTextWidget('send'.tr),
         description: Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
       ),
       singleScroll: true,
@@ -51,7 +51,7 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
             ),
           )),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
-          Text('transferVolume', style: TextStyle(color: appTheme.colors.textBlackBig)),
+          Text('transferVolume'.tr, style: TextStyle(color: appTheme.colors.textBlackBig)),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Obx(() => LInput(
             hintText: 'transferVolume'.tr,

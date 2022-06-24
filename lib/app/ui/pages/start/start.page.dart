@@ -28,7 +28,7 @@ class StartPage extends GetView<StartPageController> {
               opacity: state.bgOpacity,
               child: const Image(
                 fit: BoxFit.cover,
-                image: AssetImage('assets/images/start_bg.png'),
+                image: AssetImage('assets/images/start_bg.jpg'),
               ),
             )),
           ),

@@ -137,6 +137,7 @@ class AccountAdminPageController extends GetxController {
     if (_doType == 'exitPassword') await Get.toNamed(PlugRoutesNames.accountAdminEditPassword);
     dataAccountController.state.memMnemonic = null;
     dataAccountController.state.memAddress = null;
+    // 移除账户
     if (_doType == 'remove' && dataAccountController.removeAccount(state.accountInfo)) {
       Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
     }

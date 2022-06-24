@@ -6,7 +6,7 @@ import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_webview_pro/webview_flutter.dart';
 
 class UserDappSettingPageState {
   // 是否开启安全模式
