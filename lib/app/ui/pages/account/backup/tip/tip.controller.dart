@@ -22,6 +22,6 @@ class AccountBackupTipPageController extends GetxController {
     dataAccountController.addAccount(dataAccountController.state.memAccount!);
     dataAccountController.state.memAccount = null;
     dataAccountController.state.memMnemonic = null;
-    Get.toNamed(PlugRoutesNames.walletHome);
+    Get.offAndToNamed(PlugRoutesNames.walletHome);
   }
 }

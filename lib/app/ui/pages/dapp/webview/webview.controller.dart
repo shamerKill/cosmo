@@ -16,6 +16,7 @@ import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:flutter_webview_pro/webview_flutter.dart';
 
@@ -322,7 +323,27 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
   }
 
 
-  // webview添加方法综合入口
+  // webview添加功能方法入口
+  Set<JavascriptChannel> addWebviewFunctionSet () {
+    return <JavascriptChannel>{
+      JavascriptChannel(
+        name: _formatJsName('uriToLink'),
+        onMessageReceived: (JavascriptMessage message) async {
+          try {
+            final Uri _url = Uri.parse(message.message);
+            if (await canLaunchUrl(_url)) {
+              await launchUrl(_url);
+            } else {
+              _webviewGetError('reject link');
+            }
+          } catch (e) {
+            _webviewGetError(e);
+          }
+        }
+      ),
+    };
+  }
+  // webview添加wallet方法综合入口
   JavascriptChannel webviewFunction () => JavascriptChannel(
     name: _formatJsName('walletFunction'), // _cosmoWalletFunction
     onMessageReceived: (JavascriptMessage message) {

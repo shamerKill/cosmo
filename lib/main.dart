@@ -19,8 +19,7 @@ void main() async {
 }
 
 class PlugRoot extends StatelessWidget {
-  const PlugRoot({Key? key, this.initRoute}) : super(key: key);
-  final String? initRoute;
+  const PlugRoot({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -31,7 +30,7 @@ class PlugRoot extends StatelessWidget {
         builder: () => GetMaterialApp(
           // GetX
           theme: appTheme.theme,
-          initialRoute: initRoute ?? PlugRoutesNames.start,
+          initialRoute: PlugRoutesNames.start,
           getPages: PlugPages.routes,
           builder: EasyLoading.init(),
           defaultTransition: Transition.native,

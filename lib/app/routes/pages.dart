@@ -192,6 +192,11 @@ class PlugPages {
       page: () => const DappWebviewPage(),
       binding: DappWebviewPageBinding(),
     ),
+    GetPage(
+      name: PlugRoutesNames.dappWebviewRoute(':link'),
+      page: () => const DappWebviewPage(),
+      binding: DappWebviewPageBinding(),
+    ),
     /// 社区-收藏
     GetPage(
       name: PlugRoutesNames.dappCollection,

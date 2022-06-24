@@ -202,6 +202,7 @@
 	"canUseTransferVolume": "可转数量",
 	"allSend": "全部划转",
 	"forgetPasswordTip": "请移除后重新导入账户",
+	"accountRepeatTip": "当前账户已存在，是否进行覆盖导入？",
 
 	"transferTo": "转账至",
 	"transferIn": "转入",

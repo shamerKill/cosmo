@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/routes/routes.dart';
+import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/utils/verify.dart';
@@ -133,16 +135,26 @@ class AccountImportPageController extends GetxController {
     state._importLoading.toggle();
     LLoading.showBgLoading();
     await Future.delayed(const Duration(seconds: 2));
+    try {
+      FocusScope.of(Get.context!).unfocus();
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+    } catch (_) {}
     AccountModel createdAccount = AccountModel();
     createdAccount..address = _getAccountAddress(mnemonic)
       ..nickName = '${Env.envConfig.assets.accountDefaultPre}-${'import'.tr}-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
       ..stringifyRaw = WalletTool.encryptMnemonic(mnemonic, passwordController.text)
       ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1
       ..accountType = state.accountType;
+    if (dataAccountController.checkAccountIsHad(createdAccount)) {
+      LLoading.dismiss();
+      var res = await LBottomSheet.promptBottomSheet(title: 'accountRepeatTip'.tr);
+      if (res == false) return state._importLoading.toggle();
+    }
+    LLoading.showBgLoading();
     dataAccountController.addAccount(createdAccount);
     state._importLoading.toggle();
-    LLoading.dismiss();
     LToast.success('SuccessWithImport'.tr);
+    LLoading.dismiss();
     Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
   }
 

@@ -13,6 +13,7 @@ import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/utils/global_init.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -79,6 +80,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
   @override
   onReady() {
     super.onReady();
+    _checkDeepLink();
     _hideInit();
     initAccountStorage();
     _initAnimationController();
@@ -90,6 +92,16 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     _infoAnimationController?.dispose();
     _infoAnimationController = null;
     close = true;
+  }
+
+  // 判断是否有深度链接
+  _checkDeepLink() async {
+    String? _link = UtilGlobalInit.getDeepLink;
+    if (_link != null) {
+      UtilGlobalInit.getDeepLink = null;
+      await Future.delayed(const Duration(microseconds: 500));
+      Get.toNamed(_link);
+    }
   }
 
   // 初始化显示隐藏

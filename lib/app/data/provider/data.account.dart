@@ -42,9 +42,24 @@ class DataAccountController extends GetxController {
 
   // 添加账户
   List<AccountModel> addAccount(AccountModel account) {
+    if (checkAccountIsHad(account)) {
+      for (int i = 0; i< state.accountsList.length; i++) {
+        var item = state.accountsList[i];
+        if (item.address == account.address && account.accountType == item.accountType) {
+          state.accountsList.removeAt(i);
+          break;
+        }
+      }
+    }
     state.accountsList.add(account);
     saveAccounts();
     return state.accountsList;
+  }
+  bool checkAccountIsHad(AccountModel account) {
+    for (var item in state.accountsList) {
+      if (item.address == account.address && account.accountType == item.accountType) return true;
+    }
+    return false;
   }
   // 储存账户
   saveAccounts() {
