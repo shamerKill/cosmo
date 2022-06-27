@@ -126,7 +126,7 @@ class AccountCreateController extends GetxController {
   String _getAccountAddress(List<String> mnemonic) {
     // 创建20账户
     if (state.accountType == enumAccountType.prc20) {
-      return WalletTool.walletForMnemonicPrc20(mnemonic).hexAddress;
+      return WalletTool.walletForMnemonicPrc20(mnemonic).bech32Address;
     } else {
       // 创建10账户
       return WalletTool.walletForMnemonic(mnemonic).bech32Address;
