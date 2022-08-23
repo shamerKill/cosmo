@@ -66,7 +66,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
             ),
             Obx(() => LAnimationView(
               randomKey: false,
-              child: state.showType == 0 ? Container() : Text('tapDeleteFunction'.tr, style: Get.textTheme.bodyText1),
+              child: state.showType == 0 ? Container() : Text('sortDeleteFunction'.tr, style: Get.textTheme.bodyText1),
             )),
           ],
         ),
@@ -77,7 +77,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
             child: state.showType == 0 ? LInput(
               textController: controller.searchTextController,
               onSubmitted: controller.onSearch,
-              hintText: 'searchTokenHint',
+              hintText: 'searchTokenHint'.tr,
               textInputAction: TextInputAction.search,
               prefixIcon: Icon(Icons.search, color: appTheme.colors.textGray),
             ) : SizedBox(
@@ -96,6 +96,7 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
         controller: controller.tabBarController,
         children: [
           Obx(() => LScrollView(
+            key: state.tokenListKey,
             refreshController: controller.remoteListRefreshController,
             onLoading: state.allTokenPage == 0 ? null : controller.getTokenRemoteList,
             child: Column(

@@ -1,5 +1,9 @@
 part of './env.dart';
 
+const firstApiDomain = '47.108.78.19';
+const firstRpcApi = '$firstApiDomain:3333';
+const firstWebApi = '$firstApiDomain:9999';
+
 /// 资源配置
 abstract class _AssetsConfig {
   /// 节点默认头像前缀
@@ -22,6 +26,8 @@ abstract class _ChainInfo {
 abstract class _UrlInfo {
   /// 后台接口地址
   late String backEndSite;
+  /// 浏览器后台接口地址
+  late String browserEndSite;
   /// 链26657
   late String chainToolRpcUrl;
   /// 链1317

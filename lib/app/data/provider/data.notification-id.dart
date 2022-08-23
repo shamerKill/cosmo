@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:plug/app/data/models/interface/interface.dart';
 
 class DataNotificationIdState {
-  String get baseCoinName => 'NOTIFICATIONID';
+  String get baseCoinName => 'NOTIFICATION_ID';
   // 已阅读过的消息记录
   RxList<String> notificationIdList = RxList();
 }
@@ -36,6 +35,6 @@ class DataNotificationIdController extends GetxController {
       for (var item in listData) {
         if (item is String) state.notificationIdList.add(item);
       }
-    } catch (e) {}
+    } catch (_) {}
   }
 }

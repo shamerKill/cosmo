@@ -7,15 +7,13 @@ class LKeepAliveWrapper extends StatefulWidget {
   const LKeepAliveWrapper({Key? key, required this.child, required this.alive}) : super(key: key);
 
   @override
-  _LKeepAliveWrapperState createState() => _LKeepAliveWrapperState(alive: alive);
+  _LKeepAliveWrapperState createState() => _LKeepAliveWrapperState();
 }
 
 class _LKeepAliveWrapperState extends State<LKeepAliveWrapper> with AutomaticKeepAliveClientMixin {
-  _LKeepAliveWrapperState({
-    required this.alive,
-  });
+  bool get alive => widget.alive;
+  _LKeepAliveWrapperState();
 
-  final bool alive;
   @override
   Widget build(BuildContext context) {
     super.build(context);

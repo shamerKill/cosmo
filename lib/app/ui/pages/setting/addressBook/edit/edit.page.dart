@@ -4,7 +4,7 @@ import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/addressBook/edit/edit.controller.dart';
+import 'package:plug/app/ui/pages/setting/addressBook/edit/edit.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class UserAddressBookEditPage extends GetView<UserAddressBookEditPageController> {

@@ -36,6 +36,11 @@ class WalletTokenListPageState {
   final Rx<bool> _fetchLoading = false.obs;
   bool get fetchLoading => _fetchLoading.value;
   set fetchLoading (bool value) => _fetchLoading.value = value;
+
+  // 代币列表key标识符
+  final Rx<Key> _tokenListKey = const Key('token_list').obs;
+  Key get tokenListKey => _tokenListKey.value;
+  set tokenListKey (Key value) => _tokenListKey.value = value;
 }
 
 class WalletTokenListPageController extends GetxController with GetTickerProviderStateMixin {
@@ -51,6 +56,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
 
   WalletTokenListPageState state = WalletTokenListPageState();
   DataAccountController accountController = Get.find();
+
 
   @override
   onInit() {
@@ -114,10 +120,15 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     state.fetchLoading = true;
     return httpToolApp.getChainTokensList(state.allTokenPage, limit: 10)
       .then((res) {
-        if (res.status != 0) return state.allTokenPage = 0;
+        if (res.status != 0) {
+          state.allTokenPage = 0;
+          remoteListRefreshController = RefreshController();
+          return;
+        }
         state.allTokenPage++;
         if (res.data.length < 10) {
           state.allTokenPage = 0;
+          remoteListRefreshController = RefreshController();
         }
         return res.data.forEach((_item) => state.allTokenList.add(_item));
       })

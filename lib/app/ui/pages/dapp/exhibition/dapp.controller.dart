@@ -6,6 +6,8 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class DappExhibitionPageState {
   // banner图
@@ -96,7 +98,9 @@ class DappExhibitionPageController extends GetxController with GetTickerProvider
 
 
   // 前往扫码
-  onGoToQrScan() {}
+  onGoToQrScan() async {
+    await Get.toNamed(PlugRoutesNames.walletQrScanner);
+  }
   // 前往搜索页面
   onGoToSearch() {
     Get.toNamed(PlugRoutesNames.dappSearch);

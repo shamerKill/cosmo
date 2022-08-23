@@ -20,6 +20,8 @@ class _UrlInfoTest implements _UrlInfo {
   @override
   String backEndSite = 'https://wallet.plugchain.network';
   @override
+  String browserEndSite = 'https://www.plugchain.network';
+  @override
   String chainToolRpcUrl = 'https://api.plugchain.network/rawrpc';
   @override
   String chainInfoRpcUrl = 'https://api.plugchain.network/rawapi';

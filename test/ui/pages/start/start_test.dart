@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:plug/app/routes/routes.dart';
 import 'package:plug/main.dart';
 
 void main() {

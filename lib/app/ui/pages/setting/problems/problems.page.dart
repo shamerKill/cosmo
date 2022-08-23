@@ -6,7 +6,7 @@ import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/function/input.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/problems/problems.controller.dart';
+import 'package:plug/app/ui/pages/setting/problems/problems.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class UserProblemsPage extends GetView<UserProblemsPageController> {

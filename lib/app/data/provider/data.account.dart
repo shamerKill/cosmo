@@ -131,6 +131,6 @@ class DataAccountController extends GetxController {
     try {
       List<dynamic> listData = json.decode(data);
       state.accountsList.addAll(listData.map((e) => AccountModel()..setData(e)));
-    } catch (e) {}
+    } catch (_) {}
   }
 }

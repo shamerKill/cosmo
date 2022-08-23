@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/network/network.controller.dart';
+import 'package:plug/app/ui/pages/setting/network/network.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class UserNetworkPage extends GetView<UserNetworkPageController> {

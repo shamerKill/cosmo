@@ -12,7 +12,6 @@ class DappCollectionPage extends GetView<DappCollectionPageController> {
 
   @override
   Widget build(BuildContext context) {
-    DappCollectionPageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),

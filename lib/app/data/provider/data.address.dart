@@ -5,7 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 
 class DataAddressState {
-  String get baseCoinName => 'ADDRESSLISTNAME';
+  String get baseCoinName => 'ADDRESS_LIST_NAME';
   // 地址簿
   RxList<AddressModel> addressList = RxList();
 }
@@ -48,6 +48,6 @@ class DataAddressController extends GetxController {
     try {
       List<dynamic> listData = json.decode(data);
       state.addressList.addAll(listData.map((e) => AddressModel()..setData(e)));
-    } catch (e) {}
+    } catch (_) {}
   }
 }

@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:get/state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
-import 'package:plug/app/data/services/net.services.dart';
 
 class DataDappAddressState {
-  String get dappAddressName => 'DAPPADDRESSLIST';
+  String get dappAddressName => 'DAPP_ADDRESS_LIST';
   // 收藏的dapp
   RxList<DappModel> dappCollectList = RxList();
   // 最近的dapp
@@ -50,8 +49,6 @@ class DataDappAddressController extends GetxController {
           state.dappLatelyList.add(DappModel()..setData(item));
         }
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (_) {}
   }
 }

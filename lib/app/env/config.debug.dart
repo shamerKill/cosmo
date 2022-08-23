@@ -2,7 +2,7 @@ part of './env.dart';
 
 class _AssetsConfigDebug implements _AssetsConfig {
   @override
-  String verifierAvatarUrl = 'https://api.plugchain.network/static';
+  String verifierAvatarUrl = 'http://$firstRpcApi/static';
   @override
   String accountDefaultPre = 'cosmo';
 }
@@ -18,13 +18,15 @@ class _ChainInfoDebug implements _ChainInfo {
 
 class _UrlInfoDebug implements _UrlInfo {
   @override
-  String backEndSite = 'https://wallet.plugchain.network';
+  String backEndSite = 'http://$firstWebApi';
   @override
-  String chainToolRpcUrl = 'https://api.plugchain.network/rawrpc';
+  String browserEndSite = 'https://www.plugchain.network';
   @override
-  String chainInfoRpcUrl = 'https://api.plugchain.network/rawapi';
+  String chainToolRpcUrl = 'http://$firstRpcApi/rawrpc';
   @override
-  String chainMoreRpcUrl = 'https://wallet.plugchain.network/web_rpc';
+  String chainInfoRpcUrl = 'http://$firstRpcApi/rawapi';
   @override
-  String chainPvmRpcUrl = 'https://wallet.plugchain.network/ethraw/';
+  String chainMoreRpcUrl = 'http://$firstRpcApi/web_rpc';
+  @override
+  String chainPvmRpcUrl = 'http://$firstRpcApi/ethraw/';
 }

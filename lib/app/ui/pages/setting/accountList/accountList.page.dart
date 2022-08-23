@@ -4,7 +4,7 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/components/view/animation.component.dart';
-import 'package:plug/app/ui/pages/user/accountList/accountList.controller.dart';
+import 'package:plug/app/ui/pages/setting/accountList/accountList.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/string.dart';
 

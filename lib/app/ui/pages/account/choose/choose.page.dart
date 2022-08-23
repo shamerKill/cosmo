@@ -10,7 +10,6 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
 
   @override
   Widget build(BuildContext context) {
-    AccountChoosePageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),

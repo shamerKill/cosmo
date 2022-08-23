@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/dappSetting/dappSetting.controller.dart';
+import 'package:plug/app/ui/pages/setting/dappSetting/dappSetting.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:flutter_webview_pro/webview_flutter.dart';
 

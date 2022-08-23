@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class LViewImage extends GetView<LViewImageController> {
@@ -21,7 +22,9 @@ class LViewImage extends GetView<LViewImageController> {
   @override
   Widget build(BuildContext context) {
 
-    if (url == null || url == '') {
+    if (url == null || url == '' || (
+      Env.envConfig.type == EnvType.debug && RegExp('plugchain.network').hasMatch(url??'')
+    )) {
       return Container(
         width: width,
         height: height,
@@ -32,39 +35,51 @@ class LViewImage extends GetView<LViewImageController> {
         ),
       );
     }
-    return CachedNetworkImage(
-      width: width,
-      height: height,
-      imageUrl: url!,
-      imageBuilder: (context, imageProvider) => Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
-          image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover
+    try {
+      return CachedNetworkImage(
+        width: width,
+        height: height,
+        imageUrl: url!,
+        imageBuilder: (context, imageProvider) => Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+            image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover
+            ),
           ),
         ),
-      ),
-      placeholder: (context, url) => Container(
+        placeholder: (context, url) => Container(
+          width: width,
+          height: height,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: appTheme.colors.borderColor,
+            borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+          ),
+        ),
+        errorWidget: (context, url, error) => Container(
+          width: width,
+          height: height,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: appTheme.colors.borderColor,
+            borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+          ),
+        ),
+      );
+    } catch (_) {
+      return Container(
         width: width,
         height: height,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          color: appTheme.colors.borderColor,
+          color: bgColor??appTheme.colors.transparent,
           borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
         ),
-      ),
-      errorWidget: (context, url, error) => Container(
-        width: width,
-        height: height,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          color: appTheme.colors.borderColor,
-          borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
-        ),
-      ),
-    );
+      );
+    }
   }
 }
 

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:plug/app/ui/pages/user/about/about.controller.dart';
+import 'package:plug/app/ui/pages/setting/about/about.controller.dart';
 
 class UserAboutPageBinding implements Bindings {
   @override

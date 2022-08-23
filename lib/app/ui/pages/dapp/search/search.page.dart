@@ -12,7 +12,6 @@ class DappSearchPage extends GetView<DappSearchPageController> {
 
   @override
   Widget build(BuildContext context) {
-    DappSearchPageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),

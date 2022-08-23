@@ -12,7 +12,6 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
 
   @override
   Widget build(BuildContext context) {
-    AccountBackupTipPageState state = controller.state;
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),

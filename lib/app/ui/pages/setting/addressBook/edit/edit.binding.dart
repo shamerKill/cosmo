@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:plug/app/ui/pages/user/addressBook/edit/edit.controller.dart';
+import 'package:plug/app/ui/pages/setting/addressBook/edit/edit.controller.dart';
 
 class UserAddressBookEditPageBinding implements Bindings {
   @override

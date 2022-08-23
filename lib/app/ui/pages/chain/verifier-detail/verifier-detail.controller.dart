@@ -89,7 +89,7 @@ class ChainVerifierDetailPageController extends GetxController {
         state.verifierInfo.reward = '0';
         for (var _item in _res0) {
           if (_item['denom'] == dataCoins.state.baseCoin.minUnit) {
-            state.verifierInfo.reward = _item['amount'];
+            state.verifierInfo.reward = _item['amount'].split('.')[0];
             break;
           }
         }

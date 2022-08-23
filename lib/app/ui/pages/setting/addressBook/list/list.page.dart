@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/addressBook/list/list.controller.dart';
+import 'package:plug/app/ui/pages/setting/addressBook/list/list.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class UserAddressBookListPage extends GetView<UserAddressBookListPageController> {

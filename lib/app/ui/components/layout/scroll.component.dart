@@ -11,15 +11,19 @@ class LScrollView extends GetView<_ScrollViewController>  {
     this.children,
     this.onLoading,
     this.onRefresh,
+    this.disLoading,
     this.headerBackgroundColor,
+    this.reKey,
   }): super(key: key);
 
   final Future<void> Function()? onLoading;
+  final bool? disLoading;
   final Future<void> Function()? onRefresh;
   final List<Widget>? children;
   final Widget? child;
   final Color? headerBackgroundColor;
   final RefreshController refreshController;
+  final Key? reKey;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,7 @@ class LScrollView extends GetView<_ScrollViewController>  {
     controller.setRefresh(onRefresh);
 
     return SmartRefresher(
+      key: reKey,
       controller: refreshController,
       enablePullUp: onLoading != null,
       enablePullDown: onRefresh != null,
@@ -78,22 +83,27 @@ class LScrollView extends GetView<_ScrollViewController>  {
   }
 }
 
+class ScrollFunc {
+  Future<void> Function()? onLoading;
+  Future<void> Function()? onRefresh;
+}
+
 class _ScrollViewController extends GetxController {
   _ScrollViewController();
-  Future<void> Function()? _onLoading;
-  Future<void> Function()? _onRefresh;
+  ScrollFunc scrollFunc = ScrollFunc();
   Rx<bool> isRefreshing = false.obs;
 
-  setLoading(Future<void> Function()? _inputOnLoading) => _onLoading = _inputOnLoading;
-  setRefresh(Future<void> Function()? _inputOnRefresh) => _onRefresh = _inputOnRefresh;
+  setLoading(Future<void> Function()? _inputOnLoading) => scrollFunc.onLoading = _inputOnLoading;
+  setRefresh(Future<void> Function()? _inputOnRefresh) => scrollFunc.onRefresh = _inputOnRefresh;
 
-  void onRefresh(RefreshController _refreshController) async{
-    if (_onRefresh != null) await _onRefresh!();
+  void onRefresh(RefreshController _refreshController) async {
+    if (scrollFunc.onRefresh != null) await scrollFunc.onRefresh!();
     _refreshController.refreshCompleted();
   }
 
-  void onLoading(RefreshController _refreshController) async{
-    if (_onLoading != null) await _onLoading!();
+  void onLoading(RefreshController _refreshController) async {
+    if (scrollFunc.onLoading != null) await scrollFunc.onLoading!();
     _refreshController.loadComplete();
   }
+
 }

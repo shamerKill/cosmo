@@ -53,6 +53,8 @@ class UserMyPageController extends GetxController {
   onGoToDappSetting() => Get.toNamed(PlugRoutesNames.userDappSetting);
   // 切换指纹验证
   onToggleTouch(bool? type) async {
+    LToast.info('functionalNoHandle'.tr);
+    return;
     if (type == true) {
       try {
         var userRes = await auth.authenticate(

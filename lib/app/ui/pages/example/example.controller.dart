@@ -30,11 +30,6 @@ class ExamplePageController extends GetxController {
 
   ExamplePageController();
 
-  @override
-  onInit() {
-    super.onInit();
-  }
-
   setTitle() {
     if (state._title.value == 'resetPasswordPageTitle') {
       state._title.value = 'settingPageTitle';

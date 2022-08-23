@@ -119,7 +119,7 @@ class CheckUpdateApp {
     if (!(await _checkPermissions())) return exit(0);
     if (_loading) return;
     _loading = true;
-    if (setModalLoadingSheetState != null) this.setModalLoadingSheetState!(true);
+    if (setModalLoadingSheetState != null) setModalLoadingSheetState!(true);
     // var directory = 'await AndroidPathProvider.downloadsPath';
     var directory = await getTemporaryDirectory();
     Dio dio = Dio();

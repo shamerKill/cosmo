@@ -550,7 +550,8 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
           sendData['rawData'] is! String || // 没有传递原始数据
           !(sendData['rawData'].startsWith('0x')) // 不是0x开头
         ))
-      )
+      ) ||
+      (sendData['volume'] != null && BigInt.tryParse(sendData['volume']) == null) // 主链币数量
     ) {
       _webviewGetError('input type error, please check');
       state.webviewController?.runJavascript('window.$_windowAttrName = null;');
@@ -575,6 +576,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
             sendData['callFunc'],
             (sendData['callArgs'] as List).map((e) => e.toString()).toList(),
           ),
+          volume: BigInt.tryParse(sendData['volume']),
         );
         state.webviewController?.runJavascript('window.$_windowAttrName = {status: ${sendResult.status}, data: ${json.encode(sendResult.data)}};');
       } catch (e) {

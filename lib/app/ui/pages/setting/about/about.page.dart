@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/about/about.controller.dart';
+import 'package:plug/app/ui/pages/setting/about/about.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class UserAboutPage extends GetView<UserAboutPageController> {

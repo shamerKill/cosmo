@@ -5,7 +5,7 @@ import 'package:plug/app/translation/translation.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/bottomBar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
-import 'package:plug/app/ui/pages/user/my/my.controller.dart';
+import 'package:plug/app/ui/pages/setting/my/my.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class UserMyPage extends GetView<UserMyPageController> {

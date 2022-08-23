@@ -5,13 +5,12 @@ import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/utils/evm/evmClient.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/http.dart';
-import 'package:plug/app/config/_config.app.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 
 
 // 1317接口信息
 class _HttpToolApp extends UriTool {
-  _HttpToolApp() : super(ConfigChainData.appInfoRpcUrl);
+  _HttpToolApp() : super(Env.envConfig.urlInfo.chainInfoRpcUrl);
   /// 获取账户信息
   Future<HttpToolResponse?> getAccountChainInfo(String address) {
     return HttpToolClient.getHttp(customUri('/cosmos/auth/v1beta1/accounts/$address'))
@@ -196,7 +195,7 @@ _HttpToolApp httpToolApp = _HttpToolApp();
 
 // 26657接口信息
 class _HttpToolChain extends UriTool {
-  _HttpToolChain() : super(ConfigChainData.chainInfoRpcUrl);
+  _HttpToolChain() : super(Env.envConfig.urlInfo.chainToolRpcUrl);
   /// 获取链信息
   Future<HttpToolResponse> getChainInfo() {
     return HttpToolClient.getHttp(
@@ -208,7 +207,7 @@ _HttpToolChain httpToolChain = _HttpToolChain();
 
 // 服务器其他信息
 class _HttpToolServer extends UriTool {
-  _HttpToolServer() : super(ConfigChainData.serverInfoRpcUrl);
+  _HttpToolServer() : super(Env.envConfig.urlInfo.backEndSite);
   /// 获取手续费
   Future<HttpToolResponse> getChainFee() {
     return HttpToolClient.getHttp(
@@ -307,7 +306,7 @@ _HttpToolServer httpToolServer = _HttpToolServer();
 
 // 浏览器其他信息
 class _BrowserToolServer extends UriTool {
-  _BrowserToolServer() : super(ConfigChainData.browserInfoRpcUrl);
+  _BrowserToolServer() : super(Env.envConfig.urlInfo.browserEndSite);
   // 获取账户所有20代币信息
   Future<HttpToolResponse?> getAccountPrc20AllBalance(String address) {
     return HttpToolClient.getHttp(customUri('v2/api/pvmApi/address/token', queryParameters: {
