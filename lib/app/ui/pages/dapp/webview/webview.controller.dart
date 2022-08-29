@@ -27,6 +27,7 @@ List<String> _permissionListAll = [
   'tokenTransferSend', // 发送交易
   'contractCall', // 合约数据获取调用
   'contractSend', // 合约发送调用
+  'liquidity', // liquidity操作调用 sendLiquidity / addLiquidity / removeLiquidity
 ];
 
 class DappWebviewPageState {
@@ -117,6 +118,9 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
       // 不安全的网址
       case 'net::ERR_CLEARTEXT_NOT_PERMITTED':
         LToast.warning('ErrorWithWebUnsafe'.tr);
+        break;
+      default: 
+        LToast.warning('ErrorWithAddressType'.tr);
         break;
     }
     if (state.webviewHasHistory) {
@@ -261,15 +265,17 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
           ..addAll(_list)
           ..refresh();
     }
-    // 权限判断
-    if (
-      webviewCallData.type != 'applyPermission' &&
-      webviewCallData.type != 'getPermission' &&
-      !state.permissionListAllow.contains(webviewCallData.type)) {
-      _webviewGetError('not has permission');
-      return false;
+    // 无需权限判断
+    if (webviewCallData.type == 'applyPermission' || webviewCallData.type == 'getPermission') {
+      return true;
     }
-    return true;
+    // 判断liquidity权限
+    if (webviewCallData.type.toLowerCase().contains('liquidity') && state.permissionListAllow.contains('liquidity')) {
+      return true;
+    }
+    // 其他权限判断
+    if (state.permissionListAllow.contains(webviewCallData.type)) return true;
+    return false;
   }
   // 调用权限弹窗
   _permissionDialog(List<String> _permissionListApply, String _windowAttrName) async {
@@ -290,6 +296,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
             if (_permissionListApply.contains(_permissionListAll[2])) Text('- ${'authorizationDescriptionTransfer'.tr}', style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall)),
             if (_permissionListApply.contains(_permissionListAll[3])) Text('- ${'authorizationDescriptionContractCall'.tr}', style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall)),
             if (_permissionListApply.contains(_permissionListAll[4])) Text('- ${'authorizationDescriptionContractSend'.tr}', style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall)),
+            if (_permissionListApply.contains(_permissionListAll[5])) Text('- ${'authorizationDescriptionLiquidity'.tr}', style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall)),
             Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
             Text('authorizationAuthorizeTip'.tr, style: TextStyle(color: appTheme.colors.textGray, fontSize: appTheme.sizes.fontSizeSmall)),
           ],
@@ -368,7 +375,9 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
       case 'accountAddress': _callGetUserAccountAddress(webviewCallData.windowAttrName); break; // 获取用户地址
       case 'accountAddressType': _callGetUserAccountAddressType(webviewCallData.windowAttrName); break; // 获取用户地址类型
       case 'tokenTransferSend': _callWalletSend(webviewCallData.windowAttrName, webviewCallData.data); break; // 转账
-      case 'tokenSwap': _callWalletSwap(webviewCallData.windowAttrName, webviewCallData.data); break; // 交换
+      case 'sendLiquidity': _callWalletSwap(webviewCallData.windowAttrName, webviewCallData.data); break; // 交换
+      case 'addLiquidity': _callAddWalletSwap(webviewCallData.windowAttrName, webviewCallData.data); break; // 交换添加
+      case 'removeLiquidity': _callRemoveWalletSwap(webviewCallData.windowAttrName, webviewCallData.data); break; // 交换取消
       case 'contractCall': _callContractCall(webviewCallData.windowAttrName, webviewCallData.data); break; // 调用合约
       case 'contractSend': _callContractSend(webviewCallData.windowAttrName, webviewCallData.data); break; // 发送合约
     }
@@ -447,7 +456,7 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
       }
     }
   }
-  // swap交易
+  // liquidity交易
   _callWalletSwap(String _windowAttrName, dynamic sendData) async {
     // 判断传入信息
     if (
@@ -487,6 +496,95 @@ class DappWebviewPageController extends GetxController with GetTickerProviderSta
           toSymbol: sendData['toSymbol'],
           feeAmount: sendData['feeAmount'],
           orderPrice: sendData['orderPrice'],
+          gasAll: sendData['gasAll'],
+        );
+        state.webviewController?.runJavascript('window.$_windowAttrName = {status: ${transferResult.status}, data: ${json.encode(transferResult.data)}};');
+      } catch (e) {
+        _webviewGetError(e);
+        state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+      }
+    }
+  }
+  // 添加 liquidity交易
+  _callAddWalletSwap(String _windowAttrName, dynamic sendData) async {
+    // 判断传入信息
+    if (
+      sendData['poolId'] is! int || // poolId
+      sendData['fromSymbol'] is! String || // from token Symbol
+      sendData['fromAmount'] is! String ||
+      double.tryParse(sendData['fromAmount']) == null || // from token volume
+      sendData['toSymbol'] is! String || // to token Symbol
+      sendData['toAmount'] is! String ||
+      double.tryParse(sendData['toAmount']) == null || // gasAll
+      sendData['gasAll'] is! String ||
+      double.tryParse(sendData['gasAll']) == null // gas all
+    ) {
+      _webviewGetError('input type error, please check');
+      state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+    } else {
+      try {
+        String? password = await LBottomSheet.passwordBottomSheet();
+        if (password == null) {
+          _webviewGetError('input password is empty');
+          return state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+        }
+        List<String>? mnemonicList = await WalletTool.decryptMnemonic(
+          _accountInfo?.stringifyRaw??'',
+          password,
+        );
+        if (mnemonicList == null) {
+          _webviewGetError('input password error');
+          return state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+        }
+        HttpToolResponse transferResult = await WalletTool.dexPoolAddExchange(
+          mnemonic: mnemonicList,
+          poolId: sendData['poolId'],
+          fromSymbol: sendData['fromSymbol'],
+          fromAmount: sendData['fromAmount'],
+          toSymbol: sendData['toSymbol'],
+          toAmount: sendData['toAmount'],
+          gasAll: sendData['gasAll'],
+        );
+        state.webviewController?.runJavascript('window.$_windowAttrName = {status: ${transferResult.status}, data: ${json.encode(transferResult.data)}};');
+      } catch (e) {
+        _webviewGetError(e);
+        state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+      }
+    }
+  }
+  // 移除 liquidity交易
+  _callRemoveWalletSwap(String _windowAttrName, dynamic sendData) async {
+    // 判断传入信息
+    if (
+      sendData['poolId'] is! int || // poolId
+      sendData['fromSymbol'] is! String || // from token Symbol
+      sendData['fromAmount'] is! String ||
+      double.tryParse(sendData['fromAmount']) == null || // from token volume
+      sendData['gasAll'] is! String ||
+      double.tryParse(sendData['gasAll']) == null // gas all
+    ) {
+      _webviewGetError('input type error, please check');
+      state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+    } else {
+      try {
+        String? password = await LBottomSheet.passwordBottomSheet();
+        if (password == null) {
+          _webviewGetError('input password is empty');
+          return state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+        }
+        List<String>? mnemonicList = await WalletTool.decryptMnemonic(
+          _accountInfo?.stringifyRaw??'',
+          password,
+        );
+        if (mnemonicList == null) {
+          _webviewGetError('input password error');
+          return state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+        }
+        HttpToolResponse transferResult = await WalletTool.dexPoolRemoveExchange(
+          mnemonic: mnemonicList,
+          poolId: sendData['poolId'],
+          fromSymbol: sendData['fromSymbol'],
+          fromAmount: sendData['fromAmount'],
           gasAll: sendData['gasAll'],
         );
         state.webviewController?.runJavascript('window.$_windowAttrName = {status: ${transferResult.status}, data: ${json.encode(transferResult.data)}};');

@@ -261,6 +261,7 @@
 	"authorizationDescriptionTransfer": "Call the current account transaction function",
 	"authorizationDescriptionContractCall": "Obtaining the contract information of the account PRC20",
 	"authorizationDescriptionContractSend": "Calling the contract information of the account PRC20",
+	"authorizationDescriptionLiquidity": "Call the current account liquidity function",
 	"authorizationAuthorizeTip": "After agreeing to the authorization, you will not be prompted again",
 	"updateTip": "Update prompt",
 	"updateTipDesc": "Whether to go to your browser to download the new version?",

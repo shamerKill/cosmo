@@ -429,4 +429,51 @@ class WalletTool {
       ..orderPrice = NumUtil.multiplyDec(orderPrice, pow(10, 18)).toStringAsFixed(0);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+  // add token10 swap
+  static Future<HttpToolResponse> dexPoolAddExchange({
+    required List<String> mnemonic,
+    required int poolId,
+    required String fromSymbol,
+    required String fromAmount,
+    required String toSymbol,
+    required String toAmount,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) {
+    $fixnum.Int64 gasLimit = 400000.toInt64();
+    var wallet = getWallet(mnemonic);
+    var message = liquidityTx.MsgDepositWithinBatch.create()
+      ..depositorAddress = wallet.bech32Address
+      ..poolId = poolId.toInt64()
+      ..depositCoins.addAll([
+        (alan.Coin.create()
+          ..denom=fromSymbol
+          ..amount=fromAmount),
+        (alan.Coin.create()
+          ..denom=toSymbol
+          ..amount=toAmount)
+      ]);
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+  // remove token10 swap
+  static Future<HttpToolResponse> dexPoolRemoveExchange({
+    required List<String> mnemonic,
+    required int poolId,
+    required String fromSymbol,
+    required String fromAmount,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) {
+    $fixnum.Int64 gasLimit = 400000.toInt64();
+    var wallet = getWallet(mnemonic);
+    var message = liquidityTx.MsgWithdrawWithinBatch.create()
+      ..withdrawerAddress = wallet.bech32Address
+      ..poolId = poolId.toInt64()
+      ..poolCoin = (alan.Coin.create()
+          ..denom=fromSymbol
+          ..amount=fromAmount);
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
 }
