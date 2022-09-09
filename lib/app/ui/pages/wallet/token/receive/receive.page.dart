@@ -23,15 +23,20 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
           padding: EdgeInsets.only(top: appTheme.sizes.padding),
           child: Container(
             width: appTheme.sizes.infinity,
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall, vertical: appTheme.sizes.paddingSmall),
+            padding: EdgeInsets.symmetric(
+                horizontal: appTheme.sizes.paddingSmall,
+                vertical: appTheme.sizes.paddingSmall),
             decoration: BoxDecoration(
               color: appTheme.colors.primaryColor.withOpacity(0.2),
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
             ),
             child: Center(
               child: Text(
                 'receiveTip'.tr,
-                style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
+                style: TextStyle(
+                    color: appTheme.colors.primaryColor,
+                    fontSize: appTheme.sizes.fontSizeSmall),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -45,15 +50,19 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
         child: Container(
           decoration: BoxDecoration(
             color: appTheme.colors.pageBackgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
           ),
           child: Column(
             children: [
               Padding(
                 padding: EdgeInsets.only(top: appTheme.sizes.padding * 2),
-                child: Obx(() => Text('receiveScanTip'.tr + state.tokenInfo.symbol, style: Get.textTheme.bodyText1)),
+                child: Obx(() => Text(
+                    'receiveScanTip'.tr + state.tokenInfo.symbol,
+                    style: Get.textTheme.bodyText1)),
               ),
-              Obx(() => LQrCodeView(address: state.accountInfo.address, hideTitle: true)),
+              Obx(() => LQrCodeView(
+                  address: state.accountInfo.address, hideTitle: true)),
               Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
               DottedLine(
                 dashColor: appTheme.colors.borderColor,
@@ -68,9 +77,16 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(const IconData(0xe6df, fontFamily: 'plugIcon'), color: appTheme.colors.textGrayBig, size: appTheme.sizes.inputIconSize),
-                            Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
-                            Text('share'.tr, style: TextStyle(letterSpacing: 2, color: appTheme.colors.textGrayBig)),
+                            Icon(const IconData(0xe6df, fontFamily: 'plugIcon'),
+                                color: appTheme.colors.textGrayBig,
+                                size: appTheme.sizes.inputIconSize),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: appTheme.sizes.paddingSmall / 2)),
+                            Text('share'.tr,
+                                style: TextStyle(
+                                    letterSpacing: 2,
+                                    color: appTheme.colors.textGrayBig)),
                           ],
                         ),
                       ),
@@ -84,9 +100,16 @@ class WalletTokenReceivePage extends GetView<WalletTokenReceivePageController> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(const IconData(0xe6fc, fontFamily: 'plugIcon'), color: appTheme.colors.primaryColor, size: appTheme.sizes.inputIconSize),
-                            Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
-                            Text('copy'.tr, style: TextStyle(letterSpacing: 2, color: appTheme.colors.primaryColor)),
+                            Icon(const IconData(0xe6fc, fontFamily: 'plugIcon'),
+                                color: appTheme.colors.primaryColor,
+                                size: appTheme.sizes.inputIconSize),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    left: appTheme.sizes.paddingSmall / 2)),
+                            Text('copy'.tr,
+                                style: TextStyle(
+                                    letterSpacing: 2,
+                                    color: appTheme.colors.primaryColor)),
                           ],
                         ),
                       ),

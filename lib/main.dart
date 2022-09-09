@@ -25,9 +25,10 @@ class PlugRoot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        // 统一设计尺寸
-        designSize: const Size(750, 1334),
-        builder: () => GetMaterialApp(
+      // 统一设计尺寸
+      designSize: const Size(750, 1334),
+      builder: (_, __) {
+        return GetMaterialApp(
           // GetX
           theme: appTheme.theme,
           initialRoute: PlugRoutesNames.start,
@@ -47,7 +48,8 @@ class PlugRoot extends StatelessWidget {
           locale: plugTranslation.nowLocale.value,
           fallbackLocale: plugTranslation.fallbackLocale.value,
           enableLog: !Env.envConfig.isRelease,
-        ),
-      );
+        );
+      },
+    );
   }
 }

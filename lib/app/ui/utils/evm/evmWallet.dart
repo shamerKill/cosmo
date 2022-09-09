@@ -7,7 +7,6 @@ import 'package:web3dart/crypto.dart' as crypto;
 import 'package:web3dart/web3dart.dart' as web3;
 import 'package:web3dart/src/utils/typed_data.dart';
 
-
 class NewWallet extends Wallet {
   static const DERIVATION_PATH = "m/44'/60'/0'/0/0";
   static NetworkInfo defaultNetworkInfo = NetworkInfo.fromSingleHost(
@@ -23,12 +22,12 @@ class NewWallet extends Wallet {
     required Uint8List privateKey,
     required Uint8List publicKey,
     required this.comPublicKeyBytes,
-  }): super(
-    networkInfo: networkInfo,
-    address: address,
-    privateKey: privateKey,
-    publicKey: publicKey,
-  );
+  }) : super(
+          networkInfo: networkInfo,
+          address: address,
+          privateKey: privateKey,
+          publicKey: publicKey,
+        );
 
   @override
   factory NewWallet.derive(
@@ -60,7 +59,7 @@ class NewWallet extends Wallet {
     // Get the public key
     final publicKeyBytes = curvePoint!.getEncoded(false);
     final comPublicKeyBytes = curvePoint.getEncoded();
-    
+
     // Get the address
     final sha256Digest = SHA256Digest().process(comPublicKeyBytes);
     final address = RIPEMD160Digest().process(sha256Digest);
@@ -84,9 +83,11 @@ class NewWallet extends Wallet {
     ));
     return address;
   }
+
   @override
   Uint8List sign(Uint8List data) {
-    var seckey = crypto.intToBytes(_getPvKey(PrivateKeyParameter(_ecPrivateKey)).d!);
+    var seckey =
+        crypto.intToBytes(_getPvKey(PrivateKeyParameter(_ecPrivateKey)).d!);
     List<int> seckeyList = List.from(seckey);
     if ((seckeyList.length % 8) != 0) {
       seckeyList.removeAt(0);
@@ -102,7 +103,7 @@ class NewWallet extends Wallet {
     return uint8ListFromList(r + s + v);
   }
 
-  ECPrivateKey _getPvKey (CipherParameters params) {
+  ECPrivateKey _getPvKey(CipherParameters params) {
     PrivateKeyParameter prevParams;
     if (params is ParametersWithRandom) {
       prevParams = params.parameters as PrivateKeyParameter<PrivateKey>;
@@ -116,6 +117,7 @@ class NewWallet extends Wallet {
     final privateKeyInt = BigInt.parse(HEX.encode(privateKey), radix: 16);
     return ECPrivateKey(privateKeyInt, ECCurve_secp256k1());
   }
+
   ECSignature _normalizeECSignature(
     ECSignature signature,
     ECDomainParameters curveParams,
@@ -127,15 +129,16 @@ class NewWallet extends Wallet {
     return ECSignature(signature.r, normalizedS);
   }
 
-
   String get hexAddress {
     return web3.EthPrivateKey.fromHex(hexPrivateKey).address.toString();
   }
+
   String get hexPrivateKey {
     return crypto.bytesToHex(privateKey);
   }
 }
-Uint8List keccak256(Uint8List input, { int type = 256 }) {
+
+Uint8List keccak256(Uint8List input, {int type = 256}) {
   final KeccakDigest keccakDigest = KeccakDigest(type);
   keccakDigest.reset();
   return keccakDigest.process(input);

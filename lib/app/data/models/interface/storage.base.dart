@@ -4,10 +4,12 @@ abstract class _StorageBaseAbstract {
   _StorageBaseAbstract() {
     _saveKey();
   }
+
   /// 键名键值
   final Map<String, dynamic> _valueMap = {};
+
   /// 对象转为jsonString
-  /// 
+  ///
   /// 可以转换 基本类型/子类/list/dateTime
   String toJson() {
     Map<String, dynamic> jsonMap = {};
@@ -23,9 +25,9 @@ abstract class _StorageBaseAbstract {
         }).toList();
       } else if (_valueMap[key] is DateTime) {
         jsonMap[key] = _valueMap[key].toString();
-      } else if (
-        _valueMap[key] is bool || _valueMap[key] is String || _valueMap[key] is num
-      ) {
+      } else if (_valueMap[key] is bool ||
+          _valueMap[key] is String ||
+          _valueMap[key] is num) {
         jsonMap[key] = _valueMap[key];
       } else {
         jsonMap[key] = _valueMap[key].toString();
@@ -33,9 +35,11 @@ abstract class _StorageBaseAbstract {
     }
     return json.encode(jsonMap);
   }
+
   /// 需要将储存的属性存入_valueMap中
   /// 储存键名/键值
   void _saveKey();
+
   /// jsonString 转为对象
   void setData(String sourceStr);
 }
@@ -62,7 +66,6 @@ abstract class _StorageBaseAbstract {
 //     _saveUser = value;
 //     _saveKey();
 //   }
-
 
 //   StorageDemo._(): super();
 //   factory StorageDemo() => create();

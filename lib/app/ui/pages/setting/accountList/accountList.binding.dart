@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/setting/accountList/accountList.controller.dar
 class UserAccountListPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<UserAccountListPageController>(() => UserAccountListPageController());
+    Get.lazyPut<UserAccountListPageController>(
+        () => UserAccountListPageController());
   }
 }

@@ -15,13 +15,38 @@ import 'package:alan/proto/google/protobuf/any.pb.dart' as $0;
 import 'evm.pb.dart' as $55;
 
 class MsgEthereumTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MsgEthereumTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ethermint.evm.v1'), createEmptyInstance: create)
-    ..aOM<$0.Any>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', subBuilder: $0.Any.create)
-    ..a<$core.double>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'size', $pb.PbFieldType.OD)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hash')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'from')
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'MsgEthereumTx',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'ethermint.evm.v1'),
+      createEmptyInstance: create)
+    ..aOM<$0.Any>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'data',
+        subBuilder: $0.Any.create)
+    ..a<$core.double>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'size',
+        $pb.PbFieldType.OD)
+    ..aOS(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'hash')
+    ..aOS(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'from')
+    ..hasRequiredFields = false;
 
   MsgEthereumTx._() : super();
   factory MsgEthereumTx({
@@ -45,31 +70,40 @@ class MsgEthereumTx extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory MsgEthereumTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MsgEthereumTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory MsgEthereumTx.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MsgEthereumTx.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   MsgEthereumTx clone() => MsgEthereumTx()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MsgEthereumTx copyWith(void Function(MsgEthereumTx) updates) => super.copyWith((message) => updates(message as MsgEthereumTx)) as MsgEthereumTx; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  MsgEthereumTx copyWith(void Function(MsgEthereumTx) updates) =>
+      super.copyWith((message) => updates(message as MsgEthereumTx))
+          as MsgEthereumTx; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MsgEthereumTx create() => MsgEthereumTx._();
   MsgEthereumTx createEmptyInstance() => create();
-  static $pb.PbList<MsgEthereumTx> createRepeated() => $pb.PbList<MsgEthereumTx>();
+  static $pb.PbList<MsgEthereumTx> createRepeated() =>
+      $pb.PbList<MsgEthereumTx>();
   @$core.pragma('dart2js:noInline')
-  static MsgEthereumTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MsgEthereumTx>(create);
+  static MsgEthereumTx getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MsgEthereumTx>(create);
   static MsgEthereumTx? _defaultInstance;
 
   @$pb.TagNumber(1)
   $0.Any get data => $_getN(0);
   @$pb.TagNumber(1)
-  set data($0.Any v) { setField(1, v); }
+  set data($0.Any v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasData() => $_has(0);
   @$pb.TagNumber(1)
@@ -80,7 +114,10 @@ class MsgEthereumTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.double get size => $_getN(1);
   @$pb.TagNumber(2)
-  set size($core.double v) { $_setDouble(1, v); }
+  set size($core.double v) {
+    $_setDouble(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasSize() => $_has(1);
   @$pb.TagNumber(2)
@@ -89,7 +126,10 @@ class MsgEthereumTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get hash => $_getSZ(2);
   @$pb.TagNumber(3)
-  set hash($core.String v) { $_setString(2, v); }
+  set hash($core.String v) {
+    $_setString(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasHash() => $_has(2);
   @$pb.TagNumber(3)
@@ -98,7 +138,10 @@ class MsgEthereumTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get from => $_getSZ(3);
   @$pb.TagNumber(4)
-  set from($core.String v) { $_setString(3, v); }
+  set from($core.String v) {
+    $_setString(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasFrom() => $_has(3);
   @$pb.TagNumber(4)
@@ -106,18 +149,69 @@ class MsgEthereumTx extends $pb.GeneratedMessage {
 }
 
 class LegacyTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'LegacyTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ethermint.evm.v1'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gasPrice')
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gas', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..a<$core.List<$core.int>>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'v', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 's', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'LegacyTx',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'ethermint.evm.v1'),
+      createEmptyInstance: create)
+    ..a<$fixnum.Int64>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'nonce',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gasPrice')
+    ..a<$fixnum.Int64>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gas',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'to')
+    ..aOS(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'value')
+    ..a<$core.List<$core.int>>(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'data',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'v',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        8,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'r',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        9,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 's',
+        $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   LegacyTx._() : super();
   factory LegacyTx({
@@ -161,31 +255,39 @@ class LegacyTx extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory LegacyTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory LegacyTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory LegacyTx.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory LegacyTx.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   LegacyTx clone() => LegacyTx()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  LegacyTx copyWith(void Function(LegacyTx) updates) => super.copyWith((message) => updates(message as LegacyTx)) as LegacyTx; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  LegacyTx copyWith(void Function(LegacyTx) updates) =>
+      super.copyWith((message) => updates(message as LegacyTx))
+          as LegacyTx; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static LegacyTx create() => LegacyTx._();
   LegacyTx createEmptyInstance() => create();
   static $pb.PbList<LegacyTx> createRepeated() => $pb.PbList<LegacyTx>();
   @$core.pragma('dart2js:noInline')
-  static LegacyTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LegacyTx>(create);
+  static LegacyTx getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LegacyTx>(create);
   static LegacyTx? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get nonce => $_getI64(0);
   @$pb.TagNumber(1)
-  set nonce($fixnum.Int64 v) { $_setInt64(0, v); }
+  set nonce($fixnum.Int64 v) {
+    $_setInt64(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasNonce() => $_has(0);
   @$pb.TagNumber(1)
@@ -194,7 +296,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get gasPrice => $_getSZ(1);
   @$pb.TagNumber(2)
-  set gasPrice($core.String v) { $_setString(1, v); }
+  set gasPrice($core.String v) {
+    $_setString(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasGasPrice() => $_has(1);
   @$pb.TagNumber(2)
@@ -203,7 +308,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $fixnum.Int64 get gas => $_getI64(2);
   @$pb.TagNumber(3)
-  set gas($fixnum.Int64 v) { $_setInt64(2, v); }
+  set gas($fixnum.Int64 v) {
+    $_setInt64(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasGas() => $_has(2);
   @$pb.TagNumber(3)
@@ -212,7 +320,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get to => $_getSZ(3);
   @$pb.TagNumber(4)
-  set to($core.String v) { $_setString(3, v); }
+  set to($core.String v) {
+    $_setString(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasTo() => $_has(3);
   @$pb.TagNumber(4)
@@ -221,7 +332,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get value => $_getSZ(4);
   @$pb.TagNumber(5)
-  set value($core.String v) { $_setString(4, v); }
+  set value($core.String v) {
+    $_setString(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasValue() => $_has(4);
   @$pb.TagNumber(5)
@@ -230,7 +344,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.List<$core.int> get data => $_getN(5);
   @$pb.TagNumber(6)
-  set data($core.List<$core.int> v) { $_setBytes(5, v); }
+  set data($core.List<$core.int> v) {
+    $_setBytes(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasData() => $_has(5);
   @$pb.TagNumber(6)
@@ -239,7 +356,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.List<$core.int> get v => $_getN(6);
   @$pb.TagNumber(7)
-  set v($core.List<$core.int> v) { $_setBytes(6, v); }
+  set v($core.List<$core.int> v) {
+    $_setBytes(6, v);
+  }
+
   @$pb.TagNumber(7)
   $core.bool hasV() => $_has(6);
   @$pb.TagNumber(7)
@@ -248,7 +368,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.List<$core.int> get r => $_getN(7);
   @$pb.TagNumber(8)
-  set r($core.List<$core.int> v) { $_setBytes(7, v); }
+  set r($core.List<$core.int> v) {
+    $_setBytes(7, v);
+  }
+
   @$pb.TagNumber(8)
   $core.bool hasR() => $_has(7);
   @$pb.TagNumber(8)
@@ -257,7 +380,10 @@ class LegacyTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.List<$core.int> get s => $_getN(8);
   @$pb.TagNumber(9)
-  set s($core.List<$core.int> v) { $_setBytes(8, v); }
+  set s($core.List<$core.int> v) {
+    $_setBytes(8, v);
+  }
+
   @$pb.TagNumber(9)
   $core.bool hasS() => $_has(8);
   @$pb.TagNumber(9)
@@ -265,20 +391,81 @@ class LegacyTx extends $pb.GeneratedMessage {
 }
 
 class AccessListTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AccessListTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ethermint.evm.v1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chainId')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gasPrice')
-    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gas', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to')
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
-    ..pc<$55.AccessTuple>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accesses', $pb.PbFieldType.PM, subBuilder: $55.AccessTuple.create)
-    ..a<$core.List<$core.int>>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'v', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 's', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'AccessListTx',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'ethermint.evm.v1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'chainId')
+    ..a<$fixnum.Int64>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'nonce',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gasPrice')
+    ..a<$fixnum.Int64>(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gas',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'to')
+    ..aOS(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'value')
+    ..a<$core.List<$core.int>>(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'data',
+        $pb.PbFieldType.OY)
+    ..pc<$55.AccessTuple>(
+        8,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'accesses',
+        $pb.PbFieldType.PM,
+        subBuilder: $55.AccessTuple.create)
+    ..a<$core.List<$core.int>>(
+        9,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'v',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        10,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'r',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        11,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 's',
+        $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   AccessListTx._() : super();
   factory AccessListTx({
@@ -330,31 +517,40 @@ class AccessListTx extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory AccessListTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AccessListTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory AccessListTx.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory AccessListTx.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   AccessListTx clone() => AccessListTx()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  AccessListTx copyWith(void Function(AccessListTx) updates) => super.copyWith((message) => updates(message as AccessListTx)) as AccessListTx; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  AccessListTx copyWith(void Function(AccessListTx) updates) =>
+      super.copyWith((message) => updates(message as AccessListTx))
+          as AccessListTx; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static AccessListTx create() => AccessListTx._();
   AccessListTx createEmptyInstance() => create();
-  static $pb.PbList<AccessListTx> createRepeated() => $pb.PbList<AccessListTx>();
+  static $pb.PbList<AccessListTx> createRepeated() =>
+      $pb.PbList<AccessListTx>();
   @$core.pragma('dart2js:noInline')
-  static AccessListTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AccessListTx>(create);
+  static AccessListTx getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AccessListTx>(create);
   static AccessListTx? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get chainId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set chainId($core.String v) { $_setString(0, v); }
+  set chainId($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasChainId() => $_has(0);
   @$pb.TagNumber(1)
@@ -363,7 +559,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $fixnum.Int64 get nonce => $_getI64(1);
   @$pb.TagNumber(2)
-  set nonce($fixnum.Int64 v) { $_setInt64(1, v); }
+  set nonce($fixnum.Int64 v) {
+    $_setInt64(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasNonce() => $_has(1);
   @$pb.TagNumber(2)
@@ -372,7 +571,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get gasPrice => $_getSZ(2);
   @$pb.TagNumber(3)
-  set gasPrice($core.String v) { $_setString(2, v); }
+  set gasPrice($core.String v) {
+    $_setString(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasGasPrice() => $_has(2);
   @$pb.TagNumber(3)
@@ -381,7 +583,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $fixnum.Int64 get gas => $_getI64(3);
   @$pb.TagNumber(4)
-  set gas($fixnum.Int64 v) { $_setInt64(3, v); }
+  set gas($fixnum.Int64 v) {
+    $_setInt64(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasGas() => $_has(3);
   @$pb.TagNumber(4)
@@ -390,7 +595,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get to => $_getSZ(4);
   @$pb.TagNumber(5)
-  set to($core.String v) { $_setString(4, v); }
+  set to($core.String v) {
+    $_setString(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasTo() => $_has(4);
   @$pb.TagNumber(5)
@@ -399,7 +607,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get value => $_getSZ(5);
   @$pb.TagNumber(6)
-  set value($core.String v) { $_setString(5, v); }
+  set value($core.String v) {
+    $_setString(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasValue() => $_has(5);
   @$pb.TagNumber(6)
@@ -408,7 +619,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.List<$core.int> get data => $_getN(6);
   @$pb.TagNumber(7)
-  set data($core.List<$core.int> v) { $_setBytes(6, v); }
+  set data($core.List<$core.int> v) {
+    $_setBytes(6, v);
+  }
+
   @$pb.TagNumber(7)
   $core.bool hasData() => $_has(6);
   @$pb.TagNumber(7)
@@ -420,7 +634,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   $core.List<$core.int> get v => $_getN(8);
   @$pb.TagNumber(9)
-  set v($core.List<$core.int> v) { $_setBytes(8, v); }
+  set v($core.List<$core.int> v) {
+    $_setBytes(8, v);
+  }
+
   @$pb.TagNumber(9)
   $core.bool hasV() => $_has(8);
   @$pb.TagNumber(9)
@@ -429,7 +646,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.List<$core.int> get r => $_getN(9);
   @$pb.TagNumber(10)
-  set r($core.List<$core.int> v) { $_setBytes(9, v); }
+  set r($core.List<$core.int> v) {
+    $_setBytes(9, v);
+  }
+
   @$pb.TagNumber(10)
   $core.bool hasR() => $_has(9);
   @$pb.TagNumber(10)
@@ -438,7 +658,10 @@ class AccessListTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.List<$core.int> get s => $_getN(10);
   @$pb.TagNumber(11)
-  set s($core.List<$core.int> v) { $_setBytes(10, v); }
+  set s($core.List<$core.int> v) {
+    $_setBytes(10, v);
+  }
+
   @$pb.TagNumber(11)
   $core.bool hasS() => $_has(10);
   @$pb.TagNumber(11)
@@ -446,21 +669,86 @@ class AccessListTx extends $pb.GeneratedMessage {
 }
 
 class DynamicFeeTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DynamicFeeTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ethermint.evm.v1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chainId')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nonce', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gasTipCap')
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gasFeeCap')
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gas', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'to')
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'value')
-    ..a<$core.List<$core.int>>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'data', $pb.PbFieldType.OY)
-    ..pc<$55.AccessTuple>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'accesses', $pb.PbFieldType.PM, subBuilder: $55.AccessTuple.create)
-    ..a<$core.List<$core.int>>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'v', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r', $pb.PbFieldType.OY)
-    ..a<$core.List<$core.int>>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 's', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'DynamicFeeTx',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'ethermint.evm.v1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'chainId')
+    ..a<$fixnum.Int64>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'nonce',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gasTipCap')
+    ..aOS(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gasFeeCap')
+    ..a<$fixnum.Int64>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gas',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(
+        6,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'to')
+    ..aOS(
+        7,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'value')
+    ..a<$core.List<$core.int>>(
+        8,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'data',
+        $pb.PbFieldType.OY)
+    ..pc<$55.AccessTuple>(
+        9,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'accesses',
+        $pb.PbFieldType.PM,
+        subBuilder: $55.AccessTuple.create)
+    ..a<$core.List<$core.int>>(
+        10,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'v',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        11,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'r',
+        $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        12,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 's',
+        $pb.PbFieldType.OY)
+    ..hasRequiredFields = false;
 
   DynamicFeeTx._() : super();
   factory DynamicFeeTx({
@@ -516,31 +804,40 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory DynamicFeeTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory DynamicFeeTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory DynamicFeeTx.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory DynamicFeeTx.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   DynamicFeeTx clone() => DynamicFeeTx()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  DynamicFeeTx copyWith(void Function(DynamicFeeTx) updates) => super.copyWith((message) => updates(message as DynamicFeeTx)) as DynamicFeeTx; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  DynamicFeeTx copyWith(void Function(DynamicFeeTx) updates) =>
+      super.copyWith((message) => updates(message as DynamicFeeTx))
+          as DynamicFeeTx; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static DynamicFeeTx create() => DynamicFeeTx._();
   DynamicFeeTx createEmptyInstance() => create();
-  static $pb.PbList<DynamicFeeTx> createRepeated() => $pb.PbList<DynamicFeeTx>();
+  static $pb.PbList<DynamicFeeTx> createRepeated() =>
+      $pb.PbList<DynamicFeeTx>();
   @$core.pragma('dart2js:noInline')
-  static DynamicFeeTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DynamicFeeTx>(create);
+  static DynamicFeeTx getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<DynamicFeeTx>(create);
   static DynamicFeeTx? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get chainId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set chainId($core.String v) { $_setString(0, v); }
+  set chainId($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasChainId() => $_has(0);
   @$pb.TagNumber(1)
@@ -549,7 +846,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $fixnum.Int64 get nonce => $_getI64(1);
   @$pb.TagNumber(2)
-  set nonce($fixnum.Int64 v) { $_setInt64(1, v); }
+  set nonce($fixnum.Int64 v) {
+    $_setInt64(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasNonce() => $_has(1);
   @$pb.TagNumber(2)
@@ -558,7 +858,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get gasTipCap => $_getSZ(2);
   @$pb.TagNumber(3)
-  set gasTipCap($core.String v) { $_setString(2, v); }
+  set gasTipCap($core.String v) {
+    $_setString(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasGasTipCap() => $_has(2);
   @$pb.TagNumber(3)
@@ -567,7 +870,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get gasFeeCap => $_getSZ(3);
   @$pb.TagNumber(4)
-  set gasFeeCap($core.String v) { $_setString(3, v); }
+  set gasFeeCap($core.String v) {
+    $_setString(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasGasFeeCap() => $_has(3);
   @$pb.TagNumber(4)
@@ -576,7 +882,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $fixnum.Int64 get gas => $_getI64(4);
   @$pb.TagNumber(5)
-  set gas($fixnum.Int64 v) { $_setInt64(4, v); }
+  set gas($fixnum.Int64 v) {
+    $_setInt64(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasGas() => $_has(4);
   @$pb.TagNumber(5)
@@ -585,7 +894,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get to => $_getSZ(5);
   @$pb.TagNumber(6)
-  set to($core.String v) { $_setString(5, v); }
+  set to($core.String v) {
+    $_setString(5, v);
+  }
+
   @$pb.TagNumber(6)
   $core.bool hasTo() => $_has(5);
   @$pb.TagNumber(6)
@@ -594,7 +906,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   $core.String get value => $_getSZ(6);
   @$pb.TagNumber(7)
-  set value($core.String v) { $_setString(6, v); }
+  set value($core.String v) {
+    $_setString(6, v);
+  }
+
   @$pb.TagNumber(7)
   $core.bool hasValue() => $_has(6);
   @$pb.TagNumber(7)
@@ -603,7 +918,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.List<$core.int> get data => $_getN(7);
   @$pb.TagNumber(8)
-  set data($core.List<$core.int> v) { $_setBytes(7, v); }
+  set data($core.List<$core.int> v) {
+    $_setBytes(7, v);
+  }
+
   @$pb.TagNumber(8)
   $core.bool hasData() => $_has(7);
   @$pb.TagNumber(8)
@@ -615,7 +933,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(10)
   $core.List<$core.int> get v => $_getN(9);
   @$pb.TagNumber(10)
-  set v($core.List<$core.int> v) { $_setBytes(9, v); }
+  set v($core.List<$core.int> v) {
+    $_setBytes(9, v);
+  }
+
   @$pb.TagNumber(10)
   $core.bool hasV() => $_has(9);
   @$pb.TagNumber(10)
@@ -624,7 +945,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(11)
   $core.List<$core.int> get r => $_getN(10);
   @$pb.TagNumber(11)
-  set r($core.List<$core.int> v) { $_setBytes(10, v); }
+  set r($core.List<$core.int> v) {
+    $_setBytes(10, v);
+  }
+
   @$pb.TagNumber(11)
   $core.bool hasR() => $_has(10);
   @$pb.TagNumber(11)
@@ -633,7 +957,10 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
   @$pb.TagNumber(12)
   $core.List<$core.int> get s => $_getN(11);
   @$pb.TagNumber(12)
-  set s($core.List<$core.int> v) { $_setBytes(11, v); }
+  set s($core.List<$core.int> v) {
+    $_setBytes(11, v);
+  }
+
   @$pb.TagNumber(12)
   $core.bool hasS() => $_has(11);
   @$pb.TagNumber(12)
@@ -641,43 +968,91 @@ class DynamicFeeTx extends $pb.GeneratedMessage {
 }
 
 class ExtensionOptionsEthereumTx extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ExtensionOptionsEthereumTx', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ethermint.evm.v1'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'ExtensionOptionsEthereumTx',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'ethermint.evm.v1'),
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   ExtensionOptionsEthereumTx._() : super();
   factory ExtensionOptionsEthereumTx() => create();
-  factory ExtensionOptionsEthereumTx.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ExtensionOptionsEthereumTx.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  ExtensionOptionsEthereumTx clone() => ExtensionOptionsEthereumTx()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  ExtensionOptionsEthereumTx copyWith(void Function(ExtensionOptionsEthereumTx) updates) => super.copyWith((message) => updates(message as ExtensionOptionsEthereumTx)) as ExtensionOptionsEthereumTx; // ignore: deprecated_member_use
+  factory ExtensionOptionsEthereumTx.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory ExtensionOptionsEthereumTx.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  ExtensionOptionsEthereumTx clone() =>
+      ExtensionOptionsEthereumTx()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  ExtensionOptionsEthereumTx copyWith(
+          void Function(ExtensionOptionsEthereumTx) updates) =>
+      super.copyWith(
+              (message) => updates(message as ExtensionOptionsEthereumTx))
+          as ExtensionOptionsEthereumTx; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static ExtensionOptionsEthereumTx create() => ExtensionOptionsEthereumTx._();
   ExtensionOptionsEthereumTx createEmptyInstance() => create();
-  static $pb.PbList<ExtensionOptionsEthereumTx> createRepeated() => $pb.PbList<ExtensionOptionsEthereumTx>();
+  static $pb.PbList<ExtensionOptionsEthereumTx> createRepeated() =>
+      $pb.PbList<ExtensionOptionsEthereumTx>();
   @$core.pragma('dart2js:noInline')
-  static ExtensionOptionsEthereumTx getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ExtensionOptionsEthereumTx>(create);
+  static ExtensionOptionsEthereumTx getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ExtensionOptionsEthereumTx>(create);
   static ExtensionOptionsEthereumTx? _defaultInstance;
 }
 
 class MsgEthereumTxResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MsgEthereumTxResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ethermint.evm.v1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hash')
-    ..pc<$55.Log>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'logs', $pb.PbFieldType.PM, subBuilder: $55.Log.create)
-    ..a<$core.List<$core.int>>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'ret', $pb.PbFieldType.OY)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vmError')
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gasUsed', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'MsgEthereumTxResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'ethermint.evm.v1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'hash')
+    ..pc<$55.Log>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'logs',
+        $pb.PbFieldType.PM,
+        subBuilder: $55.Log.create)
+    ..a<$core.List<$core.int>>(
+        3,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'ret',
+        $pb.PbFieldType.OY)
+    ..aOS(
+        4,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'vmError')
+    ..a<$fixnum.Int64>(
+        5,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'gasUsed',
+        $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false;
 
   MsgEthereumTxResponse._() : super();
   factory MsgEthereumTxResponse({
@@ -705,31 +1080,42 @@ class MsgEthereumTxResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory MsgEthereumTxResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MsgEthereumTxResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  MsgEthereumTxResponse clone() => MsgEthereumTxResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  MsgEthereumTxResponse copyWith(void Function(MsgEthereumTxResponse) updates) => super.copyWith((message) => updates(message as MsgEthereumTxResponse)) as MsgEthereumTxResponse; // ignore: deprecated_member_use
+  factory MsgEthereumTxResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory MsgEthereumTxResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  MsgEthereumTxResponse clone() =>
+      MsgEthereumTxResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  MsgEthereumTxResponse copyWith(
+          void Function(MsgEthereumTxResponse) updates) =>
+      super.copyWith((message) => updates(message as MsgEthereumTxResponse))
+          as MsgEthereumTxResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static MsgEthereumTxResponse create() => MsgEthereumTxResponse._();
   MsgEthereumTxResponse createEmptyInstance() => create();
-  static $pb.PbList<MsgEthereumTxResponse> createRepeated() => $pb.PbList<MsgEthereumTxResponse>();
+  static $pb.PbList<MsgEthereumTxResponse> createRepeated() =>
+      $pb.PbList<MsgEthereumTxResponse>();
   @$core.pragma('dart2js:noInline')
-  static MsgEthereumTxResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MsgEthereumTxResponse>(create);
+  static MsgEthereumTxResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<MsgEthereumTxResponse>(create);
   static MsgEthereumTxResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get hash => $_getSZ(0);
   @$pb.TagNumber(1)
-  set hash($core.String v) { $_setString(0, v); }
+  set hash($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasHash() => $_has(0);
   @$pb.TagNumber(1)
@@ -741,7 +1127,10 @@ class MsgEthereumTxResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.List<$core.int> get ret => $_getN(2);
   @$pb.TagNumber(3)
-  set ret($core.List<$core.int> v) { $_setBytes(2, v); }
+  set ret($core.List<$core.int> v) {
+    $_setBytes(2, v);
+  }
+
   @$pb.TagNumber(3)
   $core.bool hasRet() => $_has(2);
   @$pb.TagNumber(3)
@@ -750,7 +1139,10 @@ class MsgEthereumTxResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get vmError => $_getSZ(3);
   @$pb.TagNumber(4)
-  set vmError($core.String v) { $_setString(3, v); }
+  set vmError($core.String v) {
+    $_setString(3, v);
+  }
+
   @$pb.TagNumber(4)
   $core.bool hasVmError() => $_has(3);
   @$pb.TagNumber(4)
@@ -759,7 +1151,10 @@ class MsgEthereumTxResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $fixnum.Int64 get gasUsed => $_getI64(4);
   @$pb.TagNumber(5)
-  set gasUsed($fixnum.Int64 v) { $_setInt64(4, v); }
+  set gasUsed($fixnum.Int64 v) {
+    $_setInt64(4, v);
+  }
+
   @$pb.TagNumber(5)
   $core.bool hasGasUsed() => $_has(4);
   @$pb.TagNumber(5)
@@ -770,9 +1165,10 @@ class MsgApi {
   $pb.RpcClient _client;
   MsgApi(this._client);
 
-  $async.Future<MsgEthereumTxResponse> ethereumTx($pb.ClientContext? ctx, MsgEthereumTx request) {
+  $async.Future<MsgEthereumTxResponse> ethereumTx(
+      $pb.ClientContext? ctx, MsgEthereumTx request) {
     var emptyResponse = MsgEthereumTxResponse();
-    return _client.invoke<MsgEthereumTxResponse>(ctx, 'Msg', 'EthereumTx', request, emptyResponse);
+    return _client.invoke<MsgEthereumTxResponse>(
+        ctx, 'Msg', 'EthereumTx', request, emptyResponse);
   }
 }
-

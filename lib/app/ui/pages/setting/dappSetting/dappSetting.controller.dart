@@ -13,12 +13,13 @@ class UserDappSettingPageState {
   // 安全模式下，每次进入DAPP都需要重新授权
   final Rx<bool> _safeMode = false.obs;
   bool get safeMode => _safeMode.value;
-  set safeMode (bool value) => _safeMode.value = value;
+  set safeMode(bool value) => _safeMode.value = value;
   // webview controller
   // webview控制器
   final Rx<WebViewController?> _webviewController = Rx(null);
   WebViewController? get webviewController => _webviewController.value;
-  set webviewController (WebViewController? value) => _webviewController.value = value;
+  set webviewController(WebViewController? value) =>
+      _webviewController.value = value;
 }
 
 class UserDappSettingPageController extends GetxController {
@@ -35,6 +36,7 @@ class UserDappSettingPageController extends GetxController {
     // 获取安全模式
     state.safeMode = dataConfig.state.config.safeDappView;
   }
+
   @override
   onClose() {
     LLoading.dismiss();
@@ -79,13 +81,15 @@ class UserDappSettingPageController extends GetxController {
     dataConfig.upSafeViewType(state.safeMode);
     LLoading.dismiss();
   }
+
   // 清理网络缓存
   onClearNetCache() async {
     bool? result = await LBottomSheet.promptBottomSheet(
       title: 'clearNetCacheTip'.tr,
     );
     if (result != true) return;
-    if (state.webviewController == null) return LToast.error('ErrorWithClear'.tr);
+    if (state.webviewController == null)
+      return LToast.error('ErrorWithClear'.tr);
     try {
       LLoading.showBgLoading();
       state.webviewController?.clearCache();
@@ -98,6 +102,7 @@ class UserDappSettingPageController extends GetxController {
     LLoading.dismiss();
     LToast.success('SuccessWithClearDapp'.tr);
   }
+
   // 清理DAPP授权
   onClearDappPermission() async {
     bool? result = await LBottomSheet.promptBottomSheet(

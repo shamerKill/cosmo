@@ -3,8 +3,7 @@ import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 
-class DappCollectionPageState {
-}
+class DappCollectionPageState {}
 
 class DappCollectionPageController extends GetxController {
   DappCollectionPageController();
@@ -22,6 +21,7 @@ class DappCollectionPageController extends GetxController {
     }
     dataDappAddress.saveData();
   }
+
   onDeleteItem(int index) async {
     var res = await LBottomSheet.promptBottomSheet(
       title: 'deleteCollectionTip'.tr,

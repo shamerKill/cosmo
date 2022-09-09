@@ -16,7 +16,8 @@ class ChainExportPage extends GetView<ChainExportPageController> {
     ChainExportPageState state = controller.state;
 
     return LScaffold(
-      statusBar: LAppBar.defaultStatus(backgroundColor: appTheme.colors.pageBackgroundColorBasic),
+      statusBar: LAppBar.defaultStatus(
+          backgroundColor: appTheme.colors.pageBackgroundColorBasic),
       headerBar: Container(
         height: appTheme.sizes.titleBarHeight * 0.8,
         padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
@@ -24,46 +25,48 @@ class ChainExportPage extends GetView<ChainExportPageController> {
           children: [
             Expanded(
               child: TabBar(
-                controller: state.pageTabController,
-                isScrollable: true,
-                labelStyle: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold),
-                unselectedLabelStyle: TextStyle(color: appTheme.colors.textBlack, fontSize: appTheme.sizes.fontSize),
-                labelColor: appTheme.colors.textBlackBig,
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorColor: appTheme.colors.primaryColor,
-                tabs: [
-                  SizedBox(
-                    width: appTheme.sizes.basic * 150,
-                    height: appTheme.sizes.basic * 60,
-                    child: Center(child: Text('pledge'.tr)),
-                  ),
-                  SizedBox(
-                    width: appTheme.sizes.basic * 150,
-                    height: appTheme.sizes.basic * 60,
-                    child: Center(child: Text('proposal'.tr)),
-                  ),
-                ]
-              ),
+                  controller: state.pageTabController,
+                  isScrollable: true,
+                  labelStyle: TextStyle(
+                      fontSize: appTheme.sizes.fontSizeBig,
+                      fontWeight: FontWeight.bold),
+                  unselectedLabelStyle: TextStyle(
+                      color: appTheme.colors.textBlack,
+                      fontSize: appTheme.sizes.fontSize),
+                  labelColor: appTheme.colors.textBlackBig,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor: appTheme.colors.primaryColor,
+                  tabs: [
+                    SizedBox(
+                      width: appTheme.sizes.basic * 150,
+                      height: appTheme.sizes.basic * 60,
+                      child: Center(child: Text('pledge'.tr)),
+                    ),
+                    SizedBox(
+                      width: appTheme.sizes.basic * 150,
+                      height: appTheme.sizes.basic * 60,
+                      child: Center(child: Text('proposal'.tr)),
+                    ),
+                  ]),
             ),
             InkWell(
               onTap: controller.onCreateToken,
               child: Container(
                 decoration: BoxDecoration(
                   color: appTheme.colors.textBlack,
-                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
                 ),
                 height: appTheme.sizes.basic * 44,
                 padding: EdgeInsets.symmetric(
                   horizontal: appTheme.sizes.paddingSmall,
                 ),
                 child: Center(
-                  child: Text(
-                    'issueToken'.tr,
-                    style: TextStyle(
-                      color: appTheme.colors.hightColor.withOpacity(0.9),
-                      fontSize: appTheme.sizes.fontSizeSmall,
-                    )
-                  ),
+                  child: Text('issueToken'.tr,
+                      style: TextStyle(
+                        color: appTheme.colors.hightColor.withOpacity(0.9),
+                        fontSize: appTheme.sizes.fontSizeSmall,
+                      )),
                 ),
               ),
             ),

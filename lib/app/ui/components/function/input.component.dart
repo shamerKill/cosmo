@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -35,8 +34,8 @@ class LInput extends StatelessWidget {
     this.obscureText = false,
     this.onlyNumber = false,
     this.onlyInt = false,
-  }): super(key: key);
-  
+  }) : super(key: key);
+
   final double? inputHeight;
   final int? maxLines;
   final bool? obscureText;
@@ -68,25 +67,32 @@ class LInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double _height = inputHeight??appTheme.sizes.inputHeight;
+    double _height = inputHeight ?? appTheme.sizes.inputHeight;
     return SizedBox(
       height: _height,
       child: TextField(
         focusNode: focusNode,
         controller: textController,
         maxLines: maxLines,
-        obscureText: !(visibilityPass??true),
+        obscureText: !(visibilityPass ?? true),
         cursorColor: appTheme.colors.primaryColor,
         onChanged: onChanged,
-        style: TextStyle(fontSize: appTheme.sizes.inputFontSize, color: appTheme.colors.textBlack, height: maxLines == 1 ? null : 1.8),
-        keyboardType: keyboardType??(onlyNumber == true ? TextInputType.number : null),
+        style: TextStyle(
+            fontSize: appTheme.sizes.inputFontSize,
+            color: appTheme.colors.textBlack,
+            height: maxLines == 1 ? null : 1.8),
+        keyboardType:
+            keyboardType ?? (onlyNumber == true ? TextInputType.number : null),
         enabled: disabled == true ? false : true,
-        inputFormatters: onlyNumber == true ? [
-          FilteringTextInputFormatter.allow(RegExp(onlyInt == true ? "[0-9]" : r"[0-9]+\.?[0-9]*"))
-        ] : null,
+        inputFormatters: onlyNumber == true
+            ? [
+                FilteringTextInputFormatter.allow(
+                    RegExp(onlyInt == true ? "[0-9]" : r"[0-9]+\.?[0-9]*"))
+              ]
+            : null,
         maxLength: maxLength,
-        textAlign: textAlign??TextAlign.start,
-        textInputAction: textInputAction??TextInputAction.next,
+        textAlign: textAlign ?? TextAlign.start,
+        textInputAction: textInputAction ?? TextInputAction.next,
         onSubmitted: onSubmitted,
         autofocus: autoFocus,
         decoration: InputDecoration(
@@ -103,18 +109,40 @@ class LInput extends StatelessWidget {
           suffixText: suffixText,
           suffix: suffix,
           prefixIcon: prefixIcon,
-          border: hidBorder == true ? (InputBorder.none) : ((radiusCircular == true) ? (Get.theme.inputDecorationTheme.border as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null),
-          enabledBorder: hidBorder == true ? (InputBorder.none) : ((radiusCircular == true) ? (Get.theme.inputDecorationTheme.enabledBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null),
-          focusedBorder: hidBorder == true ? (InputBorder.none) : ((radiusCircular == true) ? (Get.theme.inputDecorationTheme.focusedBorder as OutlineInputBorder?)?.copyWith(borderRadius: BorderRadius.circular(_height)) : null),
-          suffixIcon: visibilityPass == null ? suffixIcon : IconButton(
-            splashRadius: appTheme.sizes.inputIconSize,
-            icon: Icon(
-              visibilityPass as bool ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-              size: appTheme.sizes.inputIconSize,
-              color: appTheme.colors.textGray,
-            ),
-            onPressed: passOnPress,
-          ),
+          border: hidBorder == true
+              ? (InputBorder.none)
+              : ((radiusCircular == true)
+                  ? (Get.theme.inputDecorationTheme.border
+                          as OutlineInputBorder?)
+                      ?.copyWith(borderRadius: BorderRadius.circular(_height))
+                  : null),
+          enabledBorder: hidBorder == true
+              ? (InputBorder.none)
+              : ((radiusCircular == true)
+                  ? (Get.theme.inputDecorationTheme.enabledBorder
+                          as OutlineInputBorder?)
+                      ?.copyWith(borderRadius: BorderRadius.circular(_height))
+                  : null),
+          focusedBorder: hidBorder == true
+              ? (InputBorder.none)
+              : ((radiusCircular == true)
+                  ? (Get.theme.inputDecorationTheme.focusedBorder
+                          as OutlineInputBorder?)
+                      ?.copyWith(borderRadius: BorderRadius.circular(_height))
+                  : null),
+          suffixIcon: visibilityPass == null
+              ? suffixIcon
+              : IconButton(
+                  splashRadius: appTheme.sizes.inputIconSize,
+                  icon: Icon(
+                    visibilityPass as bool
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: appTheme.sizes.inputIconSize,
+                    color: appTheme.colors.textGray,
+                  ),
+                  onPressed: passOnPress,
+                ),
         ),
       ),
     );

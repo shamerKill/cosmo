@@ -25,7 +25,10 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
         ),
         Padding(
           padding: EdgeInsets.only(top: appTheme.sizes.padding),
-          child: Text('notScreenshots'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.w700)),
+          child: Text('notScreenshots'.tr,
+              style: TextStyle(
+                  fontSize: appTheme.sizes.fontSizeBig,
+                  fontWeight: FontWeight.w700)),
         ),
         Padding(
           padding: EdgeInsets.only(top: appTheme.sizes.padding),
@@ -38,7 +41,7 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
         ),
         Padding(
           padding: EdgeInsets.only(top: appTheme.sizes.padding),
-          child:  LButton(
+          child: LButton(
             width: appTheme.sizes.infinity,
             onPressed: Get.back,
             child: Text('IAmKnown'.tr),
@@ -46,7 +49,7 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
         ),
       ],
     ));
-    
+
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
@@ -65,62 +68,76 @@ class AccountBackupShowPage extends GetView<AccountBackupShowPageController> {
         children: [
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
           Builder(builder: (BuildContext _context) {
-            double _itemWidth = (context.width - appTheme.sizes.padding * 2 - appTheme.sizes.basic * 2) / 3;
+            double _itemWidth = (context.width -
+                    appTheme.sizes.padding * 2 -
+                    appTheme.sizes.basic * 2) /
+                3;
             return Container(
               decoration: BoxDecoration(
-                border: Border.all(color: appTheme.colors.borderColor, width: appTheme.sizes.basic),
-                borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                border: Border.all(
+                    color: appTheme.colors.borderColor,
+                    width: appTheme.sizes.basic),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
                 color: appTheme.colors.borderColor.withOpacity(0.1),
               ),
               clipBehavior: Clip.antiAlias,
               child: Obx(() => Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: state.mnemonicList.map<Widget>((item) {
-                  return Container(
-                    width: _itemWidth,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: appTheme.sizes.paddingSmall,
-                      vertical: appTheme.sizes.paddingSmall / 2,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: appTheme.colors.borderColor, width: appTheme.sizes.basic),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: appTheme.sizes.infinity,
-                          child: Text(
-                            '${state.mnemonicList.indexOf(item) + 1}',
-                            textAlign: TextAlign.right,
-                            style: Get.textTheme.bodyText1!.copyWith(fontSize: appTheme.sizes.fontSizeSmall * 0.8),
-                          ),
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: state.mnemonicList.map<Widget>((item) {
+                      return Container(
+                        width: _itemWidth,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: appTheme.sizes.paddingSmall,
+                          vertical: appTheme.sizes.paddingSmall / 2,
                         ),
-                        SelectableText(
-                          item,
-                          style: TextStyle(
-                            fontSize: appTheme.sizes.fontSize,
-                            color: appTheme.colors.textBlack.withOpacity(0.8),
-                          ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: appTheme.colors.borderColor,
+                              width: appTheme.sizes.basic),
                         ),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              )),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: appTheme.sizes.infinity,
+                              child: Text(
+                                '${state.mnemonicList.indexOf(item) + 1}',
+                                textAlign: TextAlign.right,
+                                style: Get.textTheme.bodyText1!.copyWith(
+                                    fontSize:
+                                        appTheme.sizes.fontSizeSmall * 0.8),
+                              ),
+                            ),
+                            SelectableText(
+                              item,
+                              style: TextStyle(
+                                fontSize: appTheme.sizes.fontSize,
+                                color:
+                                    appTheme.colors.textBlack.withOpacity(0.8),
+                              ),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    top: appTheme.sizes.paddingSmall)),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  )),
             );
           }),
         ],
       ),
       footer: Obx(() => LButton(
-        width: appTheme.sizes.infinity,
-        onPressed: state.backupTimeDown == 0 ? controller.backupStep : null,
-        child: LAnimationView(child: Text(
-          state.backupTimeDown == 0 ?
-          'backupMnemonicSure'.tr :
-          '${'backupMnemonicWaiting'.tr}(${state.backupTimeDown}s)',
-        )),
-      )),
+            width: appTheme.sizes.infinity,
+            onPressed: state.backupTimeDown == 0 ? controller.backupStep : null,
+            child: LAnimationView(
+                child: Text(
+              state.backupTimeDown == 0
+                  ? 'backupMnemonicSure'.tr
+                  : '${'backupMnemonicWaiting'.tr}(${state.backupTimeDown}s)',
+            )),
+          )),
     );
   }
 }

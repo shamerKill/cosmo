@@ -14,36 +14,38 @@ class WalletTokenListPageState {
   // 展示列表0还是已添加1
   final Rx<int> _showType = 0.obs;
   int get showType => _showType.value;
-  set showType (int value) => _showType.value = value;
+  set showType(int value) => _showType.value = value;
   // 动画比例
   final Rx<double> _animationRatio = 1.0.obs;
   double get animationRatio => _animationRatio.value;
-  set animationRatio (double value) => _animationRatio.value = value;
+  set animationRatio(double value) => _animationRatio.value = value;
   // 当前账户数据
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
-  set accountInfo (AccountModel value) {
+  set accountInfo(AccountModel value) {
     _accountInfo.value = value;
     _accountInfo.refresh();
   }
+
   // 所有代币列表
   final RxList<TokenModel> allTokenList = RxList();
   // 所有代币列表分页/0代表没有更多
   final Rx<int> _allTokenPage = 1.obs;
   int get allTokenPage => _allTokenPage.value;
-  set allTokenPage (int value) => _allTokenPage.value = value;
+  set allTokenPage(int value) => _allTokenPage.value = value;
   // 是否在请求中
   final Rx<bool> _fetchLoading = false.obs;
   bool get fetchLoading => _fetchLoading.value;
-  set fetchLoading (bool value) => _fetchLoading.value = value;
+  set fetchLoading(bool value) => _fetchLoading.value = value;
 
   // 代币列表key标识符
   final Rx<Key> _tokenListKey = const Key('token_list').obs;
   Key get tokenListKey => _tokenListKey.value;
-  set tokenListKey (Key value) => _tokenListKey.value = value;
+  set tokenListKey(Key value) => _tokenListKey.value = value;
 }
 
-class WalletTokenListPageController extends GetxController with GetTickerProviderStateMixin {
+class WalletTokenListPageController extends GetxController
+    with GetTickerProviderStateMixin {
   WalletTokenListPageController();
   // 动画控制器
   late AnimationController _controller;
@@ -57,11 +59,11 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
   WalletTokenListPageState state = WalletTokenListPageState();
   DataAccountController accountController = Get.find();
 
-
   @override
   onInit() {
     super.onInit();
-    _controller = AnimationController(duration: const Duration(milliseconds: 300), vsync: this);
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 300), vsync: this);
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
       ..addListener(() {
         state.animationRatio = _animation.value;
@@ -75,6 +77,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
       if (!_type) LLoading.dismiss();
     });
   }
+
   @override
   onClose() {
     LLoading.dismiss();
@@ -92,65 +95,75 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     }
     tabBarController.animateTo(state.showType);
   }
+
   // 左右切换
   _onToggleList() {
     if (state.showType == tabBarController.index) return;
     _controller.forward(from: 0.0);
     state.showType = tabBarController.index;
   }
+
   // 搜索
   onSearch(String? text) async {
     if (text == null) return null;
     if (text == '') return getTokenRemoteList();
     state.fetchLoading = true;
-    httpToolServer.searchTokenInfo(text).then(
-      (res) {
-        if (res.status == 0) {
-          state.allTokenList..clear()..add(res.data['token']);
-        } else {
-          LToast.info('tokenNotFind'.tr);
-        }
+    httpToolServer.searchTokenInfo(text).then((res) {
+      if (res.status == 0) {
+        state.allTokenList
+          ..clear()
+          ..add(res.data['token']);
+      } else {
+        LToast.info('tokenNotFind'.tr);
       }
-    ).whenComplete(() => state.fetchLoading = false);
+    }).whenComplete(() => state.fetchLoading = false);
   }
+
   // 获取远程代币列表
   Future<dynamic> getTokenRemoteList() async {
     if (state.fetchLoading) return null;
     if (state.allTokenPage == 0) return null;
     state.fetchLoading = true;
-    return httpToolApp.getChainTokensList(state.allTokenPage, limit: 10)
-      .then((res) {
-        if (res.status != 0) {
-          state.allTokenPage = 0;
-          remoteListRefreshController = RefreshController();
-          return;
-        }
-        state.allTokenPage++;
-        if (res.data.length < 10) {
-          state.allTokenPage = 0;
-          remoteListRefreshController = RefreshController();
-        }
-        return res.data.forEach((_item) => state.allTokenList.add(_item));
-      })
-      .whenComplete(() => state.fetchLoading = false);
+    return httpToolApp
+        .getChainTokensList(state.allTokenPage, limit: 10)
+        .then((res) {
+      if (res.status != 0) {
+        state.allTokenPage = 0;
+        remoteListRefreshController = RefreshController();
+        return;
+      }
+      state.allTokenPage++;
+      if (res.data.length < 10) {
+        state.allTokenPage = 0;
+        remoteListRefreshController = RefreshController();
+      }
+      return res.data.forEach((_item) => state.allTokenList.add(_item));
+    }).whenComplete(() => state.fetchLoading = false);
   }
+
   // 获取当前账户
   _getLocalTokenList() {
     state.accountInfo = accountController.state.nowAccount!;
   }
+
   // 判断是否已添加有当前代币
   bool checkTokenIsAdd(String minUnit) {
-    return state.accountInfo.tokenList.where((_token) => _token.minUnit == minUnit || _token.contractAddress == minUnit).isNotEmpty;
+    return state.accountInfo.tokenList
+        .where((_token) =>
+            _token.minUnit == minUnit || _token.contractAddress == minUnit)
+        .isNotEmpty;
   }
+
   // 添加/删除当前代币
   onToggleToken(TokenModel token) async {
     if (checkTokenIsAdd(token.minUnit)) {
       bool? result = await LBottomSheet.promptBottomSheet(
         title: 'tip'.tr,
-        message: Text('deleteTokenTip'.tr +  token.symbol + '?'),
+        message: Text('deleteTokenTip'.tr + token.symbol + '?'),
       );
       if (result != true) return;
-      var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
+      var _index = state.accountInfo.tokenList
+          .indexWhere((_item) => _item.minUnit == token.minUnit);
       state.accountInfo.tokenList.removeAt(_index);
     } else {
       state.accountInfo.tokenList.add(token);
@@ -161,21 +174,24 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     await Future.delayed(const Duration(milliseconds: 500));
     state.fetchLoading = false;
   }
+
   // 我的代币列表移除当前代币
   onLocalRemoveToken(TokenModel token) async {
     bool? result = await LBottomSheet.promptBottomSheet(
       title: 'tip'.tr,
-      message: Text('deleteTokenTip'.tr +  token.symbol + '?'),
+      message: Text('deleteTokenTip'.tr + token.symbol + '?'),
     );
     if (result != true) return;
-    var _index = state.accountInfo.tokenList.indexWhere((_item) => _item.minUnit == token.minUnit);
+    var _index = state.accountInfo.tokenList
+        .indexWhere((_item) => _item.minUnit == token.minUnit);
     state.accountInfo.tokenList.removeAt(_index);
     accountController.updateAccount(state.accountInfo);
     state._accountInfo.refresh();
     LToast.success('SuccessWithDeleteToken'.tr);
   }
+
   // 我的代币列表排序
-  onUserAssetsReorder (int oldIndex, int newIndex) {
+  onUserAssetsReorder(int oldIndex, int newIndex) {
     var _token = state.accountInfo.tokenList.removeAt(oldIndex + 1);
     if (newIndex >= oldIndex) {
       state.accountInfo.tokenList.insert(newIndex, _token);
@@ -184,6 +200,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     }
     accountController.updateAccount(state.accountInfo);
   }
+
   // 一键获取所有资产
   onGetUserAllAssets() async {
     bool? result = await LBottomSheet.promptBottomSheet(
@@ -193,15 +210,18 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     if (result != true) return;
     state.fetchLoading = true;
     // prc10代币
-    var tokenList10 = await httpToolApp.getAccountPrc10AllBalance(state.accountInfo.address);
+    var tokenList10 =
+        await httpToolApp.getAccountPrc10AllBalance(state.accountInfo.address);
     // prc20代币
-    var tokenList20 = await browserToolServer.getAccountPrc20AllBalance(state.accountInfo.address);
+    var tokenList20 = await browserToolServer
+        .getAccountPrc20AllBalance(state.accountInfo.address);
     if (tokenList10?.data != null) {
       for (var i = 0; i < tokenList10?.data.length; i++) {
         var _item = tokenList10?.data[i];
-        if (!checkTokenIsAdd(_item['denom'])) {
+        if (!checkTokenIsAdd(_item['denom']) &&
+            (_item['denom'] as String).length < 15) {
           var token = await dataToolServer.getTokenInfo(_item['denom']);
-          state.accountInfo.tokenList.add(token..amount=_item['amount']);
+          state.accountInfo.tokenList.add(token..amount = _item['amount']);
         }
       }
     }
@@ -210,7 +230,7 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
         var _item = tokenList20?.data[i];
         if (!checkTokenIsAdd(_item['Contract'])) {
           var token = await dataToolServer.getTokenInfo(_item['Contract']);
-          state.accountInfo.tokenList.add(token..amount=_item['Num']);
+          state.accountInfo.tokenList.add(token..amount = _item['Num']);
         }
       }
     }
@@ -218,10 +238,14 @@ class WalletTokenListPageController extends GetxController with GetTickerProvide
     accountController.updateAccount(state.accountInfo);
     state.fetchLoading = false;
   }
+
   // 前往代币详情页面
   onGoToDetail(TokenModel token) async {
-    if (token.type == enumTokenType.prc10) await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
-    if (token.type == enumTokenType.prc20) await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.contractAddress));
+    if (token.type == enumTokenType.prc10)
+      await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
+    if (token.type == enumTokenType.prc20)
+      await Get.toNamed(
+          PlugRoutesNames.walletTokenDetail(token.contractAddress));
     _getLocalTokenList();
   }
 }

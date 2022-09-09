@@ -17,23 +17,23 @@ import 'package:plug/app/ui/utils/wallet.dart';
 class AccountImportPageState {
   final Rx<bool> _passwordShow = false.obs;
   bool get passwordShow => _passwordShow.value;
-  set passwordShow (bool value) => _passwordShow.value = value;
-  
+  set passwordShow(bool value) => _passwordShow.value = value;
+
   final Rx<bool> _rePasswordShow = false.obs;
   bool get rePasswordShow => _rePasswordShow.value;
-  set rePasswordShow (bool value) => _rePasswordShow.value = value;
+  set rePasswordShow(bool value) => _rePasswordShow.value = value;
 
   final Rx<bool> _agreement = false.obs;
   bool get agreement => _agreement.value;
-  set agreement (bool value) => _agreement.value = value;
-  
+  set agreement(bool value) => _agreement.value = value;
+
   final Rx<bool> _canImport = false.obs;
   bool get canImport => _canImport.value;
-  set canImport (bool value) => _canImport.value = value;
+  set canImport(bool value) => _canImport.value = value;
 
   final Rx<bool> _importLoading = false.obs;
   bool get importLoading => _importLoading.value;
-  set importLoading (bool value) => _importLoading.value = value;
+  set importLoading(bool value) => _importLoading.value = value;
 
   // 账户类型列表
   final RxList<enumAccountType> accountTypeList = RxList([
@@ -43,7 +43,7 @@ class AccountImportPageState {
   // 账户类型选择
   final Rx<enumAccountType> _accountType = enumAccountType.prc20.obs;
   enumAccountType get accountType => _accountType.value;
-  set accountType (enumAccountType value) => _accountType.value = value;
+  set accountType(enumAccountType value) => _accountType.value = value;
 }
 
 class AccountImportPageController extends GetxController {
@@ -54,8 +54,6 @@ class AccountImportPageController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController rePasswordController = TextEditingController();
   final DataAccountController dataAccountController = Get.find();
-
-
 
   @override
   onInit() {
@@ -74,30 +72,38 @@ class AccountImportPageController extends GetxController {
   }
 
   toggleAgreement(bool? type) {
-    state.agreement = type??state.agreement;
+    state.agreement = type ?? state.agreement;
     _checkGanImport();
   }
+
   togglePasswordView(String type) {
     if (type == 'password') state._passwordShow.toggle();
     if (type == 'rePassword') state._rePasswordShow.toggle();
   }
+
   // 切换账户类型
   switchAccountType(int type) {
     state.accountType = state.accountTypeList[type];
   }
+
   // 用户协议
-  goToUserAgreement() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode('https://www.plugchain.network/v2/userAgreemen'))});
+  goToUserAgreement() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: {
+        'link': base64.encode(
+            utf8.encode('https://www.plugchain.network/v2/userAgreemen'))
+      });
   // 隐私保护
-  goToUserPrivacy() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode('https://www.plugchain.network/v2/privacyAgreemen'))});
+  goToUserPrivacy() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: {
+        'link': base64.encode(
+            utf8.encode('https://www.plugchain.network/v2/privacyAgreemen'))
+      });
   // 判断是否可以导入
   _checkGanImport() {
-    if (
-      VerifyTool.password(passwordController.text) &&
-      passwordController.text == rePasswordController.text &&
-      state.agreement
-    ) {
+    if (VerifyTool.password(passwordController.text) &&
+        passwordController.text == rePasswordController.text &&
+        state.agreement) {
       // 助记词判断
-      List<String> mnemonic = mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
+      List<String> mnemonic =
+          mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
       if (_checkMnemonic(mnemonic)) {
         state.canImport = true;
       } else {
@@ -107,8 +113,9 @@ class AccountImportPageController extends GetxController {
       state.canImport = false;
     }
   }
+
   // 导入
-  importAccount () async {
+  importAccount() async {
     if (!VerifyTool.password(passwordController.text)) {
       return LToast.error('ErrorWithPasswordInput'.tr);
     }
@@ -126,9 +133,11 @@ class AccountImportPageController extends GetxController {
       LToast.error('ErrorWithMnemonicInput'.tr);
     }
   }
+
   // 进行导入
   processImport() async {
-    List<String> mnemonic = mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
+    List<String> mnemonic =
+        mnemonicController.text.split(RegExp(r"[^a-zA-Z]+"));
     if (!WalletTool.checkMnemonic(mnemonic)) {
       return LToast.error('ErrorWithMnemonicInput'.tr);
     }
@@ -140,14 +149,18 @@ class AccountImportPageController extends GetxController {
       SystemChannels.textInput.invokeMethod('TextInput.hide');
     } catch (_) {}
     AccountModel createdAccount = AccountModel();
-    createdAccount..address = _getAccountAddress(mnemonic)
-      ..nickName = '${Env.envConfig.assets.accountDefaultPre}-${'import'.tr}-${(dataAccountController.state.nowAccount?.weight??-1) + 1}'
-      ..stringifyRaw = WalletTool.encryptMnemonic(mnemonic, passwordController.text)
-      ..weight = (dataAccountController.state.nowAccount?.weight??-1) + 1
+    createdAccount
+      ..address = _getAccountAddress(mnemonic)
+      ..nickName =
+          '${Env.envConfig.assets.accountDefaultPre}-${'import'.tr}-${(dataAccountController.state.nowAccount?.weight ?? -1) + 1}'
+      ..stringifyRaw =
+          WalletTool.encryptMnemonic(mnemonic, passwordController.text)
+      ..weight = (dataAccountController.state.nowAccount?.weight ?? -1) + 1
       ..accountType = state.accountType;
     if (dataAccountController.checkAccountIsHad(createdAccount)) {
       LLoading.dismiss();
-      var res = await LBottomSheet.promptBottomSheet(title: 'accountRepeatTip'.tr);
+      var res =
+          await LBottomSheet.promptBottomSheet(title: 'accountRepeatTip'.tr);
       if (res == false) return state._importLoading.toggle();
     }
     LLoading.showBgLoading();
@@ -155,7 +168,8 @@ class AccountImportPageController extends GetxController {
     state._importLoading.toggle();
     LToast.success('SuccessWithImport'.tr);
     LLoading.dismiss();
-    Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
+    Get.offAllNamed(PlugRoutesNames.walletHome,
+        predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
   }
 
   // 判断助记词是否可用

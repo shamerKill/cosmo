@@ -14,12 +14,11 @@ class _DataToolServer {
     _initMemTokenList();
   }
   _initMemTokenList() {
-    for (TokenModel item in dataAccount.state.nowAccount?.tokenList??[]) {
-      _memTokenList.add(
-        TokenModel()..setData(item.toJson())
-      );
+    for (TokenModel item in dataAccount.state.nowAccount?.tokenList ?? []) {
+      _memTokenList.add(TokenModel()..setData(item.toJson()));
     }
   }
+
   /// 获取代币信息
   Future<TokenModel> getTokenInfo(String _ident) async {
     for (TokenModel item in _memTokenList) {
@@ -28,11 +27,13 @@ class _DataToolServer {
       }
     }
     if (StringTool.checkAddress(_ident)) {
-      var _token = (await httpToolServer.searchToken20Info(_ident)).data?['token'];
+      var _token =
+          (await httpToolServer.searchToken20Info(_ident)).data?['token'];
       _memTokenList.add(TokenModel()..setData(_token.toJson()));
       return TokenModel()..setData(_token.toJson());
     } else {
-      var _token = (await httpToolServer.searchToken10Info(_ident)).data?['token'];
+      var _token =
+          (await httpToolServer.searchToken10Info(_ident)).data?['token'];
       _memTokenList.add(TokenModel()..setData(_token.toJson()));
       return TokenModel()..setData(_token.toJson());
     }
@@ -41,6 +42,7 @@ class _DataToolServer {
   setMemTransferLogItem(TransferLogModel item) {
     _memTransferLogItem = item;
   }
+
   TransferLogModel? get transferLogItem => _memTransferLogItem;
 }
 

@@ -15,23 +15,23 @@ class WalletQrScannerPageState {
   // 是否已经申请过
   final Rx<bool> _isApplied = false.obs;
   bool get isApplied => _isApplied.value;
-  set isApplied (bool value) => _isApplied.value = value;
+  set isApplied(bool value) => _isApplied.value = value;
   // 是否已经获取到权限
   final Rx<bool> _isGetPermission = false.obs;
   bool get isGetPermission => _isGetPermission.value;
-  set isGetPermission (bool value) => _isGetPermission.value = value;
+  set isGetPermission(bool value) => _isGetPermission.value = value;
   // 是否已经扫描到二维码
   final Rx<bool> _isScanned = false.obs;
   bool get isScanned => _isScanned.value;
-  set isScanned (bool value) => _isScanned.value = value;
+  set isScanned(bool value) => _isScanned.value = value;
   // 是否开启了闪光灯
   final Rx<bool> _isOpenedFlashLight = false.obs;
   bool get isOpenedFlashLight => _isOpenedFlashLight.value;
-  set isOpenedFlashLight (bool value) => _isOpenedFlashLight.value = value;
+  set isOpenedFlashLight(bool value) => _isOpenedFlashLight.value = value;
   // 判断是否需要带参数返回
   final Rx<bool> _isGetResultBack = false.obs;
   bool get isGetResultBack => _isGetResultBack.value;
-  set isGetResultBack (bool value) => _isGetResultBack.value = value;
+  set isGetResultBack(bool value) => _isGetResultBack.value = value;
   // 非官方码
   final RxList<String> warningQrCode = RxList();
 }
@@ -41,7 +41,7 @@ class WalletQrScannerPageController extends GetxController {
   WalletQrScannerPageState state = WalletQrScannerPageState();
   // 控制器
   QrReaderViewController? scanController;
-  
+
   @override
   onReady() async {
     String? needResult = Get.parameters['result'];
@@ -75,14 +75,16 @@ class WalletQrScannerPageController extends GetxController {
     state.isApplied = false;
     return true;
   }
+
   // 开始监听扫码
-  startScan()  {
+  startScan() {
     if (scanController == null) return;
     state.isScanned = false;
     scanController!.startCamera((String result, _) async {
       if (state.isScanned) return;
       if (result == '') return;
-      if (state.warningQrCode.firstWhereOrNull((ele) => ele == result) != null) return;
+      if (state.warningQrCode.firstWhereOrNull((ele) => ele == result) != null)
+        return;
       state.isScanned = true;
       scanController?.stopCamera();
       if (StringTool.checkNetAddress(result) && !state.isGetResultBack) {
@@ -92,7 +94,8 @@ class WalletQrScannerPageController extends GetxController {
           message: Text('scanWithWebsite'.tr),
         );
         if (type == true) {
-          return Get.offAndToNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode(result)) });
+          return Get.offAndToNamed(PlugRoutesNames.dappWebview,
+              parameters: {'link': base64.encode(utf8.encode(result))});
         }
       } else if (StringTool.checkCosmoLink(result)) {
         var data = StringTool.formatCosmoLink(result);
@@ -104,7 +107,8 @@ class WalletQrScannerPageController extends GetxController {
           state.warningQrCode.add(result);
           return startScan();
         }
-      } else if (StringTool.checkChainAddress(result) && !state.isGetResultBack) {
+      } else if (StringTool.checkChainAddress(result) &&
+          !state.isGetResultBack) {
         // 账户地址
         var type = await LBottomSheet.promptBottomSheet(
           title: 'tip'.tr,
@@ -119,6 +123,7 @@ class WalletQrScannerPageController extends GetxController {
       startScan();
     });
   }
+
   // 打开图片
   Future scanImage() async {
     try {
@@ -126,7 +131,8 @@ class WalletQrScannerPageController extends GetxController {
       if (status.isDenied || status.isPermanentlyDenied) {
         status = await Permission.photos.request();
       }
-      if (!(status.isGranted || status.isLimited)) return LToast.warning('ErrorWithPermissionCamera'.tr);
+      if (!(status.isGranted || status.isLimited))
+        return LToast.warning('ErrorWithPermissionCamera'.tr);
       state.isGetPermission = false;
       scanController?.stopCamera();
       final ImagePicker _picker = ImagePicker();
@@ -141,22 +147,26 @@ class WalletQrScannerPageController extends GetxController {
       state.isGetPermission = true;
     }
   }
+
   // 切换闪光灯
   Future flashlight() async {
     if (scanController == null) return;
     final lightType = await scanController?.setFlashlight();
-    state.isOpenedFlashLight = lightType??false;
+    state.isOpenedFlashLight = lightType ?? false;
   }
+
   // 复制到粘贴板
   onCopyAddress(String str) {
-    FlutterClipboard.copy(str).then(( value ) => LToast.success('SuccessWithCopy'.tr));
+    FlutterClipboard.copy(str)
+        .then((value) => LToast.success('SuccessWithCopy'.tr));
   }
+
   // 判断扫码json，跳转不同链接
   _checkResultJson(Map<String, dynamic> result) {
     if (result['address'] != null && result['token'] != null) {
       Get.offAndToNamed(
         PlugRoutesNames.walletTokenSend(result['token']),
-        parameters: { 'address': result['address'] },
+        parameters: {'address': result['address']},
       );
       return true;
     }

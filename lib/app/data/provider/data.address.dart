@@ -10,37 +10,38 @@ class DataAddressState {
   RxList<AddressModel> addressList = RxList();
 }
 
-
 class DataAddressController extends GetxController {
   DataAddressController() {
     _readStorage();
   }
   final DataAddressState state = DataAddressState();
 
-
   // 添加地址
   addAddress(AddressModel address) {
     state.addressList.add(address);
     _saveAccounts();
   }
+
   // 删除地址
   removeAddress(AddressModel address) {
     state.addressList.removeWhere((addr) => addr.id == address.id);
     _saveAccounts();
   }
+
   // 更新地址
   updateAddress(AddressModel address) {
     var _index = state.addressList.indexWhere((addr) => addr.id == address.id);
     if (_index == -1) return;
-    state.addressList.replaceRange(
-      _index, _index + 1, [address]
-    );
+    state.addressList.replaceRange(_index, _index + 1, [address]);
     _saveAccounts();
   }
+
   // 储存基础币
   _saveAccounts() {
-    GetStorage().write(state.baseCoinName, json.encode(state.addressList.map((e) => e.toJson()).toList()));
+    GetStorage().write(state.baseCoinName,
+        json.encode(state.addressList.map((e) => e.toJson()).toList()));
   }
+
   // 读取本地数据币
   _readStorage() {
     String? data = GetStorage().read(state.baseCoinName);

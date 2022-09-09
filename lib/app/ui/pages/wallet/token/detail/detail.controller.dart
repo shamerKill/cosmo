@@ -10,15 +10,15 @@ class WalletTokenDetailPageState {
   // 当前代币详情
   final Rx<TokenModel> _tokenInfo = TokenModel().obs;
   TokenModel get tokenInfo => _tokenInfo.value;
-  set tokenInfo (TokenModel value) => _tokenInfo.value = value;
+  set tokenInfo(TokenModel value) => _tokenInfo.value = value;
   // 当前代币是否已经添加
   final Rx<bool> _isAdd = false.obs;
   bool get isAdd => _isAdd.value;
-  set isAdd (bool value) => _isAdd.value = value;
+  set isAdd(bool value) => _isAdd.value = value;
   // 是否显示按钮
   final Rx<bool> _showButton = true.obs;
   bool get showButton => _showButton.value;
-  set showButton (bool value) => _showButton.value = value;
+  set showButton(bool value) => _showButton.value = value;
 }
 
 class WalletTokenDetailPageController extends GetxController {
@@ -33,7 +33,8 @@ class WalletTokenDetailPageController extends GetxController {
     String? tokenId = Get.parameters['token'];
     if (tokenId == null) return Get.back();
     if (tokenId == dataCoins.state.baseCoin.minUnit) state.showButton = false;
-    if (tokenId.startsWith(Env.envConfig.chainInfo.addressPrefix) && tokenId.length == 41) {
+    if (tokenId.startsWith(Env.envConfig.chainInfo.addressPrefix) &&
+        tokenId.length == 41) {
       _getTokenPrc20(tokenId);
     } else {
       _getTokenPrc10(tokenId);
@@ -43,15 +44,18 @@ class WalletTokenDetailPageController extends GetxController {
   // 获取币种
   _getTokenPrc10(String tokenId) async {
     LLoading.showLoading();
-    var _token = dataAccount.state.nowAccount?.tokenList.firstWhereOrNull((_token) => _token.minUnit == tokenId);
+    var _token = dataAccount.state.nowAccount?.tokenList
+        .firstWhereOrNull((_token) => _token.minUnit == tokenId);
     if (_token != null) state.isAdd = true;
     _token ??= await httpToolApp.getCoinInfo(tokenId);
     if (_token != null) state.tokenInfo = _token;
     LLoading.dismiss();
   }
+
   _getTokenPrc20(String tokenId) async {
     LLoading.showLoading();
-    var _token = dataAccount.state.nowAccount?.tokenList.firstWhereOrNull((_token) => _token.contractAddress == tokenId);
+    var _token = dataAccount.state.nowAccount?.tokenList
+        .firstWhereOrNull((_token) => _token.contractAddress == tokenId);
     if (_token != null) state.isAdd = true;
     _token ??= (await httpToolServer.searchTokenInfo(tokenId)).data['token'];
     if (_token != null) state.tokenInfo = _token;
@@ -66,7 +70,8 @@ class WalletTokenDetailPageController extends GetxController {
     LLoading.showLoading();
     await Future.delayed(const Duration(milliseconds: 200));
     if (state.isAdd) {
-      var _index = dataAccount.state.nowAccount?.tokenList.indexWhere((_item) => _item.minUnit == state.tokenInfo.minUnit);
+      var _index = dataAccount.state.nowAccount?.tokenList
+          .indexWhere((_item) => _item.minUnit == state.tokenInfo.minUnit);
       if (_index != null) {
         _account.tokenList.removeAt(_index);
         dataAccount.updateAccount(_account);
@@ -78,5 +83,4 @@ class WalletTokenDetailPageController extends GetxController {
     state._isAdd.toggle();
     LLoading.dismiss();
   }
-
 }

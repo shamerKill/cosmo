@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/chain/create-token/create-token.controller.dar
 class ChainCreateTokenPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ChainCreateTokenPageController>(() => ChainCreateTokenPageController());
+    Get.lazyPut<ChainCreateTokenPageController>(
+        () => ChainCreateTokenPageController());
   }
 }

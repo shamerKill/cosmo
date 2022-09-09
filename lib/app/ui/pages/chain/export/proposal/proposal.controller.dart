@@ -55,13 +55,15 @@ class ChainExportProposalPageState {
   // 当前页数/0代表没有更多
   final Rx<int> _nowPage = 1.obs;
   int get nowPage => _nowPage.value;
-  set nowPage (int value) => _nowPage.value = value;
+  set nowPage(int value) => _nowPage.value = value;
   // 提案列表
   RxList<ProposalCardInfo> proposalList = RxList();
   // 搜索controller
-  final Rx<TextEditingController> _searchController = TextEditingController().obs;
+  final Rx<TextEditingController> _searchController =
+      TextEditingController().obs;
   TextEditingController get searchController => _searchController.value;
-  set searchController (TextEditingController value) => _searchController.value = value;
+  set searchController(TextEditingController value) =>
+      _searchController.value = value;
 }
 
 class ChainExportProposalPageController extends GetxController {
@@ -79,7 +81,7 @@ class ChainExportProposalPageController extends GetxController {
   }
 
   // 获取内容
-  Future<void> onGetData() async{
+  Future<void> onGetData() async {
     int _limit = 5;
     var res = await Future.wait([
       httpToolApp.getChainProposalsList(state.nowPage, limit: _limit),
@@ -92,19 +94,30 @@ class ChainExportProposalPageController extends GetxController {
     for (var item in result.data) {
       double yesVolume = double.parse(item['final_tally_result']['yes']);
       double noVolume = double.parse(item['final_tally_result']['no']);
-      double abstainVolume = double.parse(item['final_tally_result']['abstain']);
-      double vetoVolume = double.parse(item['final_tally_result']['no_with_veto']);
-      double votingRate = (yesVolume + noVolume + abstainVolume + vetoVolume) / int.parse(tokenSupply.data??'1') * 100;
+      double abstainVolume =
+          double.parse(item['final_tally_result']['abstain']);
+      double vetoVolume =
+          double.parse(item['final_tally_result']['no_with_veto']);
+      double votingRate = (yesVolume + noVolume + abstainVolume + vetoVolume) /
+          int.parse(tokenSupply.data ?? '1') *
+          100;
       state.proposalList.add(ProposalCardInfo(
         status: (() {
           switch (item['status']) {
-            case 'PROPOSAL_STATUS_UNSPECIFIED': return EnumProposalStatus.unspecified;
-            case 'PROPOSAL_STATUS_DEPOSIT_PERIOD': return EnumProposalStatus.deposit;
-            case 'PROPOSAL_STATUS_VOTING_PERIOD': return EnumProposalStatus.votingPeriod;
-            case 'PROPOSAL_STATUS_PASSED': return EnumProposalStatus.passed;
-            case 'PROPOSAL_STATUS_REJECTED': return EnumProposalStatus.rejected;
-            case 'PROPOSAL_STATUS_FAILED': return EnumProposalStatus.failed;
-            default: return EnumProposalStatus.unspecified;
+            case 'PROPOSAL_STATUS_UNSPECIFIED':
+              return EnumProposalStatus.unspecified;
+            case 'PROPOSAL_STATUS_DEPOSIT_PERIOD':
+              return EnumProposalStatus.deposit;
+            case 'PROPOSAL_STATUS_VOTING_PERIOD':
+              return EnumProposalStatus.votingPeriod;
+            case 'PROPOSAL_STATUS_PASSED':
+              return EnumProposalStatus.passed;
+            case 'PROPOSAL_STATUS_REJECTED':
+              return EnumProposalStatus.rejected;
+            case 'PROPOSAL_STATUS_FAILED':
+              return EnumProposalStatus.failed;
+            default:
+              return EnumProposalStatus.unspecified;
           }
         })(),
         id: int.parse(item['proposal_id']),
@@ -122,36 +135,54 @@ class ChainExportProposalPageController extends GetxController {
     state.nowPage++;
     await onGetData();
   }
+
   Future<void> onRefresh() async {
     state.nowPage = 1;
     state.proposalList.clear();
     await onGetData();
   }
+
   // 前往提案详情
   onGoToProposalDetail(ProposalCardInfo info) {
     Get.toNamed(PlugRoutesNames.chainProposalDetails('${info.id}'));
   }
+
   // 展开/关闭操作框
   onToggleFunc(ProposalCardInfo info) {
     info.isOpenFunc = !info.isOpenFunc;
     state.proposalList.refresh();
   }
+
   // 弃权
-  onAbandon(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_ABSTAIN);
+  onAbandon(ProposalCardInfo info) =>
+      _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_ABSTAIN);
   // 反对
-  onReject(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_NO);
+  onReject(ProposalCardInfo info) =>
+      _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_NO);
   // 赞同
-  onAgree(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_YES);
+  onAgree(ProposalCardInfo info) =>
+      _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_YES);
   // 否决
-  onVeto(ProposalCardInfo info) => _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_NO_WITH_VETO);
+  onVeto(ProposalCardInfo info) =>
+      _proposalPrompt(info, gov.VoteOption.VOTE_OPTION_NO_WITH_VETO);
   _proposalPrompt(ProposalCardInfo info, gov.VoteOption type) async {
     String s = '';
-    switch(type) {
-      case gov.VoteOption.VOTE_OPTION_ABSTAIN: s = 'abandon'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_NO: s = 'reject'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_YES: s = 'agree'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_NO_WITH_VETO: s = 'veto'.tr; break;
-      case gov.VoteOption.VOTE_OPTION_UNSPECIFIED: s = 'veto'.tr; break;
+    switch (type) {
+      case gov.VoteOption.VOTE_OPTION_ABSTAIN:
+        s = 'abandon'.tr;
+        break;
+      case gov.VoteOption.VOTE_OPTION_NO:
+        s = 'reject'.tr;
+        break;
+      case gov.VoteOption.VOTE_OPTION_YES:
+        s = 'agree'.tr;
+        break;
+      case gov.VoteOption.VOTE_OPTION_NO_WITH_VETO:
+        s = 'veto'.tr;
+        break;
+      case gov.VoteOption.VOTE_OPTION_UNSPECIFIED:
+        s = 'veto'.tr;
+        break;
     }
     var _type = await LBottomSheet.promptBottomSheet(
       title: 'voteTip'.tr,
@@ -161,7 +192,8 @@ class ChainExportProposalPageController extends GetxController {
     var _pass = await LBottomSheet.passwordBottomSheet();
     if (_pass == null) return;
     LLoading.showBgLoading();
-    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, _pass);
+    var mnemonicList = await WalletTool.decryptMnemonic(
+        dataAccount.state.nowAccount!.stringifyRaw, _pass);
     if (mnemonicList == null) {
       LLoading.dismiss();
       return LToast.warning('ErrorWithPasswordInput'.tr);
@@ -172,11 +204,13 @@ class ChainExportProposalPageController extends GetxController {
       mnemonic: mnemonicList,
       proposalId: info.id.toString(),
       option: type,
-      gasAll: NumberTool.balanceToAmount(_fee.data??'0.0002'),
+      gasAll: NumberTool.balanceToAmount(_fee.data ?? '0.0002'),
     );
     LLoading.dismiss();
-    if (result.status == -10001) return LToast.error('ErrorWithProposalCallback'.tr);
-    if (result.status == -10002) return LToast.error('ErrorWithProposalTimeout'.tr);
+    if (result.status == -10001)
+      return LToast.error('ErrorWithProposalCallback'.tr);
+    if (result.status == -10002)
+      return LToast.error('ErrorWithProposalTimeout'.tr);
     if (result.status != 0) return LToast.error('ErrorWithProposalUnKnow'.tr);
     LToast.success('SuccessWithProposal'.tr);
   }

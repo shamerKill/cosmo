@@ -38,23 +38,34 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                       padding: EdgeInsets.all(appTheme.sizes.basic * 5.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: appTheme.colors.borderColor),
-                        borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 100.0)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(appTheme.sizes.basic * 100.0)),
                       ),
                       child: Obx(() => LViewImage(
-                        url: state.verifierInfo.avatar,
-                        bgColor: StringTool.stringToColor(state.verifierInfo.address),
-                        width: appTheme.sizes.basic * 56.0,
-                        height: appTheme.sizes.basic * 56.0,
-                        isRadius: true,
-                      )),
+                            url: state.verifierInfo.avatar,
+                            bgColor: StringTool.stringToColor(
+                                state.verifierInfo.address),
+                            width: appTheme.sizes.basic * 56.0,
+                            height: appTheme.sizes.basic * 56.0,
+                            isRadius: true,
+                          )),
                     ),
-                    Padding(padding: EdgeInsets.only(left: appTheme.sizes.basic * 10.0)),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(left: appTheme.sizes.basic * 10.0)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Obx(() =>  Text(state.verifierInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold, height: 1.6))),
-                        Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(state.verifierInfo.address, style: Get.textTheme.bodyText1)),
+                        Obx(() => Text(state.verifierInfo.nickName,
+                            style: TextStyle(
+                                fontSize: appTheme.sizes.fontSizeBig,
+                                fontWeight: FontWeight.bold,
+                                height: 1.6))),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                bottom: appTheme.sizes.basic * 10.0)),
+                        Obx(() => Text(state.verifierInfo.address,
+                            style: Get.textTheme.bodyText1)),
                       ],
                     ),
                   ],
@@ -68,12 +79,19 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: appTheme.sizes.padding, right: appTheme.sizes.padding, top: appTheme.sizes.padding),
+            padding: EdgeInsets.only(
+                left: appTheme.sizes.padding,
+                right: appTheme.sizes.padding,
+                top: appTheme.sizes.padding),
             child: Container(
               width: appTheme.sizes.infinity,
-              padding: EdgeInsets.only(top: appTheme.sizes.padding, bottom: appTheme.sizes.paddingSmall),
+              padding: EdgeInsets.only(
+                  top: appTheme.sizes.padding,
+                  bottom: appTheme.sizes.paddingSmall),
               decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: appTheme.colors.borderColor.withOpacity(0.5))),
+                border: Border(
+                    top: BorderSide(
+                        color: appTheme.colors.borderColor.withOpacity(0.5))),
               ),
               child: Row(
                 children: [
@@ -82,9 +100,14 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('pledgingVolume'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged.toString()))))
+                        Text('pledgingVolume'.tr,
+                            style: TextStyle(color: appTheme.colors.textGray)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                top: appTheme.sizes.basic * 10.0)),
+                        Obx(() => Text(NumberTool.formatNumberStr(
+                            NumberTool.amountToBalance(
+                                state.verifierInfo.pledged.toString()))))
                       ],
                     ),
                   ),
@@ -93,9 +116,14 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('pledgedReward'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.reward.toString()))))
+                        Text('pledgedReward'.tr,
+                            style: TextStyle(color: appTheme.colors.textGray)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                top: appTheme.sizes.basic * 10.0)),
+                        Obx(() => Text(NumberTool.formatNumberStr(
+                            NumberTool.amountToBalance(
+                                state.verifierInfo.reward.toString()))))
                       ],
                     ),
                   ),
@@ -113,49 +141,63 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('rePledgedVolume'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('rePledgedVolume'.tr,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
                   hintText: 'rePledgedInputHint'.tr,
                   obscureText: true,
-                  suffix: Obx(() => Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack))),
+                  suffix: Obx(() => Text(state.baseCoin.symbol,
+                      style: TextStyle(color: appTheme.colors.textBlack))),
                   onlyNumber: true,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
-                  child: Obx(() => Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(text: 'accountBalance'.tr),
-                        const TextSpan(text: '  '),
-                        TextSpan(
-                          text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.baseCoin.amount, scale: state.baseCoin.scale)),
-                          style: TextStyle(color: appTheme.colors.primaryColor)
-                        ),
-                        const TextSpan(text: ' '),
-                        TextSpan(text: state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.primaryColor))
-                      ]
-                    ),
-                    style: Get.textTheme.bodyText1
-                  ))
-                ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
+                    child: Obx(() => Text.rich(
+                        TextSpan(children: [
+                          TextSpan(text: 'accountBalance'.tr),
+                          const TextSpan(text: '  '),
+                          TextSpan(
+                              text: NumberTool.formatNumberStr(
+                                  NumberTool.amountToBalance(
+                                      state.baseCoin.amount,
+                                      scale: state.baseCoin.scale)),
+                              style: TextStyle(
+                                  color: appTheme.colors.primaryColor)),
+                          const TextSpan(text: ' '),
+                          TextSpan(
+                              text: state.baseCoin.symbol,
+                              style: TextStyle(
+                                  color: appTheme.colors.primaryColor))
+                        ]),
+                        style: Get.textTheme.bodyText1))),
                 DottedLine(dashColor: appTheme.colors.borderColor),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
+                  padding:
+                      EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    'fee'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
-                    style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
-                  )),
+                        'fee'.tr +
+                            ' ' +
+                            NumberTool.formatNumberStr(state.feeAmount) +
+                            ' ' +
+                            state.baseCoin.symbol,
+                        style:
+                            TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
+                      )),
                 )
               ],
             ),
           ),
           Container(
             width: appTheme.sizes.infinity,
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
+            padding: EdgeInsets.symmetric(
+                horizontal: appTheme.sizes.padding,
+                vertical: appTheme.sizes.paddingSmall),
             color: appTheme.colors.pageBackgroundColorBasic,
-            child: Text('verifierList'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+            child: Text('verifierList'.tr,
+                style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           Expanded(
             flex: 1,
@@ -164,131 +206,199 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
                 color: appTheme.colors.pageBackgroundColorBasic,
               ),
               child: Obx(() => LScrollView(
-                refreshController: controller.verifiersRefreshController,
-                onRefresh: controller.onRefreshVerifiersList,
-                onLoading: state.allVerifiersPage == 0 ? null : controller.onLoadVerifiersList,
-                child: Column(
-                  children: [
-                    for (var _item in state.allVerifiers)
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
-                        child: InkWell(
-                          onTap: () => controller.onSelectVerifier(_item),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: state.selectVerifier.address == _item.address ? appTheme.colors.primaryColor.withOpacity(0.05) : appTheme.colors.pageBackgroundColor,
-                              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                              border: Border.all(
-                                width: appTheme.sizes.basic,
-                                color: state.selectVerifier.address == _item.address ? appTheme.colors.primaryColor : appTheme.colors.transparent,
-                              ),
-                            ),
-                            child: LVerifierCard(
-                              transparentBg: true,
-                              verifier: _item,
-                              child: Column(
-                                children: [
-                                  Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                                  Row(
+                    refreshController: controller.verifiersRefreshController,
+                    onRefresh: controller.onRefreshVerifiersList,
+                    onLoading: state.allVerifiersPage == 0
+                        ? null
+                        : controller.onLoadVerifiersList,
+                    child: Column(
+                      children: [
+                        for (var _item in state.allVerifiers)
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: appTheme.sizes.padding,
+                                vertical: appTheme.sizes.paddingSmall),
+                            child: InkWell(
+                              onTap: () => controller.onSelectVerifier(_item),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: state.selectVerifier.address ==
+                                          _item.address
+                                      ? appTheme.colors.primaryColor
+                                          .withOpacity(0.05)
+                                      : appTheme.colors.pageBackgroundColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(appTheme.sizes.radius)),
+                                  border: Border.all(
+                                    width: appTheme.sizes.basic,
+                                    color: state.selectVerifier.address ==
+                                            _item.address
+                                        ? appTheme.colors.primaryColor
+                                        : appTheme.colors.transparent,
+                                  ),
+                                ),
+                                child: LVerifierCard(
+                                  transparentBg: true,
+                                  verifier: _item,
+                                  child: Column(
                                     children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            LAnimationView(
-                                              randomKey: false,
-                                              child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.minPledgeVolume)), style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
-                                            ),
-                                            Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                            Text('minVolumeForPledge'.tr, style: Get.textTheme.bodyText1)
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: LAnimationView(
-                                                randomKey: false,
-                                                child: Text(
-                                                  NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.allPledged)),
-                                                  style: TextStyle(letterSpacing: -1 * appTheme.sizes.basic,)
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top:
+                                                  appTheme.sizes.paddingSmall)),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                LAnimationView(
+                                                  randomKey: false,
+                                                  child: Text(
+                                                      NumberTool.formatNumberStr(
+                                                          NumberTool
+                                                              .amountToBalance(_item
+                                                                  .minPledgeVolume)),
+                                                      style: TextStyle(
+                                                        color: appTheme.colors
+                                                            .primaryColor,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        letterSpacing: -1 *
+                                                            appTheme
+                                                                .sizes.basic,
+                                                      )),
                                                 ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: appTheme.sizes
+                                                                .paddingSmall *
+                                                            0.5)),
+                                                Text('minVolumeForPledge'.tr,
+                                                    style:
+                                                        Get.textTheme.bodyText1)
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: appTheme
+                                                          .sizes.paddingSmall *
+                                                      0.5)),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  child: LAnimationView(
+                                                    randomKey: false,
+                                                    child: Text(
+                                                        NumberTool.formatNumberStr(
+                                                            NumberTool
+                                                                .amountToBalance(
+                                                                    _item
+                                                                        .allPledged)),
+                                                        style: TextStyle(
+                                                          letterSpacing: -1 *
+                                                              appTheme
+                                                                  .sizes.basic,
+                                                        )),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: appTheme.sizes
+                                                                .paddingSmall *
+                                                            0.5)),
+                                                Text(
+                                                    'pledgedVolumeWithVerifier'
+                                                        .tr,
+                                                    style:
+                                                        Get.textTheme.bodyText1)
+                                              ],
+                                            ),
+                                          ),
+                                          // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
+                                          // Expanded(
+                                          //   child: Column(
+                                          //     crossAxisAlignment: CrossAxisAlignment.end,
+                                          //     children: [
+                                          //       SingleChildScrollView(
+                                          //         scrollDirection: Axis.horizontal,
+                                          //         child: LAnimationView(
+                                          //           randomKey: false,
+                                          //           child: Text(
+                                          //             _item.pledged == '' ? '未质押' : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
+                                          //             style: _item.pledged == '' ? TextStyle(color: appTheme.colors.textGrayBig) : TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
+                                          //           ),
+                                          //         ),
+                                          //       ),
+                                          //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
+                                          //       Text('我的质押'.tr, style: Get.textTheme.bodyText1),
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: appTheme.sizes.paddingSmall),
+                                        child: InkWell(
+                                          onTap: () => controller
+                                              .onVerifierDetailListener(_item),
+                                          child: Container(
+                                            width: appTheme.sizes.infinity,
+                                            height:
+                                                appTheme.sizes.buttonHeight *
+                                                    0.6,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(
+                                                      appTheme.sizes.radius)),
+                                              gradient: LinearGradient(
+                                                begin: Alignment.centerLeft,
+                                                end: Alignment.centerRight,
+                                                colors: appTheme
+                                                    .colors.homeAddressBg,
                                               ),
                                             ),
-                                            Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                            Text('pledgedVolumeWithVerifier'.tr, style: Get.textTheme.bodyText1)
-                                          ],
-                                        ),
-                                      ),
-                                      // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
-                                      // Expanded(
-                                      //   child: Column(
-                                      //     crossAxisAlignment: CrossAxisAlignment.end,
-                                      //     children: [
-                                      //       SingleChildScrollView(
-                                      //         scrollDirection: Axis.horizontal,
-                                      //         child: LAnimationView(
-                                      //           randomKey: false,
-                                      //           child: Text(
-                                      //             _item.pledged == '' ? '未质押' : NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
-                                      //             style: _item.pledged == '' ? TextStyle(color: appTheme.colors.textGrayBig) : TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
-                                      //           ),
-                                      //         ),
-                                      //       ),
-                                      //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                      //       Text('我的质押'.tr, style: Get.textTheme.bodyText1),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall),
-                                    child: InkWell(
-                                      onTap: () => controller.onVerifierDetailListener(_item),
-                                      child: Container(
-                                        width: appTheme.sizes.infinity,
-                                        height: appTheme.sizes.buttonHeight * 0.6,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                                          gradient: LinearGradient(
-                                            begin: Alignment.centerLeft,
-                                            end: Alignment.centerRight,
-                                            colors: appTheme.colors.homeAddressBg,
+                                            child: Center(
+                                              child: Text('goToDetail'.tr,
+                                                  style:
+                                                      Get.textTheme.bodyText1),
+                                            ),
                                           ),
                                         ),
-                                        child: Center(
-                                          child: Text('goToDetail'.tr, style: Get.textTheme.bodyText1),
-                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                  ],
-                ),
-              )),
+                      ],
+                    ),
+                  )),
             ),
           )
         ],
       ),
       footerBgColor: appTheme.colors.pageBackgroundColorBasic,
       footer: Container(
-        padding: EdgeInsets.only(bottom: appTheme.sizes.padding, right: appTheme.sizes.padding, left: appTheme.sizes.padding),
+        padding: EdgeInsets.only(
+            bottom: appTheme.sizes.padding,
+            right: appTheme.sizes.padding,
+            left: appTheme.sizes.padding),
         child: Obx(() => LButton(
-          onPressed: controller.onPledgeListener,
-          width: appTheme.sizes.infinity,
-          disabled: state.pledgeLoading,
-          child: Text('转让质押'.tr),
-        )),
+              onPressed: controller.onPledgeListener,
+              width: appTheme.sizes.infinity,
+              disabled: state.pledgeLoading,
+              child: Text('转让质押'.tr),
+            )),
       ),
     );
   }

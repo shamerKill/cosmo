@@ -21,7 +21,7 @@ class AccountBackupVerifyPageState {
   /// 助记词选择是否正确
   final Rx<bool> _selectSuccess = false.obs;
   bool get selectSuccess => _selectSuccess.value;
-  set selectSuccess (bool value) => _selectSuccess.value = value;
+  set selectSuccess(bool value) => _selectSuccess.value = value;
 }
 
 class AccountBackupVerifyPageController extends GetxController {
@@ -41,12 +41,13 @@ class AccountBackupVerifyPageController extends GetxController {
     _randomList();
   }
 
-  _randomList () {
+  _randomList() {
     // 正式情况进行混淆
     if (!Env.envConfig.isDebug) {
       state._mnemonicRandomList
         ..addAll(state._mnemonicList)
-        ..sort((aItem, bItem) => StringTool.asciiABiggerThanB(aItem, bItem) ? 1 : -1);
+        ..sort((aItem, bItem) =>
+            StringTool.asciiABiggerThanB(aItem, bItem) ? 1 : -1);
     } else {
       state._mnemonicRandomList.addAll(state._mnemonicList);
     }
@@ -59,18 +60,24 @@ class AccountBackupVerifyPageController extends GetxController {
     } else {
       state._mnemonicSelectList.removeAt(index);
     }
-    state.selectSuccess = listEquals(state._mnemonicSelectList, state._mnemonicList);
+    state.selectSuccess =
+        listEquals(state._mnemonicSelectList, state._mnemonicList);
   }
 
   // 下一步
-  stepFunc () {
+  stepFunc() {
     if (dataAccountController.state.memAccount != null) {
-      dataAccountController.addAccount(dataAccountController.state.memAccount!..createTime = null);
+      dataAccountController.addAccount(
+          dataAccountController.state.memAccount!..createTime = null);
       dataAccountController.state.memAccount = null;
-    } if (dataAccountController.state.memAddress != null) {
-      dataAccountController.updateAccount(dataAccountController.getAccountFromAddress(dataAccountController.state.memAddress!)!..createTime = null);
+    }
+    if (dataAccountController.state.memAddress != null) {
+      dataAccountController.updateAccount(dataAccountController
+          .getAccountFromAddress(dataAccountController.state.memAddress!)!
+        ..createTime = null);
     }
     dataAccountController.state.memMnemonic = null;
-      Get.offAllNamed(PlugRoutesNames.walletHome, predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
+    Get.offAllNamed(PlugRoutesNames.walletHome,
+        predicate: (route) => Get.currentRoute == PlugRoutesNames.walletHome);
   }
 }

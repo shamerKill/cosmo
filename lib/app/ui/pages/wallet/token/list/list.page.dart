@@ -33,130 +33,181 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                 children: [
                   Positioned(
                     child: Obx(() => Opacity(
-                      opacity: state.showType == 0 ? state.animationRatio : (1 - state.animationRatio),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(text: 'tokensList'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSize * 1.5)),
-                            TextSpan(text: '\r/\r', style: TextStyle(color: appTheme.colors.textGray)),
-                            TextSpan(text: 'added'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                          ]
-                        ),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )),
+                          opacity: state.showType == 0
+                              ? state.animationRatio
+                              : (1 - state.animationRatio),
+                          child: Text.rich(
+                            TextSpan(children: [
+                              TextSpan(
+                                  text: 'tokensList'.tr,
+                                  style: TextStyle(
+                                      color: appTheme.colors.textBlackBig,
+                                      fontSize: appTheme.sizes.fontSize * 1.5)),
+                              TextSpan(
+                                  text: '\r/\r',
+                                  style: TextStyle(
+                                      color: appTheme.colors.textGray)),
+                              TextSpan(
+                                  text: 'added'.tr,
+                                  style: TextStyle(
+                                      color: appTheme.colors.textGray)),
+                            ]),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )),
                   ),
                   Positioned(
                     child: Obx(() => Opacity(
-                      opacity: state.showType == 1 ? state.animationRatio : (1 - state.animationRatio),
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(text: 'tokensList'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                            TextSpan(text: '\r/\r', style: TextStyle(color: appTheme.colors.textGray)),
-                            TextSpan(text: 'added'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSize * 1.5)),
-                          ]
-                        ),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    )),
+                          opacity: state.showType == 1
+                              ? state.animationRatio
+                              : (1 - state.animationRatio),
+                          child: Text.rich(
+                            TextSpan(children: [
+                              TextSpan(
+                                  text: 'tokensList'.tr,
+                                  style: TextStyle(
+                                      color: appTheme.colors.textGray)),
+                              TextSpan(
+                                  text: '\r/\r',
+                                  style: TextStyle(
+                                      color: appTheme.colors.textGray)),
+                              TextSpan(
+                                  text: 'added'.tr,
+                                  style: TextStyle(
+                                      color: appTheme.colors.textBlackBig,
+                                      fontSize: appTheme.sizes.fontSize * 1.5)),
+                            ]),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )),
                   ),
                 ],
               ),
             ),
             Obx(() => LAnimationView(
-              randomKey: false,
-              child: state.showType == 0 ? Container() : Text('sortDeleteFunction'.tr, style: Get.textTheme.bodyText1),
-            )),
+                  randomKey: false,
+                  child: state.showType == 0
+                      ? Container()
+                      : Text('sortDeleteFunction'.tr,
+                          style: Get.textTheme.bodyText1),
+                )),
           ],
         ),
         description: Obx(() => Container(
-          padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-          child: LAnimationView(
-            randomKey: false,
-            child: state.showType == 0 ? LInput(
-              textController: controller.searchTextController,
-              onSubmitted: controller.onSearch,
-              hintText: 'searchTokenHint'.tr,
-              textInputAction: TextInputAction.search,
-              prefixIcon: Icon(Icons.search, color: appTheme.colors.textGray),
-            ) : SizedBox(
-              height: appTheme.sizes.inputHeight,
-              width: appTheme.sizes.infinity,
-              child: TextButton(
-                child: Text('quickGetAssert'.tr, textAlign: TextAlign.left),
-                onPressed: controller.onGetUserAllAssets,
+              padding:
+                  EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+              child: LAnimationView(
+                randomKey: false,
+                child: state.showType == 0
+                    ? LInput(
+                        textController: controller.searchTextController,
+                        onSubmitted: controller.onSearch,
+                        hintText: 'searchTokenHint'.tr,
+                        textInputAction: TextInputAction.search,
+                        prefixIcon:
+                            Icon(Icons.search, color: appTheme.colors.textGray),
+                      )
+                    : SizedBox(
+                        height: appTheme.sizes.inputHeight,
+                        width: appTheme.sizes.infinity,
+                        child: TextButton(
+                          child: Text('quickGetAssert'.tr,
+                              textAlign: TextAlign.left),
+                          onPressed: controller.onGetUserAllAssets,
+                        ),
+                      ),
               ),
-            ),
-          ),
-        )),
+            )),
       ),
-      padding: EdgeInsets.only(bottom: (ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context))),
+      padding: EdgeInsets.only(
+          bottom: (ScreenUtil.getBottomBarH(context) == 0
+              ? appTheme.sizes.padding
+              : ScreenUtil.getBottomBarH(context))),
       body: TabBarView(
         controller: controller.tabBarController,
         children: [
-          Obx(() => LScrollView(
-            key: state.tokenListKey,
-            refreshController: controller.remoteListRefreshController,
-            onLoading: state.allTokenPage == 0 ? null : controller.getTokenRemoteList,
-            child: Column(
-              children: [
-                for (TokenModel _item in state.allTokenList)
-                  _WalletTokenListItem(
-                    token: _item,
-                    onPressed: () => controller.onGoToDetail(_item),
-                    icons: InkWell(
-                      splashColor: appTheme.colors.transparent,
-                      highlightColor: appTheme.colors.transparent,
-                      onTap: () => controller.onToggleToken(_item),
-                      child: Padding(
-                        padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                        child: LAnimationView(
-                          randomKey: false,
-                          child: controller.checkTokenIsAdd(_item.minUnit) ?
-                            Icon(const IconData(0xe81e, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.9) :
-                            Icon(const IconData(0xe6d6, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.9, color: appTheme.colors.textGray),
-                        ),
-                      ),
-                    ),
-                  )
-              ],
-            )),
-          ),
-          Obx(() => Column(
-            children: [
-              _WalletTokenListItem(
-                onPressed: () => controller.onGoToDetail(state.accountInfo.tokenList.first),
-                token: state.accountInfo.tokenList.first,
-              ),
-              Expanded(
-                child: ReorderableListView(
-                  onReorder: controller.onUserAssetsReorder,
+          Obx(
+            () => LScrollView(
+                key: state.tokenListKey,
+                refreshController: controller.remoteListRefreshController,
+                onLoading: state.allTokenPage == 0
+                    ? null
+                    : controller.getTokenRemoteList,
+                child: Column(
                   children: [
-                    for (TokenModel _item in state.accountInfo.tokenList)
-                      if (state.accountInfo.tokenList.indexOf(_item) != 0) _WalletTokenListItem(
-                        key: Key(_item.minUnit + _item.symbol + _item.contractAddress),
+                    for (TokenModel _item in state.allTokenList)
+                      _WalletTokenListItem(
                         token: _item,
                         onPressed: () => controller.onGoToDetail(_item),
-                        icons: Row(
-                          children: [
-                            InkWell(
-                              splashColor: appTheme.colors.transparent,
-                              highlightColor: appTheme.colors.transparent,
-                              onTap: () => controller.onLocalRemoveToken(_item),
-                              child: Padding(
-                                padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                                child: Icon(const IconData(0xe6f3, fontFamily: 'plugIcon'), color: appTheme.colors.textGray),
-                              ),
+                        icons: InkWell(
+                          splashColor: appTheme.colors.transparent,
+                          highlightColor: appTheme.colors.transparent,
+                          onTap: () => controller.onToggleToken(_item),
+                          child: Padding(
+                            padding:
+                                EdgeInsets.all(appTheme.sizes.paddingSmall),
+                            child: LAnimationView(
+                              randomKey: false,
+                              child: controller.checkTokenIsAdd(_item.minUnit)
+                                  ? Icon(
+                                      const IconData(0xe81e,
+                                          fontFamily: 'plugIcon'),
+                                      size: appTheme.sizes.iconSize * 0.9)
+                                  : Icon(
+                                      const IconData(0xe6d6,
+                                          fontFamily: 'plugIcon'),
+                                      size: appTheme.sizes.iconSize * 0.9,
+                                      color: appTheme.colors.textGray),
                             ),
-                          ],
+                          ),
                         ),
                       )
                   ],
-                ),
-              ),
-            ],
-          )),
+                )),
+          ),
+          Obx(() => Column(
+                children: [
+                  _WalletTokenListItem(
+                    onPressed: () => controller
+                        .onGoToDetail(state.accountInfo.tokenList.first),
+                    token: state.accountInfo.tokenList.first,
+                  ),
+                  Expanded(
+                    child: ReorderableListView(
+                      onReorder: controller.onUserAssetsReorder,
+                      children: [
+                        for (TokenModel _item in state.accountInfo.tokenList)
+                          if (state.accountInfo.tokenList.indexOf(_item) != 0)
+                            _WalletTokenListItem(
+                              key: Key(_item.minUnit +
+                                  _item.symbol +
+                                  _item.contractAddress),
+                              token: _item,
+                              onPressed: () => controller.onGoToDetail(_item),
+                              icons: Row(
+                                children: [
+                                  InkWell(
+                                    splashColor: appTheme.colors.transparent,
+                                    highlightColor: appTheme.colors.transparent,
+                                    onTap: () =>
+                                        controller.onLocalRemoveToken(_item),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(
+                                          appTheme.sizes.paddingSmall),
+                                      child: Icon(
+                                          const IconData(0xe6f3,
+                                              fontFamily: 'plugIcon'),
+                                          color: appTheme.colors.textGray),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                      ],
+                    ),
+                  ),
+                ],
+              )),
         ],
       ),
     );
@@ -195,13 +246,21 @@ class _WalletTokenListItem extends StatelessWidget {
           children: [
             LViewImage(
               url: token.logo,
-              bgColor: StringTool.stringToColor(token.type == enumTokenType.prc20 ? token.contractAddress : token.minUnit),
+              bgColor: StringTool.stringToColor(
+                  token.type == enumTokenType.prc20
+                      ? token.contractAddress
+                      : token.minUnit),
               width: appTheme.sizes.basic * 60,
               height: appTheme.sizes.basic * 60,
               isRadius: true,
             ),
-            Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
-            Text(token.symbol, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, color: appTheme.colors.textBlack, fontWeight: FontWeight.bold)),
+            Padding(
+                padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+            Text(token.symbol,
+                style: TextStyle(
+                    fontSize: appTheme.sizes.fontSizeBig,
+                    color: appTheme.colors.textBlack,
+                    fontWeight: FontWeight.bold)),
             Text('\r/', style: TextStyle(color: appTheme.colors.textGray)),
             Text(token.name, style: TextStyle(color: appTheme.colors.textGray)),
             Expanded(child: Container()),

@@ -4,38 +4,58 @@ part of './interface.dart';
 class AddressModel extends _StorageBaseAbstract {
   /// id
   String get id => _id;
-  set id (String value) { _id = value; _saveKey(); }
+  set id(String value) {
+    _id = value;
+    _saveKey();
+  }
+
   String _id = '';
+
   /// 名称
   String get name => _name;
-  set name (String value) { _name = value; _saveKey(); }
+  set name(String value) {
+    _name = value;
+    _saveKey();
+  }
+
   String _name = '';
+
   /// 备注
   String get remarks => _remarks;
-  set remarks (String value) { _remarks = value; _saveKey(); }
+  set remarks(String value) {
+    _remarks = value;
+    _saveKey();
+  }
+
   String _remarks = '';
+
   /// 地址
   String get address => _address;
-  set address (String value) { _address = value; _saveKey(); }
+  set address(String value) {
+    _address = value;
+    _saveKey();
+  }
+
   String _address = '';
 
-  AddressModel._(): super();
+  AddressModel._() : super();
   factory AddressModel() => create();
   static AddressModel create() => AddressModel._();
 
   @override
-  void _saveKey(){
+  void _saveKey() {
     _valueMap['name'] = name;
     _valueMap['remarks'] = remarks;
     _valueMap['address'] = address;
     _valueMap['id'] = id;
   }
+
   @override
   void setData(String sourceStr) {
     Map<String, dynamic> source = json.decode(sourceStr);
-    name = source['name']??'';
-    remarks = source['remarks']??'';
-    address = source['address']??'';
-    id = source['id']??'';
+    name = source['name'] ?? '';
+    remarks = source['remarks'] ?? '';
+    address = source['address'] ?? '';
+    id = source['id'] ?? '';
   }
 }

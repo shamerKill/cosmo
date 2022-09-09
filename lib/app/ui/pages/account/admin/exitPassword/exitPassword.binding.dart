@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/account/admin/exitPassword/exitPassword.contro
 class AccountExitPasswordPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AccountExitPasswordPageController>(() => AccountExitPasswordPageController());
+    Get.lazyPut<AccountExitPasswordPageController>(
+        () => AccountExitPasswordPageController());
   }
 }

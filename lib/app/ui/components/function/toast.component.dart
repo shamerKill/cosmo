@@ -15,6 +15,7 @@ class LToast {
       fontSize: appTheme.sizes.fontSize,
     );
   }
+
   static error(String message) {
     return Fluttertoast.showToast(
       msg: message,
@@ -22,6 +23,7 @@ class LToast {
       fontSize: appTheme.sizes.fontSize,
     );
   }
+
   static Future<void> warning(String message) {
     return Fluttertoast.showToast(
       msg: message,
@@ -49,5 +51,4 @@ class LToast {
   static print(String message) {
     _print(message);
   }
-
 }

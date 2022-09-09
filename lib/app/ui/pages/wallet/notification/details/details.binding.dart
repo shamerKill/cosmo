@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/wallet/notification/details/details.controller
 class WalletNotificationDetailsPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<WalletNotificationDetailsPageController>(() => WalletNotificationDetailsPageController());
+    Get.lazyPut<WalletNotificationDetailsPageController>(
+        () => WalletNotificationDetailsPageController());
   }
 }

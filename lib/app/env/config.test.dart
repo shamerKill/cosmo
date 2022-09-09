@@ -4,7 +4,7 @@ class _AssetsConfigTest implements _AssetsConfig {
   @override
   String verifierAvatarUrl = 'https://api.plugchain.network/static';
   @override
-  String accountDefaultPre = 'cosmo';
+  String accountDefaultPre = 'pando';
 }
 
 class _ChainInfoTest implements _ChainInfo {
@@ -18,15 +18,15 @@ class _ChainInfoTest implements _ChainInfo {
 
 class _UrlInfoTest implements _UrlInfo {
   @override
-  String backEndSite = 'https://wallet.plugchain.network';
+  String backEndSite = 'http://$firstWebApi';
   @override
-  String browserEndSite = 'https://www.plugchain.network';
+  String browserEndSite = 'http://$firstBrowserApi';
   @override
-  String chainToolRpcUrl = 'https://api.plugchain.network/rawrpc';
+  String chainToolRpcUrl = 'http://$firstRpcApi/rawrpc';
   @override
-  String chainInfoRpcUrl = 'https://api.plugchain.network/rawapi';
+  String chainInfoRpcUrl = 'http://$firstRpcApi/rawapi';
   @override
-  String chainMoreRpcUrl = 'https://wallet.plugchain.network/web_rpc';
+  String chainMoreRpcUrl = 'http://$firstWebApi/web_rpc';
   @override
-  String chainPvmRpcUrl = 'https://wallet.plugchain.network/ethraw/';
+  String chainPvmRpcUrl = 'http://$firstWebApi/ethraw/';
 }

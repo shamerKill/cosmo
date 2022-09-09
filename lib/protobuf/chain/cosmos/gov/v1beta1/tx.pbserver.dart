@@ -16,32 +16,47 @@ import 'tx.pbjson.dart';
 export 'tx.pb.dart';
 
 abstract class MsgServiceBase extends $pb.GeneratedService {
-  $async.Future<$36.MsgSubmitProposalResponse> submitProposal($pb.ServerContext ctx, $36.MsgSubmitProposal request);
-  $async.Future<$36.MsgVoteResponse> vote($pb.ServerContext ctx, $36.MsgVote request);
-  $async.Future<$36.MsgVoteWeightedResponse> voteWeighted($pb.ServerContext ctx, $36.MsgVoteWeighted request);
-  $async.Future<$36.MsgDepositResponse> deposit($pb.ServerContext ctx, $36.MsgDeposit request);
+  $async.Future<$36.MsgSubmitProposalResponse> submitProposal(
+      $pb.ServerContext ctx, $36.MsgSubmitProposal request);
+  $async.Future<$36.MsgVoteResponse> vote(
+      $pb.ServerContext ctx, $36.MsgVote request);
+  $async.Future<$36.MsgVoteWeightedResponse> voteWeighted(
+      $pb.ServerContext ctx, $36.MsgVoteWeighted request);
+  $async.Future<$36.MsgDepositResponse> deposit(
+      $pb.ServerContext ctx, $36.MsgDeposit request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'SubmitProposal': return $36.MsgSubmitProposal();
-      case 'Vote': return $36.MsgVote();
-      case 'VoteWeighted': return $36.MsgVoteWeighted();
-      case 'Deposit': return $36.MsgDeposit();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'SubmitProposal':
+        return $36.MsgSubmitProposal();
+      case 'Vote':
+        return $36.MsgVote();
+      case 'VoteWeighted':
+        return $36.MsgVoteWeighted();
+      case 'Deposit':
+        return $36.MsgDeposit();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'SubmitProposal': return this.submitProposal(ctx, request as $36.MsgSubmitProposal);
-      case 'Vote': return this.vote(ctx, request as $36.MsgVote);
-      case 'VoteWeighted': return this.voteWeighted(ctx, request as $36.MsgVoteWeighted);
-      case 'Deposit': return this.deposit(ctx, request as $36.MsgDeposit);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'SubmitProposal':
+        return this.submitProposal(ctx, request as $36.MsgSubmitProposal);
+      case 'Vote':
+        return this.vote(ctx, request as $36.MsgVote);
+      case 'VoteWeighted':
+        return this.voteWeighted(ctx, request as $36.MsgVoteWeighted);
+      case 'Deposit':
+        return this.deposit(ctx, request as $36.MsgDeposit);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => MsgServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => MsgServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => MsgServiceBase$messageJson;
 }
-

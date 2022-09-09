@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
 class LSwitchView extends StatelessWidget {
-  const LSwitchView({ Key? key, required this.selectList, required this.change, this.selected = 0, this.directionRow = true, }) : super(key: key);
+  const LSwitchView({
+    Key? key,
+    required this.selectList,
+    required this.change,
+    this.selected = 0,
+    this.directionRow = true,
+  }) : super(key: key);
   // 选项列表
   final Iterable<String> selectList;
   // 默认选项
@@ -14,7 +20,6 @@ class LSwitchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Widget baseBox(List<Widget> children) {
       if (directionRow) {
         return Row(children: children);
@@ -37,17 +42,18 @@ class LSwitchView extends StatelessWidget {
                 child: Radio(
                   value: selectListArr.indexOf(txt),
                   groupValue: selected,
-                  fillColor: MaterialStateColor.resolveWith((states) => appTheme.colors.primaryColor),
+                  fillColor: MaterialStateColor.resolveWith(
+                      (states) => appTheme.colors.primaryColor),
                   onChanged: (int? value) {
                     if (value != null) change(value);
                   },
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.only(right: appTheme.sizes.fontSizeSmall)),
+            Padding(
+                padding: EdgeInsets.only(right: appTheme.sizes.fontSizeSmall)),
           ],
         ),
     ]);
   }
-
 }

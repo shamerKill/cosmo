@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/account/backup/verify/verify.controller.dart';
 class AccountBackupVerifyPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AccountBackupVerifyPageController>(() => AccountBackupVerifyPageController());
+    Get.lazyPut<AccountBackupVerifyPageController>(
+        () => AccountBackupVerifyPageController());
   }
 }

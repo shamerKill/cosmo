@@ -27,8 +27,11 @@ class WalletQrScannerPage extends GetView<WalletQrScannerPageController> {
               height: Get.width * 1.4,
               width: Get.width,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius + appTheme.sizes.basic * 5.0)),
-                border: Border.all(color: appTheme.colors.primaryColor, width: appTheme.sizes.basic * 5.0),
+                borderRadius: BorderRadius.all(Radius.circular(
+                    appTheme.sizes.radius + appTheme.sizes.basic * 5.0)),
+                border: Border.all(
+                    color: appTheme.colors.primaryColor,
+                    width: appTheme.sizes.basic * 5.0),
                 color: appTheme.colors.primaryColor.withOpacity(0.1),
               ),
               child: Stack(
@@ -36,16 +39,19 @@ class WalletQrScannerPage extends GetView<WalletQrScannerPageController> {
                   Container(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(appTheme.sizes.radius)),
                     ),
-                    child: Obx(() => state.isGetPermission ? QrReaderView(
-                      width: Get.width,
-                      height: Get.width * 1.4,
-                      callback: (container) {
-                        controller.scanController = container;
-                        controller.startScan();
-                      },
-                    ) : Container()),
+                    child: Obx(() => state.isGetPermission
+                        ? QrReaderView(
+                            width: Get.width,
+                            height: Get.width * 1.4,
+                            callback: (container) {
+                              controller.scanController = container;
+                              controller.startScan();
+                            },
+                          )
+                        : Container()),
                   ),
                 ],
               ),
@@ -56,17 +62,19 @@ class WalletQrScannerPage extends GetView<WalletQrScannerPageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.image),
-                    color: appTheme.colors.primaryColor,
-                    iconSize: appTheme.sizes.iconSize,
-                    onPressed: controller.scanImage
-                  ),
+                      icon: const Icon(Icons.image),
+                      color: appTheme.colors.primaryColor,
+                      iconSize: appTheme.sizes.iconSize,
+                      onPressed: controller.scanImage),
                   Obx(() => IconButton(
-                    icon: Icon(state.isOpenedFlashLight ? Icons.flashlight_off : Icons.flashlight_on),
-                    color: state.isOpenedFlashLight ? appTheme.colors.textGrayBig : appTheme.colors.primaryColor,
-                    iconSize: appTheme.sizes.iconSize,
-                    onPressed: controller.flashlight
-                  )),
+                      icon: Icon(state.isOpenedFlashLight
+                          ? Icons.flashlight_off
+                          : Icons.flashlight_on),
+                      color: state.isOpenedFlashLight
+                          ? appTheme.colors.textGrayBig
+                          : appTheme.colors.primaryColor,
+                      iconSize: appTheme.sizes.iconSize,
+                      onPressed: controller.flashlight)),
                 ],
               ),
             ),

@@ -1,9 +1,10 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LLoading {
-  static showLoading () {
+  static showLoading() {
     EasyLoading.show();
   }
+
   static showBgLoading({
     String? text,
   }) {
@@ -12,8 +13,10 @@ class LLoading {
       status: text,
     );
   }
-  static dismiss () {
+
+  static dismiss() {
     EasyLoading.dismiss();
   }
+
   static bool isShow() => EasyLoading.isShow;
 }

@@ -16,11 +16,16 @@ class UserMyPage extends GetView<UserMyPageController> {
     UserMyPageState state = controller.state;
 
     return LScaffold(
-      statusBar: LAppBar.defaultStatus(backgroundColor: appTheme.colors.pageBackgroundColorBasic),
+      statusBar: LAppBar.defaultStatus(
+          backgroundColor: appTheme.colors.pageBackgroundColorBasic),
       headerBar: Padding(
-        padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall, vertical: appTheme.sizes.paddingSmall),
+        padding: EdgeInsets.symmetric(
+            horizontal: appTheme.sizes.paddingSmall,
+            vertical: appTheme.sizes.paddingSmall),
         child: Builder(builder: (_) {
-          double _height = (context.mediaQuerySize.width - appTheme.sizes.paddingSmall * 4) / 3;
+          double _height =
+              (context.mediaQuerySize.width - appTheme.sizes.paddingSmall * 4) /
+                  3;
           return Row(
             children: [
               Expanded(
@@ -30,7 +35,8 @@ class UserMyPage extends GetView<UserMyPageController> {
                     height: _height,
                     decoration: BoxDecoration(
                       color: appTheme.colors.pageBackgroundColor,
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(appTheme.sizes.radius)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -40,14 +46,17 @@ class UserMyPage extends GetView<UserMyPageController> {
                           width: appTheme.sizes.iconSize * 1.2,
                           height: appTheme.sizes.iconSize * 1.2,
                         ),
-                        Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                bottom: appTheme.sizes.paddingSmall)),
                         Text('accountAdmin'.tr),
                       ],
                     ),
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+              Padding(
+                  padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
               Expanded(
                 child: InkWell(
                   onTap: controller.onGoToAddressBookList,
@@ -55,7 +64,8 @@ class UserMyPage extends GetView<UserMyPageController> {
                     height: _height,
                     decoration: BoxDecoration(
                       color: appTheme.colors.pageBackgroundColor,
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(appTheme.sizes.radius)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -65,14 +75,17 @@ class UserMyPage extends GetView<UserMyPageController> {
                           width: appTheme.sizes.iconSize * 1.2,
                           height: appTheme.sizes.iconSize * 1.2,
                         ),
-                        Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                bottom: appTheme.sizes.paddingSmall)),
                         Text('addressesBook'.tr),
                       ],
                     ),
                   ),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+              Padding(
+                  padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
               Expanded(
                 child: InkWell(
                   onTap: controller.onGoToNotificationsList,
@@ -80,7 +93,8 @@ class UserMyPage extends GetView<UserMyPageController> {
                     height: _height,
                     decoration: BoxDecoration(
                       color: appTheme.colors.pageBackgroundColor,
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(appTheme.sizes.radius)),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +104,9 @@ class UserMyPage extends GetView<UserMyPageController> {
                           width: appTheme.sizes.iconSize * 1.2,
                           height: appTheme.sizes.iconSize * 1.2,
                         ),
-                        Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                bottom: appTheme.sizes.paddingSmall)),
                         Text('messagesCenter'.tr),
                       ],
                     ),
@@ -107,11 +123,13 @@ class UserMyPage extends GetView<UserMyPageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('baseSetting'.tr, style: Get.textTheme.bodyText1),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Container(
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
             ),
             child: Column(
               children: [
@@ -128,7 +146,9 @@ class UserMyPage extends GetView<UserMyPageController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('dappSetting'.tr),
-                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                            color: appTheme.colors.textGray,
+                            size: appTheme.sizes.iconSize * 0.6),
                       ],
                     ),
                   ),
@@ -138,28 +158,30 @@ class UserMyPage extends GetView<UserMyPageController> {
                   width: appTheme.sizes.infinity,
                   color: appTheme.colors.borderColor.withOpacity(0.4),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: appTheme.sizes.paddingSmall * 0.6,
-                    bottom: appTheme.sizes.paddingSmall * 0.6,
-                    left: appTheme.sizes.padding,
-                    right: appTheme.sizes.paddingSmall,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('loginWithFingerprints'.tr),
-                      Obx(() => state.canTouch ? Switch(
-                        value: state.enableTouch,
-                        onChanged: controller.onToggleTouch,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ) : Padding(
-                        padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5, bottom: appTheme.sizes.paddingSmall * 0.5),
-                        child: Text('notCanUse'.tr, style: TextStyle(color: appTheme.colors.textGray),),
-                      )),
-                    ],
-                  ),
-                ),
+                // 指纹
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     top: appTheme.sizes.paddingSmall * 0.6,
+                //     bottom: appTheme.sizes.paddingSmall * 0.6,
+                //     left: appTheme.sizes.padding,
+                //     right: appTheme.sizes.paddingSmall,
+                //   ),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text('loginWithFingerprints'.tr),
+                //       Obx(() => state.canTouch ? Switch(
+                //         value: state.enableTouch,
+                //         onChanged: controller.onToggleTouch,
+                //         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                //       ) : Padding(
+                //         padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5, bottom: appTheme.sizes.paddingSmall * 0.5),
+                //         child: Text('notCanUse'.tr, style: TextStyle(color: appTheme.colors.textGray),),
+                //       )),
+                //     ],
+                //   ),
+                // ),
+                // 主网切换
                 // Container(
                 //   height: appTheme.sizes.basic,
                 //   width: appTheme.sizes.infinity,
@@ -196,15 +218,22 @@ class UserMyPage extends GetView<UserMyPageController> {
                 InkWell(
                   onTap: controller.onGoToLanguage,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: appTheme.sizes.padding,
+                        horizontal: appTheme.sizes.padding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('languageSwitch'.tr),
                         Row(
                           children: [
-                            Obx(() => Text(plugTranslation.localToString(state.language), style: TextStyle(color: appTheme.colors.primaryColor))),
-                            Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                            Obx(() => Text(
+                                plugTranslation.localToString(state.language),
+                                style: TextStyle(
+                                    color: appTheme.colors.primaryColor))),
+                            Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                                color: appTheme.colors.textGray,
+                                size: appTheme.sizes.iconSize * 0.6),
                           ],
                         ),
                       ],
@@ -214,25 +243,32 @@ class UserMyPage extends GetView<UserMyPageController> {
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Text('guide'.tr, style: Get.textTheme.bodyText1),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Container(
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
             ),
             child: Column(
               children: [
                 InkWell(
                   onTap: controller.onGoToUseHelper,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: appTheme.sizes.padding,
+                        horizontal: appTheme.sizes.padding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('userGuide'.tr),
-                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                            color: appTheme.colors.textGray,
+                            size: appTheme.sizes.iconSize * 0.6),
                       ],
                     ),
                   ),
@@ -245,12 +281,16 @@ class UserMyPage extends GetView<UserMyPageController> {
                 InkWell(
                   onTap: controller.onGoToAgreement,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: appTheme.sizes.padding,
+                        horizontal: appTheme.sizes.padding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('userArguments'.tr),
-                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                            color: appTheme.colors.textGray,
+                            size: appTheme.sizes.iconSize * 0.6),
                       ],
                     ),
                   ),
@@ -263,12 +303,16 @@ class UserMyPage extends GetView<UserMyPageController> {
                 InkWell(
                   onTap: controller.onGoToAboutUs,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: appTheme.sizes.padding,
+                        horizontal: appTheme.sizes.padding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('aboutUs'.tr),
-                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                            color: appTheme.colors.textGray,
+                            size: appTheme.sizes.iconSize * 0.6),
                       ],
                     ),
                   ),
@@ -281,12 +325,16 @@ class UserMyPage extends GetView<UserMyPageController> {
                 InkWell(
                   onTap: controller.onGoToProblems,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: appTheme.sizes.padding,
+                        horizontal: appTheme.sizes.padding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('backProblem'.tr),
-                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                        Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                            color: appTheme.colors.textGray,
+                            size: appTheme.sizes.iconSize * 0.6),
                       ],
                     ),
                   ),

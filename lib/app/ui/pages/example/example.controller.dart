@@ -14,11 +14,9 @@ class ExamplePageState {
 
   final Rx<bool> _showPassWrod = false.obs;
   bool get showPassWrod => _showPassWrod.value;
-  showPassWrodToggle () => _showPassWrod.toggle();
-
+  showPassWrodToggle() => _showPassWrod.toggle();
 
   RxList<String> items = <String>[].obs;
-  
 }
 
 class ExamplePageController extends GetxController {
@@ -26,7 +24,6 @@ class ExamplePageController extends GetxController {
   TextEditingController inputVolume = TextEditingController();
   TextEditingController password = TextEditingController();
   RefreshController accountRefreshController = RefreshController();
-
 
   ExamplePageController();
 
@@ -37,12 +34,15 @@ class ExamplePageController extends GetxController {
       state._title.value = 'resetPasswordPageTitle';
     }
   }
-  showSnackbar () {
+
+  showSnackbar() {
     Get.snackbar('title', 'message');
   }
+
   changeTheme() {
     appTheme.changeTheme();
   }
+
   chageLanguage() {
     if (Get.locale == plugTranslation.localList[0]) {
       Get.updateLocale(plugTranslation.localList[1]);
@@ -51,9 +51,11 @@ class ExamplePageController extends GetxController {
     }
     Get.forceAppUpdate();
   }
-  linkToCreateAccount () {
+
+  linkToCreateAccount() {
     Get.toNamed(PlugRoutesNames.accountCreate);
   }
+
   addVolume() {
     state.items.add(inputVolume.text);
     inputVolume.text = '';
@@ -67,17 +69,13 @@ class ExamplePageController extends GetxController {
       ..weight = 1
       ..stringifyRaw = 'gajoifgjoasdj'
       ..tokenList = [
-        TokenModel()
-          ..symbol = 'BTC',
-        TokenModel()
-          ..symbol = 'ETH',
-        TokenModel()
-          ..symbol = 'ALPHA',
+        TokenModel()..symbol = 'BTC',
+        TokenModel()..symbol = 'ETH',
+        TokenModel()..symbol = 'ALPHA',
       ];
     var newAccount = AccountModel()..setData(accountDemo.toJson());
 
-    var verifer = VerifierModel()
-      ..status = VerifierStatusEnum.jailing;
+    var verifer = VerifierModel()..status = VerifierStatusEnum.jailing;
     print(verifer.toJson());
     var verifierRaw = VerifierModel()..setData(verifer.toJson());
     print(verifierRaw.status);

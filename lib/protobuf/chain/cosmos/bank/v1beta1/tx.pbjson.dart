@@ -15,51 +15,102 @@ import 'bank.pbjson.dart' as $10;
 const MsgSend$json = const {
   '1': 'MsgSend',
   '2': const [
-    const {'1': 'from_address', '3': 1, '4': 1, '5': 9, '8': const {}, '10': 'fromAddress'},
-    const {'1': 'to_address', '3': 2, '4': 1, '5': 9, '8': const {}, '10': 'toAddress'},
-    const {'1': 'amount', '3': 3, '4': 3, '5': 11, '6': '.cosmos.base.v1beta1.Coin', '8': const {}, '10': 'amount'},
+    const {
+      '1': 'from_address',
+      '3': 1,
+      '4': 1,
+      '5': 9,
+      '8': const {},
+      '10': 'fromAddress'
+    },
+    const {
+      '1': 'to_address',
+      '3': 2,
+      '4': 1,
+      '5': 9,
+      '8': const {},
+      '10': 'toAddress'
+    },
+    const {
+      '1': 'amount',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.cosmos.base.v1beta1.Coin',
+      '8': const {},
+      '10': 'amount'
+    },
   ],
   '7': const {},
 };
 
 /// Descriptor for `MsgSend`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List msgSendDescriptor = $convert.base64Decode('CgdNc2dTZW5kEjoKDGZyb21fYWRkcmVzcxgBIAEoCUIX8t4fE3lhbWw6ImZyb21fYWRkcmVzcyJSC2Zyb21BZGRyZXNzEjQKCnRvX2FkZHJlc3MYAiABKAlCFfLeHxF5YW1sOiJ0b19hZGRyZXNzIlIJdG9BZGRyZXNzEmMKBmFtb3VudBgDIAMoCzIZLmNvc21vcy5iYXNlLnYxYmV0YTEuQ29pbkIwyN4fAKrfHyhnaXRodWIuY29tL2Nvc21vcy9jb3Ntb3Mtc2RrL3R5cGVzLkNvaW5zUgZhbW91bnQ6COigHwCIoB8A');
+final $typed_data.Uint8List msgSendDescriptor = $convert.base64Decode(
+    'CgdNc2dTZW5kEjoKDGZyb21fYWRkcmVzcxgBIAEoCUIX8t4fE3lhbWw6ImZyb21fYWRkcmVzcyJSC2Zyb21BZGRyZXNzEjQKCnRvX2FkZHJlc3MYAiABKAlCFfLeHxF5YW1sOiJ0b19hZGRyZXNzIlIJdG9BZGRyZXNzEmMKBmFtb3VudBgDIAMoCzIZLmNvc21vcy5iYXNlLnYxYmV0YTEuQ29pbkIwyN4fAKrfHyhnaXRodWIuY29tL2Nvc21vcy9jb3Ntb3Mtc2RrL3R5cGVzLkNvaW5zUgZhbW91bnQ6COigHwCIoB8A');
 @$core.Deprecated('Use msgSendResponseDescriptor instead')
 const MsgSendResponse$json = const {
   '1': 'MsgSendResponse',
 };
 
 /// Descriptor for `MsgSendResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List msgSendResponseDescriptor = $convert.base64Decode('Cg9Nc2dTZW5kUmVzcG9uc2U=');
+final $typed_data.Uint8List msgSendResponseDescriptor =
+    $convert.base64Decode('Cg9Nc2dTZW5kUmVzcG9uc2U=');
 @$core.Deprecated('Use msgMultiSendDescriptor instead')
 const MsgMultiSend$json = const {
   '1': 'MsgMultiSend',
   '2': const [
-    const {'1': 'inputs', '3': 1, '4': 3, '5': 11, '6': '.cosmos.bank.v1beta1.Input', '8': const {}, '10': 'inputs'},
-    const {'1': 'outputs', '3': 2, '4': 3, '5': 11, '6': '.cosmos.bank.v1beta1.Output', '8': const {}, '10': 'outputs'},
+    const {
+      '1': 'inputs',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.cosmos.bank.v1beta1.Input',
+      '8': const {},
+      '10': 'inputs'
+    },
+    const {
+      '1': 'outputs',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.cosmos.bank.v1beta1.Output',
+      '8': const {},
+      '10': 'outputs'
+    },
   ],
   '7': const {},
 };
 
 /// Descriptor for `MsgMultiSend`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List msgMultiSendDescriptor = $convert.base64Decode('CgxNc2dNdWx0aVNlbmQSOAoGaW5wdXRzGAEgAygLMhouY29zbW9zLmJhbmsudjFiZXRhMS5JbnB1dEIEyN4fAFIGaW5wdXRzEjsKB291dHB1dHMYAiADKAsyGy5jb3Ntb3MuYmFuay52MWJldGExLk91dHB1dEIEyN4fAFIHb3V0cHV0czoE6KAfAA==');
+final $typed_data.Uint8List msgMultiSendDescriptor = $convert.base64Decode(
+    'CgxNc2dNdWx0aVNlbmQSOAoGaW5wdXRzGAEgAygLMhouY29zbW9zLmJhbmsudjFiZXRhMS5JbnB1dEIEyN4fAFIGaW5wdXRzEjsKB291dHB1dHMYAiADKAsyGy5jb3Ntb3MuYmFuay52MWJldGExLk91dHB1dEIEyN4fAFIHb3V0cHV0czoE6KAfAA==');
 @$core.Deprecated('Use msgMultiSendResponseDescriptor instead')
 const MsgMultiSendResponse$json = const {
   '1': 'MsgMultiSendResponse',
 };
 
 /// Descriptor for `MsgMultiSendResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List msgMultiSendResponseDescriptor = $convert.base64Decode('ChRNc2dNdWx0aVNlbmRSZXNwb25zZQ==');
+final $typed_data.Uint8List msgMultiSendResponseDescriptor =
+    $convert.base64Decode('ChRNc2dNdWx0aVNlbmRSZXNwb25zZQ==');
 const $core.Map<$core.String, $core.dynamic> MsgServiceBase$json = const {
   '1': 'Msg',
   '2': const [
-    const {'1': 'Send', '2': '.cosmos.bank.v1beta1.MsgSend', '3': '.cosmos.bank.v1beta1.MsgSendResponse'},
-    const {'1': 'MultiSend', '2': '.cosmos.bank.v1beta1.MsgMultiSend', '3': '.cosmos.bank.v1beta1.MsgMultiSendResponse'},
+    const {
+      '1': 'Send',
+      '2': '.cosmos.bank.v1beta1.MsgSend',
+      '3': '.cosmos.bank.v1beta1.MsgSendResponse'
+    },
+    const {
+      '1': 'MultiSend',
+      '2': '.cosmos.bank.v1beta1.MsgMultiSend',
+      '3': '.cosmos.bank.v1beta1.MsgMultiSendResponse'
+    },
   ],
 };
 
 @$core.Deprecated('Use msgServiceDescriptor instead')
-const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> MsgServiceBase$messageJson = const {
+const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+    MsgServiceBase$messageJson = const {
   '.cosmos.bank.v1beta1.MsgSend': MsgSend$json,
   '.cosmos.base.v1beta1.Coin': $9.Coin$json,
   '.cosmos.bank.v1beta1.MsgSendResponse': MsgSendResponse$json,
@@ -70,4 +121,5 @@ const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> MsgService
 };
 
 /// Descriptor for `Msg`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List msgServiceDescriptor = $convert.base64Decode('CgNNc2cSSgoEU2VuZBIcLmNvc21vcy5iYW5rLnYxYmV0YTEuTXNnU2VuZBokLmNvc21vcy5iYW5rLnYxYmV0YTEuTXNnU2VuZFJlc3BvbnNlElkKCU11bHRpU2VuZBIhLmNvc21vcy5iYW5rLnYxYmV0YTEuTXNnTXVsdGlTZW5kGikuY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dNdWx0aVNlbmRSZXNwb25zZQ==');
+final $typed_data.Uint8List msgServiceDescriptor = $convert.base64Decode(
+    'CgNNc2cSSgoEU2VuZBIcLmNvc21vcy5iYW5rLnYxYmV0YTEuTXNnU2VuZBokLmNvc21vcy5iYW5rLnYxYmV0YTEuTXNnU2VuZFJlc3BvbnNlElkKCU11bHRpU2VuZBIhLmNvc21vcy5iYW5rLnYxYmV0YTEuTXNnTXVsdGlTZW5kGikuY29zbW9zLmJhbmsudjFiZXRhMS5Nc2dNdWx0aVNlbmRSZXNwb25zZQ==');

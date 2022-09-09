@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/chain/proposalDetails/proposalDetails.controll
 class ChainProposalDetailsPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ChainProposalDetailsPageController>(() => ChainProposalDetailsPageController());
+    Get.lazyPut<ChainProposalDetailsPageController>(
+        () => ChainProposalDetailsPageController());
   }
 }

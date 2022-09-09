@@ -16,32 +16,51 @@ import 'tx.pbjson.dart';
 export 'tx.pb.dart';
 
 abstract class MsgServiceBase extends $pb.GeneratedService {
-  $async.Future<$27.MsgSetWithdrawAddressResponse> setWithdrawAddress($pb.ServerContext ctx, $27.MsgSetWithdrawAddress request);
-  $async.Future<$27.MsgWithdrawDelegatorRewardResponse> withdrawDelegatorReward($pb.ServerContext ctx, $27.MsgWithdrawDelegatorReward request);
-  $async.Future<$27.MsgWithdrawValidatorCommissionResponse> withdrawValidatorCommission($pb.ServerContext ctx, $27.MsgWithdrawValidatorCommission request);
-  $async.Future<$27.MsgFundCommunityPoolResponse> fundCommunityPool($pb.ServerContext ctx, $27.MsgFundCommunityPool request);
+  $async.Future<$27.MsgSetWithdrawAddressResponse> setWithdrawAddress(
+      $pb.ServerContext ctx, $27.MsgSetWithdrawAddress request);
+  $async.Future<$27.MsgWithdrawDelegatorRewardResponse> withdrawDelegatorReward(
+      $pb.ServerContext ctx, $27.MsgWithdrawDelegatorReward request);
+  $async.Future<$27.MsgWithdrawValidatorCommissionResponse>
+      withdrawValidatorCommission(
+          $pb.ServerContext ctx, $27.MsgWithdrawValidatorCommission request);
+  $async.Future<$27.MsgFundCommunityPoolResponse> fundCommunityPool(
+      $pb.ServerContext ctx, $27.MsgFundCommunityPool request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'SetWithdrawAddress': return $27.MsgSetWithdrawAddress();
-      case 'WithdrawDelegatorReward': return $27.MsgWithdrawDelegatorReward();
-      case 'WithdrawValidatorCommission': return $27.MsgWithdrawValidatorCommission();
-      case 'FundCommunityPool': return $27.MsgFundCommunityPool();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'SetWithdrawAddress':
+        return $27.MsgSetWithdrawAddress();
+      case 'WithdrawDelegatorReward':
+        return $27.MsgWithdrawDelegatorReward();
+      case 'WithdrawValidatorCommission':
+        return $27.MsgWithdrawValidatorCommission();
+      case 'FundCommunityPool':
+        return $27.MsgFundCommunityPool();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'SetWithdrawAddress': return this.setWithdrawAddress(ctx, request as $27.MsgSetWithdrawAddress);
-      case 'WithdrawDelegatorReward': return this.withdrawDelegatorReward(ctx, request as $27.MsgWithdrawDelegatorReward);
-      case 'WithdrawValidatorCommission': return this.withdrawValidatorCommission(ctx, request as $27.MsgWithdrawValidatorCommission);
-      case 'FundCommunityPool': return this.fundCommunityPool(ctx, request as $27.MsgFundCommunityPool);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'SetWithdrawAddress':
+        return this
+            .setWithdrawAddress(ctx, request as $27.MsgSetWithdrawAddress);
+      case 'WithdrawDelegatorReward':
+        return this.withdrawDelegatorReward(
+            ctx, request as $27.MsgWithdrawDelegatorReward);
+      case 'WithdrawValidatorCommission':
+        return this.withdrawValidatorCommission(
+            ctx, request as $27.MsgWithdrawValidatorCommission);
+      case 'FundCommunityPool':
+        return this.fundCommunityPool(ctx, request as $27.MsgFundCommunityPool);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => MsgServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => MsgServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => MsgServiceBase$messageJson;
 }
-

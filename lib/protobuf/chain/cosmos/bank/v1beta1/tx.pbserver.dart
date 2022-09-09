@@ -16,26 +16,35 @@ import 'tx.pbjson.dart';
 export 'tx.pb.dart';
 
 abstract class MsgServiceBase extends $pb.GeneratedService {
-  $async.Future<$12.MsgSendResponse> send($pb.ServerContext ctx, $12.MsgSend request);
-  $async.Future<$12.MsgMultiSendResponse> multiSend($pb.ServerContext ctx, $12.MsgMultiSend request);
+  $async.Future<$12.MsgSendResponse> send(
+      $pb.ServerContext ctx, $12.MsgSend request);
+  $async.Future<$12.MsgMultiSendResponse> multiSend(
+      $pb.ServerContext ctx, $12.MsgMultiSend request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'Send': return $12.MsgSend();
-      case 'MultiSend': return $12.MsgMultiSend();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'Send':
+        return $12.MsgSend();
+      case 'MultiSend':
+        return $12.MsgMultiSend();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'Send': return this.send(ctx, request as $12.MsgSend);
-      case 'MultiSend': return this.multiSend(ctx, request as $12.MsgMultiSend);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'Send':
+        return this.send(ctx, request as $12.MsgSend);
+      case 'MultiSend':
+        return this.multiSend(ctx, request as $12.MsgMultiSend);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => MsgServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => MsgServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => MsgServiceBase$messageJson;
 }
-

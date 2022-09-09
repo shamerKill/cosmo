@@ -10,7 +10,7 @@ class UserLanguagePageState {
   // 当前语言
   final Rx<String> _nowLanguage = ''.obs;
   String get nowLanguage => _nowLanguage.value;
-  set nowLanguage (String value) => _nowLanguage.value = value;
+  set nowLanguage(String value) => _nowLanguage.value = value;
 }
 
 class UserLanguagePageController extends GetxController {

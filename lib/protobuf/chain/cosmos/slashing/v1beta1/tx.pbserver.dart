@@ -16,23 +16,29 @@ import 'tx.pbjson.dart';
 export 'tx.pb.dart';
 
 abstract class MsgServiceBase extends $pb.GeneratedService {
-  $async.Future<$43.MsgUnjailResponse> unjail($pb.ServerContext ctx, $43.MsgUnjail request);
+  $async.Future<$43.MsgUnjailResponse> unjail(
+      $pb.ServerContext ctx, $43.MsgUnjail request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'Unjail': return $43.MsgUnjail();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'Unjail':
+        return $43.MsgUnjail();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'Unjail': return this.unjail(ctx, request as $43.MsgUnjail);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'Unjail':
+        return this.unjail(ctx, request as $43.MsgUnjail);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => MsgServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => MsgServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => MsgServiceBase$messageJson;
 }
-

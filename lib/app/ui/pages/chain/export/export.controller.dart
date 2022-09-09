@@ -6,10 +6,12 @@ class ChainExportPageState {
   // 页面切换controller
   final Rx<TabController?> _pageTabController = Rx(null);
   TabController? get pageTabController => _pageTabController.value;
-  set pageTabController (TabController? value) => _pageTabController.value = value;
+  set pageTabController(TabController? value) =>
+      _pageTabController.value = value;
 }
 
-class ChainExportPageController extends GetxController with GetTickerProviderStateMixin {
+class ChainExportPageController extends GetxController
+    with GetTickerProviderStateMixin {
   ChainExportPageController();
   ChainExportPageState state = ChainExportPageState();
 

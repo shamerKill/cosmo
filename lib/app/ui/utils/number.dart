@@ -18,15 +18,18 @@ class NumberTool {
     if (inputSplit.length > 1) result += "." + inputSplit[1];
     return result;
   }
+
   static String getNumberInt(String input) {
     List<String> inputSplit = input.split(".");
     return inputSplit[0];
   }
+
   static String getNumberDecimalPoint(String input) {
     List<String> inputSplit = input.split(".");
     if (inputSplit.length <= 1) return "";
     return ".${inputSplit[1]}";
   }
+
   static String getNumberLenStar(int num) {
     String result = "";
     for (int i = 0; i < num; i++) {
@@ -34,41 +37,42 @@ class NumberTool {
     }
     return result;
   }
-  static String amountToBalance(String input, { int scale = 6 }) {
+
+  static String amountToBalance(String input, {int scale = 6}) {
     String _str = input.padLeft(scale + 1, '0');
     String _startStr = _str.substring(0, _str.length - scale);
     String _endStr = _str.substring(_str.length - scale);
-    String result = _startStr + ('.' + _endStr).replaceFirst(RegExp('[0|.]+\$'), '');
+    String result =
+        _startStr + ('.' + _endStr).replaceFirst(RegExp('[0|.]+\$'), '');
     if (double.tryParse(result) == 0) return '0';
     return result;
   }
-  static String balanceToAmount(String input, { int scale = 6 }) {
+
+  static String balanceToAmount(String input, {int scale = 6}) {
     List<String> _l = input.split('.');
     BigInt _mem = BigInt.zero;
     for (int i = 0; i < _l.length; i++) {
-      String _str = (
-        i == 0 ? 
-          (_l[i] + ''.padRight(scale, '0')) :
-          (_l[i].padRight(scale, '0'))
-      );
+      String _str = (i == 0
+          ? (_l[i] + ''.padRight(scale, '0'))
+          : (_l[i].padRight(scale, '0')));
       _mem += BigInt.parse(i == 0 ? _str : _str.substring(0, (scale + 1 - i)));
     }
     return _mem.toString();
   }
-  static String doubleBalanceToAmount(double input, { int scale = 6 }) {
+
+  static String doubleBalanceToAmount(double input, {int scale = 6}) {
     List<String> _l = input.toString().split('.');
     BigInt _mem = BigInt.zero;
     for (int i = 0; i < _l.length; i++) {
-      String _str = (
-        i == 0 ? 
-          (_l[i] + ''.padRight(scale, '0')) :
-          (_l[i].padRight(scale, '0'))
-      );
+      String _str = (i == 0
+          ? (_l[i] + ''.padRight(scale, '0'))
+          : (_l[i].padRight(scale, '0')));
       _mem += BigInt.parse(i == 0 ? _str : _str.substring(0, (scale + 1 - i)));
     }
     return _mem.toString();
   }
-  static String numMul(String one, String two, { int scale = 2}) {
+
+  static String numMul(String one, String two, {int scale = 2}) {
     try {
       double douOne = double.parse(one);
       double douTwo = double.parse(two);

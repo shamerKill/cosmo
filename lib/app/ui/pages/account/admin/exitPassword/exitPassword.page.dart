@@ -8,8 +8,8 @@ import 'package:plug/app/ui/components/layout/scaffold.component.dart';
 import 'package:plug/app/ui/pages/account/admin/exitPassword/exitPassword.controller.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 
-
-class AccountExitPasswordPage extends GetView<AccountExitPasswordPageController> {
+class AccountExitPasswordPage
+    extends GetView<AccountExitPasswordPageController> {
   const AccountExitPasswordPage({Key? key}) : super(key: key);
 
   @override
@@ -28,24 +28,25 @@ class AccountExitPasswordPage extends GetView<AccountExitPasswordPageController>
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
             child: Obx(() => LInput(
-              labelText: 'inputPassword'.tr,
-              disabled: state.createLoading,
-              textController: controller.passwordController,
-              visibilityPass: state.passwordShow,
-              keyboardType: TextInputType.visiblePassword,
-              passOnPress: () => controller.togglePasswordView('password'),
-            )),
+                  labelText: 'inputPassword'.tr,
+                  disabled: state.createLoading,
+                  textController: controller.passwordController,
+                  visibilityPass: state.passwordShow,
+                  keyboardType: TextInputType.visiblePassword,
+                  passOnPress: () => controller.togglePasswordView('password'),
+                )),
           ),
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
             child: Obx(() => LInput(
-              labelText: 'inputPasswordAgain'.tr,
-              disabled: state.createLoading,
-              textController: controller.rePasswordController,
-              visibilityPass: state.rePasswordShow,
-              keyboardType: TextInputType.visiblePassword,
-              passOnPress: () => controller.togglePasswordView('rePassword'),
-            )),
+                  labelText: 'inputPasswordAgain'.tr,
+                  disabled: state.createLoading,
+                  textController: controller.rePasswordController,
+                  visibilityPass: state.rePasswordShow,
+                  keyboardType: TextInputType.visiblePassword,
+                  passOnPress: () =>
+                      controller.togglePasswordView('rePassword'),
+                )),
           ),
         ],
       ),
@@ -56,11 +57,11 @@ class AccountExitPasswordPage extends GetView<AccountExitPasswordPageController>
               vertical: appTheme.sizes.padding,
             ),
             child: Obx(() => LButton(
-              width: appTheme.sizes.infinity,
-              child: Text('editPassword'.tr),
-              disabled: state.createLoading,
-              onPressed: state.canCreate ? controller.createAccount : null,
-            )),
+                  width: appTheme.sizes.infinity,
+                  child: Text('editPassword'.tr),
+                  disabled: state.createLoading,
+                  onPressed: state.canCreate ? controller.createAccount : null,
+                )),
           ),
         ],
       ),

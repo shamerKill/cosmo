@@ -27,8 +27,11 @@ class UserProblemsPageController extends GetxController {
   // 提交问题反馈
   onSubmitProblems() async {
     Get.focusScope?.unfocus();
-    if (!StringTool.checkEmail(emailController.text) || descController.text == '' || state.picList.isEmpty) return LToast.warning('ErrorWithInputData'.tr);
-    var type = await LBottomSheet.promptBottomSheet(title: 'submitProblemTip'.tr);
+    if (!StringTool.checkEmail(emailController.text) ||
+        descController.text == '' ||
+        state.picList.isEmpty) return LToast.warning('ErrorWithInputData'.tr);
+    var type =
+        await LBottomSheet.promptBottomSheet(title: 'submitProblemTip'.tr);
     if (type != true) return;
     LLoading.showLoading();
     dio.FormData _formData = dio.FormData.fromMap({
@@ -46,16 +49,17 @@ class UserProblemsPageController extends GetxController {
     descController.text = '';
     state.picList.clear();
   }
+
   // 选择图片
   onSelectPicture() {
     LBottomSheet.baseBottomSheet(
       showClose: false,
       child: LBottomSheet.selectSheetChild(
-        labelList: ['selectWithAlbum'.tr, 'selectWithCamera'.tr],
-        successCallBack: _onSelectPicType
-      ),
+          labelList: ['selectWithAlbum'.tr, 'selectWithCamera'.tr],
+          successCallBack: _onSelectPicType),
     );
   }
+
   // 选择图片类型
   _onSelectPicType(int type) async {
     Get.back();
@@ -63,22 +67,25 @@ class UserProblemsPageController extends GetxController {
     if (type == 0) {
       try {
         final ImagePicker _picker = ImagePicker();
-        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+        final XFile? image =
+            await _picker.pickImage(source: ImageSource.gallery);
         if (image == null) return;
         if (state.picList.contains(image.path)) return;
         state.picList.add(image.path);
-      } catch(_) {}
-    // 相册
+      } catch (_) {}
+      // 相册
     } else if (type == 1) {
       try {
         final ImagePicker _picker = ImagePicker();
-        final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+        final XFile? image =
+            await _picker.pickImage(source: ImageSource.camera);
         if (image == null) return;
         if (state.picList.contains(image.path)) return;
         state.picList.add(image.path);
-      } catch(_) {}
+      } catch (_) {}
     }
   }
+
   // 长按删除图片
   onLongDelete(String path) async {
     bool? result = await LBottomSheet.promptBottomSheet(
@@ -87,6 +94,7 @@ class UserProblemsPageController extends GetxController {
     if (result != true) return;
     state.picList.remove(path);
   }
+
   // 展示图片
   onShowPic(String path) {
     Get.bottomSheet(
@@ -99,10 +107,7 @@ class UserProblemsPageController extends GetxController {
             horizontal: appTheme.sizes.paddingSmall,
             vertical: appTheme.sizes.paddingBig * 2,
           ),
-          child: Image.file(
-            File(path),
-            fit: BoxFit.contain
-          ),
+          child: Image.file(File(path), fit: BoxFit.contain),
         ),
       ),
       isScrollControlled: true,

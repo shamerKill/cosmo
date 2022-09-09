@@ -10,7 +10,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:uni_links/uni_links.dart';
 
 class UtilGlobalInit {
-  static init () async {
+  static init() async {
     _changeSystemUI();
     if (Env.envConfig.isRelease) {
       await _openSuperFPS();
@@ -20,16 +20,16 @@ class UtilGlobalInit {
     await plugTranslation.init();
     await _getDeepLink();
   }
+
   // 修改头部背景
   static _changeSystemUI() async {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      )
-    );
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
   }
+
   // 禁止转向
-  static _changeSystemPerferred({ canRotate = false }) async {
+  static _changeSystemPerferred({canRotate = false}) async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -37,6 +37,7 @@ class UtilGlobalInit {
       if (canRotate) DeviceOrientation.landscapeRight,
     ]);
   }
+
   // 开启高高刷
   static _openSuperFPS() async {
     try {
@@ -44,6 +45,7 @@ class UtilGlobalInit {
       await FlutterDisplayMode.setPreferredMode(modes[1]);
     } on PlatformException catch (_) {}
   }
+
   // 判断是否有外部连接
   static String? getDeepLink;
   static Future<String?> _getDeepLink() async {
@@ -52,12 +54,12 @@ class UtilGlobalInit {
     switch (initialUri?.path) {
       case '/web':
         if (initialUri?.queryParameters['href'] is String) {
-          result = PlugRoutesNames.dappWebviewRoute(base64.encode(utf8.encode(initialUri?.queryParameters['href']??'')));
+          result = PlugRoutesNames.dappWebviewRoute(base64
+              .encode(utf8.encode(initialUri?.queryParameters['href'] ?? '')));
         }
         break;
     }
     getDeepLink = result;
     return result;
   }
-
 }

@@ -12,7 +12,7 @@ class DappSearchPageState {
   // 搜索框是否有值
   final Rx<bool> _searchHadData = false.obs;
   bool get searchHadData => _searchHadData.value;
-  set searchHadData (bool value) => _searchHadData.value = value;
+  set searchHadData(bool value) => _searchHadData.value = value;
 }
 
 class DappSearchPageController extends GetxController {
@@ -23,12 +23,12 @@ class DappSearchPageController extends GetxController {
   // 获取收藏Dapp/最近的Dapp
   DataDappAddressController dataDappAddress = Get.find();
 
-
   @override
   onInit() {
     super.onInit();
     searchController.addListener(_onSearchInputHadData);
   }
+
   @override
   onClose() {
     searchController.removeListener(_onSearchInputHadData);
@@ -47,28 +47,35 @@ class DappSearchPageController extends GetxController {
   onSearchBtn() {
     Get.back();
   }
+
   // 搜索
   onSearchData(String data) {
     if (StringTool.checkNetAddress(data)) {
       _onAddHistory(data);
-      Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode(data))});
+      Get.toNamed(PlugRoutesNames.dappWebview,
+          parameters: {'link': base64.encode(utf8.encode(data))});
       searchController.text = '';
     } else {
       LToast.warning('ErrorWithInputSite'.tr);
     }
   }
+
   // 点击历史搜索
   onClickHistory(DappModel data) {
     searchController.text = data.address;
   }
+
   // 删除搜索历史
   onDeleteHistory(String address) {
-    dataDappAddress.state.dappLatelyList.removeWhere((item) => item.address == address);
+    dataDappAddress.state.dappLatelyList
+        .removeWhere((item) => item.address == address);
     dataDappAddress.saveData();
   }
+
   // 添加搜索历史
   _onAddHistory(String address) {
-    var index = dataDappAddress.state.dappLatelyList.indexWhere((item) => item.address == address);
+    var index = dataDappAddress.state.dappLatelyList
+        .indexWhere((item) => item.address == address);
     var ele = DappModel();
     if (index >= 0) {
       ele = dataDappAddress.state.dappLatelyList.removeAt(index);

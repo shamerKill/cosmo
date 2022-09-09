@@ -8,16 +8,18 @@ class WalletNotificationDetailsPageState {
   // 消息详情
   final Rx<NotificationModel> _notificationInfo = NotificationModel().obs;
   NotificationModel get notificationInfo => _notificationInfo.value;
-  set notificationInfo (NotificationModel value) => _notificationInfo.value = value;
+  set notificationInfo(NotificationModel value) =>
+      _notificationInfo.value = value;
   // 消息内容
   final Rx<String> _notificationContext = ''.obs;
   String get notificationContext => _notificationContext.value;
-  set notificationContext (String value) => _notificationContext.value = value;
+  set notificationContext(String value) => _notificationContext.value = value;
 }
 
 class WalletNotificationDetailsPageController extends GetxController {
   WalletNotificationDetailsPageController();
-  WalletNotificationDetailsPageState state = WalletNotificationDetailsPageState();
+  WalletNotificationDetailsPageState state =
+      WalletNotificationDetailsPageState();
 
   @override
   onReady() async {
@@ -38,9 +40,11 @@ class WalletNotificationDetailsPageController extends GetxController {
 
   // 设置内容详情
   setContext() {
-    state.notificationContext = 'data:text/html;base64,' + base64Encode(const Utf8Encoder().convert('''
+    state.notificationContext =
+        'data:text/html;base64,' + base64Encode(const Utf8Encoder().convert('''
       <!DOCTYPE html>
       <head>
+        <meta charset="utf-8">
         <style>
           * {
             font-size: 40px;

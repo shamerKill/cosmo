@@ -32,8 +32,10 @@ class LScaffold extends GetView<LScaffoldController> {
   final void Function(bool)? onDrawerChanged;
   final Widget? bottomNavigationBar;
   final EdgeInsetsGeometry? padding;
+
   /// 是否隐藏左右padding
   final bool hidHorizontalPadding;
+
   /// 是否隐藏底部安全距离
   final bool hidBottomBar;
   final bool singleScroll;
@@ -55,7 +57,9 @@ class LScaffold extends GetView<LScaffoldController> {
           appBar: statusBar,
           onDrawerChanged: onDrawerChanged,
           drawer: drawer,
-          backgroundColor: basicBackgroundColor ? appTheme.colors.pageBackgroundColorBasic : null,
+          backgroundColor: basicBackgroundColor
+              ? appTheme.colors.pageBackgroundColorBasic
+              : null,
           body: SizedBox(
             height: appTheme.sizes.infinity,
             child: Column(
@@ -64,28 +68,51 @@ class LScaffold extends GetView<LScaffoldController> {
               children: [
                 if (headerBar != null) headerBar!,
                 if (titleBar != null) titleBar!,
-                if (body != null) Expanded(
-                  flex: 1,
-                  child: Container(
-                    width: appTheme.sizes.infinity,
-                    padding: padding??EdgeInsets.only(
-                      left: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding, right: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding,
-                      bottom: (hidBottomBar || footer != null || bottomNavigationBar != null) ? 0 :
-                        (ScreenUtil.getBottomBarH(context) == 0.0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context)),
+                if (body != null)
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      width: appTheme.sizes.infinity,
+                      padding: padding ??
+                          EdgeInsets.only(
+                            left: hidHorizontalPadding
+                                ? appTheme.sizes.zero
+                                : appTheme.sizes.padding,
+                            right: hidHorizontalPadding
+                                ? appTheme.sizes.zero
+                                : appTheme.sizes.padding,
+                            bottom: (hidBottomBar ||
+                                    footer != null ||
+                                    bottomNavigationBar != null)
+                                ? 0
+                                : (ScreenUtil.getBottomBarH(context) == 0.0
+                                    ? appTheme.sizes.padding
+                                    : ScreenUtil.getBottomBarH(context)),
+                          ),
+                      child: singleScroll
+                          ? SingleChildScrollView(child: body)
+                          : body,
                     ),
-                    child: singleScroll ? SingleChildScrollView(child: body) : body,
                   ),
-                ),
-                if (footer != null) Container(
-                  width: appTheme.sizes.infinity,
-                  color: footerBgColor,
-                  padding: padding??EdgeInsets.only(
-                    left: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding, right: hidHorizontalPadding ? appTheme.sizes.zero : appTheme.sizes.padding,
-                      bottom: hidBottomBar ? 0 :
-                        (ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context))
+                if (footer != null)
+                  Container(
+                    width: appTheme.sizes.infinity,
+                    color: footerBgColor,
+                    padding: padding ??
+                        EdgeInsets.only(
+                            left: hidHorizontalPadding
+                                ? appTheme.sizes.zero
+                                : appTheme.sizes.padding,
+                            right: hidHorizontalPadding
+                                ? appTheme.sizes.zero
+                                : appTheme.sizes.padding,
+                            bottom: hidBottomBar
+                                ? 0
+                                : (ScreenUtil.getBottomBarH(context) == 0
+                                    ? appTheme.sizes.padding
+                                    : ScreenUtil.getBottomBarH(context))),
+                    child: footer,
                   ),
-                  child: footer,
-                ),
               ],
             ),
           ),
@@ -97,17 +124,15 @@ class LScaffold extends GetView<LScaffoldController> {
   }
 }
 
-
 class LScaffoldController extends GetxController {
   DateTime? _lastPressBackTime;
-  Future<bool> onWillPop () async {
+  Future<bool> onWillPop() async {
     if (!GetPlatform.isAndroid) return true;
-    bool isFirstRoute = Get.key.currentState?.canPop()??true;
+    bool isFirstRoute = Get.key.currentState?.canPop() ?? true;
     if (isFirstRoute) return true;
-    if (
-      _lastPressBackTime == null ||
-      DateTime.now().difference(_lastPressBackTime!) > const Duration(seconds: 1)
-    ) {
+    if (_lastPressBackTime == null ||
+        DateTime.now().difference(_lastPressBackTime!) >
+            const Duration(seconds: 1)) {
       LToast.info('exitAppToast'.tr);
       _lastPressBackTime = DateTime.now();
       return false;

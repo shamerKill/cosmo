@@ -18,17 +18,27 @@ const QueryCurrentPlanRequest$json = const {
 };
 
 /// Descriptor for `QueryCurrentPlanRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryCurrentPlanRequestDescriptor = $convert.base64Decode('ChdRdWVyeUN1cnJlbnRQbGFuUmVxdWVzdA==');
+final $typed_data.Uint8List queryCurrentPlanRequestDescriptor =
+    $convert.base64Decode('ChdRdWVyeUN1cnJlbnRQbGFuUmVxdWVzdA==');
 @$core.Deprecated('Use queryCurrentPlanResponseDescriptor instead')
 const QueryCurrentPlanResponse$json = const {
   '1': 'QueryCurrentPlanResponse',
   '2': const [
-    const {'1': 'plan', '3': 1, '4': 1, '5': 11, '6': '.cosmos.upgrade.v1beta1.Plan', '10': 'plan'},
+    const {
+      '1': 'plan',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.cosmos.upgrade.v1beta1.Plan',
+      '10': 'plan'
+    },
   ],
 };
 
 /// Descriptor for `QueryCurrentPlanResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryCurrentPlanResponseDescriptor = $convert.base64Decode('ChhRdWVyeUN1cnJlbnRQbGFuUmVzcG9uc2USMAoEcGxhbhgBIAEoCzIcLmNvc21vcy51cGdyYWRlLnYxYmV0YTEuUGxhblIEcGxhbg==');
+final $typed_data.Uint8List queryCurrentPlanResponseDescriptor =
+    $convert.base64Decode(
+        'ChhRdWVyeUN1cnJlbnRQbGFuUmVzcG9uc2USMAoEcGxhbhgBIAEoCzIcLmNvc21vcy51cGdyYWRlLnYxYmV0YTEuUGxhblIEcGxhbg==');
 @$core.Deprecated('Use queryAppliedPlanRequestDescriptor instead')
 const QueryAppliedPlanRequest$json = const {
   '1': 'QueryAppliedPlanRequest',
@@ -38,7 +48,9 @@ const QueryAppliedPlanRequest$json = const {
 };
 
 /// Descriptor for `QueryAppliedPlanRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryAppliedPlanRequestDescriptor = $convert.base64Decode('ChdRdWVyeUFwcGxpZWRQbGFuUmVxdWVzdBISCgRuYW1lGAEgASgJUgRuYW1l');
+final $typed_data.Uint8List queryAppliedPlanRequestDescriptor =
+    $convert.base64Decode(
+        'ChdRdWVyeUFwcGxpZWRQbGFuUmVxdWVzdBISCgRuYW1lGAEgASgJUgRuYW1l');
 @$core.Deprecated('Use queryAppliedPlanResponseDescriptor instead')
 const QueryAppliedPlanResponse$json = const {
   '1': 'QueryAppliedPlanResponse',
@@ -48,7 +60,9 @@ const QueryAppliedPlanResponse$json = const {
 };
 
 /// Descriptor for `QueryAppliedPlanResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryAppliedPlanResponseDescriptor = $convert.base64Decode('ChhRdWVyeUFwcGxpZWRQbGFuUmVzcG9uc2USFgoGaGVpZ2h0GAEgASgDUgZoZWlnaHQ=');
+final $typed_data.Uint8List queryAppliedPlanResponseDescriptor =
+    $convert.base64Decode(
+        'ChhRdWVyeUFwcGxpZWRQbGFuUmVzcG9uc2USFgoGaGVpZ2h0GAEgASgDUgZoZWlnaHQ=');
 @$core.Deprecated('Use queryUpgradedConsensusStateRequestDescriptor instead')
 const QueryUpgradedConsensusStateRequest$json = const {
   '1': 'QueryUpgradedConsensusStateRequest',
@@ -59,12 +73,20 @@ const QueryUpgradedConsensusStateRequest$json = const {
 };
 
 /// Descriptor for `QueryUpgradedConsensusStateRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryUpgradedConsensusStateRequestDescriptor = $convert.base64Decode('CiJRdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXF1ZXN0Eh8KC2xhc3RfaGVpZ2h0GAEgASgDUgpsYXN0SGVpZ2h0OgIYAQ==');
+final $typed_data.Uint8List queryUpgradedConsensusStateRequestDescriptor =
+    $convert.base64Decode(
+        'CiJRdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXF1ZXN0Eh8KC2xhc3RfaGVpZ2h0GAEgASgDUgpsYXN0SGVpZ2h0OgIYAQ==');
 @$core.Deprecated('Use queryUpgradedConsensusStateResponseDescriptor instead')
 const QueryUpgradedConsensusStateResponse$json = const {
   '1': 'QueryUpgradedConsensusStateResponse',
   '2': const [
-    const {'1': 'upgraded_consensus_state', '3': 2, '4': 1, '5': 12, '10': 'upgradedConsensusState'},
+    const {
+      '1': 'upgraded_consensus_state',
+      '3': 2,
+      '4': 1,
+      '5': 12,
+      '10': 'upgradedConsensusState'
+    },
   ],
   '7': const {'3': true},
   '9': const [
@@ -73,7 +95,9 @@ const QueryUpgradedConsensusStateResponse$json = const {
 };
 
 /// Descriptor for `QueryUpgradedConsensusStateResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryUpgradedConsensusStateResponseDescriptor = $convert.base64Decode('CiNRdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXNwb25zZRI4Chh1cGdyYWRlZF9jb25zZW5zdXNfc3RhdGUYAiABKAxSFnVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGU6AhgBSgQIARAC');
+final $typed_data.Uint8List queryUpgradedConsensusStateResponseDescriptor =
+    $convert.base64Decode(
+        'CiNRdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXNwb25zZRI4Chh1cGdyYWRlZF9jb25zZW5zdXNfc3RhdGUYAiABKAxSFnVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGU6AhgBSgQIARAC');
 @$core.Deprecated('Use queryModuleVersionsRequestDescriptor instead')
 const QueryModuleVersionsRequest$json = const {
   '1': 'QueryModuleVersionsRequest',
@@ -83,47 +107,83 @@ const QueryModuleVersionsRequest$json = const {
 };
 
 /// Descriptor for `QueryModuleVersionsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryModuleVersionsRequestDescriptor = $convert.base64Decode('ChpRdWVyeU1vZHVsZVZlcnNpb25zUmVxdWVzdBIfCgttb2R1bGVfbmFtZRgBIAEoCVIKbW9kdWxlTmFtZQ==');
+final $typed_data.Uint8List queryModuleVersionsRequestDescriptor =
+    $convert.base64Decode(
+        'ChpRdWVyeU1vZHVsZVZlcnNpb25zUmVxdWVzdBIfCgttb2R1bGVfbmFtZRgBIAEoCVIKbW9kdWxlTmFtZQ==');
 @$core.Deprecated('Use queryModuleVersionsResponseDescriptor instead')
 const QueryModuleVersionsResponse$json = const {
   '1': 'QueryModuleVersionsResponse',
   '2': const [
-    const {'1': 'module_versions', '3': 1, '4': 3, '5': 11, '6': '.cosmos.upgrade.v1beta1.ModuleVersion', '10': 'moduleVersions'},
+    const {
+      '1': 'module_versions',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.cosmos.upgrade.v1beta1.ModuleVersion',
+      '10': 'moduleVersions'
+    },
   ],
 };
 
 /// Descriptor for `QueryModuleVersionsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryModuleVersionsResponseDescriptor = $convert.base64Decode('ChtRdWVyeU1vZHVsZVZlcnNpb25zUmVzcG9uc2USTgoPbW9kdWxlX3ZlcnNpb25zGAEgAygLMiUuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5Nb2R1bGVWZXJzaW9uUg5tb2R1bGVWZXJzaW9ucw==');
+final $typed_data.Uint8List queryModuleVersionsResponseDescriptor =
+    $convert.base64Decode(
+        'ChtRdWVyeU1vZHVsZVZlcnNpb25zUmVzcG9uc2USTgoPbW9kdWxlX3ZlcnNpb25zGAEgAygLMiUuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5Nb2R1bGVWZXJzaW9uUg5tb2R1bGVWZXJzaW9ucw==');
 const $core.Map<$core.String, $core.dynamic> QueryServiceBase$json = const {
   '1': 'Query',
   '2': const [
-    const {'1': 'CurrentPlan', '2': '.cosmos.upgrade.v1beta1.QueryCurrentPlanRequest', '3': '.cosmos.upgrade.v1beta1.QueryCurrentPlanResponse', '4': const {}},
-    const {'1': 'AppliedPlan', '2': '.cosmos.upgrade.v1beta1.QueryAppliedPlanRequest', '3': '.cosmos.upgrade.v1beta1.QueryAppliedPlanResponse', '4': const {}},
+    const {
+      '1': 'CurrentPlan',
+      '2': '.cosmos.upgrade.v1beta1.QueryCurrentPlanRequest',
+      '3': '.cosmos.upgrade.v1beta1.QueryCurrentPlanResponse',
+      '4': const {}
+    },
+    const {
+      '1': 'AppliedPlan',
+      '2': '.cosmos.upgrade.v1beta1.QueryAppliedPlanRequest',
+      '3': '.cosmos.upgrade.v1beta1.QueryAppliedPlanResponse',
+      '4': const {}
+    },
     const {
       '1': 'UpgradedConsensusState',
       '2': '.cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest',
       '3': '.cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse',
       '4': const {'33': true},
     },
-    const {'1': 'ModuleVersions', '2': '.cosmos.upgrade.v1beta1.QueryModuleVersionsRequest', '3': '.cosmos.upgrade.v1beta1.QueryModuleVersionsResponse', '4': const {}},
+    const {
+      '1': 'ModuleVersions',
+      '2': '.cosmos.upgrade.v1beta1.QueryModuleVersionsRequest',
+      '3': '.cosmos.upgrade.v1beta1.QueryModuleVersionsResponse',
+      '4': const {}
+    },
   ],
 };
 
 @$core.Deprecated('Use queryServiceDescriptor instead')
-const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> QueryServiceBase$messageJson = const {
-  '.cosmos.upgrade.v1beta1.QueryCurrentPlanRequest': QueryCurrentPlanRequest$json,
-  '.cosmos.upgrade.v1beta1.QueryCurrentPlanResponse': QueryCurrentPlanResponse$json,
+const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+    QueryServiceBase$messageJson = const {
+  '.cosmos.upgrade.v1beta1.QueryCurrentPlanRequest':
+      QueryCurrentPlanRequest$json,
+  '.cosmos.upgrade.v1beta1.QueryCurrentPlanResponse':
+      QueryCurrentPlanResponse$json,
   '.cosmos.upgrade.v1beta1.Plan': $52.Plan$json,
   '.google.protobuf.Timestamp': $4.Timestamp$json,
   '.google.protobuf.Any': $0.Any$json,
-  '.cosmos.upgrade.v1beta1.QueryAppliedPlanRequest': QueryAppliedPlanRequest$json,
-  '.cosmos.upgrade.v1beta1.QueryAppliedPlanResponse': QueryAppliedPlanResponse$json,
-  '.cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest': QueryUpgradedConsensusStateRequest$json,
-  '.cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse': QueryUpgradedConsensusStateResponse$json,
-  '.cosmos.upgrade.v1beta1.QueryModuleVersionsRequest': QueryModuleVersionsRequest$json,
-  '.cosmos.upgrade.v1beta1.QueryModuleVersionsResponse': QueryModuleVersionsResponse$json,
+  '.cosmos.upgrade.v1beta1.QueryAppliedPlanRequest':
+      QueryAppliedPlanRequest$json,
+  '.cosmos.upgrade.v1beta1.QueryAppliedPlanResponse':
+      QueryAppliedPlanResponse$json,
+  '.cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateRequest':
+      QueryUpgradedConsensusStateRequest$json,
+  '.cosmos.upgrade.v1beta1.QueryUpgradedConsensusStateResponse':
+      QueryUpgradedConsensusStateResponse$json,
+  '.cosmos.upgrade.v1beta1.QueryModuleVersionsRequest':
+      QueryModuleVersionsRequest$json,
+  '.cosmos.upgrade.v1beta1.QueryModuleVersionsResponse':
+      QueryModuleVersionsResponse$json,
   '.cosmos.upgrade.v1beta1.ModuleVersion': $52.ModuleVersion$json,
 };
 
 /// Descriptor for `Query`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List queryServiceDescriptor = $convert.base64Decode('CgVRdWVyeRKeAQoLQ3VycmVudFBsYW4SLy5jb3Ntb3MudXBncmFkZS52MWJldGExLlF1ZXJ5Q3VycmVudFBsYW5SZXF1ZXN0GjAuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeUN1cnJlbnRQbGFuUmVzcG9uc2UiLILT5JMCJhIkL2Nvc21vcy91cGdyYWRlL3YxYmV0YTEvY3VycmVudF9wbGFuEqUBCgtBcHBsaWVkUGxhbhIvLmNvc21vcy51cGdyYWRlLnYxYmV0YTEuUXVlcnlBcHBsaWVkUGxhblJlcXVlc3QaMC5jb3Ntb3MudXBncmFkZS52MWJldGExLlF1ZXJ5QXBwbGllZFBsYW5SZXNwb25zZSIzgtPkkwItEisvY29zbW9zL3VwZ3JhZGUvdjFiZXRhMS9hcHBsaWVkX3BsYW4ve25hbWV9EtwBChZVcGdyYWRlZENvbnNlbnN1c1N0YXRlEjouY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXF1ZXN0GjsuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXNwb25zZSJJiAIBgtPkkwJAEj4vY29zbW9zL3VwZ3JhZGUvdjFiZXRhMS91cGdyYWRlZF9jb25zZW5zdXNfc3RhdGUve2xhc3RfaGVpZ2h0fRKqAQoOTW9kdWxlVmVyc2lvbnMSMi5jb3Ntb3MudXBncmFkZS52MWJldGExLlF1ZXJ5TW9kdWxlVmVyc2lvbnNSZXF1ZXN0GjMuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeU1vZHVsZVZlcnNpb25zUmVzcG9uc2UiL4LT5JMCKRInL2Nvc21vcy91cGdyYWRlL3YxYmV0YTEvbW9kdWxlX3ZlcnNpb25z');
+final $typed_data.Uint8List queryServiceDescriptor = $convert.base64Decode(
+    'CgVRdWVyeRKeAQoLQ3VycmVudFBsYW4SLy5jb3Ntb3MudXBncmFkZS52MWJldGExLlF1ZXJ5Q3VycmVudFBsYW5SZXF1ZXN0GjAuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeUN1cnJlbnRQbGFuUmVzcG9uc2UiLILT5JMCJhIkL2Nvc21vcy91cGdyYWRlL3YxYmV0YTEvY3VycmVudF9wbGFuEqUBCgtBcHBsaWVkUGxhbhIvLmNvc21vcy51cGdyYWRlLnYxYmV0YTEuUXVlcnlBcHBsaWVkUGxhblJlcXVlc3QaMC5jb3Ntb3MudXBncmFkZS52MWJldGExLlF1ZXJ5QXBwbGllZFBsYW5SZXNwb25zZSIzgtPkkwItEisvY29zbW9zL3VwZ3JhZGUvdjFiZXRhMS9hcHBsaWVkX3BsYW4ve25hbWV9EtwBChZVcGdyYWRlZENvbnNlbnN1c1N0YXRlEjouY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXF1ZXN0GjsuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeVVwZ3JhZGVkQ29uc2Vuc3VzU3RhdGVSZXNwb25zZSJJiAIBgtPkkwJAEj4vY29zbW9zL3VwZ3JhZGUvdjFiZXRhMS91cGdyYWRlZF9jb25zZW5zdXNfc3RhdGUve2xhc3RfaGVpZ2h0fRKqAQoOTW9kdWxlVmVyc2lvbnMSMi5jb3Ntb3MudXBncmFkZS52MWJldGExLlF1ZXJ5TW9kdWxlVmVyc2lvbnNSZXF1ZXN0GjMuY29zbW9zLnVwZ3JhZGUudjFiZXRhMS5RdWVyeU1vZHVsZVZlcnNpb25zUmVzcG9uc2UiL4LT5JMCKRInL2Nvc21vcy91cGdyYWRlL3YxYmV0YTEvbW9kdWxlX3ZlcnNpb25z');

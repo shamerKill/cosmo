@@ -2,8 +2,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 
-class AccountBackupTipPageState {
-}
+class AccountBackupTipPageState {}
 
 class AccountBackupTipPageController extends GetxController {
   AccountBackupTipPageController();
@@ -18,6 +17,7 @@ class AccountBackupTipPageController extends GetxController {
   void backupNow() {
     Get.toNamed(PlugRoutesNames.accountBackupShow);
   }
+
   void backupLate() {
     dataAccountController.addAccount(dataAccountController.state.memAccount!);
     dataAccountController.state.memAccount = null;

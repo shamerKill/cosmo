@@ -2,15 +2,20 @@
 enum VoteOption {
   /// 不投票
   OptionEmpty,
+
   /// 同意
   OptionYes,
+
   /// 弃权
   OptionAbstain,
+
   /// 不同意
   OptionNo,
+
   /// 强烈反对
   OptionNoWithVeto,
 }
+
 /// 币种类型
 class ModelCoin {
   final String denom;

@@ -9,7 +9,8 @@ import 'package:plug/app/ui/pages/chain/export/delegate/delegate.controller.dart
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 
-class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController> {
+class ChainExportDelegatePage
+    extends GetView<ChainExportDelegatePageController> {
   const ChainExportDelegatePage({Key? key}) : super(key: key);
 
   @override
@@ -23,7 +24,8 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
         Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
           ),
           clipBehavior: Clip.antiAlias,
           child: Stack(
@@ -32,7 +34,8 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                 width: appTheme.sizes.infinity,
                 padding: EdgeInsets.only(top: appTheme.sizes.basic * 240),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
@@ -47,8 +50,12 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('verifierList'.tr, style: TextStyle(color: appTheme.colors.hightColor)),
-                        Padding(padding: EdgeInsets.only(right: appTheme.sizes.basic * 5.0)),
+                        Text('verifierList'.tr,
+                            style:
+                                TextStyle(color: appTheme.colors.hightColor)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                right: appTheme.sizes.basic * 5.0)),
                         Icon(
                           const IconData(0xe60a, fontFamily: 'plugIcon'),
                           color: appTheme.colors.hightColor,
@@ -60,10 +67,13 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                padding: EdgeInsets.symmetric(
+                    vertical: appTheme.sizes.padding,
+                    horizontal: appTheme.sizes.padding),
                 decoration: BoxDecoration(
                   color: appTheme.colors.pageBackgroundColor,
-                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Column(
@@ -71,11 +81,15 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('pledgingVolume'.tr, style: Get.textTheme.bodyText1),
-                        Text('withdrawingVolume'.tr, style: Get.textTheme.bodyText1),
+                        Text('pledgingVolume'.tr,
+                            style: Get.textTheme.bodyText1),
+                        Text('withdrawingVolume'.tr,
+                            style: Get.textTheme.bodyText1),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -84,35 +98,63 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
                             scrollDirection: Axis.horizontal,
                             child: LAnimationView(
                               child: Obx(() => Text(
-                                NumberTool.formatNumberStr(NumberTool.amountToBalance(state.delegatingAmount, scale: state.tokenInfo.scale)),
-                                style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeBig * 1.1, letterSpacing: -1 * appTheme.sizes.basic),
-                              )),
+                                    NumberTool.formatNumberStr(
+                                        NumberTool.amountToBalance(
+                                            state.delegatingAmount,
+                                            scale: state.tokenInfo.scale)),
+                                    style: TextStyle(
+                                        color: appTheme.colors.primaryColor,
+                                        fontSize:
+                                            appTheme.sizes.fontSizeBig * 1.1,
+                                        letterSpacing:
+                                            -1 * appTheme.sizes.basic),
+                                  )),
                               randomKey: false,
                             ),
                           ),
                         ),
-                        Padding(padding: EdgeInsets.only(left: appTheme.sizes.padding)),
+                        Padding(
+                            padding:
+                                EdgeInsets.only(left: appTheme.sizes.padding)),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: LAnimationView(
                             child: Obx(() => Text(
-                              NumberTool.formatNumberStr(NumberTool.amountToBalance(state.redeemingAmount, scale: state.tokenInfo.scale)),
-                              style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSizeBig * 1.1, letterSpacing: -1 * appTheme.sizes.basic),
-                            )),
+                                  NumberTool.formatNumberStr(
+                                      NumberTool.amountToBalance(
+                                          state.redeemingAmount,
+                                          scale: state.tokenInfo.scale)),
+                                  style: TextStyle(
+                                      color: appTheme.colors.textBlackBig,
+                                      fontSize:
+                                          appTheme.sizes.fontSizeBig * 1.1,
+                                      letterSpacing: -1 * appTheme.sizes.basic),
+                                )),
                             randomKey: false,
                           ),
                         ),
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.padding),
-                      child: DottedLine(dashColor: appTheme.colors.borderColor,),
+                      padding: EdgeInsets.only(
+                          top: appTheme.sizes.paddingSmall,
+                          bottom: appTheme.sizes.padding),
+                      child: DottedLine(
+                        dashColor: appTheme.colors.borderColor,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('pledgedReward'.tr, style: Get.textTheme.bodyText1),
-                        Obx(() => LAnimationView(child: Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.rewardedAmount, scale: state.tokenInfo.scale))), randomKey: false,)),
+                        Text('pledgedReward'.tr,
+                            style: Get.textTheme.bodyText1),
+                        Obx(() => LAnimationView(
+                              child: Text(NumberTool.formatNumberStr(
+                                  NumberTool.amountToBalance(
+                                      state.rewardedAmount,
+                                      scale: state.tokenInfo.scale))),
+                              randomKey: false,
+                            )),
                       ],
                     ),
                   ],
@@ -126,106 +168,144 @@ class ChainExportDelegatePage extends GetView<ChainExportDelegatePageController>
             top: appTheme.sizes.padding,
             bottom: appTheme.sizes.padding,
           ),
-          child: Text('verifierListByPledged'.tr, style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)),
+          child: Text('verifierListByPledged'.tr,
+              style: TextStyle(
+                  color: appTheme.colors.textBlackBig,
+                  fontSize: appTheme.sizes.fontSizeBig,
+                  fontWeight: FontWeight.bold)),
         ),
         Expanded(
           child: LScrollView(
             refreshController: controller.delegateRefreshController,
             onRefresh: controller.initGetData,
             child: Obx(() => Column(
-              children: [
-                for (UserVerifierModel _item in state.myDelegatedVerifiesList)
-                  Padding(
-                    padding: EdgeInsets.only(bottom: appTheme.sizes.padding),
-                    child: LVerifierCard(
-                      verifier: _item,
-                      child: Column(
-                        children: [
-                          Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                          Row(
+                  children: [
+                    for (UserVerifierModel _item
+                        in state.myDelegatedVerifiesList)
+                      Padding(
+                        padding:
+                            EdgeInsets.only(bottom: appTheme.sizes.padding),
+                        child: LVerifierCard(
+                          verifier: _item,
+                          child: Column(
                             children: [
-                              // Expanded(
-                              //   child: Column(
-                              //     crossAxisAlignment: CrossAxisAlignment.start,
-                              //     children: [
-                              //       LAnimationView(
-                              //         randomKey: false,
-                              //         child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
-                              //       ),
-                              //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                              //       Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
-                              //     ],
-                              //   ),
-                              // ),
-                              // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: LAnimationView(
-                                        randomKey: false,
-                                        child: Text(
-                                          NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.pledged)),
-                                          style: TextStyle(letterSpacing: -1 * appTheme.sizes.basic,)
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      top: appTheme.sizes.paddingSmall)),
+                              Row(
+                                children: [
+                                  // Expanded(
+                                  //   child: Column(
+                                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                                  //     children: [
+                                  //       LAnimationView(
+                                  //         randomKey: false,
+                                  //         child: Text('${_item.yieldRate}%', style: TextStyle(color: appTheme.colors.primaryColor, fontWeight: FontWeight.bold, letterSpacing: -1 * appTheme.sizes.basic,)),
+                                  //       ),
+                                  //       Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
+                                  //       Text('预计年化收益率'.tr, style: Get.textTheme.bodyText1)
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  // Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: LAnimationView(
+                                            randomKey: false,
+                                            child: Text(
+                                                NumberTool.formatNumberStr(
+                                                    NumberTool.amountToBalance(
+                                                        _item.pledged)),
+                                                style: TextStyle(
+                                                  letterSpacing:
+                                                      -1 * appTheme.sizes.basic,
+                                                )),
+                                          ),
                                         ),
-                                      ),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                top: appTheme
+                                                        .sizes.paddingSmall *
+                                                    0.5)),
+                                        Text('myPledge'.tr,
+                                            style: Get.textTheme.bodyText1)
+                                      ],
                                     ),
-                                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                    Text('myPledge'.tr, style: Get.textTheme.bodyText1)
-                                  ],
-                                ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: appTheme.sizes.paddingSmall *
+                                              0.5)),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: LAnimationView(
+                                            randomKey: false,
+                                            child: Text(
+                                                NumberTool.formatNumberStr(
+                                                    NumberTool.amountToBalance(
+                                                        _item.reward)),
+                                                style: TextStyle(
+                                                  color: appTheme
+                                                      .colors.primaryColor,
+                                                  letterSpacing:
+                                                      -1 * appTheme.sizes.basic,
+                                                )),
+                                          ),
+                                        ),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                top: appTheme
+                                                        .sizes.paddingSmall *
+                                                    0.5)),
+                                        Text('rewardedVolumeByPledged'.tr,
+                                            style: Get.textTheme.bodyText1)
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall * 0.5)),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: LAnimationView(
-                                        randomKey: false,
-                                        child: Text(
-                                          NumberTool.formatNumberStr(NumberTool.amountToBalance(_item.reward)),
-                                          style: TextStyle(color: appTheme.colors.primaryColor, letterSpacing: -1 * appTheme.sizes.basic,)
-                                        ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: appTheme.sizes.paddingSmall),
+                                child: InkWell(
+                                  onTap: () =>
+                                      controller.onGoToDelegatedDetails(_item),
+                                  child: Container(
+                                    width: appTheme.sizes.infinity,
+                                    height: appTheme.sizes.buttonHeight * 0.6,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              appTheme.sizes.radius)),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: appTheme.colors.homeAddressBg,
                                       ),
                                     ),
-                                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.5)),
-                                    Text('rewardedVolumeByPledged'.tr, style: Get.textTheme.bodyText1)
-                                  ],
+                                    child: Center(
+                                      child: Text('goToDetail'.tr,
+                                          style: Get.textTheme.bodyText1),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall),
-                            child: InkWell(
-                              onTap: () => controller.onGoToDelegatedDetails(_item),
-                              child: Container(
-                                width: appTheme.sizes.infinity,
-                                height: appTheme.sizes.buttonHeight * 0.6,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                                  gradient: LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: appTheme.colors.homeAddressBg,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text('goToDetail'.tr, style: Get.textTheme.bodyText1),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-              ],
-            )),
+                        ),
+                      )
+                  ],
+                )),
           ),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/chain/verifier-detail/verifier-detail.controll
 class ChainVerifierDetailPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ChainVerifierDetailPageController>(() => ChainVerifierDetailPageController());
+    Get.lazyPut<ChainVerifierDetailPageController>(
+        () => ChainVerifierDetailPageController());
   }
 }

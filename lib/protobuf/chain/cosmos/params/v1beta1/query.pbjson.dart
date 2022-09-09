@@ -20,30 +20,47 @@ const QueryParamsRequest$json = const {
 };
 
 /// Descriptor for `QueryParamsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryParamsRequestDescriptor = $convert.base64Decode('ChJRdWVyeVBhcmFtc1JlcXVlc3QSGgoIc3Vic3BhY2UYASABKAlSCHN1YnNwYWNlEhAKA2tleRgCIAEoCVIDa2V5');
+final $typed_data.Uint8List queryParamsRequestDescriptor = $convert.base64Decode(
+    'ChJRdWVyeVBhcmFtc1JlcXVlc3QSGgoIc3Vic3BhY2UYASABKAlSCHN1YnNwYWNlEhAKA2tleRgCIAEoCVIDa2V5');
 @$core.Deprecated('Use queryParamsResponseDescriptor instead')
 const QueryParamsResponse$json = const {
   '1': 'QueryParamsResponse',
   '2': const [
-    const {'1': 'param', '3': 1, '4': 1, '5': 11, '6': '.cosmos.params.v1beta1.ParamChange', '8': const {}, '10': 'param'},
+    const {
+      '1': 'param',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.cosmos.params.v1beta1.ParamChange',
+      '8': const {},
+      '10': 'param'
+    },
   ],
 };
 
 /// Descriptor for `QueryParamsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List queryParamsResponseDescriptor = $convert.base64Decode('ChNRdWVyeVBhcmFtc1Jlc3BvbnNlEj4KBXBhcmFtGAEgASgLMiIuY29zbW9zLnBhcmFtcy52MWJldGExLlBhcmFtQ2hhbmdlQgTI3h8AUgVwYXJhbQ==');
+final $typed_data.Uint8List queryParamsResponseDescriptor = $convert.base64Decode(
+    'ChNRdWVyeVBhcmFtc1Jlc3BvbnNlEj4KBXBhcmFtGAEgASgLMiIuY29zbW9zLnBhcmFtcy52MWJldGExLlBhcmFtQ2hhbmdlQgTI3h8AUgVwYXJhbQ==');
 const $core.Map<$core.String, $core.dynamic> QueryServiceBase$json = const {
   '1': 'Query',
   '2': const [
-    const {'1': 'Params', '2': '.cosmos.params.v1beta1.QueryParamsRequest', '3': '.cosmos.params.v1beta1.QueryParamsResponse', '4': const {}},
+    const {
+      '1': 'Params',
+      '2': '.cosmos.params.v1beta1.QueryParamsRequest',
+      '3': '.cosmos.params.v1beta1.QueryParamsResponse',
+      '4': const {}
+    },
   ],
 };
 
 @$core.Deprecated('Use queryServiceDescriptor instead')
-const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> QueryServiceBase$messageJson = const {
+const $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+    QueryServiceBase$messageJson = const {
   '.cosmos.params.v1beta1.QueryParamsRequest': QueryParamsRequest$json,
   '.cosmos.params.v1beta1.QueryParamsResponse': QueryParamsResponse$json,
   '.cosmos.params.v1beta1.ParamChange': $39.ParamChange$json,
 };
 
 /// Descriptor for `Query`. Decode as a `google.protobuf.ServiceDescriptorProto`.
-final $typed_data.Uint8List queryServiceDescriptor = $convert.base64Decode('CgVRdWVyeRKGAQoGUGFyYW1zEikuY29zbW9zLnBhcmFtcy52MWJldGExLlF1ZXJ5UGFyYW1zUmVxdWVzdBoqLmNvc21vcy5wYXJhbXMudjFiZXRhMS5RdWVyeVBhcmFtc1Jlc3BvbnNlIiWC0+STAh8SHS9jb3Ntb3MvcGFyYW1zL3YxYmV0YTEvcGFyYW1z');
+final $typed_data.Uint8List queryServiceDescriptor = $convert.base64Decode(
+    'CgVRdWVyeRKGAQoGUGFyYW1zEikuY29zbW9zLnBhcmFtcy52MWJldGExLlF1ZXJ5UGFyYW1zUmVxdWVzdBoqLmNvc21vcy5wYXJhbXMudjFiZXRhMS5RdWVyeVBhcmFtc1Jlc3BvbnNlIiWC0+STAh8SHS9jb3Ntb3MvcGFyYW1zL3YxYmV0YTEvcGFyYW1z');

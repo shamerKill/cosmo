@@ -13,25 +13,25 @@ class ChainExportDelegatePageState {
   // 账户信息
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
-  set accountInfo (AccountModel value) => _accountInfo.value = value;
+  set accountInfo(AccountModel value) => _accountInfo.value = value;
   // 质押中数量
   final Rx<String> _delegatingAmount = ''.obs;
   String get delegatingAmount => _delegatingAmount.value;
-  set delegatingAmount (String value) => _delegatingAmount.value = value;
+  set delegatingAmount(String value) => _delegatingAmount.value = value;
   // 赎回中数量
   final Rx<String> _redeemingAmount = ''.obs;
   String get redeemingAmount => _redeemingAmount.value;
-  set redeemingAmount (String value) => _redeemingAmount.value = value;
+  set redeemingAmount(String value) => _redeemingAmount.value = value;
   // 质押奖励数量
   final Rx<String> _rewardedAmount = ''.obs;
   String get rewardedAmount => _rewardedAmount.value;
-  set rewardedAmount (String value) => _rewardedAmount.value = value;
+  set rewardedAmount(String value) => _rewardedAmount.value = value;
   // 我的质押节点列表
   final RxList<UserVerifierModel> myDelegatedVerifiesList = RxList();
   // 主流币信息
   final Rx<TokenModel> _tokenInfo = TokenModel().obs;
   TokenModel get tokenInfo => _tokenInfo.value;
-  set tokenInfo (TokenModel value) => _tokenInfo.value = value;
+  set tokenInfo(TokenModel value) => _tokenInfo.value = value;
 }
 
 class ChainExportDelegatePageController extends GetxController {
@@ -64,7 +64,9 @@ class ChainExportDelegatePageController extends GetxController {
     var delegateInfo = res[0];
     var unDelegateInfo = res[1];
     var rewardInfo = res[2];
-    if (delegateInfo?.status != 0 || unDelegateInfo?.status != 0 || rewardInfo?.status != 0) return LLoading.dismiss();
+    if (delegateInfo?.status != 0 ||
+        unDelegateInfo?.status != 0 ||
+        rewardInfo?.status != 0) return LLoading.dismiss();
     int _delegatingAmount = 0;
     // 循环质押列表
     state.myDelegatedVerifiesList.clear();
@@ -76,8 +78,10 @@ class ChainExportDelegatePageController extends GetxController {
         ..pledged = delegation['balance']['amount'];
       // 获取质押节点奖励
       for (var _reItem in rewardInfo?.data['rewards']) {
-        if (_reItem['validator_address'] == delegation['delegation']['validator_address']) {
-          var _amount = _reItem['reward'].firstWhere((_ele) => _ele['denom'] == state.tokenInfo.minUnit)['amount'];
+        if (_reItem['validator_address'] ==
+            delegation['delegation']['validator_address']) {
+          var _amount = _reItem['reward'].firstWhere(
+              (_ele) => _ele['denom'] == state.tokenInfo.minUnit)['amount'];
           _info.reward = NumberTool.getNumberInt(_amount);
           break;
         }
@@ -98,8 +102,11 @@ class ChainExportDelegatePageController extends GetxController {
     }
     // 获取节点基本信息
     var result = await Future.wait([
-      httpToolServer.getChainVerifierAvatar(state.myDelegatedVerifiesList.map((_ele) => _ele.address).toList()),
-      Future.wait(state.myDelegatedVerifiesList.map((_ele) => httpToolApp.getChainVerifierInfo(_ele.address)).toList()),
+      httpToolServer.getChainVerifierAvatar(
+          state.myDelegatedVerifiesList.map((_ele) => _ele.address).toList()),
+      Future.wait(state.myDelegatedVerifiesList
+          .map((_ele) => httpToolApp.getChainVerifierInfo(_ele.address))
+          .toList()),
     ]);
     var result$0 = (result[0] as HttpToolResponse).data;
     var result$1 = (result[1] as List<HttpToolResponse?>);
@@ -109,7 +116,7 @@ class ChainExportDelegatePageController extends GetxController {
       verifier
         ..setStatus(resVerifier?.data['validator']['status'])
         ..nickName = resVerifier?.data['validator']['description']['moniker']
-        ..avatar = result$0[verifier.address]??'';
+        ..avatar = result$0[verifier.address] ?? '';
     }
 
     state.delegatingAmount = _delegatingAmount.toString();
@@ -123,6 +130,7 @@ class ChainExportDelegatePageController extends GetxController {
   onGoToVerifierList() {
     Get.toNamed(PlugRoutesNames.chainVerifiersList);
   }
+
   // 查看已质押详情
   onGoToDelegatedDetails(UserVerifierModel verifier) {
     Get.toNamed(PlugRoutesNames.chainVerifierDetail(verifier.address, '1'));

@@ -14,19 +14,19 @@ class ChainPledgeTransferPageState {
   // 节点信息
   final Rx<UserVerifierModel> _verifierInfo = UserVerifierModel().obs;
   UserVerifierModel get verifierInfo => _verifierInfo.value;
-  set verifierInfo (UserVerifierModel value) => _verifierInfo.value = value;
+  set verifierInfo(UserVerifierModel value) => _verifierInfo.value = value;
   // 手续费数量
   final Rx<String> _feeAmount = ''.obs;
   String get feeAmount => _feeAmount.value;
-  set feeAmount (String value) => _feeAmount.value = value;
+  set feeAmount(String value) => _feeAmount.value = value;
   // 基础币
   final Rx<TokenModel> _baseCoin = TokenModel().obs;
   TokenModel get baseCoin => _baseCoin.value;
-  set baseCoin (TokenModel value) => _baseCoin.value = value;
+  set baseCoin(TokenModel value) => _baseCoin.value = value;
   // 是否在质押等待中
   final Rx<bool> _pledgeLoading = false.obs;
   bool get pledgeLoading => _pledgeLoading.value;
-  set pledgeLoading (bool value) => _pledgeLoading.value = value;
+  set pledgeLoading(bool value) => _pledgeLoading.value = value;
 }
 
 class ChainPledgeTransferPageController extends GetxController {
@@ -58,7 +58,8 @@ class ChainPledgeTransferPageController extends GetxController {
       // 节点信息
       httpToolApp.getChainVerifierInfo(state.verifierInfo.address),
       // 账户余额
-      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, dataCoins.state.baseCoin.minUnit),
+      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address,
+          dataCoins.state.baseCoin.minUnit),
       // 手续费
       httpToolServer.getChainFee(),
       // 获取节点头像
@@ -68,37 +69,41 @@ class ChainPledgeTransferPageController extends GetxController {
     var _balance = result[1];
     var _fee = result[2];
     var _avatar = result[3];
-    if (_verifierInfo != null && _verifierInfo.status == 0 && _verifierInfo.data != null) {
-      state.verifierInfo..nickName = _verifierInfo.data['validator']['description']['moniker']
+    if (_verifierInfo != null &&
+        _verifierInfo.status == 0 &&
+        _verifierInfo.data != null) {
+      state.verifierInfo
+        ..nickName = _verifierInfo.data['validator']['description']['moniker']
         ..setStatus(_verifierInfo.data['validator']['status'])
         ..allPledged = _verifierInfo.data['validator']['tokens']
-        ..minPledgeVolume = _verifierInfo.data['validator']['min_self_delegation'];
+        ..minPledgeVolume =
+            _verifierInfo.data['validator']['min_self_delegation'];
     }
     if (_balance != null && _balance.status == 0) {
-      state.baseCoin.setData(
-        (dataCoins.state.baseCoin..amount = _balance.data).toJson()
-      );
+      state.baseCoin
+          .setData((dataCoins.state.baseCoin..amount = _balance.data).toJson());
       state._baseCoin.refresh();
     }
     // 节点头像
     if (_avatar != null && _avatar.status == 0 && _avatar.data != null) {
-      state.verifierInfo.avatar = _avatar.data[state.verifierInfo.address]??'';
+      state.verifierInfo.avatar =
+          _avatar.data[state.verifierInfo.address] ?? '';
     }
     state._verifierInfo.refresh();
-    state.feeAmount = _fee?.data??'0.0002';
+    state.feeAmount = _fee?.data ?? '0.0002';
   }
 
   // 质押监听
   onPledgeListener() async {
     var _pledgeValue = NumberTool.balanceToAmount(pledgeController.text);
     var douValue = double.tryParse(_pledgeValue);
-    if (
-      douValue == null || douValue == 0.0
-    ) return LToast.warning('ErrorWithVolumeInput'.tr);
+    if (douValue == null || douValue == 0.0)
+      return LToast.warning('ErrorWithVolumeInput'.tr);
     String? pass = await LBottomSheet.passwordBottomSheet();
     if (pass == null) return;
     LLoading.showBgLoading();
-    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, pass);
+    var mnemonicList = await WalletTool.decryptMnemonic(
+        dataAccount.state.nowAccount!.stringifyRaw, pass);
     if (mnemonicList == null) {
       LLoading.dismiss();
       return LToast.warning('ErrorWithPasswordInput'.tr);
@@ -113,8 +118,10 @@ class ChainPledgeTransferPageController extends GetxController {
     );
     LLoading.dismiss();
     state.pledgeLoading = false;
-    if (result.status == -10001) return LToast.error('ErrorWithPledgeCallback'.tr);
-    if (result.status == -10002) return LToast.error('ErrorWithPledgeTimeout'.tr);
+    if (result.status == -10001)
+      return LToast.error('ErrorWithPledgeCallback'.tr);
+    if (result.status == -10002)
+      return LToast.error('ErrorWithPledgeTimeout'.tr);
     if (result.status != 0) return LToast.error('ErrorWithPledgeUnKnow'.tr);
     LToast.success('SuccessWithPledge'.tr);
     pledgeController.text = '0';

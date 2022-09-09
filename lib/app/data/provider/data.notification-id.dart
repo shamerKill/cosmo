@@ -9,7 +9,6 @@ class DataNotificationIdState {
   RxList<String> notificationIdList = RxList();
 }
 
-
 class DataNotificationIdController extends GetxController {
   DataNotificationIdController() {
     _readStorage();
@@ -22,10 +21,13 @@ class DataNotificationIdController extends GetxController {
     state.notificationIdList.add(id);
     _saveAccounts();
   }
+
   // 储存信息
   _saveAccounts() {
-    GetStorage().write(state.baseCoinName, json.encode(state.notificationIdList));
+    GetStorage()
+        .write(state.baseCoinName, json.encode(state.notificationIdList));
   }
+
   // 读取本地信息
   _readStorage() {
     String? data = GetStorage().read(state.baseCoinName);

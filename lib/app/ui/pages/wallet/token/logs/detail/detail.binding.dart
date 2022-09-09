@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/wallet/token/logs/detail/detail.controller.dar
 class WalletTokenLogsDetailPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<WalletTokenLogsDetailPageController>(() => WalletTokenLogsDetailPageController());
+    Get.lazyPut<WalletTokenLogsDetailPageController>(
+        () => WalletTokenLogsDetailPageController());
   }
 }

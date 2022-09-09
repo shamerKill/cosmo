@@ -2,13 +2,12 @@ import 'dart:convert';
 
 import 'package:plug/app/data/models/response/msgs.dart';
 
-
 class ChainMessageTool {
-  static formatAny(
-    String source
-  ) {
+  static formatAny(String source) {
     var obj = json.decode(source);
-    if (obj is Iterable) { obj = obj.first; }
+    if (obj is Iterable) {
+      obj = obj.first;
+    }
     String type = (obj['type'] is String) ? obj['type'] : obj['@type'];
     switch (type) {
       case '/cosmos.bank.v1beta1.MsgSend':
@@ -25,9 +24,9 @@ class ChainMessageTool {
         return ModelMsgWithdrawValidatorCommission(source);
       case '/cosmos.evidence.v1beta1.MsgSubmitEvidence':
         return ModelMsgSubmitEvidence(source);
-      case '/cosmos.feegrant.v1beta1.MsgGrantAllowance': 
+      case '/cosmos.feegrant.v1beta1.MsgGrantAllowance':
         return ModelMsgGrantAllowance(source);
-      case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance': 
+      case '/cosmos.feegrant.v1beta1.MsgRevokeAllowance':
         return ModelMsgRevokeAllowance(source);
       case '/cosmos.gov.v1beta1.MsgVote':
         return ModelMsgVote(source);
@@ -71,7 +70,7 @@ class ChainMessageTool {
         return ModelMsgWithdrawWithinBatch(source);
       case '/tendermint.liquidity.v1beta1.MsgSwapWithinBatch':
         return ModelMsgSwapWithinBatch(source);
-      
+
       case 'cosmos-sdk/MsgSend':
         return ModelMsgSend(source);
       case 'cosmos-sdk/MsgMultiSend':
@@ -86,9 +85,9 @@ class ChainMessageTool {
         return ModelMsgWithdrawValidatorCommission(source);
       case 'cosmos-sdk/MsgSubmitEvidence':
         return ModelMsgSubmitEvidence(source);
-      case 'cosmos-sdk/MsgGrantAllowance': 
+      case 'cosmos-sdk/MsgGrantAllowance':
         return ModelMsgGrantAllowance(source);
-      case 'cosmos-sdk/MsgRevokeAllowance': 
+      case 'cosmos-sdk/MsgRevokeAllowance':
         return ModelMsgRevokeAllowance(source);
       case 'cosmos-sdk/MsgVote':
         return ModelMsgVote(source);

@@ -7,12 +7,7 @@ class HttpToolResponse {
   late int status;
   late String message;
   String? path;
-  HttpToolResponse (
-    dynamic value,
-    {
-      String? path
-    }
-  ) {
+  HttpToolResponse(dynamic value, {String? path}) {
     if (value != null) {
       if (value is! Map) {
         data = value;
@@ -25,7 +20,7 @@ class HttpToolResponse {
       } else {
         data = value['data'];
         status = value['status'] == 200 ? 0 : value['status'];
-        message = value['message']??'';
+        message = value['message'] ?? '';
       }
     } else {
       data = null;
@@ -45,7 +40,9 @@ class HttpToolClient {
     Response<Map<String, dynamic>>? response;
     try {
       var language = plugTranslation.nowLocale.value.toLanguageTag();
-      response = await Dio().getUri<Map<String, dynamic>>(uri, options: Options(headers: { 'lang': language}));
+      var lang = language.split('-')[0];
+      response = await Dio().getUri<Map<String, dynamic>>(uri,
+          options: Options(headers: {'lang': lang}));
     } catch (e) {
       DioError err = e as DioError;
       if (err.error is String && RegExp(r"404").hasMatch(err.error)) {
@@ -55,16 +52,20 @@ class HttpToolClient {
       }
     }
     if (response != null && response.data != null) {
-      return HttpToolResponse(response.data!, path: response.requestOptions.path);
+      return HttpToolResponse(response.data!,
+          path: response.requestOptions.path);
     } else {
       return HttpToolResponse(null, path: uri.path);
     }
   }
-  static Future<HttpToolResponse> postHttp(Uri uri, { dynamic data }) async {
+
+  static Future<HttpToolResponse> postHttp(Uri uri, {dynamic data}) async {
     Response<Map<String, dynamic>>? response;
     try {
       var language = plugTranslation.nowLocale.value.toLanguageTag();
-      response = await Dio().postUri<Map<String, dynamic>>(uri, data: data, options: Options(headers: { 'lang': language}));
+      var lang = language.split('-')[0];
+      response = await Dio().postUri<Map<String, dynamic>>(uri,
+          data: data, options: Options(headers: {'lang': lang}));
     } catch (e) {
       DioError err = e as DioError;
       if (err.error is String && RegExp(r"404").hasMatch(err.error)) {
@@ -74,7 +75,8 @@ class HttpToolClient {
       }
     }
     if (response != null && response.data != null) {
-      return HttpToolResponse(response.data!, path: response.requestOptions.path);
+      return HttpToolResponse(response.data!,
+          path: response.requestOptions.path);
     } else {
       return HttpToolResponse(null, path: uri.path);
     }
@@ -83,18 +85,14 @@ class HttpToolClient {
 
 class UriTool {
   late Uri _baseUri;
-  UriTool(
-    String url
-  ) {
+  UriTool(String url) {
     _baseUri = Uri.parse(url);
   }
   Uri _defaultSetUri(
-    String path,
-    {
-      Map<String, dynamic>? queryParameters,
-      String? query,
-    }
-  ) {
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    String? query,
+  }) {
     return Uri(
       scheme: _baseUri.scheme,
       host: _baseUri.host,
@@ -104,6 +102,11 @@ class UriTool {
       queryParameters: queryParameters,
     );
   }
-  
-  Uri customUri (String path, {Map<String, dynamic>? queryParameters, String? query,}) => _defaultSetUri(path, queryParameters: queryParameters, query: query);
+
+  Uri customUri(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    String? query,
+  }) =>
+      _defaultSetUri(path, queryParameters: queryParameters, query: query);
 }

@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/account/backup/tip/tip.controller.dart';
 class AccountBackupTipPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AccountBackupTipPageController>(() => AccountBackupTipPageController());
+    Get.lazyPut<AccountBackupTipPageController>(
+        () => AccountBackupTipPageController());
   }
 }

@@ -21,7 +21,8 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
         title: LAppBar.defaultHeaderTextWidget('send'.tr),
-        description: Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+        description: Padding(
+            padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
       ),
       singleScroll: true,
       body: Column(
@@ -30,82 +31,96 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('receiveAddress'.tr, style: TextStyle(color: appTheme.colors.textBlackBig)),
+              Text('receiveAddress'.tr,
+                  style: TextStyle(color: appTheme.colors.textBlackBig)),
               InkWell(
                 onTap: controller.onGoToAddressList,
                 child: Padding(
                   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('addressesBook'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
+                  child: Text('addressesBook'.tr,
+                      style: TextStyle(color: appTheme.colors.primaryColor)),
                 ),
               ),
             ],
           ),
           Obx(() => LInput(
-            hintText: 'addAccountAddress'.tr,
-            textController: controller.addressController,
-            disabled: state.sendLoading,
-            suffixIcon: IconButton(
-              icon: const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
-              onPressed: controller.onScanQr,
-              splashRadius: appTheme.sizes.iconSize,
-            ),
-          )),
+                hintText: 'addAccountAddress'.tr,
+                textController: controller.addressController,
+                disabled: state.sendLoading,
+                suffixIcon: IconButton(
+                  icon: const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
+                  onPressed: controller.onScanQr,
+                  splashRadius: appTheme.sizes.iconSize,
+                ),
+              )),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
-          Text('transferVolume'.tr, style: TextStyle(color: appTheme.colors.textBlackBig)),
+          Text('transferVolume'.tr,
+              style: TextStyle(color: appTheme.colors.textBlackBig)),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Obx(() => LInput(
-            hintText: 'transferVolume'.tr,
-            textController: controller.volumeController,
-            onlyNumber: true,
-            disabled: state.sendLoading,
-            suffixIcon: Padding(
-              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Obx(() => Text(state.tokenInfo.symbol, style: TextStyle(color: appTheme.colors.textGray)))
-                ],
-              ),
-            ),
-          )),
+                hintText: 'transferVolume'.tr,
+                textController: controller.volumeController,
+                onlyNumber: true,
+                disabled: state.sendLoading,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: appTheme.sizes.paddingSmall),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Obx(() => Text(state.tokenInfo.symbol,
+                          style: TextStyle(color: appTheme.colors.textGray)))
+                    ],
+                  ),
+                ),
+              )),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Obx(() => Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(text: 'canUseTransferVolume'.tr),
-                      const TextSpan(text: '\r\r'),
-                      TextSpan(
-                        text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale)) + '\r' + state.tokenInfo.symbol,
-                        style: TextStyle(color: appTheme.colors.primaryColor),
-                      ),
-                    ]
-                  ),
-                )),
+                      TextSpan(children: [
+                        TextSpan(text: 'canUseTransferVolume'.tr),
+                        const TextSpan(text: '\r\r'),
+                        TextSpan(
+                          text: NumberTool.formatNumberStr(
+                                  NumberTool.amountToBalance(
+                                      state.tokenInfo.amount,
+                                      scale: state.tokenInfo.scale)) +
+                              '\r' +
+                              state.tokenInfo.symbol,
+                          style: TextStyle(color: appTheme.colors.primaryColor),
+                        ),
+                      ]),
+                    )),
               ),
               InkWell(
                 onTap: state.sendLoading ? null : controller.onAllSend,
                 child: Padding(
                   padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                  child: Text('allSend'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
+                  child: Text('allSend'.tr,
+                      style: TextStyle(color: appTheme.colors.primaryColor)),
                 ),
               ),
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
-            child: DottedLine(dashColor: appTheme.colors.borderColor,),
+            padding: EdgeInsets.only(
+                top: appTheme.sizes.paddingSmall,
+                bottom: appTheme.sizes.paddingSmall),
+            child: DottedLine(
+              dashColor: appTheme.colors.borderColor,
+            ),
           ),
-          Obx(() => Text('fee'.tr + '\r\r${NumberTool.formatNumberStr(state.fee)}\r${controller.dataCoins.state.baseCoin.symbol}')),
+          Obx(() => Text('fee'.tr +
+              '\r\r${NumberTool.formatNumberStr(state.fee)}\r${controller.dataCoins.state.baseCoin.symbol}')),
         ],
       ),
       footer: Obx(() => LButton(
-        onPressed: state.sendLoading ? null : controller.onSend,
-        child: Text('send'.tr),
-      )),
+            onPressed: state.sendLoading ? null : controller.onSend,
+            child: Text('send'.tr),
+          )),
     );
   }
 }

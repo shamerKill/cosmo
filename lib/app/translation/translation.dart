@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 
 import 'package:plug/app/data/provider/data.config.dart';
 
-
 class _PlugTranslation extends Translations {
   Locale? get locale => Get.deviceLocale;
 
@@ -22,11 +21,11 @@ class _PlugTranslation extends Translations {
 
   @override
   Map<String, Map<String, String>> get keys => {
-    'en-US': enUS,
-    'zh-CN': zhHans,
-    'en_US': enUS,
-    'zh_CN': zhHans,
-  };
+        'en-US': enUS,
+        'zh-CN': zhHans,
+        'en_US': enUS,
+        'zh_CN': zhHans,
+      };
 }
 
 class _InitTranslation {
@@ -41,18 +40,25 @@ class _InitTranslation {
   init() async {
     if (translations != null) return;
     try {
-      String? zhHans = await rootBundle.loadString('assets/json/translation/zh_Hans.json');
-      String? enUS = await rootBundle.loadString('assets/json/translation/en_US.json');
+      String? zhHans =
+          await rootBundle.loadString('assets/json/translation/zh_Hans.json');
+      String? enUS =
+          await rootBundle.loadString('assets/json/translation/en_US.json');
       Map<String, String> zhHansJson = {};
-      (json.decode(zhHans) as Map<String, dynamic>).forEach((key, value) { zhHansJson[key] = value; });
+      (json.decode(zhHans) as Map<String, dynamic>).forEach((key, value) {
+        zhHansJson[key] = value;
+      });
       Map<String, String> enUSJson = {};
-      (json.decode(enUS) as Map<String, dynamic>).forEach((key, value) { enUSJson[key] = value; });
+      (json.decode(enUS) as Map<String, dynamic>).forEach((key, value) {
+        enUSJson[key] = value;
+      });
       translations = _PlugTranslation(enUS: enUSJson, zhHans: zhHansJson);
       await _setDefaultLocal();
     } catch (e) {
       e;
     }
   }
+
   _setDefaultLocal() async {
     DataConfigController appConfig = Get.put(DataConfigController());
     if (appConfig.state.config.languageType is Locale) {
@@ -61,9 +67,11 @@ class _InitTranslation {
       nowLocale.value = localList[0];
     }
   }
+
   String localToString(Locale language) {
     if (language.toLanguageTag() == localList[0].toLanguageTag()) return '简体中文';
-    if (language.toLanguageTag() == localList[1].toLanguageTag()) return 'English';
+    if (language.toLanguageTag() == localList[1].toLanguageTag())
+      return 'English';
     return '';
   }
 }

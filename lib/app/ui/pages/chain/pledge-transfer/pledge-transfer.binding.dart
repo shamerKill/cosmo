@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/chain/pledge-transfer/pledge-transfer.controll
 class ChainPledgeTransferPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ChainPledgeTransferPageController>(() => ChainPledgeTransferPageController());
+    Get.lazyPut<ChainPledgeTransferPageController>(
+        () => ChainPledgeTransferPageController());
   }
 }

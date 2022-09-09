@@ -37,23 +37,34 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                       padding: EdgeInsets.all(appTheme.sizes.basic * 5.0),
                       decoration: BoxDecoration(
                         border: Border.all(color: appTheme.colors.borderColor),
-                        borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 100.0)),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(appTheme.sizes.basic * 100.0)),
                       ),
                       child: Obx(() => LViewImage(
-                        url: state.verifierInfo.avatar,
-                        bgColor: StringTool.stringToColor(state.verifierInfo.address),
-                        width: appTheme.sizes.basic * 56.0,
-                        height: appTheme.sizes.basic * 56.0,
-                        isRadius: true,
-                      )),
+                            url: state.verifierInfo.avatar,
+                            bgColor: StringTool.stringToColor(
+                                state.verifierInfo.address),
+                            width: appTheme.sizes.basic * 56.0,
+                            height: appTheme.sizes.basic * 56.0,
+                            isRadius: true,
+                          )),
                     ),
-                    Padding(padding: EdgeInsets.only(left: appTheme.sizes.basic * 10.0)),
+                    Padding(
+                        padding:
+                            EdgeInsets.only(left: appTheme.sizes.basic * 10.0)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Obx(() =>  Text(state.verifierInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold, height: 1.6))),
-                        Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(state.verifierInfo.address, style: Get.textTheme.bodyText1)),
+                        Obx(() => Text(state.verifierInfo.nickName,
+                            style: TextStyle(
+                                fontSize: appTheme.sizes.fontSizeBig,
+                                fontWeight: FontWeight.bold,
+                                height: 1.6))),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                bottom: appTheme.sizes.basic * 10.0)),
+                        Obx(() => Text(state.verifierInfo.address,
+                            style: Get.textTheme.bodyText1)),
                       ],
                     ),
                   ],
@@ -67,12 +78,19 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: appTheme.sizes.padding, right: appTheme.sizes.padding, top: appTheme.sizes.padding),
+            padding: EdgeInsets.only(
+                left: appTheme.sizes.padding,
+                right: appTheme.sizes.padding,
+                top: appTheme.sizes.padding),
             child: Container(
               width: appTheme.sizes.infinity,
-              padding: EdgeInsets.only(top: appTheme.sizes.padding, bottom: appTheme.sizes.paddingSmall),
+              padding: EdgeInsets.only(
+                  top: appTheme.sizes.padding,
+                  bottom: appTheme.sizes.paddingSmall),
               decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: appTheme.colors.borderColor.withOpacity(0.5))),
+                border: Border(
+                    top: BorderSide(
+                        color: appTheme.colors.borderColor.withOpacity(0.5))),
               ),
               child: Row(
                 children: [
@@ -92,9 +110,14 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('totalPledgeQuantity'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.allPledged.toString()))))
+                        Text('totalPledgeQuantity'.tr,
+                            style: TextStyle(color: appTheme.colors.textGray)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                top: appTheme.sizes.basic * 10.0)),
+                        Obx(() => Text(NumberTool.formatNumberStr(
+                            NumberTool.amountToBalance(
+                                state.verifierInfo.allPledged.toString()))))
                       ],
                     ),
                   ),
@@ -103,9 +126,14 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('myPledge'.tr, style: TextStyle(color: appTheme.colors.textGray)),
-                        Padding(padding: EdgeInsets.only(top: appTheme.sizes.basic * 10.0)),
-                        Obx(() => Text(NumberTool.formatNumberStr(NumberTool.amountToBalance(state.verifierInfo.pledged.toString()))))
+                        Text('myPledge'.tr,
+                            style: TextStyle(color: appTheme.colors.textGray)),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                top: appTheme.sizes.basic * 10.0)),
+                        Obx(() => Text(NumberTool.formatNumberStr(
+                            NumberTool.amountToBalance(
+                                state.verifierInfo.pledged.toString()))))
                       ],
                     ),
                   ),
@@ -123,50 +151,65 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('withdrawVolume'.tr, style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('withdrawVolume'.tr,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
                   hintText: 'inputPledgedVolume'.tr,
                   obscureText: true,
-                  suffix: Obx(() => Text(state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.textBlack))),
+                  suffix: Obx(() => Text(state.baseCoin.symbol,
+                      style: TextStyle(color: appTheme.colors.textBlack))),
                   onlyNumber: true,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
-                  child: Obx(() => Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(text: 'accountBalance'.tr),
-                        const TextSpan(text: '  '),
-                        TextSpan(
-                          text: NumberTool.formatNumberStr(NumberTool.amountToBalance(state.baseCoin.amount, scale: state.baseCoin.scale)),
-                          style: TextStyle(color: appTheme.colors.primaryColor)
-                        ),
-                        const TextSpan(text: ' '),
-                        TextSpan(text: state.baseCoin.symbol, style: TextStyle(color: appTheme.colors.primaryColor))
-                      ]
-                    ),
-                    style: Get.textTheme.bodyText1
-                  ))
-                ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
+                    child: Obx(() => Text.rich(
+                        TextSpan(children: [
+                          TextSpan(text: 'accountBalance'.tr),
+                          const TextSpan(text: '  '),
+                          TextSpan(
+                              text: NumberTool.formatNumberStr(
+                                  NumberTool.amountToBalance(
+                                      state.baseCoin.amount,
+                                      scale: state.baseCoin.scale)),
+                              style: TextStyle(
+                                  color: appTheme.colors.primaryColor)),
+                          const TextSpan(text: ' '),
+                          TextSpan(
+                              text: state.baseCoin.symbol,
+                              style: TextStyle(
+                                  color: appTheme.colors.primaryColor))
+                        ]),
+                        style: Get.textTheme.bodyText1))),
                 DottedLine(dashColor: appTheme.colors.borderColor),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
+                  padding:
+                      EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
                   child: Obx(() => Text(
-                    'fee'.tr + ' ' + NumberTool.formatNumberStr(state.feeAmount) + ' ' + state.baseCoin.symbol,
-                    style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
-                  )),
+                        'fee'.tr +
+                            ' ' +
+                            NumberTool.formatNumberStr(state.feeAmount) +
+                            ' ' +
+                            state.baseCoin.symbol,
+                        style:
+                            TextStyle(fontSize: appTheme.sizes.fontSizeSmall),
+                      )),
                 ),
-                Text('withdrawTipText'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.warningColor)),
+                Text('withdrawTipText'.tr,
+                    style: Get.textTheme.bodyText1
+                        ?.copyWith(color: appTheme.colors.warningColor)),
                 Padding(
-                  padding: EdgeInsets.only(top: appTheme.sizes.padding * 2, bottom: appTheme.sizes.padding),
+                  padding: EdgeInsets.only(
+                      top: appTheme.sizes.padding * 2,
+                      bottom: appTheme.sizes.padding),
                   child: Obx(() => LButton(
-                    onPressed: controller.onPledgeListener,
-                    width: appTheme.sizes.infinity,
-                    disabled: state.pledgeLoading,
-                    child: Text('withdraw'.tr),
-                  )),
+                        onPressed: controller.onPledgeListener,
+                        width: appTheme.sizes.infinity,
+                        disabled: state.pledgeLoading,
+                        child: Text('withdraw'.tr),
+                      )),
                 ),
               ],
             ),

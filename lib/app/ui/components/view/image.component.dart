@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/theme/theme.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class LViewImage extends GetView<LViewImageController> {
   const LViewImage({
@@ -21,17 +22,20 @@ class LViewImage extends GetView<LViewImageController> {
 
   @override
   Widget build(BuildContext context) {
-
-    if (url == null || url == '' || (
-      Env.envConfig.type == EnvType.debug && RegExp('plugchain.network').hasMatch(url??'')
-    )) {
+    if (url == null ||
+        url == '' ||
+        !(StringTool.isHttpUrl(url ?? '') ||
+            StringTool.isHttpsUrl(url ?? '')) ||
+        (Env.envConfig.type == EnvType.debug &&
+            RegExp('plugchain.network').hasMatch(url ?? ''))) {
       return Container(
         width: width,
         height: height,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          color: bgColor??appTheme.colors.transparent,
-          borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+          color: bgColor ?? appTheme.colors.transparent,
+          borderRadius:
+              isRadius ? BorderRadius.all(Radius.circular(width)) : null,
         ),
       );
     }
@@ -43,11 +47,9 @@ class LViewImage extends GetView<LViewImageController> {
         imageBuilder: (context, imageProvider) => Container(
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
-            borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
-            image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover
-            ),
+            borderRadius:
+                isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+            image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
           ),
         ),
         placeholder: (context, url) => Container(
@@ -56,7 +58,8 @@ class LViewImage extends GetView<LViewImageController> {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: appTheme.colors.borderColor,
-            borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+            borderRadius:
+                isRadius ? BorderRadius.all(Radius.circular(width)) : null,
           ),
         ),
         errorWidget: (context, url, error) => Container(
@@ -65,7 +68,8 @@ class LViewImage extends GetView<LViewImageController> {
           clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
             color: appTheme.colors.borderColor,
-            borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+            borderRadius:
+                isRadius ? BorderRadius.all(Radius.circular(width)) : null,
           ),
         ),
       );
@@ -75,17 +79,16 @@ class LViewImage extends GetView<LViewImageController> {
         height: height,
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          color: bgColor??appTheme.colors.transparent,
-          borderRadius: isRadius ? BorderRadius.all(Radius.circular(width)) : null,
+          color: bgColor ?? appTheme.colors.transparent,
+          borderRadius:
+              isRadius ? BorderRadius.all(Radius.circular(width)) : null,
         ),
       );
     }
   }
 }
 
-
-class LViewImageState {
-}
+class LViewImageState {}
 
 class LViewImageController extends GetxController {
   LViewImageController();

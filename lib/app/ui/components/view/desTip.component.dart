@@ -15,8 +15,11 @@ class LDesTipView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: appTheme.sizes.basic * 10, right: appTheme.sizes.paddingSmall),
-          child: Image.asset("assets/images/page_item_pex.png", width: appTheme.sizes.basic * 30),
+          padding: EdgeInsets.only(
+              top: appTheme.sizes.basic * 10,
+              right: appTheme.sizes.paddingSmall),
+          child: Image.asset("assets/images/page_item_pex.png",
+              width: appTheme.sizes.basic * 30),
         ),
         Expanded(
           child: Text(

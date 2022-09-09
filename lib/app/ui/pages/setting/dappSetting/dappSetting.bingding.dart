@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/setting/dappSetting/dappSetting.controller.dar
 class UserDappSettingPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<UserDappSettingPageController>(() => UserDappSettingPageController());
+    Get.lazyPut<UserDappSettingPageController>(
+        () => UserDappSettingPageController());
   }
 }

@@ -9,7 +9,8 @@ import 'package:alan/proto/cosmos/auth/v1beta1/auth.pb.dart' as authPb;
 import 'package:alan/proto/cosmos/staking/v1beta1/tx.pb.dart' as staking;
 import 'package:alan/proto/cosmos/gov/v1beta1/tx.pb.dart' as gov;
 import 'package:alan/proto/cosmos/gov/v1beta1/gov.pb.dart' as govDef;
-import 'package:alan/proto/cosmos/distribution/v1beta1/tx.pb.dart' as distribution;
+import 'package:alan/proto/cosmos/distribution/v1beta1/tx.pb.dart'
+    as distribution;
 import 'package:alan/proto/google/protobuf/any.pb.dart' as $1;
 import 'package:encrypt/encrypt.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
@@ -27,9 +28,9 @@ import 'package:plug/app/ui/utils/evm/evmWallet.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:plug/protobuf/chain/token/tx.pb.dart' as tokenTx;
-import 'package:plug/protobuf/chain/liquidity/v1beta1/tx.pb.dart' as liquidityTx;
+import 'package:plug/protobuf/chain/liquidity/v1beta1/tx.pb.dart'
+    as liquidityTx;
 import 'package:plug/protobuf/chain/signer/v1beta1/signer.pb.dart' as secp2561;
-
 
 List<int> errorCode = [
   -10001, // 签名数据有误
@@ -47,15 +48,20 @@ class SelfAuthQuerier extends alan.AuthQuerier {
   }) : super(client: client);
 
   @override
-  factory SelfAuthQuerier.build(alan.Wallet wallet, grpc.ClientChannel channel, { enumAccountType? addressType }) {
-    return SelfAuthQuerier(client: auth.QueryClient(channel), wallet: wallet, addressType: addressType??enumAccountType.prc10);
+  factory SelfAuthQuerier.build(alan.Wallet wallet, grpc.ClientChannel channel,
+      {enumAccountType? addressType}) {
+    return SelfAuthQuerier(
+        client: auth.QueryClient(channel),
+        wallet: wallet,
+        addressType: addressType ?? enumAccountType.prc10);
   }
   @override
   Future<alan.AccountI?> getAccountData(String address) async {
     $1.Any pubKey;
     if (addressType == enumAccountType.prc20) {
       // 短公钥
-      var secp256Key = secp2561.PubKey.create()..key = (wallet as dynamic).comPublicKeyBytes;
+      var secp256Key = secp2561.PubKey.create()
+        ..key = (wallet as dynamic).comPublicKeyBytes;
       pubKey = alan.Codec.serialize(secp256Key);
     } else {
       // 长公钥
@@ -72,19 +78,20 @@ class SelfAuthQuerier extends alan.AuthQuerier {
       accountInfo = accountResult?.data['base_account'];
     }
     if (accountResult != null) {
-      if (accountResult.data["account_number"] != '') accountNumber = '${accountInfo["account_number"]}';
-      if (accountResult.data["sequence"] != '') sequence = '${accountInfo["sequence"]}';
+      if (accountResult.data["account_number"] != '')
+        accountNumber = '${accountInfo["account_number"]}';
+      if (accountResult.data["sequence"] != '')
+        sequence = '${accountInfo["sequence"]}';
     }
-    return alan.BaseAccount(
-      authPb.BaseAccount(
-        address: wallet.bech32Address,
-        pubKey: pubKey,
-        accountNumber: $fixnum.Int64.parseInt(accountNumber),
-        sequence: $fixnum.Int64.parseInt(sequence),
-      )
-    );
+    return alan.BaseAccount(authPb.BaseAccount(
+      address: wallet.bech32Address,
+      pubKey: pubKey,
+      accountNumber: $fixnum.Int64.parseInt(accountNumber),
+      sequence: $fixnum.Int64.parseInt(sequence),
+    ));
   }
 }
+
 class SelfNodeQuerier extends alan.QueryHelper implements alan.NodeQuerier {
   SelfNodeQuerier._({
     required http.Client httpClient,
@@ -105,23 +112,23 @@ class WalletTool {
     bech32Hrp: Env.envConfig.chainInfo.addressPrefix,
     host: Env.envConfig.urlInfo.chainInfoRpcUrl,
   );
-  static Future<HttpToolResponse> _createAndSendMsg (
+  static Future<HttpToolResponse> _createAndSendMsg(
     alan.Wallet wallet,
     List<GeneratedMessage> msgs,
     String memo,
     $fixnum.Int64 gasLimit,
-    String gasAll,
-    {
-      bool? noWait,
-    }
-  ) async {
+    String gasAll, {
+    bool? noWait,
+  }) async {
     DataCoinsController dataCoins = Get.find();
     DataAccountController dataAccountController = Get.find();
     alan.TxSigner signer;
-    if (dataAccountController.state.nowAccount?.accountType == enumAccountType.prc20) {
+    if (dataAccountController.state.nowAccount?.accountType ==
+        enumAccountType.prc20) {
       signer = alan.TxSigner(
         nodeQuerier: SelfNodeQuerier.build(http.Client()),
-        authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel, addressType: enumAccountType.prc20),
+        authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel,
+            addressType: enumAccountType.prc20),
       );
     } else {
       signer = alan.TxSigner(
@@ -137,18 +144,22 @@ class WalletTool {
         gasLimit: gasLimit,
         amount: [
           alan.Coin.create()
-            ..denom=dataCoins.state.baseCoin.minUnit
-            ..amount=gasAll
+            ..denom = dataCoins.state.baseCoin.minUnit
+            ..amount = gasAll
         ],
       ),
     );
     var config = alan.DefaultTxConfig.create();
     var encoder = config.txEncoder();
     var request = base64.encode(encoder(tx));
-    HttpToolResponse result = await _walletSendFetch('broadcast_tx_async', { 'tx': request }, noWait: noWait);
+    HttpToolResponse result = await _walletSendFetch(
+        'broadcast_tx_async', {'tx': request},
+        noWait: noWait);
     return result;
   }
-  static Future<HttpToolResponse> _fetchDefault(String method, Map<String, dynamic> params) {
+
+  static Future<HttpToolResponse> _fetchDefault(
+      String method, Map<String, dynamic> params) {
     String data = json.encode({
       'jsonrpc': '2.0',
       'id': '${Random(1000).nextInt(1000000000)}',
@@ -160,10 +171,15 @@ class WalletTool {
       data: data,
     );
   }
-  static Future<HttpToolResponse> _walletSendFetch (String method, Map<String, dynamic> params, { bool? noWait }) async {
+
+  static Future<HttpToolResponse> _walletSendFetch(
+      String method, Map<String, dynamic> params,
+      {bool? noWait}) async {
     var result = await _fetchDefault(method, params);
     Completer<HttpToolResponse> compute = Completer();
-    if (result.data == null || result.data['result'] == null || result.data['result']['code'] != 0) {
+    if (result.data == null ||
+        result.data['result'] == null ||
+        result.data['result']['code'] != 0) {
       result.status = errorCode[0]; // 发送出错
       result.message = 'error';
       return result;
@@ -173,12 +189,18 @@ class WalletTool {
       }
       var isSuccessEnd = 0; // 10结束
       Timer.periodic(const Duration(seconds: 3), (timer) async {
-        var successResult = await _fetchDefault('tx_search', { 'query': 'tx.hash=\'' + result.data['result']['hash'] + '\'', 'page': '1', 'prove': false });
+        var successResult = await _fetchDefault('tx_search', {
+          'query': 'tx.hash=\'' + result.data['result']['hash'] + '\'',
+          'page': '1',
+          'prove': false
+        });
         if (successResult.data['result']['total_count'] != '0') {
           timer.cancel();
           result.data = successResult.data;
-          if (successResult.data['result']['txs'][0]['tx_result']['code'] != 0) {
-            result.status = successResult.data['result']['txs'][0]['tx_result']['code']; // 发送出错
+          if (successResult.data['result']['txs'][0]['tx_result']['code'] !=
+              0) {
+            result.status = successResult.data['result']['txs'][0]['tx_result']
+                ['code']; // 发送出错
             result.message = 'error';
           }
           compute.complete(result);
@@ -195,6 +217,7 @@ class WalletTool {
     }
     return compute.future;
   }
+
   // 创建账户助记词
   static List<String> createMnemonic() {
     var list = alan.Bip39.generateMnemonic();
@@ -202,17 +225,21 @@ class WalletTool {
     if (setList.length != list.length) return createMnemonic();
     return list;
   }
+
   // 解压助记词
-  static alan.Wallet walletForMnemonic (List<String> mnemonic) => alan.Wallet.derive(mnemonic, _networkInfo);
+  static alan.Wallet walletForMnemonic(List<String> mnemonic) =>
+      alan.Wallet.derive(mnemonic, _networkInfo);
   static NewWallet walletForMnemonicPrc20(List<String> mnemonic) {
     return NewWallet.derive(mnemonic, networkInfo: _networkInfo);
   }
+
   /// 检查助记词
-  static bool checkMnemonic (List<String> mnemonic) {
+  static bool checkMnemonic(List<String> mnemonic) {
     return alan.Bip39.validateMnemonic(mnemonic);
   }
+
   /// 加密
-  static encryptMnemonic (List<String> mnemonic, String pass) {
+  static encryptMnemonic(List<String> mnemonic, String pass) {
     String keyPass = pass;
     while (keyPass.length < 32) {
       keyPass += '0';
@@ -223,6 +250,7 @@ class WalletTool {
     final encrypted = encrypter.encrypt(mnemonic.join('_'));
     return encrypted.base64;
   }
+
   /// 解压
   static FutureOr<List<String>?> decryptMnemonic(String raw, String pass) {
     List<String>? decrypt(String joinPass) {
@@ -242,13 +270,17 @@ class WalletTool {
         return null;
       }
     }
+
     return foundation.compute(decrypt, '${raw}____________$pass');
   }
+
   static alan.Wallet getWallet(List<String> mnemonic) {
     DataAccountController dataAccountController = Get.find();
-    if (dataAccountController.state.nowAccount?.accountType == enumAccountType.prc20) return walletForMnemonicPrc20(mnemonic);
+    if (dataAccountController.state.nowAccount?.accountType ==
+        enumAccountType.prc20) return walletForMnemonicPrc20(mnemonic);
     return walletForMnemonic(mnemonic);
   }
+
   // 赎回收益
   static Future<HttpToolResponse> withReward({
     required List<String> mnemonic,
@@ -264,6 +296,7 @@ class WalletTool {
       ..validatorAddress = validatorAddress;
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // 赎回质押
   static Future<HttpToolResponse> unDelegate({
     required List<String> mnemonic,
@@ -279,13 +312,12 @@ class WalletTool {
     var message = staking.MsgUndelegate.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorAddress = validatorAddress
-      ..amount = (
-        alan.Coin.create()
+      ..amount = (alan.Coin.create()
         ..denom = dataCoins.state.baseCoin.minUnit
-        ..amount = volume
-      );
+        ..amount = volume);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // 质押
   static Future<HttpToolResponse> delegate({
     required List<String> mnemonic,
@@ -301,13 +333,12 @@ class WalletTool {
     var message = staking.MsgDelegate.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorAddress = validatorAddress
-      ..amount = (
-        alan.Coin.create()
+      ..amount = (alan.Coin.create()
         ..denom = dataCoins.state.baseCoin.minUnit
-        ..amount = volume
-      );
+        ..amount = volume);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // 转让质押
   static Future<HttpToolResponse> reDelegate({
     required List<String> mnemonic,
@@ -325,13 +356,12 @@ class WalletTool {
       ..delegatorAddress = wallet.bech32Address
       ..validatorSrcAddress = validatorSrcAddress
       ..validatorDstAddress = validatorDstAddress
-      ..amount = (
-        alan.Coin.create()
+      ..amount = (alan.Coin.create()
         ..denom = dataCoins.state.baseCoin.minUnit
-        ..amount = volume
-      );
+        ..amount = volume);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // 转账
   static Future<HttpToolResponse> transfer({
     required List<String> mnemonic,
@@ -350,10 +380,11 @@ class WalletTool {
       ..toAddress = toAddress
       ..amount.add(alan.Coin.create()
         ..denom = denom
-        ..amount = volume
-      );
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll, noWait: noWait);
+        ..amount = volume);
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll,
+        noWait: noWait);
   }
+
   // 进行投票
   static Future<HttpToolResponse> proposalVote({
     required List<String> mnemonic,
@@ -371,6 +402,7 @@ class WalletTool {
       ..option = option;
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // 创建代币
   static Future<HttpToolResponse> createToken({
     required List<String> mnemonic,
@@ -389,17 +421,17 @@ class WalletTool {
     var wallet = getWallet(mnemonic);
     String memo = '';
     var message = tokenTx.MsgIssueToken.create()
-        ..owner = wallet.bech32Address
-        ..name = name
-        ..symbol = symbol
-        ..minUnit = minUnit
-        ..initialSupply = $fixnum.Int64.parseInt(initialSupply)
-        ..maxSupply = $fixnum.Int64.parseInt(maxSupply)
-        ..mintable = mintable
-        ..scale = int.parse(scale)
-        ;
+      ..owner = wallet.bech32Address
+      ..name = name
+      ..symbol = symbol
+      ..minUnit = minUnit
+      ..initialSupply = $fixnum.Int64.parseInt(initialSupply)
+      ..maxSupply = $fixnum.Int64.parseInt(maxSupply)
+      ..mintable = mintable
+      ..scale = int.parse(scale);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // token10 swap
   static Future<HttpToolResponse> dexPoolExchange({
     required List<String> mnemonic,
@@ -420,15 +452,44 @@ class WalletTool {
       ..poolId = poolId.toInt64()
       ..swapTypeId = 1
       ..offerCoin = (alan.Coin.create()
-                          ..denom = fromSymbol
-                          ..amount = fromAmount)
+        ..denom = fromSymbol
+        ..amount = fromAmount)
       ..demandCoinDenom = toSymbol
       ..offerCoinFee = (alan.Coin.create()
-                            ..denom=fromSymbol
-                            ..amount=feeAmount)
-      ..orderPrice = NumUtil.multiplyDec(orderPrice, pow(10, 18)).toStringAsFixed(0);
+        ..denom = fromSymbol
+        ..amount = feeAmount)
+      ..orderPrice =
+          NumUtil.multiplyDec(orderPrice, pow(10, 18)).toStringAsFixed(0);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
+  // create token10 swap
+  static Future<HttpToolResponse> dexPoolCreateExchange({
+    required List<String> mnemonic,
+    required String fromSymbol,
+    required String fromAmount,
+    required String toSymbol,
+    required String toAmount,
+    required String gasAll,
+    String memo = '',
+    $fixnum.Int64? gasLimit,
+  }) {
+    $fixnum.Int64 gasLimit = 400000.toInt64();
+    var wallet = getWallet(mnemonic);
+    var message = liquidityTx.MsgCreatePool.create()
+      ..poolCreatorAddress = wallet.bech32Address
+      ..poolTypeId = 1
+      ..depositCoins.addAll([
+        (alan.Coin.create()
+          ..denom = fromSymbol
+          ..amount = fromAmount),
+        (alan.Coin.create()
+          ..denom = toSymbol
+          ..amount = toAmount)
+      ]);
+    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+  }
+
   // add token10 swap
   static Future<HttpToolResponse> dexPoolAddExchange({
     required List<String> mnemonic,
@@ -448,14 +509,15 @@ class WalletTool {
       ..poolId = poolId.toInt64()
       ..depositCoins.addAll([
         (alan.Coin.create()
-          ..denom=fromSymbol
-          ..amount=fromAmount),
+          ..denom = fromSymbol
+          ..amount = fromAmount),
         (alan.Coin.create()
-          ..denom=toSymbol
-          ..amount=toAmount)
+          ..denom = toSymbol
+          ..amount = toAmount)
       ]);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
+
   // remove token10 swap
   static Future<HttpToolResponse> dexPoolRemoveExchange({
     required List<String> mnemonic,
@@ -472,8 +534,8 @@ class WalletTool {
       ..withdrawerAddress = wallet.bech32Address
       ..poolId = poolId.toInt64()
       ..poolCoin = (alan.Coin.create()
-          ..denom=fromSymbol
-          ..amount=fromAmount);
+        ..denom = fromSymbol
+        ..amount = fromAmount);
     return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
   }
 }

@@ -22,8 +22,9 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
       ),
       basicBackgroundColor: true,
       padding: EdgeInsets.only(
-          bottom: (ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context))
-      ),
+          bottom: (ScreenUtil.getBottomBarH(context) == 0
+              ? appTheme.sizes.padding
+              : ScreenUtil.getBottomBarH(context))),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,7 +37,8 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
               },
             ),
           ),
-          Padding(padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding)),
+          Padding(
+              padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding)),
           Container(
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
@@ -52,16 +54,19 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
               children: [
                 Text('dappSafeSetting'.tr),
                 Obx(() => Switch(
-                  value: state.safeMode,
-                  onChanged: controller.onToggleSafeMode,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                )),
+                      value: state.safeMode,
+                      onChanged: controller.onToggleSafeMode,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    )),
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
-            child: Text('dappSafeSettingDesc'.tr, style: Get.textTheme.bodyText1),
+            padding: EdgeInsets.symmetric(
+                horizontal: appTheme.sizes.padding,
+                vertical: appTheme.sizes.paddingSmall),
+            child:
+                Text('dappSafeSettingDesc'.tr, style: Get.textTheme.bodyText1),
           ),
           InkWell(
             onTap: controller.onClearNetCache,
@@ -76,36 +81,42 @@ class UserDappSettingPage extends GetView<UserDappSettingPageController> {
                 left: appTheme.sizes.padding,
                 right: appTheme.sizes.paddingSmall,
               ),
-              child: Text('clearNetCache'.tr, style: TextStyle(color: appTheme.colors.errorColor)),
+              child: Text('clearNetCache'.tr,
+                  style: TextStyle(color: appTheme.colors.errorColor)),
             ),
           ),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
           Obx(() => Column(
-            children: [
-              if (!state.safeMode)
-                InkWell(
-                  onTap: controller.onClearDappPermission,
-                  child: Container(
-                    width: appTheme.sizes.infinity,
-                    decoration: BoxDecoration(
-                      color: appTheme.colors.pageBackgroundColor,
+                children: [
+                  if (!state.safeMode)
+                    InkWell(
+                      onTap: controller.onClearDappPermission,
+                      child: Container(
+                        width: appTheme.sizes.infinity,
+                        decoration: BoxDecoration(
+                          color: appTheme.colors.pageBackgroundColor,
+                        ),
+                        padding: EdgeInsets.only(
+                          top: appTheme.sizes.padding,
+                          bottom: appTheme.sizes.padding,
+                          left: appTheme.sizes.padding,
+                          right: appTheme.sizes.paddingSmall,
+                        ),
+                        child: Text('clearDappPermission'.tr,
+                            style:
+                                TextStyle(color: appTheme.colors.errorColor)),
+                      ),
                     ),
-                    padding: EdgeInsets.only(
-                      top: appTheme.sizes.padding,
-                      bottom: appTheme.sizes.padding,
-                      left: appTheme.sizes.padding,
-                      right: appTheme.sizes.paddingSmall,
+                  if (!state.safeMode)
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: appTheme.sizes.padding,
+                          vertical: appTheme.sizes.paddingSmall),
+                      child: Text('clearDappPermissionDesc'.tr,
+                          style: Get.textTheme.bodyText1),
                     ),
-                    child: Text('clearDappPermission'.tr, style: TextStyle(color: appTheme.colors.errorColor)),
-                  ),
-                ),
-              if (!state.safeMode)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
-                  child: Text('clearDappPermissionDesc'.tr, style: Get.textTheme.bodyText1),
-                ),
-            ],
-          ))
+                ],
+              ))
         ],
       ),
     );

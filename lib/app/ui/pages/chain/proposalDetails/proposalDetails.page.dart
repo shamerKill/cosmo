@@ -9,7 +9,8 @@ import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
 
-class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageController> {
+class ChainProposalDetailsPage
+    extends GetView<ChainProposalDetailsPageController> {
   const ChainProposalDetailsPage({Key? key}) : super(key: key);
 
   @override
@@ -25,40 +26,56 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Obx(() => Text(
-            '#${state.proposalInfo.id}\n${state.proposalInfo.title}',
-            style: TextStyle(color: appTheme.colors.textBlackBig, fontSize: appTheme.sizes.fontSizeBig, fontWeight: FontWeight.bold)
-          )),
+              '#${state.proposalInfo.id}\n${state.proposalInfo.title}',
+              style: TextStyle(
+                  color: appTheme.colors.textBlackBig,
+                  fontSize: appTheme.sizes.fontSizeBig,
+                  fontWeight: FontWeight.bold))),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Obx(() => Container(
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall, vertical: appTheme.sizes.basic * 5),
-            decoration: BoxDecoration(
-              color: (() {
-                if (state.proposalInfo.status == EnumProposalStatus.passed) return appTheme.colors.primaryColor.withOpacity(0.2);
-                if (state.proposalInfo.status == EnumProposalStatus.rejected) return appTheme.colors.errorColor.withOpacity(0.2);
-                return appTheme.colors.textGrayBig.withOpacity(0.2);
-              })(),
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-            ),
-            child: Text(
-              statusMap[state.proposalInfo.status]!,
-              style: TextStyle(color: (() {
-                if (state.proposalInfo.status == EnumProposalStatus.passed) return appTheme.colors.primaryColor;
-                if (state.proposalInfo.status == EnumProposalStatus.rejected) return appTheme.colors.errorColor;
-                return appTheme.colors.textGrayBig;
-              })(), fontSize: appTheme.sizes.fontSizeSmall, fontWeight: FontWeight.bold)
-            ),
-          )),
+                padding: EdgeInsets.symmetric(
+                    horizontal: appTheme.sizes.paddingSmall,
+                    vertical: appTheme.sizes.basic * 5),
+                decoration: BoxDecoration(
+                  color: (() {
+                    if (state.proposalInfo.status == EnumProposalStatus.passed)
+                      return appTheme.colors.primaryColor.withOpacity(0.2);
+                    if (state.proposalInfo.status ==
+                        EnumProposalStatus.rejected)
+                      return appTheme.colors.errorColor.withOpacity(0.2);
+                    return appTheme.colors.textGrayBig.withOpacity(0.2);
+                  })(),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                ),
+                child: Text(statusMap[state.proposalInfo.status]!,
+                    style: TextStyle(
+                        color: (() {
+                          if (state.proposalInfo.status ==
+                              EnumProposalStatus.passed)
+                            return appTheme.colors.primaryColor;
+                          if (state.proposalInfo.status ==
+                              EnumProposalStatus.rejected)
+                            return appTheme.colors.errorColor;
+                          return appTheme.colors.textGrayBig;
+                        })(),
+                        fontSize: appTheme.sizes.fontSizeSmall,
+                        fontWeight: FontWeight.bold)),
+              )),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Container(
             width: appTheme.sizes.infinity,
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall, vertical: appTheme.sizes.paddingSmall / 2),
+            padding: EdgeInsets.symmetric(
+                horizontal: appTheme.sizes.paddingSmall,
+                vertical: appTheme.sizes.paddingSmall / 2),
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
               border: Border.all(color: appTheme.colors.borderColor),
             ),
             child: Builder(builder: (_) {
-              Widget getList ({
+              Widget getList({
                 String title = '',
                 String info = '',
                 bool? isAddress,
@@ -66,59 +83,96 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                 TextStyle? textStyle,
               }) {
                 return Padding(
-                  padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2, bottom: appTheme.sizes.paddingSmall / 2),
+                  padding: EdgeInsets.only(
+                      top: appTheme.sizes.paddingSmall / 2,
+                      bottom: appTheme.sizes.paddingSmall / 2),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: appTheme.sizes.basic * 5.0),
-                        child: Text(title, style: Get.textTheme.bodyText1),
-                      ),
-                      Text(
-                        isAddress == true ? StringTool.hideAddressCenter(info) : info,
-                        style: textStyle ?? const TextStyle(fontWeight: FontWeight.w500),
-                        maxLines: maxLines,
-                      ),
-                    ]
-                  ),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: appTheme.sizes.basic * 5.0),
+                          child: Text(title, style: Get.textTheme.bodyText1),
+                        ),
+                        Text(
+                          isAddress == true
+                              ? StringTool.hideAddressCenter(info)
+                              : info,
+                          style: textStyle ??
+                              const TextStyle(fontWeight: FontWeight.w500),
+                          maxLines: maxLines,
+                        ),
+                      ]),
                 );
               }
+
               return Obx(() => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  getList(title: 'proposer'.tr, info: state.proposalInfo.sender),
-                  getList(title: 'initBound'.tr, info: NumberTool.amountToBalance(state.proposalInfo.startBondVolume)),
-                  getList(title: 'allBound'.tr, info: NumberTool.amountToBalance(state.proposalInfo.allBondVolume)),
-                  getList(title: 'submitTime'.tr, info: DateUtil.formatDate(state.proposalInfo.submitStartTime)),
-                  getList(title: 'moneyEndTime'.tr, info: DateUtil.formatDate(state.proposalInfo.fundEndTime)),
-                  getList(title: 'proposalStartTime'.tr, info: DateUtil.formatDate(state.proposalInfo.votingStartTime)),
-                  getList(title: 'proposalEndTime'.tr, info: DateUtil.formatDate(state.proposalInfo.votingEndTime)),
-                  getList(title: 'proposalDescription'.tr, info: state.proposalInfo.description, textStyle: TextStyle(color: appTheme.colors.textGrayBig)),
-                ],
-              ));
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      getList(
+                          title: 'proposer'.tr,
+                          info: state.proposalInfo.sender),
+                      getList(
+                          title: 'initBound'.tr,
+                          info: NumberTool.amountToBalance(
+                              state.proposalInfo.startBondVolume)),
+                      getList(
+                          title: 'allBound'.tr,
+                          info: NumberTool.amountToBalance(
+                              state.proposalInfo.allBondVolume)),
+                      getList(
+                          title: 'submitTime'.tr,
+                          info: DateUtil.formatDate(
+                              state.proposalInfo.submitStartTime)),
+                      getList(
+                          title: 'moneyEndTime'.tr,
+                          info: DateUtil.formatDate(
+                              state.proposalInfo.fundEndTime)),
+                      getList(
+                          title: 'proposalStartTime'.tr,
+                          info: DateUtil.formatDate(
+                              state.proposalInfo.votingStartTime)),
+                      getList(
+                          title: 'proposalEndTime'.tr,
+                          info: DateUtil.formatDate(
+                              state.proposalInfo.votingEndTime)),
+                      getList(
+                          title: 'proposalDescription'.tr,
+                          info: state.proposalInfo.description,
+                          textStyle:
+                              TextStyle(color: appTheme.colors.textGrayBig)),
+                    ],
+                  ));
             }),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+            padding:
+                EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
             child: Obx(() => Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(text: '${'totalProposalVolume'.tr}: '),
                   TextSpan(
-                    text: '${NumberTool.formatNumberStr(NumberTool.amountToBalance(state.proposalInfo.totalBalanceVolume, scale: state.baseCoinInfo.scale))} ${state.baseCoinInfo.symbol}',
-                    style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall)
+                    children: [
+                      TextSpan(text: '${'totalProposalVolume'.tr}: '),
+                      TextSpan(
+                          text:
+                              '${NumberTool.formatNumberStr(NumberTool.amountToBalance(state.proposalInfo.totalBalanceVolume, scale: state.baseCoinInfo.scale))} ${state.baseCoinInfo.symbol}',
+                          style: TextStyle(
+                              fontSize: appTheme.sizes.fontSizeSmall)),
+                    ],
                   ),
-                ],
-              ),
-              style: TextStyle(fontSize: appTheme.sizes.fontSize, color: appTheme.colors.textBlackBig),
-            )),
+                  style: TextStyle(
+                      fontSize: appTheme.sizes.fontSize,
+                      color: appTheme.colors.textBlackBig),
+                )),
           ),
           Container(
             width: appTheme.sizes.infinity,
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall, vertical: appTheme.sizes.paddingSmall / 2),
+            padding: EdgeInsets.symmetric(
+                horizontal: appTheme.sizes.paddingSmall,
+                vertical: appTheme.sizes.paddingSmall / 2),
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
               border: Border.all(color: appTheme.colors.borderColor),
             ),
             child: Builder(builder: (_) {
@@ -133,56 +187,87 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                   child: Row(
                     children: [
                       Container(
-                        height: appTheme.sizes.basic * 80.0, width: appTheme.sizes.basic * 5.0,
+                        height: appTheme.sizes.basic * 80.0,
+                        width: appTheme.sizes.basic * 5.0,
                         decoration: BoxDecoration(color: color),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall),
+                        padding:
+                            EdgeInsets.only(left: appTheme.sizes.paddingSmall),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(text),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: appTheme.sizes.basic * 5.0),
-                              child: Text('$rate%'),
-                            ),
-                            Text(
-                              '${NumberTool.formatNumberStr(volume)} ${state.baseCoinInfo.symbol}',
-                              style: TextStyle(color: appTheme.colors.textGray, fontSize: appTheme.sizes.fontSizeSmall),
-                            ),
-                          ]
-                        ),
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(text),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: appTheme.sizes.basic * 5.0),
+                                child: Text('$rate%'),
+                              ),
+                              Text(
+                                '${NumberTool.formatNumberStr(volume)} ${state.baseCoinInfo.symbol}',
+                                style: TextStyle(
+                                    color: appTheme.colors.textGray,
+                                    fontSize: appTheme.sizes.fontSizeSmall),
+                              ),
+                            ]),
                       ),
                     ],
                   ),
                 );
               }
+
               return Obx(() => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  rateItem('agree'.tr, appTheme.colors.proposalAgree, controller.getVolumeRate(state.proposalInfo.agreeVolume), state.proposalInfo.agreeVolume),
-                  rateItem('reject'.tr, appTheme.colors.proposalReject, controller.getVolumeRate(state.proposalInfo.rejectVolume), state.proposalInfo.rejectVolume),
-                  rateItem('veto'.tr, appTheme.colors.proposalVeto, controller.getVolumeRate(state.proposalInfo.vetoVolume), state.proposalInfo.vetoVolume),
-                  rateItem('abandon'.tr, appTheme.colors.proposalAbandon, controller.getVolumeRate(state.proposalInfo.abandonVolume), state.proposalInfo.abandonVolume),
-                ],
-              ));
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      rateItem(
+                          'agree'.tr,
+                          appTheme.colors.proposalAgree,
+                          controller
+                              .getVolumeRate(state.proposalInfo.agreeVolume),
+                          state.proposalInfo.agreeVolume),
+                      rateItem(
+                          'reject'.tr,
+                          appTheme.colors.proposalReject,
+                          controller
+                              .getVolumeRate(state.proposalInfo.rejectVolume),
+                          state.proposalInfo.rejectVolume),
+                      rateItem(
+                          'veto'.tr,
+                          appTheme.colors.proposalVeto,
+                          controller
+                              .getVolumeRate(state.proposalInfo.vetoVolume),
+                          state.proposalInfo.vetoVolume),
+                      rateItem(
+                          'abandon'.tr,
+                          appTheme.colors.proposalAbandon,
+                          controller
+                              .getVolumeRate(state.proposalInfo.abandonVolume),
+                          state.proposalInfo.abandonVolume),
+                    ],
+                  ));
             }),
           ),
           Padding(
             key: controller.vetoTitleKey,
-            padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+            padding:
+                EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
             child: Text(
               'vote'.tr,
-              style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, color: appTheme.colors.textBlackBig),
+              style: TextStyle(
+                  fontSize: appTheme.sizes.fontSizeBig,
+                  color: appTheme.colors.textBlackBig),
             ),
           ),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.paddingSmall / 2, vertical: appTheme.sizes.paddingSmall / 2),
+            padding: EdgeInsets.symmetric(
+                horizontal: appTheme.sizes.paddingSmall / 2,
+                vertical: appTheme.sizes.paddingSmall / 2),
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
               border: Border.all(color: appTheme.colors.borderColor),
             ),
             child: Column(
@@ -190,84 +275,130 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
                 TabBar(
                   controller: controller.listTabController,
                   labelColor: appTheme.colors.textBlack,
-                  unselectedLabelColor: appTheme.colors.textBlack.withOpacity(0.6),
+                  unselectedLabelColor:
+                      appTheme.colors.textBlack.withOpacity(0.6),
                   indicatorColor: appTheme.colors.primaryColor,
                   isScrollable: true,
                   tabs: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Obx(() => Text('${'all'.tr}(${state.allHashTotalLength})')),
+                      padding: EdgeInsets.symmetric(
+                          vertical: appTheme.sizes.paddingSmall),
+                      child: Obx(() =>
+                          Text('${'all'.tr}(${state.allHashTotalLength})')),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Obx(() => Text('${'agree'.tr}(${state.agreeHashTotalLength})')),
+                      padding: EdgeInsets.symmetric(
+                          vertical: appTheme.sizes.paddingSmall),
+                      child: Obx(() =>
+                          Text('${'agree'.tr}(${state.agreeHashTotalLength})')),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Obx(() => Text('${'reject'.tr}(${state.rejectHashTotalLength})')),
+                      padding: EdgeInsets.symmetric(
+                          vertical: appTheme.sizes.paddingSmall),
+                      child: Obx(() => Text(
+                          '${'reject'.tr}(${state.rejectHashTotalLength})')),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Obx(() => Text('${'veto'.tr}(${state.vetoHashTotalLength})')),
+                      padding: EdgeInsets.symmetric(
+                          vertical: appTheme.sizes.paddingSmall),
+                      child: Obx(() =>
+                          Text('${'veto'.tr}(${state.vetoHashTotalLength})')),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
-                      child: Obx(() => Text('${'abandon'.tr}(${state.abandonHashTotalLength})')),
+                      padding: EdgeInsets.symmetric(
+                          vertical: appTheme.sizes.paddingSmall),
+                      child: Obx(() => Text(
+                          '${'abandon'.tr}(${state.abandonHashTotalLength})')),
                     ),
                   ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
                 ),
-                Obx(() => state.vetoTabViewHeight == 0.0 ? Container() : SizedBox(
-                  height: state.vetoTabViewHeight,
-                  width: appTheme.sizes.infinity,
-                  child: TabBarView(
-                    controller: controller.listTabController,
-                    children: [
-                      Obx(() => Column(
-                        children: [
-                          for (var value in state.allHashList)
-                            _ProposalVoterItem(value),
-                          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.allHashPage, allPageTotal: state.allHashTotalPage, type: 'ALL'),
-                        ],
+                Obx(() => state.vetoTabViewHeight == 0.0
+                    ? Container()
+                    : SizedBox(
+                        height: state.vetoTabViewHeight,
+                        width: appTheme.sizes.infinity,
+                        child: TabBarView(
+                            controller: controller.listTabController,
+                            children: [
+                              Obx(() => Column(
+                                    children: [
+                                      for (var value in state.allHashList)
+                                        _ProposalVoterItem(value),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: appTheme.sizes.padding)),
+                                      _ProposalVoterRow(
+                                          getList: controller.getList,
+                                          nowPage: state.allHashPage,
+                                          allPageTotal: state.allHashTotalPage,
+                                          type: 'ALL'),
+                                    ],
+                                  )),
+                              Obx(() => Column(
+                                    children: [
+                                      for (var value in state.agreeHashList)
+                                        _ProposalVoterItem(value),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: appTheme.sizes.padding)),
+                                      _ProposalVoterRow(
+                                          getList: controller.getList,
+                                          nowPage: state.agreeHashPage,
+                                          allPageTotal:
+                                              state.agreeHashTotalPage,
+                                          type: 'AGREE'),
+                                    ],
+                                  )),
+                              Obx(() => Column(
+                                    children: [
+                                      for (var value in state.rejectHashList)
+                                        _ProposalVoterItem(value),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: appTheme.sizes.padding)),
+                                      _ProposalVoterRow(
+                                          getList: controller.getList,
+                                          nowPage: state.rejectHashPage,
+                                          allPageTotal:
+                                              state.rejectHashTotalPage,
+                                          type: 'REJECT'),
+                                    ],
+                                  )),
+                              Obx(() => Column(
+                                    children: [
+                                      for (var value in state.vetoHashList)
+                                        _ProposalVoterItem(value),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: appTheme.sizes.padding)),
+                                      _ProposalVoterRow(
+                                          getList: controller.getList,
+                                          nowPage: state.vetoHashPage,
+                                          allPageTotal:
+                                              state.rejectHashTotalPage,
+                                          type: 'VETO'),
+                                    ],
+                                  )),
+                              Obx(() => Column(
+                                    children: [
+                                      for (var value in state.abandonHashList)
+                                        _ProposalVoterItem(value),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: appTheme.sizes.padding)),
+                                      _ProposalVoterRow(
+                                          getList: controller.getList,
+                                          nowPage: state.abandonHashPage,
+                                          allPageTotal:
+                                              state.abandonHashTotalPage,
+                                          type: 'ABANDON'),
+                                    ],
+                                  )),
+                            ]),
                       )),
-                      Obx(() => Column(
-                        children: [
-                          for (var value in state.agreeHashList)
-                            _ProposalVoterItem(value),
-                          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.agreeHashPage, allPageTotal: state.agreeHashTotalPage, type: 'AGREE'),
-                        ],
-                      )),
-                      Obx(() => Column(
-                        children: [
-                          for (var value in state.rejectHashList)
-                            _ProposalVoterItem(value),
-                          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.rejectHashPage, allPageTotal: state.rejectHashTotalPage, type: 'REJECT'),
-                        ],
-                      )),
-                      Obx(() => Column(
-                        children: [
-                          for (var value in state.vetoHashList)
-                            _ProposalVoterItem(value),
-                          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.vetoHashPage, allPageTotal: state.rejectHashTotalPage, type: 'VETO'),
-                        ],
-                      )),
-                      Obx(() => Column(
-                        children: [
-                          for (var value in state.abandonHashList)
-                            _ProposalVoterItem(value),
-                          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                          _ProposalVoterRow(getList: controller.getList, nowPage: state.abandonHashPage, allPageTotal: state.abandonHashTotalPage, type: 'ABANDON'),
-                        ],
-                      )),
-                    ]
-                  ),
-                )),
               ],
             ),
           ),
@@ -275,33 +406,37 @@ class ChainProposalDetailsPage extends GetView<ChainProposalDetailsPageControlle
             padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
             child: Text(
               'depositor'.tr,
-              style: TextStyle(fontSize: appTheme.sizes.fontSizeBig, color: appTheme.colors.textBlackBig),
+              style: TextStyle(
+                  fontSize: appTheme.sizes.fontSizeBig,
+                  color: appTheme.colors.textBlackBig),
             ),
           ),
           Obx(() => Offstage(
-            offstage: state.depositsHashList.isEmpty,
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.paddingSmall),
-              decoration: BoxDecoration(
-                color: appTheme.colors.pageBackgroundColor,
-                borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                border: Border.all(color: appTheme.colors.borderColor),
-              ),
-              child: Column(
-                children: [
-                  for (var value in state.depositsHashList)
-                    _ProposalDepositorItem(value)
-                ],
-              ),
-            ),
-          )),
+                offstage: state.depositsHashList.isEmpty,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: appTheme.sizes.padding,
+                      vertical: appTheme.sizes.paddingSmall),
+                  decoration: BoxDecoration(
+                    color: appTheme.colors.pageBackgroundColor,
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(appTheme.sizes.radius)),
+                    border: Border.all(color: appTheme.colors.borderColor),
+                  ),
+                  child: Column(
+                    children: [
+                      for (var value in state.depositsHashList)
+                        _ProposalDepositorItem(value)
+                    ],
+                  ),
+                ),
+              )),
         ],
       ),
     );
   }
 }
-
 
 class _ProposalVoterItem extends StatelessWidget {
   final HashInfo info;
@@ -332,11 +467,14 @@ class _ProposalVoterItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall, horizontal: appTheme.sizes.paddingSmall),
+        padding: EdgeInsets.symmetric(
+            vertical: appTheme.sizes.paddingSmall,
+            horizontal: appTheme.sizes.paddingSmall),
         decoration: BoxDecoration(
           color: appTheme.colors.pageBackgroundColorBasic.withOpacity(0.4),
           border: Border.all(color: appTheme.colors.borderColor),
-          borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
         ),
         child: Column(
           children: [
@@ -349,11 +487,14 @@ class _ProposalVoterItem extends StatelessWidget {
                     color: appTheme.colors.primaryColor,
                   ),
                 ),
-                Text(_statusStr, style: TextStyle(fontWeight: FontWeight.bold, color: _statusColor)),
+                Text(_statusStr,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: _statusColor)),
               ],
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+              padding:
+                  EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -420,7 +561,8 @@ class _ProposalVoterRow extends StatelessWidget {
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
               border: Border.all(color: appTheme.colors.borderColor),
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 5.0)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.basic * 5.0)),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -469,7 +611,8 @@ class _ProposalPageIconButton extends StatelessWidget {
       height: appTheme.sizes.basic * 50.0,
       decoration: BoxDecoration(
         border: Border.all(color: appTheme.colors.borderColor),
-        borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 5.0)),
+        borderRadius:
+            BorderRadius.all(Radius.circular(appTheme.sizes.basic * 5.0)),
         color: appTheme.colors.pageBackgroundColor,
       ),
       child: IconButton(
@@ -493,11 +636,14 @@ class _ProposalDepositorItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall, horizontal: appTheme.sizes.paddingSmall),
+        padding: EdgeInsets.symmetric(
+            vertical: appTheme.sizes.paddingSmall,
+            horizontal: appTheme.sizes.paddingSmall),
         decoration: BoxDecoration(
           color: appTheme.colors.pageBackgroundColor,
           border: Border.all(color: appTheme.colors.borderColor),
-          borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.basic * 5.0)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(appTheme.sizes.basic * 5.0)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -509,7 +655,8 @@ class _ProposalDepositorItem extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: appTheme.sizes.basic * 2.0),
+              padding:
+                  EdgeInsets.symmetric(vertical: appTheme.sizes.basic * 2.0),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -518,7 +665,7 @@ class _ProposalDepositorItem extends StatelessWidget {
                   'volume'.tr,
                   style: Get.textTheme.bodyText1,
                 ),
-                Text(NumberTool.formatNumberStr(info.amount??'')),
+                Text(NumberTool.formatNumberStr(info.amount ?? '')),
               ],
             ),
           ],

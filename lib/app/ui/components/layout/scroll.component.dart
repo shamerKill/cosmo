@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class LScrollView extends GetView<_ScrollViewController>  {
+class LScrollView extends GetView<_ScrollViewController> {
   const LScrollView({
     Key? key,
     required this.refreshController,
@@ -14,7 +14,7 @@ class LScrollView extends GetView<_ScrollViewController>  {
     this.disLoading,
     this.headerBackgroundColor,
     this.reKey,
-  }): super(key: key);
+  }) : super(key: key);
 
   final Future<void> Function()? onLoading;
   final bool? disLoading;
@@ -43,41 +43,36 @@ class LScrollView extends GetView<_ScrollViewController>  {
         backgroundColor: headerBackgroundColor,
       ),
       footer: CustomFooter(
-        builder: (BuildContext context ,LoadStatus? mode){
+        builder: (BuildContext context, LoadStatus? mode) {
           if (controller.isRefreshing.value) return Container();
           Widget body;
           // TODO: 加载设置
-          if(mode==LoadStatus.idle){
-            body =  const Text("pull up load");
-          }
-          else if(mode==LoadStatus.loading){
-            body =  const CupertinoActivityIndicator();
-          }
-          else if(mode == LoadStatus.failed){
+          if (mode == LoadStatus.idle) {
+            body = const Text("pull up load");
+          } else if (mode == LoadStatus.loading) {
+            body = const CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
             body = const Text("Load Failed!Click retry!");
-          }
-          else if(mode == LoadStatus.canLoading){
-              body = const Text("release to load more");
-          }
-          else{
+          } else if (mode == LoadStatus.canLoading) {
+            body = const Text("release to load more");
+          } else {
             body = const Text("No more Data");
           }
           return SizedBox(
             height: appTheme.sizes.basic * 55.0,
-            child: Center(child:body),
+            child: Center(child: body),
           );
         },
       ),
       child: CustomScrollView(
         physics: const ClampingScrollPhysics(),
-        slivers: (children == null) ? [
-          SliverToBoxAdapter(
-            child: child,
-          )
-        ] : [
-          for (var _item in children!)
-            SliverToBoxAdapter(child: _item)
-        ],
+        slivers: (children == null)
+            ? [
+                SliverToBoxAdapter(
+                  child: child,
+                )
+              ]
+            : [for (var _item in children!) SliverToBoxAdapter(child: _item)],
       ),
     );
   }
@@ -93,8 +88,10 @@ class _ScrollViewController extends GetxController {
   ScrollFunc scrollFunc = ScrollFunc();
   Rx<bool> isRefreshing = false.obs;
 
-  setLoading(Future<void> Function()? _inputOnLoading) => scrollFunc.onLoading = _inputOnLoading;
-  setRefresh(Future<void> Function()? _inputOnRefresh) => scrollFunc.onRefresh = _inputOnRefresh;
+  setLoading(Future<void> Function()? _inputOnLoading) =>
+      scrollFunc.onLoading = _inputOnLoading;
+  setRefresh(Future<void> Function()? _inputOnRefresh) =>
+      scrollFunc.onRefresh = _inputOnRefresh;
 
   void onRefresh(RefreshController _refreshController) async {
     if (scrollFunc.onRefresh != null) await scrollFunc.onRefresh!();
@@ -105,5 +102,4 @@ class _ScrollViewController extends GetxController {
     if (scrollFunc.onLoading != null) await scrollFunc.onLoading!();
     _refreshController.loadComplete();
   }
-
 }

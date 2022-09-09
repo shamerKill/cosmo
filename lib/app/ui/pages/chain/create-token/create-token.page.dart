@@ -68,7 +68,8 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Text('tokenTotalSupply'.tr, textAlign: TextAlign.center),
+                  child:
+                      Text('tokenTotalSupply'.tr, textAlign: TextAlign.center),
                 ),
                 Expanded(
                   flex: 4,
@@ -110,14 +111,16 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Text('tokenAdditionalType'.tr, textAlign: TextAlign.center),
+                  child: Text('tokenAdditionalType'.tr,
+                      textAlign: TextAlign.center),
                 ),
                 Expanded(
                   flex: 4,
                   child: InkWell(
                     onTap: controller.onExchangeMintable,
                     child: LInput(
-                      textController: controller.coinMintableVolumeTextController,
+                      textController:
+                          controller.coinMintableVolumeTextController,
                       disabled: true,
                     ),
                   ),
@@ -125,51 +128,58 @@ class ChainCreateTokenPage extends GetView<ChainCreateTokenPageController> {
               ],
             ),
           ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
-              child: DottedLine(
-                dashColor: appTheme.colors.borderColor,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding),
+            child: DottedLine(
+              dashColor: appTheme.colors.borderColor,
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding:
+                  EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.2),
+              child: Text(
+                'createTokenDesc1'.tr,
+                style: TextStyle(
+                    color: appTheme.colors.textGray,
+                    fontSize: appTheme.sizes.fontSizeSmall),
+                textAlign: TextAlign.left,
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall * 0.2),
-                child: Text(
-                  'createTokenDesc1'.tr,
-                  style: TextStyle(color: appTheme.colors.textGray, fontSize: appTheme.sizes.fontSizeSmall),
-                  textAlign: TextAlign.left,
-                ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
+              child: Text(
+                'createTokenDesc2'.tr,
+                style: TextStyle(
+                    color: appTheme.colors.textGray,
+                    fontSize: appTheme.sizes.fontSizeSmall),
+                textAlign: TextAlign.left,
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall),
-                child: Text(
-                  'createTokenDesc2'.tr,
-                  style: TextStyle(color: appTheme.colors.textGray, fontSize: appTheme.sizes.fontSizeSmall),
-                  textAlign: TextAlign.left,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall),
-              child: Obx(() => Text(
-                '${'fee'.tr}\r\r ${state.fee} ${controller.dataCoins.state.baseCoin.symbol}',
-                style: TextStyle(color: appTheme.colors.primaryColor),
-              )),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.2),
-              child: Obx(() => state.isExist ? Text(
-                'ErrorWithCoinSymbolRepeat'.tr,
-                style: TextStyle(color: appTheme.colors.errorColor),
-              ) : Text(
-                '${'tokenSendFee'.tr}\r\r ${state.createFee} ${controller.dataCoins.state.baseCoin.symbol}',
-                style: TextStyle(color: appTheme.colors.primaryColor),
-              )),
-            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall),
+            child: Obx(() => Text(
+                  '${'fee'.tr}\r\r ${state.fee} ${controller.dataCoins.state.baseCoin.symbol}',
+                  style: TextStyle(color: appTheme.colors.primaryColor),
+                )),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.2),
+            child: Obx(() => state.isExist
+                ? Text(
+                    'ErrorWithCoinSymbolRepeat'.tr,
+                    style: TextStyle(color: appTheme.colors.errorColor),
+                  )
+                : Text(
+                    '${'tokenSendFee'.tr}\r\r ${state.createFee} ${controller.dataCoins.state.baseCoin.symbol}',
+                    style: TextStyle(color: appTheme.colors.primaryColor),
+                  )),
+          ),
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.paddingBig),
             child: LButton(

@@ -21,7 +21,7 @@ class BasicHomePageState {
   // 消息提醒
   final Rx<bool> _hadNewsTip = false.obs;
   bool get hadNewsTip => _hadNewsTip.value;
-  set hadNewsTip (bool value) => _hadNewsTip.value = value;
+  set hadNewsTip(bool value) => _hadNewsTip.value = value;
 
   // 账户列表
   final RxList<AccountModel> accountList = RxList<AccountModel>();
@@ -29,38 +29,40 @@ class BasicHomePageState {
   // 侧边栏选中账户
   final Rx<String> _drawerSelected = ''.obs;
   String get drawerSelected => _drawerSelected.value;
-  set drawerSelected (String value) => _drawerSelected.value = value;
+  set drawerSelected(String value) => _drawerSelected.value = value;
 
   // 当前账户
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
-  set accountInfo (AccountModel value) => _accountInfo.value = value;
+  set accountInfo(AccountModel value) => _accountInfo.value = value;
 
   // 账户价值
   final Rx<String> _accountAssetsPrice = ''.obs;
   String get accountAssetsPrice => _accountAssetsPrice.value;
-  set accountAssetsPrice (String value) => _accountAssetsPrice.value = value;
+  set accountAssetsPrice(String value) => _accountAssetsPrice.value = value;
 
   // 是否隐藏余额
   final Rx<bool> _hideInfo = false.obs;
   bool get hideInfo => _hideInfo.value;
-  set hideInfo (bool value) => _hideInfo.value = value;
+  set hideInfo(bool value) => _hideInfo.value = value;
 
   // 盒子高度比例0-100
   final Rx<double> _infoBoxHeightScale = 100.0.obs;
   double get infoBoxHeightScale => _infoBoxHeightScale.value;
-  set infoBoxHeightScale (double value) => _infoBoxHeightScale.value = value;
-  
+  set infoBoxHeightScale(double value) => _infoBoxHeightScale.value = value;
+
   // 提示备份显示内容
   final RxList<Widget> tipBackupView = RxList<Widget>();
 
   // 桌面侧滑的key
-  final Rx<GlobalKey<ScaffoldState>> _scaffoldKey = GlobalKey<ScaffoldState>().obs;
+  final Rx<GlobalKey<ScaffoldState>> _scaffoldKey =
+      GlobalKey<ScaffoldState>().obs;
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey.value;
-  set scaffoldKey (GlobalKey<ScaffoldState> value) => _scaffoldKey.value = value;
+  set scaffoldKey(GlobalKey<ScaffoldState> value) => _scaffoldKey.value = value;
 }
 
-class BasicHomePageController extends GetxController with GetTickerProviderStateMixin {
+class BasicHomePageController extends GetxController
+    with GetTickerProviderStateMixin {
   BasicHomePageController();
 
   RefreshController accountRefreshController = RefreshController();
@@ -86,6 +88,7 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     _initAnimationController();
     _checkBackup();
   }
+
   @override
   onClose() {
     _timer?.cancel();
@@ -115,46 +118,59 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     _checkAndInsertAccountBaseCoin();
     LLoading.showLoading();
     httpToolApp.getAccountSenderList(state.accountInfo.address);
-    var result = await Future.wait<dynamic>(
-      state.accountInfo.tokenList.map<Future<dynamic>>(
-        (token) => httpToolApp.getAccountBalance(state.accountInfo.address, token.type == enumTokenType.prc10 ? token.minUnit : token.contractAddress)
-      ).toList()
-    );
+    var result = await Future.wait<dynamic>(state.accountInfo.tokenList
+        .map<Future<dynamic>>((token) => httpToolApp.getAccountBalance(
+            state.accountInfo.address,
+            token.type == enumTokenType.prc10
+                ? token.minUnit
+                : token.contractAddress))
+        .toList());
     LLoading.dismiss();
     // 更改币种余额
     for (var i = 0; i < result.length; i++) {
-      state.accountInfo.tokenList[i].amount = result[i]?.data??'';
+      state.accountInfo.tokenList[i].amount = result[i]?.data ?? '';
     }
     state._accountInfo.refresh();
     _getAccountPrice();
   }
+
   // 判断账户是否有基础币，如果没有加入并储存
   _checkAndInsertAccountBaseCoin() {
-    var type = dataAccountController.checkAccountHadCoin(dataAccountController.state.nowAccount!.address, dataCoinsController.state.baseCoin.minUnit);
+    var type = dataAccountController.checkAccountHadCoin(
+        dataAccountController.state.nowAccount!.address,
+        dataCoinsController.state.baseCoin.minUnit);
     if (!type) {
       dataAccountController.updateAccount(
-        dataAccountController.state.nowAccount!..tokenList.insert(0, dataCoinsController.state.baseCoin),
+        dataAccountController.state.nowAccount!
+          ..tokenList.insert(0, dataCoinsController.state.baseCoin),
       );
     }
     state.accountInfo = dataAccountController.state.nowAccount!;
     onDrawerSelect(state.accountInfo.address);
   }
+
   // 获取账户价值
   _getAccountPrice() async {
     double num = 0.0;
     var result = await Future.wait([
       for (var token in state.accountInfo.tokenList)
-        httpToolServer.getCoinPrice(token.type == enumTokenType.prc20 ? token.contractAddress : token.minUnit)
+        httpToolServer.getCoinPrice(token.type == enumTokenType.prc20
+            ? token.contractAddress
+            : token.minUnit)
     ]);
     for (var i = 0; i < state.accountInfo.tokenList.length; i++) {
       var token = state.accountInfo.tokenList[i];
       if (result[i].status != 0 || result[i].data == null) break;
       token.price = '${result[i].data['price']}';
-      num += double.tryParse(NumberTool.numMul(NumberTool.amountToBalance(token.amount, scale: token.scale), token.price))??0;
+      num += double.tryParse(NumberTool.numMul(
+              NumberTool.amountToBalance(token.amount, scale: token.scale),
+              token.price)) ??
+          0;
     }
     state._accountInfo.refresh();
     state.accountAssetsPrice = num.toString();
   }
+
   // 检查是否需要备份
   _checkBackup() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -169,22 +185,28 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       horizontalPadding: true,
     );
   }
+
   // 菜单
-  onTapMenu () {
+  onTapMenu() {
     state.scaffoldKey.currentState?.openDrawer();
   }
+
   // 消息
-  goToNewsList () {
+  goToNewsList() {
     Get.toNamed(PlugRoutesNames.walletNotification);
   }
+
   // 扫码
-  goToScan () {
+  goToScan() {
     Get.toNamed(PlugRoutesNames.walletQrScanner);
   }
+
   // 复制地址
-  onCopyAddress({ String? address }) {
-    FlutterClipboard.copy(address ?? state.accountInfo.address).then(( value ) => LToast.success('SuccessWithCopyAddress'.tr));
+  onCopyAddress({String? address}) {
+    FlutterClipboard.copy(address ?? state.accountInfo.address)
+        .then((value) => LToast.success('SuccessWithCopyAddress'.tr));
   }
+
   // 显示二维码
   onShowScan() async {
     bool _memType = state.hideInfo;
@@ -195,21 +217,24 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     );
     onInfoHide(type: _memType);
   }
+
   // 初始化切换动画
   _initAnimationController() {
     _infoAnimationController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _infoAnimation = Tween(begin: 0.0, end: 100.0).animate(_infoAnimationController!)
-      ..addListener(() {
-        if (state.hideInfo) {
-          state.infoBoxHeightScale = 100.0 - _infoAnimation.value;
-        } else {
-          state.infoBoxHeightScale = _infoAnimation.value;
-        }
-      });
+    _infoAnimation =
+        Tween(begin: 0.0, end: 100.0).animate(_infoAnimationController!)
+          ..addListener(() {
+            if (state.hideInfo) {
+              state.infoBoxHeightScale = 100.0 - _infoAnimation.value;
+            } else {
+              state.infoBoxHeightScale = _infoAnimation.value;
+            }
+          });
   }
+
   // 一键隐藏切换
   onInfoHide({bool? type}) {
     if (_infoAnimationController == null) _initAnimationController();
@@ -223,29 +248,34 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     dataAppConfig.upHomeHide(state.hideInfo);
     _infoAnimationController?.forward(from: 0.0);
   }
+
   // 添加代币
   onAddToken() async {
     await Get.toNamed(PlugRoutesNames.walletTokenList);
     initAccountStorage();
   }
+
   // 我的代币详情
   onToTokenPage(TokenModel token) async {
     await Get.toNamed(PlugRoutesNames.walletTokenLogs(
-      token.type == enumTokenType.prc10 ?
-        token.minUnit : token.contractAddress
-    ));
+        token.type == enumTokenType.prc10
+            ? token.minUnit
+            : token.contractAddress));
     initAccountStorage();
   }
+
   // 前往备份
   onGoToBackup() {
     Get.back();
     Get.toNamed(PlugRoutesNames.accountBackupShow);
   }
+
   // 暂不提醒
   onWaitBackup() {
     Get.back();
     state.accountInfo.createTime = DateTime.now();
   }
+
   // 监听侧边栏
   onDrawerChanged(bool? type) {
     if (type == true) {
@@ -255,10 +285,12 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
       state.drawerSelected = '';
     }
   }
+
   // 侧边栏账户选择
   onDrawerSelect(String _address) {
     state.drawerSelected = _address;
   }
+
   // 切换账户
   onChangeAccount(String _address) async {
     state.scaffoldKey.currentState?.openEndDrawer();
@@ -267,11 +299,13 @@ class BasicHomePageController extends GetxController with GetTickerProviderState
     await initAccountStorage();
     LToast.success('SuccessWithSwitch'.tr);
   }
+
   // 管理账户
   onAdminAccount(String _address) {
     state.scaffoldKey.currentState?.openEndDrawer();
     Get.toNamed(PlugRoutesNames.accountAdmin(_address));
   }
+
   // 添加账户
   onAddAccount() {
     Get.back();

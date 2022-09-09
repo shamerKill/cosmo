@@ -12,7 +12,6 @@ class DappCollectionPage extends GetView<DappCollectionPageController> {
 
   @override
   Widget build(BuildContext context) {
-
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(),
@@ -21,30 +20,34 @@ class DappCollectionPage extends GetView<DappCollectionPageController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             LAppBar.defaultHeaderTextWidget('myCollections'.tr),
-            Text('deleteOrCollection'.tr, style: TextStyle(color: appTheme.colors.primaryColor)),
+            Text('deleteOrCollection'.tr,
+                style: TextStyle(color: appTheme.colors.primaryColor)),
           ],
         ),
         description: Padding(
-          padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)
-        ),
+            padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
       ),
       basicBackgroundColor: true,
       body: Container(
         decoration: BoxDecoration(
           color: appTheme.colors.pageBackgroundColor,
-          borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+          borderRadius:
+              BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
         ),
         child: Obx(() => ReorderableListView(
-          onReorder: controller.onReorder,
-          children: [
-            for (DappModel _item in controller.dataDappAddress.state.dappCollectList)
-              _DappCollectionListItem(
-                key: Key(_item.address + _item.title),
-                dapp: _item,
-                onDelete: () => controller.onDeleteItem(controller.dataDappAddress.state.dappCollectList.indexOf(_item)),
-              ),
-          ],
-        )),
+              onReorder: controller.onReorder,
+              children: [
+                for (DappModel _item
+                    in controller.dataDappAddress.state.dappCollectList)
+                  _DappCollectionListItem(
+                    key: Key(_item.address + _item.title),
+                    dapp: _item,
+                    onDelete: () => controller.onDeleteItem(controller
+                        .dataDappAddress.state.dappCollectList
+                        .indexOf(_item)),
+                  ),
+              ],
+            )),
       ),
     );
   }
@@ -86,7 +89,8 @@ class _DappCollectionListItem extends StatelessWidget {
               height: appTheme.sizes.basic * 60,
               isRadius: true,
             ),
-            Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
+            Padding(
+                padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall)),
             Expanded(
               child: Text(
                 dapp.title,
@@ -100,7 +104,8 @@ class _DappCollectionListItem extends StatelessWidget {
               onTap: onDelete,
               child: Padding(
                 padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
-                child: Icon(const IconData(0xe6f3, fontFamily: 'plugIcon'), color: appTheme.colors.textGray),
+                child: Icon(const IconData(0xe6f3, fontFamily: 'plugIcon'),
+                    color: appTheme.colors.textGray),
               ),
             )
           ],

@@ -14,19 +14,19 @@ class UserMyPageState {
   // 是否开启了指纹验证
   final Rx<bool> _enableTouch = false.obs;
   bool get enableTouch => _enableTouch.value;
-  set enableTouch (bool value) => _enableTouch.value = value;
+  set enableTouch(bool value) => _enableTouch.value = value;
   // 是否可以开启指纹验证
   final Rx<bool> _canTouch = false.obs;
   bool get canTouch => _canTouch.value;
-  set canTouch (bool value) => _canTouch.value = value;
+  set canTouch(bool value) => _canTouch.value = value;
   // 当前网络
   final Rx<String> _network = ''.obs;
   String get network => _network.value;
-  set network (String value) => _network.value = value;
+  set network(String value) => _network.value = value;
   // 当前语言
   final Rx<Locale> _language = plugTranslation.nowLocale;
   Locale get language => _language.value;
-  set language (Locale value) => _language.value = value;
+  set language(Locale value) => _language.value = value;
 }
 
 class UserMyPageController extends GetxController {
@@ -57,16 +57,15 @@ class UserMyPageController extends GetxController {
     return;
     if (type == true) {
       try {
-        var userRes = await auth.authenticate(
-          localizedReason: 'getFingerprints'.tr
-        );
+        var userRes =
+            await auth.authenticate(localizedReason: 'getFingerprints'.tr);
         if (userRes) state.enableTouch = true;
-      } on PlatformException catch (_) {
-      }
+      } on PlatformException catch (_) {}
     } else if (type == false) {
       state.enableTouch = false;
     }
   }
+
   // 前往网络切换
   onGoToNetwork() => Get.toNamed(PlugRoutesNames.userNetwork);
   // 前往语言切换
@@ -74,7 +73,10 @@ class UserMyPageController extends GetxController {
   // 前往使用指南
   onGoToUseHelper() => LToast.info('functionalNoHandle'.tr);
   // 前往用户协议
-  onGoToAgreement() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: { 'link': base64.encode(utf8.encode('https://www.plugchain.network/v2/userAgreemen'))});
+  onGoToAgreement() => Get.toNamed(PlugRoutesNames.dappWebview, parameters: {
+        'link': base64.encode(
+            utf8.encode('https://www.plugchain.network/v2/userAgreemen'))
+      });
   // 前往关于我们
   onGoToAboutUs() => Get.toNamed(PlugRoutesNames.userAbout);
   // 前往问题反馈

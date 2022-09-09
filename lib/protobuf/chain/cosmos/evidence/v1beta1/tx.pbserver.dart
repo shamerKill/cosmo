@@ -16,23 +16,29 @@ import 'tx.pbjson.dart';
 export 'tx.pb.dart';
 
 abstract class MsgServiceBase extends $pb.GeneratedService {
-  $async.Future<$29.MsgSubmitEvidenceResponse> submitEvidence($pb.ServerContext ctx, $29.MsgSubmitEvidence request);
+  $async.Future<$29.MsgSubmitEvidenceResponse> submitEvidence(
+      $pb.ServerContext ctx, $29.MsgSubmitEvidence request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'SubmitEvidence': return $29.MsgSubmitEvidence();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'SubmitEvidence':
+        return $29.MsgSubmitEvidence();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'SubmitEvidence': return this.submitEvidence(ctx, request as $29.MsgSubmitEvidence);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'SubmitEvidence':
+        return this.submitEvidence(ctx, request as $29.MsgSubmitEvidence);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => MsgServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => MsgServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => MsgServiceBase$messageJson;
 }
-

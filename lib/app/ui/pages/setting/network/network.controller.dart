@@ -12,32 +12,32 @@ class UserNetworkPageState {
   // 当前网络id
   final Rx<int> _nowNetId = 0.obs;
   int get nowNetId => _nowNetId.value;
-  set nowNetId (int value) => _nowNetId.value = value;
+  set nowNetId(int value) => _nowNetId.value = value;
 }
 
 class UserNetworkPageController extends GetxController {
   UserNetworkPageController();
   UserNetworkPageState state = UserNetworkPageState();
 
-
   @override
   onInit() async {
     super.onInit();
     _getNetList();
   }
+
   @override
   onClose() {
     LLoading.dismiss();
   }
-  
 
   // 获取网络列表
   Future<void> _getNetList() async {
     LLoading.showBgLoading(text: 'networkFetching'.tr);
     LLoading.dismiss();
   }
+
   // 更改当前网络
-  exchangeNoNet(int id, { required NetWorkModel network }) async {
+  exchangeNoNet(int id, {required NetWorkModel network}) async {
     if (id == state.nowNetId) return;
     bool? result = await LBottomSheet.promptBottomSheet(
       title: 'switchNetworkTip'.tr,

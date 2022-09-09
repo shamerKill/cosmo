@@ -8,11 +8,11 @@ class WalletTokenReceivePageState {
   // 账户信息
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
-  set accountInfo (AccountModel value) => _accountInfo.value = value;  
+  set accountInfo(AccountModel value) => _accountInfo.value = value;
   // 币种信息
   final Rx<TokenModel> _tokenInfo = TokenModel().obs;
   TokenModel get tokenInfo => _tokenInfo.value;
-  set tokenInfo (TokenModel value) => _tokenInfo.value = value;
+  set tokenInfo(TokenModel value) => _tokenInfo.value = value;
 }
 
 class WalletTokenReceivePageController extends GetxController {
@@ -24,7 +24,8 @@ class WalletTokenReceivePageController extends GetxController {
   @override
   void onReady() {
     String? token = Get.parameters['token'];
-    if (dataAccount.state.nowAccount == null || token == null) return Get.back();
+    if (dataAccount.state.nowAccount == null || token == null)
+      return Get.back();
     state.accountInfo = dataAccount.state.nowAccount!;
     state._accountInfo.refresh();
     for (var _item in state.accountInfo.tokenList) {
@@ -39,8 +40,10 @@ class WalletTokenReceivePageController extends GetxController {
   onShare() {
     LToast.warning('canNotShare'.tr);
   }
+
   // 复制操作
   onCopy() {
-    FlutterClipboard.copy(state.accountInfo.address).then(( value ) => LToast.success('SuccessWithCopy'.tr));
+    FlutterClipboard.copy(state.accountInfo.address)
+        .then((value) => LToast.success('SuccessWithCopy'.tr));
   }
 }

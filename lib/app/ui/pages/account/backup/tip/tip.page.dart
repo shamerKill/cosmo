@@ -12,7 +12,6 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
 
   @override
   Widget build(BuildContext context) {
-
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
       titleBar: const Image(
@@ -26,13 +25,21 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('backupTipTitle'.tr, style: TextStyle(fontWeight: FontWeight.bold, fontSize: appTheme.sizes.fontSizeBig)),
-                Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
-                Text('backupTipDescription'.tr, style: TextStyle(fontSize: appTheme.sizes.fontSize)),
+                Text('backupTipTitle'.tr,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: appTheme.sizes.fontSizeBig)),
+                Padding(
+                    padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+                Text('backupTipDescription'.tr,
+                    style: TextStyle(fontSize: appTheme.sizes.fontSize)),
                 Container(
                   padding: EdgeInsets.only(top: appTheme.sizes.paddingBig),
                   decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: appTheme.colors.borderColor.withOpacity(0.5))),
+                    border: Border(
+                        bottom: BorderSide(
+                            color:
+                                appTheme.colors.borderColor.withOpacity(0.5))),
                   ),
                 ),
                 Padding(
@@ -56,7 +63,8 @@ class AccountBackupTipPage extends GetView<AccountBackupTipPageController> {
             child: LButton(
               contrast: true,
               width: appTheme.sizes.infinity,
-              child: Text('backupTipAtLate'.tr, style: TextStyle(color: appTheme.colors.textGrayBig)),
+              child: Text('backupTipAtLate'.tr,
+                  style: TextStyle(color: appTheme.colors.textGrayBig)),
               onPressed: controller.backupLate,
             ),
           ),

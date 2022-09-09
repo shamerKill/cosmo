@@ -18,7 +18,7 @@ class AccountBackupShowPageState {
   /// 备份倒计时
   final Rx<int> _backupTimeDown = 10.obs;
   int get backupTimeDown => _backupTimeDown.value;
-  set backupTimeDown (int value) => _backupTimeDown.value = value;
+  set backupTimeDown(int value) => _backupTimeDown.value = value;
 
   /// 截屏显示内容
   final RxList<Widget> screenShotView = RxList();
@@ -35,12 +35,14 @@ class AccountBackupShowPageController extends GetxController {
     super.onInit();
     if (dataAccountController.state.memMnemonic == null) return Get.back();
   }
+
   @override
   void onReady() {
     super.onReady();
     state._mnemonicList.addAll(dataAccountController.state.memMnemonic!);
     _showNoShot();
   }
+
   @override
   onClose() {
     backTimeTimer?.cancel();
@@ -69,9 +71,7 @@ class AccountBackupShowPageController extends GetxController {
   /// 显示请勿截屏
   _showNoShot() async {
     await LBottomSheet.baseBottomSheet(
-      horizontalPadding: true,
-      child: state.screenShotView[0]
-    );
+        horizontalPadding: true, child: state.screenShotView[0]);
     if (Platform.isAndroid) {
       try {
         FlutterScreenshotSwitcher.disableScreenshots();

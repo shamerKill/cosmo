@@ -29,8 +29,9 @@ class EvmClient {
     // chainID
     this.chainId,
   }) {
-    chainId = chainId??Env.envConfig.chainInfo.pvmChainId;
-    ethClient = Web3Client(apiUrl??Env.envConfig.urlInfo.chainPvmRpcUrl, Client());
+    chainId = chainId ?? Env.envConfig.chainInfo.pvmChainId;
+    ethClient =
+        Web3Client(apiUrl ?? Env.envConfig.urlInfo.chainPvmRpcUrl, Client());
     _cosmoWallet = NewWallet.derive(mnemonic);
     _ethPrivateKey = EthPrivateKey.fromHex(cosmoWallet.hexPrivateKey);
     if (privateKey != null) {
@@ -44,12 +45,15 @@ class EvmClient {
     List<dynamic> argsList,
   ) {
     return ContractFunction(
-      contractName,
-      abiList.map((item) => FunctionParameter('', parseAbiType(item))).toList()
-    ).encodeCall(argsList.map((item) {
+            contractName,
+            abiList
+                .map((item) => FunctionParameter('', parseAbiType(item)))
+                .toList())
+        .encodeCall(argsList.map((item) {
       return _tryFormatData(item);
     }).toList());
   }
+
   static dynamic _tryFormatData(dynamic input) {
     if (input is List) {
       return input.map((item) => _tryFormatData(item)).toList();
@@ -68,6 +72,7 @@ class EvmClient {
       }
     }
   }
+
   // 合约函数处理
   static Uint8List toolFormatContractData(
     String callFunc, // 函数方法
@@ -84,7 +89,9 @@ class EvmClient {
           _callArgs.add('32');
         }
         _callArgs.add(element.length.toString());
-        for (var item in element) { _callArgs.add(item); }
+        for (var item in element) {
+          _callArgs.add(item);
+        }
       } else {
         _callArgs.add(element);
       }
@@ -112,33 +119,35 @@ class EvmClient {
     }
     return Uint8List.fromList(dataArr);
   }
+
   // 处理大数
   static String toolFormatVolumeToHex(
-    double volume,
-    {
-      int? scale,
-    }
-  ) {
-    var _scale = scale??0;
-    var _smallValue = BigInt.from(BigInt.from(10).pow(_scale).toInt() * (volume - volume.toInt()));
+    double volume, {
+    int? scale,
+  }) {
+    var _scale = scale ?? 0;
+    var _smallValue = BigInt.from(
+        BigInt.from(10).pow(_scale).toInt() * (volume - volume.toInt()));
     var _absValue = BigInt.from(10).pow(_scale) * BigInt.from(volume.toInt());
     var hexStr = (_absValue + _smallValue).toRadixString(16);
-    while(hexStr.length < 64) { hexStr = '0' + hexStr; }
+    while (hexStr.length < 64) {
+      hexStr = '0' + hexStr;
+    }
     return '0x' + hexStr;
   }
+
   // 获取实际可读数量
   static double toolFormatToRealVolume(
-    BigInt volume,
-    {
-      int? scale,
-    }
-  ) {
-    var _scale = scale??0;
+    BigInt volume, {
+    int? scale,
+  }) {
+    var _scale = scale ?? 0;
     var factor = BigInt.from(10).pow(_scale);
     final value = volume ~/ factor;
     final remainder = volume.remainder(factor);
     return value.toInt() + (remainder.toInt() / factor.toInt());
   }
+
   // 调用合约
   static Future<String?> callContract(
     String contractAddress, // 合约地址
@@ -150,6 +159,7 @@ class EvmClient {
       data: toolFormatContractData(callFunc, callArgs),
     );
   }
+
   static Future<String?> callContractRaw(
     String contractAddress, // 合约地址
     Uint8List data,
@@ -159,23 +169,23 @@ class EvmClient {
       data: data,
     );
   }
+
   // 获取账户合约余额
   static Future<BigInt> getContractBalance(
-    String contractAddress, // 合约地址
-    String hexAddress // 账户地址
-  ) async {
-    contractAddress = StringTool.checkChainAddress(contractAddress) ? StringTool.bech32ToHex(contractAddress) : contractAddress;
-    var balance = await callContract(
-      contractAddress,
-      'balanceOf(address)',
-      [
-        hexAddress,
-      ]
-    );
-    return hexToInt(balance??'');
+      String contractAddress, // 合约地址
+      String hexAddress // 账户地址
+      ) async {
+    contractAddress = StringTool.checkChainAddress(contractAddress)
+        ? StringTool.bech32ToHex(contractAddress)
+        : contractAddress;
+    var balance = await callContract(contractAddress, 'balanceOf(address)', [
+      hexAddress,
+    ]);
+    return hexToInt(balance ?? '');
   }
+
   /// EVM发送数据
-  /// 
+  ///
   /// * toAddress 合约地址/转账地址
   /// * data 数据
   /// * volume 转账数量
@@ -183,47 +193,48 @@ class EvmClient {
   /// * gasPrice gas数量
   Future<String> send(
     String toAddress,
-    Uint8List? data,
-    {
-      BigInt? volume, // 转账数量
-      int? maxGas, // 最大gas数量
-      int? gasPrice, // gas数量
-    }
-  ) async {
-    var _volume = volume??BigInt.from(0);
-    var _gasPrice = gasPrice != null ? EtherAmount.inWei(BigInt.from(gasPrice)) : (await ethClient.getGasPrice());
-    var _maxGas = maxGas??(await ethClient.estimateGas(
-      sender: ethPrivateKey.address,
-      to: EthereumAddress.fromHex(toAddress),
-      gasPrice: _gasPrice,
-      value: EtherAmount.inWei(_volume),
-      data: data,
-    )).toInt();
+    Uint8List? data, {
+    BigInt? volume, // 转账数量
+    int? maxGas, // 最大gas数量
+    int? gasPrice, // gas数量
+  }) async {
+    var _volume = volume ?? BigInt.from(0);
+    var _gasPrice = gasPrice != null
+        ? EtherAmount.inWei(BigInt.from(gasPrice))
+        : (await ethClient.getGasPrice());
+    var _maxGas = maxGas ??
+        (await ethClient.estimateGas(
+          sender: ethPrivateKey.address,
+          to: EthereumAddress.fromHex(toAddress),
+          gasPrice: _gasPrice,
+          value: EtherAmount.inWei(_volume),
+          data: data,
+        ))
+            .toInt();
     return ethClient.sendTransaction(
-      ethPrivateKey,
-      Transaction(
-        from: ethPrivateKey.address,
-        to: EthereumAddress.fromHex(toAddress),
-        gasPrice: _gasPrice,
-        maxGas: _maxGas,
-        value: EtherAmount.inWei(_volume),
-        data: data,
-      ),
-      chainId: chainId
-    );
+        ethPrivateKey,
+        Transaction(
+          from: ethPrivateKey.address,
+          to: EthereumAddress.fromHex(toAddress),
+          gasPrice: _gasPrice,
+          maxGas: _maxGas,
+          value: EtherAmount.inWei(_volume),
+          data: data,
+        ),
+        chainId: chainId);
   }
+
   Future<HttpToolResponse> sendAsync(
     String toAddress,
-    Uint8List? data,
-    {
-      BigInt? volume, // 转账数量
-      int? maxGas, // 最大gas数量
-      int? gasPrice, // gas数量
-    }
-  ) async {
+    Uint8List? data, {
+    BigInt? volume, // 转账数量
+    int? maxGas, // 最大gas数量
+    int? gasPrice, // gas数量
+  }) async {
     var hash = '';
     try {
-      hash = await send(toAddress, data, volume: volume, maxGas: maxGas, gasPrice: gasPrice);
+      hash = await send(toAddress, data,
+          volume: volume, maxGas: maxGas, gasPrice: gasPrice);
     } catch (e) {
       return Future.value(HttpToolResponse({
         'status': ErrorCode.signError,

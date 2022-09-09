@@ -4,7 +4,6 @@ import 'package:plug/app/ui/components/view/image.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
 import 'package:plug/app/ui/utils/string.dart';
 
-
 class LVerifierStatusNode extends StatelessWidget {
   const LVerifierStatusNode({
     Key? key,
@@ -14,63 +13,66 @@ class LVerifierStatusNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          padding: EdgeInsets.only(
-            right: appTheme.sizes.paddingSmall * 0.5,
-            left: appTheme.sizes.paddingSmall * 0.5,
-            top: appTheme.sizes.paddingSmall * 0.5,
-            bottom: appTheme.sizes.paddingSmall * 0.5,
+    return Stack(children: [
+      Container(
+        padding: EdgeInsets.only(
+          right: appTheme.sizes.paddingSmall * 0.5,
+          left: appTheme.sizes.paddingSmall * 0.5,
+          top: appTheme.sizes.paddingSmall * 0.5,
+          bottom: appTheme.sizes.paddingSmall * 0.5,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(appTheme.sizes.radius),
+            bottomLeft: Radius.circular(appTheme.sizes.radius),
           ),
+          color: (verifier.status == VerifierStatusEnum.running
+              ? appTheme.colors.primaryColor
+              : (verifier.status == VerifierStatusEnum.invalid
+                  ? appTheme.colors.errorColor
+                  : appTheme.colors.warningColor)),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          children: [
+            Icon(
+              verifier.status == VerifierStatusEnum.running
+                  ? const IconData(0xe81e, fontFamily: 'plugIcon')
+                  : const IconData(0xe60c, fontFamily: 'plugIcon'),
+              color: appTheme.colors.hightColor,
+              size: appTheme.sizes.basic * 20.0,
+            ),
+            Padding(
+                padding:
+                    EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
+            Text(StringTool.getVerifierStatus(verifier.status),
+                style: TextStyle(
+                    color: appTheme.colors.hightColor,
+                    fontSize: appTheme.sizes.fontSizeSmall * 0.8))
+          ],
+        ),
+      ),
+      Positioned(
+        top: appTheme.sizes.zero,
+        left: appTheme.sizes.zero,
+        child: Container(
+          width: appTheme.sizes.basic * 100,
+          height: appTheme.sizes.basic * 80,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(appTheme.sizes.radius),
-              bottomLeft: Radius.circular(appTheme.sizes.radius),
-            ),
-            color: (
-              verifier.status == VerifierStatusEnum.running ? appTheme.colors.primaryColor : 
-                (
-                  verifier.status == VerifierStatusEnum.invalid ? appTheme.colors.errorColor : appTheme.colors.warningColor
-                )
-            ),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: Row(
-            children: [
-              Icon(
-                verifier.status == VerifierStatusEnum.running ? const IconData(0xe81e, fontFamily: 'plugIcon') : const IconData(0xe60c, fontFamily: 'plugIcon'),
-                color: appTheme.colors.hightColor,
-                size: appTheme.sizes.basic * 20.0,
-              ),
-              Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
-              Text(StringTool.getVerifierStatus(verifier.status), style: TextStyle(color: appTheme.colors.hightColor, fontSize: appTheme.sizes.fontSizeSmall * 0.8))
-            ],
-          ),
-        ),
-        Positioned(
-          top: appTheme.sizes.zero,
-          left: appTheme.sizes.zero,
-          child: Container(
-            width: appTheme.sizes.basic * 100,
-            height: appTheme.sizes.basic * 80,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  appTheme.colors.hightColor.withOpacity(0.3),
-                  appTheme.colors.hightColor.withOpacity(0),
-                ],
-              ),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                appTheme.colors.hightColor.withOpacity(0.3),
+                appTheme.colors.hightColor.withOpacity(0),
+              ],
             ),
           ),
         ),
-      ]
-    );
+      ),
+    ]);
   }
 }
-
 
 class LVerifierCard extends StatelessWidget {
   const LVerifierCard({
@@ -85,7 +87,6 @@ class LVerifierCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.only(
         top: appTheme.sizes.paddingSmall,
@@ -93,7 +94,8 @@ class LVerifierCard extends StatelessWidget {
         left: appTheme.sizes.padding,
       ),
       decoration: BoxDecoration(
-        color: transparentBg == true ? null : appTheme.colors.pageBackgroundColor,
+        color:
+            transparentBg == true ? null : appTheme.colors.pageBackgroundColor,
         borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
       ),
       child: Column(
@@ -109,17 +111,19 @@ class LVerifierCard extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall, right: appTheme.sizes.paddingSmall),
+                  padding: EdgeInsets.only(
+                      left: appTheme.sizes.paddingSmall,
+                      right: appTheme.sizes.paddingSmall),
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Text(
-                      verifier.nickName,
-                      style: TextStyle(color: appTheme.colors.textBlackBig)
-                    ),
+                    child: Text(verifier.nickName,
+                        style: TextStyle(color: appTheme.colors.textBlackBig)),
                   ),
                 ),
               ),
-              LVerifierStatusNode(verifier: verifier,),
+              LVerifierStatusNode(
+                verifier: verifier,
+              ),
             ],
           ),
           Padding(
@@ -128,10 +132,12 @@ class LVerifierCard extends StatelessWidget {
               right: appTheme.sizes.padding,
             ),
             child: Container(
-              decoration: BoxDecoration(
-                border: Border(top: BorderSide(color: appTheme.colors.borderColor, width: appTheme.sizes.basic)),
-              )
-            ),
+                decoration: BoxDecoration(
+              border: Border(
+                  top: BorderSide(
+                      color: appTheme.colors.borderColor,
+                      width: appTheme.sizes.basic)),
+            )),
           ),
           Padding(
             padding: EdgeInsets.only(

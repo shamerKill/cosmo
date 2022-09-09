@@ -7,9 +7,8 @@ class DataConfigState {
   String get baseStorageName => 'DATACONFIGSTATE';
   final Rx<ConfigAppData> _config = ConfigAppData().obs;
   ConfigAppData get config => _config.value;
-  set config (ConfigAppData value) => _config.value = value;
+  set config(ConfigAppData value) => _config.value = value;
 }
-
 
 class DataConfigController extends GetxController {
   DataConfigController() {
@@ -22,20 +21,24 @@ class DataConfigController extends GetxController {
     state.config.safeDappView = type;
     _saveConfig();
   }
+
   // 更新语言版本
   upLocaleType(Locale locale) {
     state.config.languageType = locale;
     _saveConfig();
   }
+
   // 修改首页隐藏展示
   upHomeHide(bool type) {
     state.config.homeValueHide = type;
     _saveConfig();
   }
+
   // 储存配置
   _saveConfig() {
     GetStorage().write(state.baseStorageName, state.config.toJson());
   }
+
   // 读取本地配置
   _readStorage() {
     String? data = GetStorage().read(state.baseStorageName);

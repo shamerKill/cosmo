@@ -1,38 +1,52 @@
-
 import 'dart:convert';
 
 import 'package:plug/app/data/models/response/base.dart';
 
-_decodeMsg (String source) {
+_decodeMsg(String source) {
   var _obj = json.decode(source);
-  if (_obj is Iterable) { _obj = _obj.first; }
-  return _obj['value']??_obj;
-}
-List<ModelCoin> _decodeCoinList (List<dynamic> amounts) => amounts.map((item) => ModelCoin(
-  denom: item['denom'],
-  amount: item['amount'],
-)).toList();
-List<ModelMultiInOutput> _decodeInOutPutList (List<dynamic> input) => input.map((item) => ModelMultiInOutput(
-  address: item['address'],
-  coins: _decodeCoinList(item['coins']),
-)).toList();
-VoteOption _decodeVoteOption (String option) {
-  switch (option) {
-    case 'VOTE_OPTION_UNSPECIFIED': return VoteOption.OptionEmpty;
-    case 'VOTE_OPTION_YES': return VoteOption.OptionYes;
-    case 'VOTE_OPTION_ABSTAIN': return VoteOption.OptionAbstain;
-    case 'VOTE_OPTION_NO': return VoteOption.OptionNo;
-    case 'VOTE_OPTION_NO_WITH_VETO': return VoteOption.OptionNoWithVeto;
-    default : return VoteOption.OptionEmpty;
+  if (_obj is Iterable) {
+    _obj = _obj.first;
   }
-}
-List<ModelWeightedVoteOption> _decodeVoteOptions (List<dynamic> options) {
-  return options.map(((item) => ModelWeightedVoteOption(
-    option: _decodeVoteOption(item['option']??''),
-    weight: item['weight'],
-  ))).toList();
+  return _obj['value'] ?? _obj;
 }
 
+List<ModelCoin> _decodeCoinList(List<dynamic> amounts) => amounts
+    .map((item) => ModelCoin(
+          denom: item['denom'],
+          amount: item['amount'],
+        ))
+    .toList();
+List<ModelMultiInOutput> _decodeInOutPutList(List<dynamic> input) => input
+    .map((item) => ModelMultiInOutput(
+          address: item['address'],
+          coins: _decodeCoinList(item['coins']),
+        ))
+    .toList();
+VoteOption _decodeVoteOption(String option) {
+  switch (option) {
+    case 'VOTE_OPTION_UNSPECIFIED':
+      return VoteOption.OptionEmpty;
+    case 'VOTE_OPTION_YES':
+      return VoteOption.OptionYes;
+    case 'VOTE_OPTION_ABSTAIN':
+      return VoteOption.OptionAbstain;
+    case 'VOTE_OPTION_NO':
+      return VoteOption.OptionNo;
+    case 'VOTE_OPTION_NO_WITH_VETO':
+      return VoteOption.OptionNoWithVeto;
+    default:
+      return VoteOption.OptionEmpty;
+  }
+}
+
+List<ModelWeightedVoteOption> _decodeVoteOptions(List<dynamic> options) {
+  return options
+      .map(((item) => ModelWeightedVoteOption(
+            option: _decodeVoteOption(item['option'] ?? ''),
+            weight: item['weight'],
+          )))
+      .toList();
+}
 
 /// 发送交易 01
 class ModelMsgSend {
@@ -42,10 +56,10 @@ class ModelMsgSend {
   late final List<ModelCoin> amount;
   ModelMsgSend(String source) {
     var obj = _decodeMsg(source);
-    fromAddress = obj['from_address']??'';
-    toAddress = obj['to_address']??'';
-    amount = _decodeCoinList(obj['amount']??[]);
-    msgType = obj['@type']??obj['type']??'';
+    fromAddress = obj['from_address'] ?? '';
+    toAddress = obj['to_address'] ?? '';
+    amount = _decodeCoinList(obj['amount'] ?? []);
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -58,7 +72,7 @@ class ModelMsgMultiSend {
     var obj = _decodeMsg(source);
     inputs = _decodeInOutPutList(obj['inputs']);
     outputs = _decodeInOutPutList(obj['outputs']);
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -69,9 +83,9 @@ class ModelMsgSetWithdrawAddress {
   late final String withdrawAddress;
   ModelMsgSetWithdrawAddress(String source) {
     var obj = _decodeMsg(source);
-    delegatorAddress = obj['delegator_address']??'';
-    withdrawAddress = obj['withdraw_address']??'';
-    msgType = obj['@type']??obj['type']??'';
+    delegatorAddress = obj['delegator_address'] ?? '';
+    withdrawAddress = obj['withdraw_address'] ?? '';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -82,9 +96,9 @@ class ModelMsgWithdrawDelegatorReward {
   late final String validatorAddress;
   ModelMsgWithdrawDelegatorReward(String source) {
     var obj = _decodeMsg(source);
-    delegatorAddress = obj['delegator_address']??'';
-    validatorAddress = obj['validator_address']??'';
-    msgType = obj['@type']??obj['type']??'';
+    delegatorAddress = obj['delegator_address'] ?? '';
+    validatorAddress = obj['validator_address'] ?? '';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -94,8 +108,8 @@ class ModelMsgWithdrawValidatorCommission {
   late final String validatorAddress;
   ModelMsgWithdrawValidatorCommission(String source) {
     var obj = _decodeMsg(source);
-    validatorAddress = obj['validator_address']??'';
-    msgType = obj['@type']??obj['type']??'';
+    validatorAddress = obj['validator_address'] ?? '';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -106,9 +120,9 @@ class ModelMsgFundCommunityPool {
   late final List<ModelCoin> amount;
   ModelMsgFundCommunityPool(String source) {
     var obj = _decodeMsg(source);
-    depositor = obj['depositor']??'';
-    amount = _decodeCoinList(obj['amount']??[]);
-    msgType = obj['@type']??obj['type']??'';
+    depositor = obj['depositor'] ?? '';
+    amount = _decodeCoinList(obj['amount'] ?? []);
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -119,9 +133,9 @@ class ModelMsgSubmitEvidence {
   late final dynamic evidence;
   ModelMsgSubmitEvidence(String source) {
     var obj = _decodeMsg(source);
-    submitter = obj['submitter']??'';
+    submitter = obj['submitter'] ?? '';
     evidence = obj['evidence'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -133,10 +147,10 @@ class ModelMsgGrantAllowance {
   late final dynamic allowance;
   ModelMsgGrantAllowance(String source) {
     var obj = _decodeMsg(source);
-    granter = obj['granter']??'';
-    grantee = obj['grantee']??'';
+    granter = obj['granter'] ?? '';
+    grantee = obj['grantee'] ?? '';
     allowance = obj['allowance'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -147,9 +161,9 @@ class ModelMsgRevokeAllowance {
   late final String grantee;
   ModelMsgRevokeAllowance(String source) {
     var obj = _decodeMsg(source);
-    granter = obj['granter']??'';
-    grantee = obj['grantee']??'';
-    msgType = obj['@type']??obj['type']??'';
+    granter = obj['granter'] ?? '';
+    grantee = obj['grantee'] ?? '';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -161,10 +175,10 @@ class ModelMsgSubmitProposal {
   late final String proposer;
   ModelMsgSubmitProposal(String source) {
     var obj = _decodeMsg(source);
-    proposer = obj['proposer']??'';
+    proposer = obj['proposer'] ?? '';
     content = obj['content'];
-    initialDeposit = _decodeCoinList(obj['initial_deposit']??[]);
-    msgType = obj['@type']??obj['type']??'';
+    initialDeposit = _decodeCoinList(obj['initial_deposit'] ?? []);
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -174,12 +188,12 @@ class ModelMsgVote {
   late final int proposalId;
   late final String voter;
   late final VoteOption option;
-  ModelMsgVote (String source) {
+  ModelMsgVote(String source) {
     var obj = _decodeMsg(source);
     proposalId = int.parse(obj['proposal_id'].toString());
-    voter = obj['voter']??'';
+    voter = obj['voter'] ?? '';
     option = _decodeVoteOption(obj['option']);
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -189,12 +203,12 @@ class ModelMsgVoteWeighted {
   late final int proposalId;
   late final String voter;
   late final List<ModelWeightedVoteOption> options;
-  ModelMsgVoteWeighted (String source) {
+  ModelMsgVoteWeighted(String source) {
     var obj = _decodeMsg(source);
     proposalId = int.parse(obj['proposal_id'].toString());
-    voter = obj['voter']??'';
-    options = _decodeVoteOptions(obj['options']??'');
-    msgType = obj['@type']??obj['type']??'';
+    voter = obj['voter'] ?? '';
+    options = _decodeVoteOptions(obj['options'] ?? '');
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -207,9 +221,9 @@ class ModelMsgDeposit {
   ModelMsgDeposit(String source) {
     var obj = _decodeMsg(source);
     proposalId = int.parse(obj['proposal_id'].toString());
-    depositor = obj['depositor']??'';
-    amount = _decodeCoinList(obj['amount']??[]);
-    msgType = obj['@type']??obj['type']??'';
+    depositor = obj['depositor'] ?? '';
+    amount = _decodeCoinList(obj['amount'] ?? []);
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -219,8 +233,8 @@ class ModelMsgUnJail {
   late final String validatorAddr;
   ModelMsgUnJail(String source) {
     var obj = _decodeMsg(source);
-    validatorAddr = obj['validator_addr']??'';
-    msgType = obj['@type']??obj['type']??'';
+    validatorAddr = obj['validator_addr'] ?? '';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -236,10 +250,10 @@ class ModelMsgCreateValidator {
   late final ModelCoin value;
   ModelMsgCreateValidator(String source) {
     var obj = _decodeMsg(source);
-    minSelfDelegation = obj['min_self_delegation']??'';
-    delegatorAddress = obj['delegator_address']??'';
-    validatorAddress = obj['validator_address']??'';
-    pubkey = obj['pubkey']??'';
+    minSelfDelegation = obj['min_self_delegation'] ?? '';
+    delegatorAddress = obj['delegator_address'] ?? '';
+    validatorAddress = obj['validator_address'] ?? '';
+    pubkey = obj['pubkey'] ?? '';
     value = ModelCoin(
       amount: obj['value']['amount'],
       denom: obj['value']['denom'],
@@ -256,7 +270,7 @@ class ModelMsgCreateValidator {
       maxRate: obj['commission']['max_rate'],
       maxChangeRate: obj['commission']['max_change_rate'],
     );
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -279,7 +293,7 @@ class ModelMsgEditValidator {
     validatorAddress = obj['validator_address'];
     commissionRate = obj['commission_rate'];
     minSelfDelegation = obj['min_self_delegation'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -297,7 +311,7 @@ class ModelMsgDelegate {
       denom: obj['amount']['denom'],
       amount: obj['amount']['amount'],
     );
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -317,7 +331,7 @@ class ModelMsgBeginRedelegate {
       denom: obj['amount']['denom'],
       amount: obj['amount']['amount'],
     );
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -335,7 +349,7 @@ class ModelMsgUndelegate {
       denom: obj['amount']['denom'],
       amount: obj['amount']['amount'],
     );
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -354,7 +368,7 @@ class ModelMsgCreateVestingAccount {
     amount = _decodeCoinList(obj['amount']);
     endTime = int.parse(obj['end_time'].toString().toString());
     delayed = obj['delayed'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -371,11 +385,11 @@ class ModelMsgEthereumTx {
     size = double.parse(obj['size'].toString().toString());
     hash = obj['hash'];
     from = obj['from'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
-/// 创建prc10 token 22 
+/// 创建prc10 token 22
 class ModelMsgIssueToken {
   late final String msgType;
   late final String symbol;
@@ -396,7 +410,7 @@ class ModelMsgIssueToken {
     maxSupply = int.parse(obj['max_supply'].toString());
     mintable = obj['mintable'];
     owner = obj['owner'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -413,7 +427,7 @@ class ModelMsgMintToken {
     to = obj['to'];
     amount = int.parse(obj['amount'].toString());
     owner = obj['owner'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -430,7 +444,7 @@ class ModelMsgEditToken {
     name = obj['name'];
     maxSupply = int.parse((obj['maxSupply'] ?? obj['max_supply']).toString());
     owner = obj['owner'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -442,10 +456,10 @@ class ModelMsgBurnToken {
   late final String owner;
   ModelMsgBurnToken(String source) {
     var obj = _decodeMsg(source);
-    symbol = obj['symbol']??'';
-    amount = int.parse((obj['amount']??0).toString());
-    owner = obj['owner']??'';
-    msgType = obj['@type']??obj['type']??'';
+    symbol = obj['symbol'] ?? '';
+    amount = int.parse((obj['amount'] ?? 0).toString());
+    owner = obj['owner'] ?? '';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -460,7 +474,7 @@ class ModelMsgTransferOwnerToken {
     symbol = obj['symbol'];
     to = obj['to'];
     owner = obj['owner'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -475,7 +489,7 @@ class ModelMsgCreatePool {
     poolCreatorAddress = obj['pool_creator_address'];
     poolTypeId = int.parse(obj['pool_type_id'].toString());
     depositCoins = _decodeCoinList(obj['deposit_coins']);
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -490,7 +504,7 @@ class ModelMsgDepositWithinBatch {
     depositorAddress = obj['depositor_address'];
     poolId = int.parse(obj['pool_id'].toString());
     depositCoins = _decodeCoinList(obj['deposit_coins']);
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -504,8 +518,9 @@ class ModelMsgWithdrawWithinBatch {
     var obj = _decodeMsg(source);
     withdrawerAddress = obj['withdrawer_address'];
     poolId = int.parse(obj['pool_id'].toString());
-    poolCoin = ModelCoin(denom: obj['pool_coin']['denom'], amount: obj['pool_coin']['amount']);
-    msgType = obj['@type']??obj['type']??'';
+    poolCoin = ModelCoin(
+        denom: obj['pool_coin']['denom'], amount: obj['pool_coin']['amount']);
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }
 
@@ -524,10 +539,13 @@ class ModelMsgSwapWithinBatch {
     swapRequesterAddress = obj['swap_requester_address'];
     poolId = int.parse(obj['pool_id'].toString());
     swapTypeId = int.parse(obj['swap_type_id'].toString());
-    offerCoin = ModelCoin(denom: obj['offer_coin']['denom'], amount: obj['offer_coin']['amount']);
+    offerCoin = ModelCoin(
+        denom: obj['offer_coin']['denom'], amount: obj['offer_coin']['amount']);
     demandCoinDenom = obj['demand_coin_denom'];
-    offerCoinFee = ModelCoin(denom: obj['offer_coin_fee']['denom'], amount: obj['offer_coin_fee']['amount']);
+    offerCoinFee = ModelCoin(
+        denom: obj['offer_coin_fee']['denom'],
+        amount: obj['offer_coin_fee']['amount']);
     orderPrice = obj['order_price'];
-    msgType = obj['@type']??obj['type']??'';
+    msgType = obj['@type'] ?? obj['type'] ?? '';
   }
 }

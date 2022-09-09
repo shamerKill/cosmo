@@ -15,11 +15,26 @@ import '../../base/query/v1beta1/pagination.pb.dart' as $2;
 import 'bank.pb.dart' as $10;
 
 class QueryBalanceRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryBalanceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'denom')
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryBalanceRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'address')
+    ..aOS(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'denom')
+    ..hasRequiredFields = false;
 
   QueryBalanceRequest._() : super();
   factory QueryBalanceRequest({
@@ -35,31 +50,40 @@ class QueryBalanceRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryBalanceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryBalanceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory QueryBalanceRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryBalanceRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   QueryBalanceRequest clone() => QueryBalanceRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryBalanceRequest copyWith(void Function(QueryBalanceRequest) updates) => super.copyWith((message) => updates(message as QueryBalanceRequest)) as QueryBalanceRequest; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryBalanceRequest copyWith(void Function(QueryBalanceRequest) updates) =>
+      super.copyWith((message) => updates(message as QueryBalanceRequest))
+          as QueryBalanceRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryBalanceRequest create() => QueryBalanceRequest._();
   QueryBalanceRequest createEmptyInstance() => create();
-  static $pb.PbList<QueryBalanceRequest> createRepeated() => $pb.PbList<QueryBalanceRequest>();
+  static $pb.PbList<QueryBalanceRequest> createRepeated() =>
+      $pb.PbList<QueryBalanceRequest>();
   @$core.pragma('dart2js:noInline')
-  static QueryBalanceRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryBalanceRequest>(create);
+  static QueryBalanceRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryBalanceRequest>(create);
   static QueryBalanceRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get address => $_getSZ(0);
   @$pb.TagNumber(1)
-  set address($core.String v) { $_setString(0, v); }
+  set address($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasAddress() => $_has(0);
   @$pb.TagNumber(1)
@@ -68,7 +92,10 @@ class QueryBalanceRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get denom => $_getSZ(1);
   @$pb.TagNumber(2)
-  set denom($core.String v) { $_setString(1, v); }
+  set denom($core.String v) {
+    $_setString(1, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasDenom() => $_has(1);
   @$pb.TagNumber(2)
@@ -76,10 +103,22 @@ class QueryBalanceRequest extends $pb.GeneratedMessage {
 }
 
 class QueryBalanceResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryBalanceResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOM<$9.Coin>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'balance', subBuilder: $9.Coin.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryBalanceResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOM<$9.Coin>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'balance',
+        subBuilder: $9.Coin.create)
+    ..hasRequiredFields = false;
 
   QueryBalanceResponse._() : super();
   factory QueryBalanceResponse({
@@ -91,31 +130,41 @@ class QueryBalanceResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryBalanceResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryBalanceResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryBalanceResponse clone() => QueryBalanceResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryBalanceResponse copyWith(void Function(QueryBalanceResponse) updates) => super.copyWith((message) => updates(message as QueryBalanceResponse)) as QueryBalanceResponse; // ignore: deprecated_member_use
+  factory QueryBalanceResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryBalanceResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryBalanceResponse clone() =>
+      QueryBalanceResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryBalanceResponse copyWith(void Function(QueryBalanceResponse) updates) =>
+      super.copyWith((message) => updates(message as QueryBalanceResponse))
+          as QueryBalanceResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryBalanceResponse create() => QueryBalanceResponse._();
   QueryBalanceResponse createEmptyInstance() => create();
-  static $pb.PbList<QueryBalanceResponse> createRepeated() => $pb.PbList<QueryBalanceResponse>();
+  static $pb.PbList<QueryBalanceResponse> createRepeated() =>
+      $pb.PbList<QueryBalanceResponse>();
   @$core.pragma('dart2js:noInline')
-  static QueryBalanceResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryBalanceResponse>(create);
+  static QueryBalanceResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryBalanceResponse>(create);
   static QueryBalanceResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $9.Coin get balance => $_getN(0);
   @$pb.TagNumber(1)
-  set balance($9.Coin v) { setField(1, v); }
+  set balance($9.Coin v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasBalance() => $_has(0);
   @$pb.TagNumber(1)
@@ -125,11 +174,27 @@ class QueryBalanceResponse extends $pb.GeneratedMessage {
 }
 
 class QueryAllBalancesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryAllBalancesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'address')
-    ..aOM<$2.PageRequest>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pagination', subBuilder: $2.PageRequest.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryAllBalancesRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'address')
+    ..aOM<$2.PageRequest>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pagination',
+        subBuilder: $2.PageRequest.create)
+    ..hasRequiredFields = false;
 
   QueryAllBalancesRequest._() : super();
   factory QueryAllBalancesRequest({
@@ -145,31 +210,42 @@ class QueryAllBalancesRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryAllBalancesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryAllBalancesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryAllBalancesRequest clone() => QueryAllBalancesRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryAllBalancesRequest copyWith(void Function(QueryAllBalancesRequest) updates) => super.copyWith((message) => updates(message as QueryAllBalancesRequest)) as QueryAllBalancesRequest; // ignore: deprecated_member_use
+  factory QueryAllBalancesRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryAllBalancesRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryAllBalancesRequest clone() =>
+      QueryAllBalancesRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryAllBalancesRequest copyWith(
+          void Function(QueryAllBalancesRequest) updates) =>
+      super.copyWith((message) => updates(message as QueryAllBalancesRequest))
+          as QueryAllBalancesRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryAllBalancesRequest create() => QueryAllBalancesRequest._();
   QueryAllBalancesRequest createEmptyInstance() => create();
-  static $pb.PbList<QueryAllBalancesRequest> createRepeated() => $pb.PbList<QueryAllBalancesRequest>();
+  static $pb.PbList<QueryAllBalancesRequest> createRepeated() =>
+      $pb.PbList<QueryAllBalancesRequest>();
   @$core.pragma('dart2js:noInline')
-  static QueryAllBalancesRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryAllBalancesRequest>(create);
+  static QueryAllBalancesRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryAllBalancesRequest>(create);
   static QueryAllBalancesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get address => $_getSZ(0);
   @$pb.TagNumber(1)
-  set address($core.String v) { $_setString(0, v); }
+  set address($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasAddress() => $_has(0);
   @$pb.TagNumber(1)
@@ -178,7 +254,10 @@ class QueryAllBalancesRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $2.PageRequest get pagination => $_getN(1);
   @$pb.TagNumber(2)
-  set pagination($2.PageRequest v) { setField(2, v); }
+  set pagination($2.PageRequest v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasPagination() => $_has(1);
   @$pb.TagNumber(2)
@@ -188,11 +267,29 @@ class QueryAllBalancesRequest extends $pb.GeneratedMessage {
 }
 
 class QueryAllBalancesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryAllBalancesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..pc<$9.Coin>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'balances', $pb.PbFieldType.PM, subBuilder: $9.Coin.create)
-    ..aOM<$2.PageResponse>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pagination', subBuilder: $2.PageResponse.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryAllBalancesResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..pc<$9.Coin>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'balances',
+        $pb.PbFieldType.PM,
+        subBuilder: $9.Coin.create)
+    ..aOM<$2.PageResponse>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pagination',
+        subBuilder: $2.PageResponse.create)
+    ..hasRequiredFields = false;
 
   QueryAllBalancesResponse._() : super();
   factory QueryAllBalancesResponse({
@@ -208,25 +305,33 @@ class QueryAllBalancesResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryAllBalancesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryAllBalancesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryAllBalancesResponse clone() => QueryAllBalancesResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryAllBalancesResponse copyWith(void Function(QueryAllBalancesResponse) updates) => super.copyWith((message) => updates(message as QueryAllBalancesResponse)) as QueryAllBalancesResponse; // ignore: deprecated_member_use
+  factory QueryAllBalancesResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryAllBalancesResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryAllBalancesResponse clone() =>
+      QueryAllBalancesResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryAllBalancesResponse copyWith(
+          void Function(QueryAllBalancesResponse) updates) =>
+      super.copyWith((message) => updates(message as QueryAllBalancesResponse))
+          as QueryAllBalancesResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryAllBalancesResponse create() => QueryAllBalancesResponse._();
   QueryAllBalancesResponse createEmptyInstance() => create();
-  static $pb.PbList<QueryAllBalancesResponse> createRepeated() => $pb.PbList<QueryAllBalancesResponse>();
+  static $pb.PbList<QueryAllBalancesResponse> createRepeated() =>
+      $pb.PbList<QueryAllBalancesResponse>();
   @$core.pragma('dart2js:noInline')
-  static QueryAllBalancesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryAllBalancesResponse>(create);
+  static QueryAllBalancesResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryAllBalancesResponse>(create);
   static QueryAllBalancesResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -235,7 +340,10 @@ class QueryAllBalancesResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $2.PageResponse get pagination => $_getN(1);
   @$pb.TagNumber(2)
-  set pagination($2.PageResponse v) { setField(2, v); }
+  set pagination($2.PageResponse v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasPagination() => $_has(1);
   @$pb.TagNumber(2)
@@ -245,10 +353,22 @@ class QueryAllBalancesResponse extends $pb.GeneratedMessage {
 }
 
 class QueryTotalSupplyRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryTotalSupplyRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOM<$2.PageRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pagination', subBuilder: $2.PageRequest.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryTotalSupplyRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOM<$2.PageRequest>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pagination',
+        subBuilder: $2.PageRequest.create)
+    ..hasRequiredFields = false;
 
   QueryTotalSupplyRequest._() : super();
   factory QueryTotalSupplyRequest({
@@ -260,31 +380,42 @@ class QueryTotalSupplyRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryTotalSupplyRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryTotalSupplyRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryTotalSupplyRequest clone() => QueryTotalSupplyRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryTotalSupplyRequest copyWith(void Function(QueryTotalSupplyRequest) updates) => super.copyWith((message) => updates(message as QueryTotalSupplyRequest)) as QueryTotalSupplyRequest; // ignore: deprecated_member_use
+  factory QueryTotalSupplyRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryTotalSupplyRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryTotalSupplyRequest clone() =>
+      QueryTotalSupplyRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryTotalSupplyRequest copyWith(
+          void Function(QueryTotalSupplyRequest) updates) =>
+      super.copyWith((message) => updates(message as QueryTotalSupplyRequest))
+          as QueryTotalSupplyRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryTotalSupplyRequest create() => QueryTotalSupplyRequest._();
   QueryTotalSupplyRequest createEmptyInstance() => create();
-  static $pb.PbList<QueryTotalSupplyRequest> createRepeated() => $pb.PbList<QueryTotalSupplyRequest>();
+  static $pb.PbList<QueryTotalSupplyRequest> createRepeated() =>
+      $pb.PbList<QueryTotalSupplyRequest>();
   @$core.pragma('dart2js:noInline')
-  static QueryTotalSupplyRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryTotalSupplyRequest>(create);
+  static QueryTotalSupplyRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryTotalSupplyRequest>(create);
   static QueryTotalSupplyRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $2.PageRequest get pagination => $_getN(0);
   @$pb.TagNumber(1)
-  set pagination($2.PageRequest v) { setField(1, v); }
+  set pagination($2.PageRequest v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasPagination() => $_has(0);
   @$pb.TagNumber(1)
@@ -294,11 +425,29 @@ class QueryTotalSupplyRequest extends $pb.GeneratedMessage {
 }
 
 class QueryTotalSupplyResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryTotalSupplyResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..pc<$9.Coin>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'supply', $pb.PbFieldType.PM, subBuilder: $9.Coin.create)
-    ..aOM<$2.PageResponse>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pagination', subBuilder: $2.PageResponse.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryTotalSupplyResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..pc<$9.Coin>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'supply',
+        $pb.PbFieldType.PM,
+        subBuilder: $9.Coin.create)
+    ..aOM<$2.PageResponse>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pagination',
+        subBuilder: $2.PageResponse.create)
+    ..hasRequiredFields = false;
 
   QueryTotalSupplyResponse._() : super();
   factory QueryTotalSupplyResponse({
@@ -314,25 +463,33 @@ class QueryTotalSupplyResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryTotalSupplyResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryTotalSupplyResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryTotalSupplyResponse clone() => QueryTotalSupplyResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryTotalSupplyResponse copyWith(void Function(QueryTotalSupplyResponse) updates) => super.copyWith((message) => updates(message as QueryTotalSupplyResponse)) as QueryTotalSupplyResponse; // ignore: deprecated_member_use
+  factory QueryTotalSupplyResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryTotalSupplyResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryTotalSupplyResponse clone() =>
+      QueryTotalSupplyResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryTotalSupplyResponse copyWith(
+          void Function(QueryTotalSupplyResponse) updates) =>
+      super.copyWith((message) => updates(message as QueryTotalSupplyResponse))
+          as QueryTotalSupplyResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryTotalSupplyResponse create() => QueryTotalSupplyResponse._();
   QueryTotalSupplyResponse createEmptyInstance() => create();
-  static $pb.PbList<QueryTotalSupplyResponse> createRepeated() => $pb.PbList<QueryTotalSupplyResponse>();
+  static $pb.PbList<QueryTotalSupplyResponse> createRepeated() =>
+      $pb.PbList<QueryTotalSupplyResponse>();
   @$core.pragma('dart2js:noInline')
-  static QueryTotalSupplyResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryTotalSupplyResponse>(create);
+  static QueryTotalSupplyResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryTotalSupplyResponse>(create);
   static QueryTotalSupplyResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -341,7 +498,10 @@ class QueryTotalSupplyResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $2.PageResponse get pagination => $_getN(1);
   @$pb.TagNumber(2)
-  set pagination($2.PageResponse v) { setField(2, v); }
+  set pagination($2.PageResponse v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasPagination() => $_has(1);
   @$pb.TagNumber(2)
@@ -351,10 +511,21 @@ class QueryTotalSupplyResponse extends $pb.GeneratedMessage {
 }
 
 class QuerySupplyOfRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QuerySupplyOfRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'denom')
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QuerySupplyOfRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'denom')
+    ..hasRequiredFields = false;
 
   QuerySupplyOfRequest._() : super();
   factory QuerySupplyOfRequest({
@@ -366,31 +537,41 @@ class QuerySupplyOfRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QuerySupplyOfRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QuerySupplyOfRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QuerySupplyOfRequest clone() => QuerySupplyOfRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QuerySupplyOfRequest copyWith(void Function(QuerySupplyOfRequest) updates) => super.copyWith((message) => updates(message as QuerySupplyOfRequest)) as QuerySupplyOfRequest; // ignore: deprecated_member_use
+  factory QuerySupplyOfRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QuerySupplyOfRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QuerySupplyOfRequest clone() =>
+      QuerySupplyOfRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QuerySupplyOfRequest copyWith(void Function(QuerySupplyOfRequest) updates) =>
+      super.copyWith((message) => updates(message as QuerySupplyOfRequest))
+          as QuerySupplyOfRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QuerySupplyOfRequest create() => QuerySupplyOfRequest._();
   QuerySupplyOfRequest createEmptyInstance() => create();
-  static $pb.PbList<QuerySupplyOfRequest> createRepeated() => $pb.PbList<QuerySupplyOfRequest>();
+  static $pb.PbList<QuerySupplyOfRequest> createRepeated() =>
+      $pb.PbList<QuerySupplyOfRequest>();
   @$core.pragma('dart2js:noInline')
-  static QuerySupplyOfRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QuerySupplyOfRequest>(create);
+  static QuerySupplyOfRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QuerySupplyOfRequest>(create);
   static QuerySupplyOfRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get denom => $_getSZ(0);
   @$pb.TagNumber(1)
-  set denom($core.String v) { $_setString(0, v); }
+  set denom($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasDenom() => $_has(0);
   @$pb.TagNumber(1)
@@ -398,10 +579,22 @@ class QuerySupplyOfRequest extends $pb.GeneratedMessage {
 }
 
 class QuerySupplyOfResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QuerySupplyOfResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOM<$9.Coin>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'amount', subBuilder: $9.Coin.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QuerySupplyOfResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOM<$9.Coin>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'amount',
+        subBuilder: $9.Coin.create)
+    ..hasRequiredFields = false;
 
   QuerySupplyOfResponse._() : super();
   factory QuerySupplyOfResponse({
@@ -413,31 +606,42 @@ class QuerySupplyOfResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QuerySupplyOfResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QuerySupplyOfResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QuerySupplyOfResponse clone() => QuerySupplyOfResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QuerySupplyOfResponse copyWith(void Function(QuerySupplyOfResponse) updates) => super.copyWith((message) => updates(message as QuerySupplyOfResponse)) as QuerySupplyOfResponse; // ignore: deprecated_member_use
+  factory QuerySupplyOfResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QuerySupplyOfResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QuerySupplyOfResponse clone() =>
+      QuerySupplyOfResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QuerySupplyOfResponse copyWith(
+          void Function(QuerySupplyOfResponse) updates) =>
+      super.copyWith((message) => updates(message as QuerySupplyOfResponse))
+          as QuerySupplyOfResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QuerySupplyOfResponse create() => QuerySupplyOfResponse._();
   QuerySupplyOfResponse createEmptyInstance() => create();
-  static $pb.PbList<QuerySupplyOfResponse> createRepeated() => $pb.PbList<QuerySupplyOfResponse>();
+  static $pb.PbList<QuerySupplyOfResponse> createRepeated() =>
+      $pb.PbList<QuerySupplyOfResponse>();
   @$core.pragma('dart2js:noInline')
-  static QuerySupplyOfResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QuerySupplyOfResponse>(create);
+  static QuerySupplyOfResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QuerySupplyOfResponse>(create);
   static QuerySupplyOfResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $9.Coin get amount => $_getN(0);
   @$pb.TagNumber(1)
-  set amount($9.Coin v) { setField(1, v); }
+  set amount($9.Coin v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasAmount() => $_has(0);
   @$pb.TagNumber(1)
@@ -447,39 +651,64 @@ class QuerySupplyOfResponse extends $pb.GeneratedMessage {
 }
 
 class QueryParamsRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryParamsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryParamsRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   QueryParamsRequest._() : super();
   factory QueryParamsRequest() => create();
-  factory QueryParamsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryParamsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory QueryParamsRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryParamsRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   QueryParamsRequest clone() => QueryParamsRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryParamsRequest copyWith(void Function(QueryParamsRequest) updates) => super.copyWith((message) => updates(message as QueryParamsRequest)) as QueryParamsRequest; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryParamsRequest copyWith(void Function(QueryParamsRequest) updates) =>
+      super.copyWith((message) => updates(message as QueryParamsRequest))
+          as QueryParamsRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryParamsRequest create() => QueryParamsRequest._();
   QueryParamsRequest createEmptyInstance() => create();
-  static $pb.PbList<QueryParamsRequest> createRepeated() => $pb.PbList<QueryParamsRequest>();
+  static $pb.PbList<QueryParamsRequest> createRepeated() =>
+      $pb.PbList<QueryParamsRequest>();
   @$core.pragma('dart2js:noInline')
-  static QueryParamsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryParamsRequest>(create);
+  static QueryParamsRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryParamsRequest>(create);
   static QueryParamsRequest? _defaultInstance;
 }
 
 class QueryParamsResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryParamsResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOM<$10.Params>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'params', subBuilder: $10.Params.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryParamsResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOM<$10.Params>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'params',
+        subBuilder: $10.Params.create)
+    ..hasRequiredFields = false;
 
   QueryParamsResponse._() : super();
   factory QueryParamsResponse({
@@ -491,31 +720,40 @@ class QueryParamsResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryParamsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryParamsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
+  factory QueryParamsResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryParamsResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
   QueryParamsResponse clone() => QueryParamsResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryParamsResponse copyWith(void Function(QueryParamsResponse) updates) => super.copyWith((message) => updates(message as QueryParamsResponse)) as QueryParamsResponse; // ignore: deprecated_member_use
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryParamsResponse copyWith(void Function(QueryParamsResponse) updates) =>
+      super.copyWith((message) => updates(message as QueryParamsResponse))
+          as QueryParamsResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryParamsResponse create() => QueryParamsResponse._();
   QueryParamsResponse createEmptyInstance() => create();
-  static $pb.PbList<QueryParamsResponse> createRepeated() => $pb.PbList<QueryParamsResponse>();
+  static $pb.PbList<QueryParamsResponse> createRepeated() =>
+      $pb.PbList<QueryParamsResponse>();
   @$core.pragma('dart2js:noInline')
-  static QueryParamsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryParamsResponse>(create);
+  static QueryParamsResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryParamsResponse>(create);
   static QueryParamsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $10.Params get params => $_getN(0);
   @$pb.TagNumber(1)
-  set params($10.Params v) { setField(1, v); }
+  set params($10.Params v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasParams() => $_has(0);
   @$pb.TagNumber(1)
@@ -525,10 +763,22 @@ class QueryParamsResponse extends $pb.GeneratedMessage {
 }
 
 class QueryDenomsMetadataRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryDenomsMetadataRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOM<$2.PageRequest>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pagination', subBuilder: $2.PageRequest.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryDenomsMetadataRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOM<$2.PageRequest>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pagination',
+        subBuilder: $2.PageRequest.create)
+    ..hasRequiredFields = false;
 
   QueryDenomsMetadataRequest._() : super();
   factory QueryDenomsMetadataRequest({
@@ -540,31 +790,43 @@ class QueryDenomsMetadataRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryDenomsMetadataRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryDenomsMetadataRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryDenomsMetadataRequest clone() => QueryDenomsMetadataRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryDenomsMetadataRequest copyWith(void Function(QueryDenomsMetadataRequest) updates) => super.copyWith((message) => updates(message as QueryDenomsMetadataRequest)) as QueryDenomsMetadataRequest; // ignore: deprecated_member_use
+  factory QueryDenomsMetadataRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryDenomsMetadataRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryDenomsMetadataRequest clone() =>
+      QueryDenomsMetadataRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryDenomsMetadataRequest copyWith(
+          void Function(QueryDenomsMetadataRequest) updates) =>
+      super.copyWith(
+              (message) => updates(message as QueryDenomsMetadataRequest))
+          as QueryDenomsMetadataRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryDenomsMetadataRequest create() => QueryDenomsMetadataRequest._();
   QueryDenomsMetadataRequest createEmptyInstance() => create();
-  static $pb.PbList<QueryDenomsMetadataRequest> createRepeated() => $pb.PbList<QueryDenomsMetadataRequest>();
+  static $pb.PbList<QueryDenomsMetadataRequest> createRepeated() =>
+      $pb.PbList<QueryDenomsMetadataRequest>();
   @$core.pragma('dart2js:noInline')
-  static QueryDenomsMetadataRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryDenomsMetadataRequest>(create);
+  static QueryDenomsMetadataRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryDenomsMetadataRequest>(create);
   static QueryDenomsMetadataRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $2.PageRequest get pagination => $_getN(0);
   @$pb.TagNumber(1)
-  set pagination($2.PageRequest v) { setField(1, v); }
+  set pagination($2.PageRequest v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasPagination() => $_has(0);
   @$pb.TagNumber(1)
@@ -574,11 +836,29 @@ class QueryDenomsMetadataRequest extends $pb.GeneratedMessage {
 }
 
 class QueryDenomsMetadataResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryDenomsMetadataResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..pc<$10.Metadata>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadatas', $pb.PbFieldType.PM, subBuilder: $10.Metadata.create)
-    ..aOM<$2.PageResponse>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pagination', subBuilder: $2.PageResponse.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryDenomsMetadataResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..pc<$10.Metadata>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'metadatas',
+        $pb.PbFieldType.PM,
+        subBuilder: $10.Metadata.create)
+    ..aOM<$2.PageResponse>(
+        2,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'pagination',
+        subBuilder: $2.PageResponse.create)
+    ..hasRequiredFields = false;
 
   QueryDenomsMetadataResponse._() : super();
   factory QueryDenomsMetadataResponse({
@@ -594,25 +874,35 @@ class QueryDenomsMetadataResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryDenomsMetadataResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryDenomsMetadataResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryDenomsMetadataResponse clone() => QueryDenomsMetadataResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryDenomsMetadataResponse copyWith(void Function(QueryDenomsMetadataResponse) updates) => super.copyWith((message) => updates(message as QueryDenomsMetadataResponse)) as QueryDenomsMetadataResponse; // ignore: deprecated_member_use
+  factory QueryDenomsMetadataResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryDenomsMetadataResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryDenomsMetadataResponse clone() =>
+      QueryDenomsMetadataResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryDenomsMetadataResponse copyWith(
+          void Function(QueryDenomsMetadataResponse) updates) =>
+      super.copyWith(
+              (message) => updates(message as QueryDenomsMetadataResponse))
+          as QueryDenomsMetadataResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
-  static QueryDenomsMetadataResponse create() => QueryDenomsMetadataResponse._();
+  static QueryDenomsMetadataResponse create() =>
+      QueryDenomsMetadataResponse._();
   QueryDenomsMetadataResponse createEmptyInstance() => create();
-  static $pb.PbList<QueryDenomsMetadataResponse> createRepeated() => $pb.PbList<QueryDenomsMetadataResponse>();
+  static $pb.PbList<QueryDenomsMetadataResponse> createRepeated() =>
+      $pb.PbList<QueryDenomsMetadataResponse>();
   @$core.pragma('dart2js:noInline')
-  static QueryDenomsMetadataResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryDenomsMetadataResponse>(create);
+  static QueryDenomsMetadataResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryDenomsMetadataResponse>(create);
   static QueryDenomsMetadataResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -621,7 +911,10 @@ class QueryDenomsMetadataResponse extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $2.PageResponse get pagination => $_getN(1);
   @$pb.TagNumber(2)
-  set pagination($2.PageResponse v) { setField(2, v); }
+  set pagination($2.PageResponse v) {
+    setField(2, v);
+  }
+
   @$pb.TagNumber(2)
   $core.bool hasPagination() => $_has(1);
   @$pb.TagNumber(2)
@@ -631,10 +924,21 @@ class QueryDenomsMetadataResponse extends $pb.GeneratedMessage {
 }
 
 class QueryDenomMetadataRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryDenomMetadataRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'denom')
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryDenomMetadataRequest',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOS(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'denom')
+    ..hasRequiredFields = false;
 
   QueryDenomMetadataRequest._() : super();
   factory QueryDenomMetadataRequest({
@@ -646,31 +950,42 @@ class QueryDenomMetadataRequest extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryDenomMetadataRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryDenomMetadataRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryDenomMetadataRequest clone() => QueryDenomMetadataRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryDenomMetadataRequest copyWith(void Function(QueryDenomMetadataRequest) updates) => super.copyWith((message) => updates(message as QueryDenomMetadataRequest)) as QueryDenomMetadataRequest; // ignore: deprecated_member_use
+  factory QueryDenomMetadataRequest.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryDenomMetadataRequest.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryDenomMetadataRequest clone() =>
+      QueryDenomMetadataRequest()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryDenomMetadataRequest copyWith(
+          void Function(QueryDenomMetadataRequest) updates) =>
+      super.copyWith((message) => updates(message as QueryDenomMetadataRequest))
+          as QueryDenomMetadataRequest; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryDenomMetadataRequest create() => QueryDenomMetadataRequest._();
   QueryDenomMetadataRequest createEmptyInstance() => create();
-  static $pb.PbList<QueryDenomMetadataRequest> createRepeated() => $pb.PbList<QueryDenomMetadataRequest>();
+  static $pb.PbList<QueryDenomMetadataRequest> createRepeated() =>
+      $pb.PbList<QueryDenomMetadataRequest>();
   @$core.pragma('dart2js:noInline')
-  static QueryDenomMetadataRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryDenomMetadataRequest>(create);
+  static QueryDenomMetadataRequest getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryDenomMetadataRequest>(create);
   static QueryDenomMetadataRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get denom => $_getSZ(0);
   @$pb.TagNumber(1)
-  set denom($core.String v) { $_setString(0, v); }
+  set denom($core.String v) {
+    $_setString(0, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasDenom() => $_has(0);
   @$pb.TagNumber(1)
@@ -678,10 +993,22 @@ class QueryDenomMetadataRequest extends $pb.GeneratedMessage {
 }
 
 class QueryDenomMetadataResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'QueryDenomMetadataResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'cosmos.bank.v1beta1'), createEmptyInstance: create)
-    ..aOM<$10.Metadata>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'metadata', subBuilder: $10.Metadata.create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      const $core.bool.fromEnvironment('protobuf.omit_message_names')
+          ? ''
+          : 'QueryDenomMetadataResponse',
+      package: const $pb.PackageName(
+          const $core.bool.fromEnvironment('protobuf.omit_message_names')
+              ? ''
+              : 'cosmos.bank.v1beta1'),
+      createEmptyInstance: create)
+    ..aOM<$10.Metadata>(
+        1,
+        const $core.bool.fromEnvironment('protobuf.omit_field_names')
+            ? ''
+            : 'metadata',
+        subBuilder: $10.Metadata.create)
+    ..hasRequiredFields = false;
 
   QueryDenomMetadataResponse._() : super();
   factory QueryDenomMetadataResponse({
@@ -693,31 +1020,43 @@ class QueryDenomMetadataResponse extends $pb.GeneratedMessage {
     }
     return _result;
   }
-  factory QueryDenomMetadataResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory QueryDenomMetadataResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  QueryDenomMetadataResponse clone() => QueryDenomMetadataResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  QueryDenomMetadataResponse copyWith(void Function(QueryDenomMetadataResponse) updates) => super.copyWith((message) => updates(message as QueryDenomMetadataResponse)) as QueryDenomMetadataResponse; // ignore: deprecated_member_use
+  factory QueryDenomMetadataResponse.fromBuffer($core.List<$core.int> i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(i, r);
+  factory QueryDenomMetadataResponse.fromJson($core.String i,
+          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(i, r);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+      'Will be removed in next major version')
+  QueryDenomMetadataResponse clone() =>
+      QueryDenomMetadataResponse()..mergeFromMessage(this);
+  @$core.Deprecated('Using this can add significant overhead to your binary. '
+      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+      'Will be removed in next major version')
+  QueryDenomMetadataResponse copyWith(
+          void Function(QueryDenomMetadataResponse) updates) =>
+      super.copyWith(
+              (message) => updates(message as QueryDenomMetadataResponse))
+          as QueryDenomMetadataResponse; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
   @$core.pragma('dart2js:noInline')
   static QueryDenomMetadataResponse create() => QueryDenomMetadataResponse._();
   QueryDenomMetadataResponse createEmptyInstance() => create();
-  static $pb.PbList<QueryDenomMetadataResponse> createRepeated() => $pb.PbList<QueryDenomMetadataResponse>();
+  static $pb.PbList<QueryDenomMetadataResponse> createRepeated() =>
+      $pb.PbList<QueryDenomMetadataResponse>();
   @$core.pragma('dart2js:noInline')
-  static QueryDenomMetadataResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryDenomMetadataResponse>(create);
+  static QueryDenomMetadataResponse getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<QueryDenomMetadataResponse>(create);
   static QueryDenomMetadataResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $10.Metadata get metadata => $_getN(0);
   @$pb.TagNumber(1)
-  set metadata($10.Metadata v) { setField(1, v); }
+  set metadata($10.Metadata v) {
+    setField(1, v);
+  }
+
   @$pb.TagNumber(1)
   $core.bool hasMetadata() => $_has(0);
   @$pb.TagNumber(1)
@@ -730,33 +1069,52 @@ class QueryApi {
   $pb.RpcClient _client;
   QueryApi(this._client);
 
-  $async.Future<QueryBalanceResponse> balance($pb.ClientContext? ctx, QueryBalanceRequest request) {
+  $async.Future<QueryBalanceResponse> balance(
+      $pb.ClientContext? ctx, QueryBalanceRequest request) {
     var emptyResponse = QueryBalanceResponse();
-    return _client.invoke<QueryBalanceResponse>(ctx, 'Query', 'Balance', request, emptyResponse);
+    return _client.invoke<QueryBalanceResponse>(
+        ctx, 'Query', 'Balance', request, emptyResponse);
   }
-  $async.Future<QueryAllBalancesResponse> allBalances($pb.ClientContext? ctx, QueryAllBalancesRequest request) {
+
+  $async.Future<QueryAllBalancesResponse> allBalances(
+      $pb.ClientContext? ctx, QueryAllBalancesRequest request) {
     var emptyResponse = QueryAllBalancesResponse();
-    return _client.invoke<QueryAllBalancesResponse>(ctx, 'Query', 'AllBalances', request, emptyResponse);
+    return _client.invoke<QueryAllBalancesResponse>(
+        ctx, 'Query', 'AllBalances', request, emptyResponse);
   }
-  $async.Future<QueryTotalSupplyResponse> totalSupply($pb.ClientContext? ctx, QueryTotalSupplyRequest request) {
+
+  $async.Future<QueryTotalSupplyResponse> totalSupply(
+      $pb.ClientContext? ctx, QueryTotalSupplyRequest request) {
     var emptyResponse = QueryTotalSupplyResponse();
-    return _client.invoke<QueryTotalSupplyResponse>(ctx, 'Query', 'TotalSupply', request, emptyResponse);
+    return _client.invoke<QueryTotalSupplyResponse>(
+        ctx, 'Query', 'TotalSupply', request, emptyResponse);
   }
-  $async.Future<QuerySupplyOfResponse> supplyOf($pb.ClientContext? ctx, QuerySupplyOfRequest request) {
+
+  $async.Future<QuerySupplyOfResponse> supplyOf(
+      $pb.ClientContext? ctx, QuerySupplyOfRequest request) {
     var emptyResponse = QuerySupplyOfResponse();
-    return _client.invoke<QuerySupplyOfResponse>(ctx, 'Query', 'SupplyOf', request, emptyResponse);
+    return _client.invoke<QuerySupplyOfResponse>(
+        ctx, 'Query', 'SupplyOf', request, emptyResponse);
   }
-  $async.Future<QueryParamsResponse> params($pb.ClientContext? ctx, QueryParamsRequest request) {
+
+  $async.Future<QueryParamsResponse> params(
+      $pb.ClientContext? ctx, QueryParamsRequest request) {
     var emptyResponse = QueryParamsResponse();
-    return _client.invoke<QueryParamsResponse>(ctx, 'Query', 'Params', request, emptyResponse);
+    return _client.invoke<QueryParamsResponse>(
+        ctx, 'Query', 'Params', request, emptyResponse);
   }
-  $async.Future<QueryDenomMetadataResponse> denomMetadata($pb.ClientContext? ctx, QueryDenomMetadataRequest request) {
+
+  $async.Future<QueryDenomMetadataResponse> denomMetadata(
+      $pb.ClientContext? ctx, QueryDenomMetadataRequest request) {
     var emptyResponse = QueryDenomMetadataResponse();
-    return _client.invoke<QueryDenomMetadataResponse>(ctx, 'Query', 'DenomMetadata', request, emptyResponse);
+    return _client.invoke<QueryDenomMetadataResponse>(
+        ctx, 'Query', 'DenomMetadata', request, emptyResponse);
   }
-  $async.Future<QueryDenomsMetadataResponse> denomsMetadata($pb.ClientContext? ctx, QueryDenomsMetadataRequest request) {
+
+  $async.Future<QueryDenomsMetadataResponse> denomsMetadata(
+      $pb.ClientContext? ctx, QueryDenomsMetadataRequest request) {
     var emptyResponse = QueryDenomsMetadataResponse();
-    return _client.invoke<QueryDenomsMetadataResponse>(ctx, 'Query', 'DenomsMetadata', request, emptyResponse);
+    return _client.invoke<QueryDenomsMetadataResponse>(
+        ctx, 'Query', 'DenomsMetadata', request, emptyResponse);
   }
 }
-

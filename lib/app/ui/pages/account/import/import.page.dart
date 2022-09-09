@@ -38,25 +38,27 @@ class AccountImportPage extends GetView<AccountImportPageController> {
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
               child: Obx(() => LInput(
-                labelText: 'inputPassword'.tr,
-                disabled: state.importLoading,
-                textController: controller.passwordController,
-                visibilityPass: state.passwordShow,
-                hintText: 'passwordFormatTip'.tr,
-                keyboardType: TextInputType.visiblePassword,
-                passOnPress: () => controller.togglePasswordView('password'),
-              )),
+                    labelText: 'inputPassword'.tr,
+                    disabled: state.importLoading,
+                    textController: controller.passwordController,
+                    visibilityPass: state.passwordShow,
+                    hintText: 'passwordFormatTip'.tr,
+                    keyboardType: TextInputType.visiblePassword,
+                    passOnPress: () =>
+                        controller.togglePasswordView('password'),
+                  )),
             ),
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
               child: Obx(() => LInput(
-                labelText: 'inputPasswordAgain'.tr,
-                disabled: state.importLoading,
-                textController: controller.rePasswordController,
-                visibilityPass: state.rePasswordShow,
-                keyboardType: TextInputType.visiblePassword,
-                passOnPress: () => controller.togglePasswordView('rePassword'),
-              )),
+                    labelText: 'inputPasswordAgain'.tr,
+                    disabled: state.importLoading,
+                    textController: controller.rePasswordController,
+                    visibilityPass: state.rePasswordShow,
+                    keyboardType: TextInputType.visiblePassword,
+                    passOnPress: () =>
+                        controller.togglePasswordView('rePassword'),
+                  )),
             ),
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
@@ -67,10 +69,12 @@ class AccountImportPage extends GetView<AccountImportPageController> {
                     child: Text('accountType'.tr + ' :'),
                   ),
                   Obx(() => LSwitchView(
-                    selectList: state.accountTypeList.map((item) => StringTool.accountTypeToString(item)),
-                    change: controller.switchAccountType,
-                    selected: state.accountTypeList.indexOf(state.accountType),
-                  ))
+                        selectList: state.accountTypeList.map(
+                            (item) => StringTool.accountTypeToString(item)),
+                        change: controller.switchAccountType,
+                        selected:
+                            state.accountTypeList.indexOf(state.accountType),
+                      ))
                 ],
               ),
             ),
@@ -82,27 +86,31 @@ class AccountImportPage extends GetView<AccountImportPageController> {
           Row(
             children: [
               Obx(() => Checkbox(
-                value: state.agreement,
-                onChanged: controller.toggleAgreement,
-              )),
+                    value: state.agreement,
+                    onChanged: controller.toggleAgreement,
+                  )),
               Expanded(
                 flex: 1,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Text('argumentsClickTip_1'.tr, style: Get.textTheme.bodyText1),
-                      InkWell(
-                        child: Text('argumentsClickTip_2'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.primaryColor)),
-                        onTap: controller.goToUserAgreement,
-                      ),
-                      Text('argumentsClickTip_3'.tr, style: Get.textTheme.bodyText1),
-                      InkWell(
-                        child: Text('argumentsClickTip_4'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.primaryColor)),
-                        onTap: controller.goToUserPrivacy,
-                      ),
-                    ]
-                  ),
+                  child: Row(children: [
+                    Text('argumentsClickTip_1'.tr,
+                        style: Get.textTheme.bodyText1),
+                    InkWell(
+                      child: Text('argumentsClickTip_2'.tr,
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: appTheme.colors.primaryColor)),
+                      onTap: controller.goToUserAgreement,
+                    ),
+                    Text('argumentsClickTip_3'.tr,
+                        style: Get.textTheme.bodyText1),
+                    InkWell(
+                      child: Text('argumentsClickTip_4'.tr,
+                          style: Get.textTheme.bodyText1
+                              ?.copyWith(color: appTheme.colors.primaryColor)),
+                      onTap: controller.goToUserPrivacy,
+                    ),
+                  ]),
                 ),
               ),
             ],
@@ -112,11 +120,11 @@ class AccountImportPage extends GetView<AccountImportPageController> {
               vertical: appTheme.sizes.padding,
             ),
             child: Obx(() => LButton(
-              width: appTheme.sizes.infinity,
-              child: Text('importAccountStart'.tr),
-              disabled: state.importLoading,
-              onPressed: state.canImport ? controller.importAccount : null,
-            )),
+                  width: appTheme.sizes.infinity,
+                  child: Text('importAccountStart'.tr),
+                  disabled: state.importLoading,
+                  onPressed: state.canImport ? controller.importAccount : null,
+                )),
           ),
         ],
       ),

@@ -11,11 +11,11 @@ class UserAddressBookEditPageState {
   // 是否是修改
   final Rx<bool> _isEdit = false.obs;
   bool get isEdit => _isEdit.value;
-  set isEdit (bool value) => _isEdit.value = value;
+  set isEdit(bool value) => _isEdit.value = value;
   // 地址簿详情
   final Rx<AddressModel> _addressInfo = AddressModel().obs;
   AddressModel get addressInfo => _addressInfo.value;
-  set addressInfo (AddressModel value) => _addressInfo.value = value;
+  set addressInfo(AddressModel value) => _addressInfo.value = value;
 }
 
 class UserAddressBookEditPageController extends GetxController {
@@ -48,11 +48,13 @@ class UserAddressBookEditPageController extends GetxController {
 
   // 保存
   onSave() {
-    if (addressController.text == '') return LToast.warning('ErrorWithAddressInput'.tr);
+    if (addressController.text == '')
+      return LToast.warning('ErrorWithAddressInput'.tr);
     state.addressInfo.name = nameController.text;
     state.addressInfo.remarks = remarksController.text;
     state.addressInfo.address = addressController.text;
-    if (state.addressInfo.id == '') state.addressInfo.id = StringTool.getRandomStr();
+    if (state.addressInfo.id == '')
+      state.addressInfo.id = StringTool.getRandomStr();
     if (state.isEdit) {
       dataAddress.updateAddress(state.addressInfo);
     } else {
@@ -62,6 +64,7 @@ class UserAddressBookEditPageController extends GetxController {
     LToast.success('SuccessWithSave'.tr);
     Get.back();
   }
+
   // 删除
   onRemove() async {
     bool? type = await LBottomSheet.promptBottomSheet(
@@ -73,10 +76,13 @@ class UserAddressBookEditPageController extends GetxController {
       Get.back();
     }
   }
+
   // 扫码
   onScanQr() async {
-    var address = await Get.toNamed(PlugRoutesNames.walletQrScanner, parameters: { 'result': 'true' });
-    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('ErrorWithAddressType'.tr);
+    var address = await Get.toNamed(PlugRoutesNames.walletQrScanner,
+        parameters: {'result': 'true'});
+    if (address is! String || !StringTool.checkChainAddress(address))
+      return LToast.error('ErrorWithAddressType'.tr);
     addressController.text = address;
   }
 }

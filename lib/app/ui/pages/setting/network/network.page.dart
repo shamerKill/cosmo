@@ -33,29 +33,38 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
             child: Text('mainNetwork'.tr, style: Get.textTheme.bodyText1),
           ),
           Obx(() => Column(
-            children: [
-              for (NetWorkModel _item in state.mainNetList)
-                InkWell(
-                  onTap: () => controller.exchangeNoNet(_item.id, network: _item),
-                  child: Container(
-                    height: appTheme.sizes.fontSize * 4,
-                    decoration: BoxDecoration(
-                      color: appTheme.colors.pageBackgroundColor,
-                      border: Border(bottom: BorderSide(color: appTheme.colors.pageBackgroundColorBasic)),
+                children: [
+                  for (NetWorkModel _item in state.mainNetList)
+                    InkWell(
+                      onTap: () =>
+                          controller.exchangeNoNet(_item.id, network: _item),
+                      child: Container(
+                        height: appTheme.sizes.fontSize * 4,
+                        decoration: BoxDecoration(
+                          color: appTheme.colors.pageBackgroundColor,
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: appTheme
+                                      .colors.pageBackgroundColorBasic)),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: appTheme.sizes.padding,
+                            horizontal: appTheme.sizes.padding),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(_item.name),
+                            if (state.nowNetId == _item.id)
+                              Icon(
+                                  const IconData(0xe81e,
+                                      fontFamily: 'plugIcon'),
+                                  size: appTheme.sizes.iconSize * 0.8)
+                          ],
+                        ),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(_item.name),
-                        if (state.nowNetId == _item.id)
-                          Icon(const IconData(0xe81e, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.8)
-                      ],
-                    ),
-                  ),
-                ),
-            ],
-          )),
+                ],
+              )),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: appTheme.sizes.padding,
@@ -64,29 +73,38 @@ class UserNetworkPage extends GetView<UserNetworkPageController> {
             child: Text('testNetwork'.tr, style: Get.textTheme.bodyText1),
           ),
           Obx(() => Column(
-            children: [
-              for (NetWorkModel _item in state.testNetList)
-                InkWell(
-                  onTap: () => controller.exchangeNoNet(_item.id, network: _item),
-                  child: Container(
-                    height: appTheme.sizes.fontSize * 4,
-                    decoration: BoxDecoration(
-                      color: appTheme.colors.pageBackgroundColor,
-                      border: Border(bottom: BorderSide(color: appTheme.colors.pageBackgroundColorBasic)),
+                children: [
+                  for (NetWorkModel _item in state.testNetList)
+                    InkWell(
+                      onTap: () =>
+                          controller.exchangeNoNet(_item.id, network: _item),
+                      child: Container(
+                        height: appTheme.sizes.fontSize * 4,
+                        decoration: BoxDecoration(
+                          color: appTheme.colors.pageBackgroundColor,
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: appTheme
+                                      .colors.pageBackgroundColorBasic)),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: appTheme.sizes.padding,
+                            horizontal: appTheme.sizes.padding),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(_item.name),
+                            if (state.nowNetId == _item.id)
+                              Icon(
+                                  const IconData(0xe81e,
+                                      fontFamily: 'plugIcon'),
+                                  size: appTheme.sizes.iconSize * 0.8)
+                          ],
+                        ),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(_item.name),
-                        if (state.nowNetId == _item.id)
-                          Icon(const IconData(0xe81e, fontFamily: 'plugIcon'), size: appTheme.sizes.iconSize * 0.8)
-                      ],
-                    ),
-                  ),
-                ),
-            ],
-          )),
+                ],
+              )),
         ],
       ),
     );

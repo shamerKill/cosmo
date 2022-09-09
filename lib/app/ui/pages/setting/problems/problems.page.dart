@@ -32,7 +32,8 @@ class UserProblemsPage extends GetView<UserProblemsPageController> {
             ),
           ],
         ),
-        description: Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
+        description:
+            Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
       ),
       singleScroll: true,
       basicBackgroundColor: true,
@@ -40,59 +41,65 @@ class UserProblemsPage extends GetView<UserProblemsPageController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('email'.tr),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
             hintText: 'emailInputHint'.tr,
             textController: controller.emailController,
           ),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Text('description'.tr),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           LInput(
             hintText: 'problemInputHint'.tr,
             textController: controller.descController,
             maxLines: 5,
             inputHeight: appTheme.sizes.inputHeight * 3,
           ),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Text('updateScreenshot'.tr),
-          Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
+          Padding(
+              padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
           Obx(() => Wrap(
-            spacing: appTheme.sizes.paddingSmall,
-            runSpacing: appTheme.sizes.paddingSmall,
-            children: [
-              for (String _pic in state.picList)
-                InkWell(
-                  onTap: () => controller.onShowPic(_pic),
-                  onLongPress: () => controller.onLongDelete(_pic),
-                  child: Container(
-                    width: appTheme.sizes.basic * 175,
-                    height: appTheme.sizes.basic * 175,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                spacing: appTheme.sizes.paddingSmall,
+                runSpacing: appTheme.sizes.paddingSmall,
+                children: [
+                  for (String _pic in state.picList)
+                    InkWell(
+                      onTap: () => controller.onShowPic(_pic),
+                      onLongPress: () => controller.onLongDelete(_pic),
+                      child: Container(
+                        width: appTheme.sizes.basic * 175,
+                        height: appTheme.sizes.basic * 175,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(appTheme.sizes.radius)),
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: Image.file(File(_pic), fit: BoxFit.cover),
+                      ),
                     ),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Image.file(
-                      File(_pic),
-                      fit: BoxFit.cover
+                  if (state.picList.isEmpty)
+                    InkWell(
+                      onTap: controller.onSelectPicture,
+                      child: Container(
+                        width: appTheme.sizes.basic * 175,
+                        height: appTheme.sizes.basic * 175,
+                        decoration: BoxDecoration(
+                          color: appTheme.colors.textGray.withOpacity(0.1),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(appTheme.sizes.radius)),
+                        ),
+                        child: Icon(Icons.cloud_upload_outlined,
+                            color: appTheme.colors.textGray,
+                            size: appTheme.sizes.iconSize * 1.5),
+                      ),
                     ),
-                  ),
-                ),
-              if (state.picList.isEmpty)
-                InkWell(
-                  onTap: controller.onSelectPicture,
-                  child: Container(
-                    width: appTheme.sizes.basic * 175,
-                    height: appTheme.sizes.basic * 175,
-                    decoration: BoxDecoration(
-                      color: appTheme.colors.textGray.withOpacity(0.1),
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                    ),
-                    child: Icon(Icons.cloud_upload_outlined, color: appTheme.colors.textGray, size: appTheme.sizes.iconSize * 1.5),
-                  ),
-                ),
-            ],
-          )),
+                ],
+              )),
         ],
       ),
     );

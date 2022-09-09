@@ -14,21 +14,21 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainVerifierDetailPageState {
   // 验证者信息
-  final Rx<UserVerifierModel> _verifierInfo =UserVerifierModel().obs;
+  final Rx<UserVerifierModel> _verifierInfo = UserVerifierModel().obs;
   UserVerifierModel get verifierInfo => _verifierInfo.value;
-  set verifierInfo (UserVerifierModel value) => _verifierInfo.value = value;
+  set verifierInfo(UserVerifierModel value) => _verifierInfo.value = value;
   // 基础币信息
   final Rx<TokenModel> _baseCoinInfo = TokenModel().obs;
   TokenModel get baseCoinInfo => _baseCoinInfo.value;
-  set baseCoinInfo (TokenModel value) => _baseCoinInfo.value = value;
+  set baseCoinInfo(TokenModel value) => _baseCoinInfo.value = value;
   // 显示已质押状态的按钮
   final Rx<bool> _showPledgedState = false.obs;
   bool get showPledgedState => _showPledgedState.value;
-  set showPledgedState (bool value) => _showPledgedState.value = value;
+  set showPledgedState(bool value) => _showPledgedState.value = value;
   // 显示未质押状态的按钮
   final Rx<bool> _showNoPledgeState = false.obs;
   bool get showNoPledgeState => _showNoPledgeState.value;
-  set showNoPledgeState (bool value) => _showNoPledgeState.value = value;
+  set showNoPledgeState(bool value) => _showNoPledgeState.value = value;
 }
 
 class ChainVerifierDetailPageController extends GetxController {
@@ -59,13 +59,15 @@ class ChainVerifierDetailPageController extends GetxController {
     LLoading.dismiss();
   }
 
-  _getData({ bool init = false }) async {
+  _getData({bool init = false}) async {
     // 获取验证者信息
     if (init) LLoading.showBgLoading();
-    var result = await httpToolApp.getChainVerifierInfo(state.verifierInfo.address);
+    var result =
+        await httpToolApp.getChainVerifierInfo(state.verifierInfo.address);
     if (result == null || result.status != 0 || result.data == null) return;
     var verifier = result.data['validator'];
-    state.verifierInfo..nickName = verifier['description']['moniker']
+    state.verifierInfo
+      ..nickName = verifier['description']['moniker']
       ..setStatus(verifier['status'])
       ..allPledged = verifier['tokens']
       ..minPledgeVolume = verifier['min_self_delegation'];
@@ -73,18 +75,26 @@ class ChainVerifierDetailPageController extends GetxController {
     if (state.showPledgedState == true) {
       var _res = await Future.wait([
         // 获取奖励
-        httpToolApp.getAccountRewardData(dataAccount.state.nowAccount!.address, vAddress: state.verifierInfo.address),
+        httpToolApp.getAccountRewardData(dataAccount.state.nowAccount!.address,
+            vAddress: state.verifierInfo.address),
         // 获取质押中数据
-        httpToolApp.getAccountDelegateData(dataAccount.state.nowAccount!.address),
+        httpToolApp
+            .getAccountDelegateData(dataAccount.state.nowAccount!.address),
         // 获取赎回数据
-        httpToolApp.getAccountUnDelegateData(dataAccount.state.nowAccount!.address),
+        httpToolApp
+            .getAccountUnDelegateData(dataAccount.state.nowAccount!.address),
         // 获取转质押数据
-        httpToolApp.getAccountReDelegateData(dataAccount.state.nowAccount!.address),
+        httpToolApp
+            .getAccountReDelegateData(dataAccount.state.nowAccount!.address),
         // 获取节点头像
-        httpToolServer.getChainVerifierAvatar([dataAccount.state.nowAccount!.address]),
+        httpToolServer
+            .getChainVerifierAvatar([dataAccount.state.nowAccount!.address]),
       ]);
       // 奖励
-      if (_res[0] != null && _res[0]?.status == 0 && _res[0]!.data != null && _res[0]!.data['rewards'] != null) {
+      if (_res[0] != null &&
+          _res[0]?.status == 0 &&
+          _res[0]!.data != null &&
+          _res[0]!.data['rewards'] != null) {
         var _res0 = _res[0]!.data['rewards'];
         state.verifierInfo.reward = '0';
         for (var _item in _res0) {
@@ -95,18 +105,25 @@ class ChainVerifierDetailPageController extends GetxController {
         }
       }
       // 质押中
-      if (_res[1] != null && _res[1]?.status == 0 && _res[1]!.data != null && _res[1]!.data['delegation_responses'] != null) {
+      if (_res[1] != null &&
+          _res[1]?.status == 0 &&
+          _res[1]!.data != null &&
+          _res[1]!.data['delegation_responses'] != null) {
         var _res1 = _res[1]!.data['delegation_responses'];
         state.verifierInfo.pledged = '0';
         for (var _item in _res1) {
-          if (_item['delegation']['validator_address'] == state.verifierInfo.address) {
+          if (_item['delegation']['validator_address'] ==
+              state.verifierInfo.address) {
             state.verifierInfo.pledged = _item['balance']['amount'];
             break;
           }
         }
       }
       // 赎回中
-      if (_res[2] != null && _res[2]?.status == 0 && _res[2]!.data != null && _res[2]!.data['unbonding_responses'] != null) {
+      if (_res[2] != null &&
+          _res[2]?.status == 0 &&
+          _res[2]!.data != null &&
+          _res[2]!.data['unbonding_responses'] != null) {
         var _res2 = _res[2]!.data['unbonding_responses'];
         state.verifierInfo.redeeming = '0';
         for (var _item in _res2) {
@@ -121,10 +138,14 @@ class ChainVerifierDetailPageController extends GetxController {
         }
       }
       // 转质押中
-      if (_res[3] != null && _res[3]?.status == 0 && _res[3]!.data != null && _res[3]!.data['redelegation_responses'] != null) {
+      if (_res[3] != null &&
+          _res[3]?.status == 0 &&
+          _res[3]!.data != null &&
+          _res[3]!.data['redelegation_responses'] != null) {
         var _res3 = _res[3]!.data['redelegation_responses'];
         for (var _item in _res3) {
-          if (_item['redelegation']['validator_dst_address'] == state.verifierInfo.address) {
+          if (_item['redelegation']['validator_dst_address'] ==
+              state.verifierInfo.address) {
             int _value = 0;
             for (var _pledge in _item['entries']) {
               _value += int.parse(_pledge['balance']);
@@ -136,7 +157,8 @@ class ChainVerifierDetailPageController extends GetxController {
       }
       // 节点头像
       if (_res[4] != null && _res[4]?.status == 0 && _res[4]!.data != null) {
-        state.verifierInfo.avatar = _res[4]!.data[state.verifierInfo.address]??'';
+        state.verifierInfo.avatar =
+            _res[4]!.data[state.verifierInfo.address] ?? '';
       }
     }
     state._verifierInfo.refresh();
@@ -146,15 +168,18 @@ class ChainVerifierDetailPageController extends GetxController {
   onBackPledge() {
     Get.toNamed(PlugRoutesNames.chainBackupPledge(state.verifierInfo.address));
   }
+
   // 赎回收益
   onBackReward() async {
-    var promptType = await LBottomSheet.promptBottomSheet(title: 'withdrawTipTitle'.tr, message: Text('withdrawTipText_1'.tr));
+    var promptType = await LBottomSheet.promptBottomSheet(
+        title: 'withdrawTipTitle'.tr, message: Text('withdrawTipText_1'.tr));
     if (promptType != true) return;
     var password = await LBottomSheet.passwordBottomSheet();
     // 解压账户
     if (password == null) return;
     LLoading.showBgLoading();
-    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
+    var mnemonicList = await WalletTool.decryptMnemonic(
+        dataAccount.state.nowAccount!.stringifyRaw, password);
     if (mnemonicList == null) {
       LLoading.dismiss();
       return LToast.warning('ErrorWithPasswordInput'.tr);
@@ -163,23 +188,30 @@ class ChainVerifierDetailPageController extends GetxController {
     var result = await WalletTool.withReward(
       mnemonic: mnemonicList,
       validatorAddress: state.verifierInfo.address,
-      gasAll: NumberTool.balanceToAmount(fee.data??'0.0002'),
+      gasAll: NumberTool.balanceToAmount(fee.data ?? '0.0002'),
     );
-    if (result.status == -10001) return LToast.error('ErrorWithRedeemRewardCallback'.tr);
-    if (result.status == -10002) return LToast.error('ErrorWithRedeemRewardTimeout'.tr);
-    if (result.status != 0) return LToast.error('ErrorWithRedeemRewardUnKnow'.tr);
+    if (result.status == -10001)
+      return LToast.error('ErrorWithRedeemRewardCallback'.tr);
+    if (result.status == -10002)
+      return LToast.error('ErrorWithRedeemRewardTimeout'.tr);
+    if (result.status != 0)
+      return LToast.error('ErrorWithRedeemRewardUnKnow'.tr);
     LToast.success('SuccessWithRewardRedeem'.tr);
     LLoading.dismiss();
     onRefresh();
   }
+
   // 转质押
   onRePledge() {
     Get.toNamed(PlugRoutesNames.chainRePledge(state.verifierInfo.address));
   }
+
   // 质押
   onPledge() {
-    Get.toNamed(PlugRoutesNames.chainPledgeTransfer(state.verifierInfo.address));
+    Get.toNamed(
+        PlugRoutesNames.chainPledgeTransfer(state.verifierInfo.address));
   }
+
   // 刷新加载
   Future<void> onRefresh() async {
     await _getData();

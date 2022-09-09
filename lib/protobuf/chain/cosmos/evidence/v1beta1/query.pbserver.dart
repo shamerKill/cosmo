@@ -16,26 +16,35 @@ import 'query.pbjson.dart';
 export 'query.pb.dart';
 
 abstract class QueryServiceBase extends $pb.GeneratedService {
-  $async.Future<$28.QueryEvidenceResponse> evidence($pb.ServerContext ctx, $28.QueryEvidenceRequest request);
-  $async.Future<$28.QueryAllEvidenceResponse> allEvidence($pb.ServerContext ctx, $28.QueryAllEvidenceRequest request);
+  $async.Future<$28.QueryEvidenceResponse> evidence(
+      $pb.ServerContext ctx, $28.QueryEvidenceRequest request);
+  $async.Future<$28.QueryAllEvidenceResponse> allEvidence(
+      $pb.ServerContext ctx, $28.QueryAllEvidenceRequest request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'Evidence': return $28.QueryEvidenceRequest();
-      case 'AllEvidence': return $28.QueryAllEvidenceRequest();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'Evidence':
+        return $28.QueryEvidenceRequest();
+      case 'AllEvidence':
+        return $28.QueryAllEvidenceRequest();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'Evidence': return this.evidence(ctx, request as $28.QueryEvidenceRequest);
-      case 'AllEvidence': return this.allEvidence(ctx, request as $28.QueryAllEvidenceRequest);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'Evidence':
+        return this.evidence(ctx, request as $28.QueryEvidenceRequest);
+      case 'AllEvidence':
+        return this.allEvidence(ctx, request as $28.QueryAllEvidenceRequest);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => QueryServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => QueryServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => QueryServiceBase$messageJson;
 }
-

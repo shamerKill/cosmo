@@ -4,6 +4,7 @@ import 'package:plug/app/ui/pages/wallet/token/detail/detail.controller.dart';
 class WalletTokenDetailPageBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<WalletTokenDetailPageController>(() => WalletTokenDetailPageController());
+    Get.lazyPut<WalletTokenDetailPageController>(
+        () => WalletTokenDetailPageController());
   }
 }

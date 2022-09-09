@@ -30,36 +30,41 @@ class UserAboutPage extends GetView<UserAboutPageController> {
               bottom: appTheme.sizes.paddingSmall,
             ),
             child: Obx(() => Text(
-              state.appName,
-              style: TextStyle(
-                fontSize: appTheme.sizes.fontSizeBig * 1.2,
-                fontWeight: FontWeight.bold,
-              ),
-            )),
+                  state.appName,
+                  style: TextStyle(
+                    fontSize: appTheme.sizes.fontSizeBig * 1.2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
           ),
           Padding(
             padding: EdgeInsets.only(
               bottom: appTheme.sizes.padding * 2,
             ),
             child: Obx(() => Text(
-              state.appVersion,
-              style: TextStyle(color: appTheme.colors.textGray),
-            )),
+                  state.appVersion,
+                  style: TextStyle(color: appTheme.colors.textGray),
+                )),
           ),
           Container(
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
             ),
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                  padding: EdgeInsets.symmetric(
+                      vertical: appTheme.sizes.padding,
+                      horizontal: appTheme.sizes.padding),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('versionUpdateLogs'.tr),
-                      Icon(const IconData(0xe658, fontFamily: 'plugIcon'), color: appTheme.colors.textGray, size: appTheme.sizes.iconSize  * 0.6),
+                      Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                          color: appTheme.colors.textGray,
+                          size: appTheme.sizes.iconSize * 0.6),
                     ],
                   ),
                 ),
@@ -71,24 +76,31 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                 InkWell(
                   onTap: controller.onUpdateVersion,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: appTheme.sizes.padding,
+                        horizontal: appTheme.sizes.padding),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('versionUpdate'.tr),
                         if (state.hadUpdate == '')
-                          Text('versionIsLasted'.tr, style: Get.textTheme.bodyText1)
-                        else 
+                          Text('versionIsLasted'.tr,
+                              style: Get.textTheme.bodyText1)
+                        else
                           Row(
                             children: [
-                              Text('v ${state.hadUpdate}', style: Get.textTheme.bodyText1),
-                              Padding(padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall / 2)),
+                              Text('v ${state.hadUpdate}',
+                                  style: Get.textTheme.bodyText1),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: appTheme.sizes.paddingSmall / 2)),
                               Container(
                                 width: appTheme.sizes.radius / 2,
                                 height: appTheme.sizes.radius / 2,
                                 decoration: BoxDecoration(
                                   color: appTheme.colors.primaryColor,
-                                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(appTheme.sizes.radius)),
                                 ),
                               ),
                             ],
@@ -108,45 +120,57 @@ class UserAboutPage extends GetView<UserAboutPageController> {
           Container(
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
             ),
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
+                  padding: EdgeInsets.symmetric(
+                      vertical: appTheme.sizes.padding,
+                      horizontal: appTheme.sizes.padding),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('website'.tr),
                       Obx(() => SelectableText(
-                        state.webSite,
-                        style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
-                      )),
+                            state.webSite,
+                            style: TextStyle(
+                                color: appTheme.colors.primaryColor,
+                                fontSize: appTheme.sizes.fontSizeSmall),
+                          )),
                     ],
                   ),
                 ),
-                Obx(() => state.twitterSite == '' ? Container() : Column(
-                  children: [
-                    Container(
-                      height: appTheme.sizes.basic,
-                      width: appTheme.sizes.infinity,
-                      color: appTheme.colors.borderColor,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: appTheme.sizes.padding, horizontal: appTheme.sizes.padding),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Obx(() => state.twitterSite == ''
+                    ? Container()
+                    : Column(
                         children: [
-                          Text('twitter'.tr),
-                          Obx(() => SelectableText(
-                            state.twitterSite,
-                            style: TextStyle(color: appTheme.colors.primaryColor, fontSize: appTheme.sizes.fontSizeSmall),
-                          )),
+                          Container(
+                            height: appTheme.sizes.basic,
+                            width: appTheme.sizes.infinity,
+                            color: appTheme.colors.borderColor,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: appTheme.sizes.padding,
+                                horizontal: appTheme.sizes.padding),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('twitter'.tr),
+                                Obx(() => SelectableText(
+                                      state.twitterSite,
+                                      style: TextStyle(
+                                          color: appTheme.colors.primaryColor,
+                                          fontSize:
+                                              appTheme.sizes.fontSizeSmall),
+                                    )),
+                              ],
+                            ),
+                          )
                         ],
-                      ),
-                    )
-                  ],
-                )),
+                      )),
               ],
             ),
           ),

@@ -5,11 +5,7 @@ part './config.debug.dart';
 part './config.test.dart';
 part 'config.release.dart';
 
-enum EnvType {
-  debug,
-  test,
-  release
-}
+enum EnvType { debug, test, release }
 
 class EnvConfig {
   final EnvType type;

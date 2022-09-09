@@ -89,6 +89,5 @@ import 'package:plug/app/ui/pages/wallet/token/receive/receive.page.dart';
 import 'package:plug/app/ui/pages/wallet/token/send/send.binding.dart';
 import 'package:plug/app/ui/pages/wallet/token/send/send.page.dart';
 
-
 part './pages.dart';
 part './names.dart';

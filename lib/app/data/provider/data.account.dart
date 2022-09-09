@@ -23,6 +23,7 @@ class DataAccountState {
     }
     return _account;
   }
+
   // 判断是否有账户
   bool get hadAccount => _accountsList.isNotEmpty;
   // 创建账户时，暂存的账户
@@ -43,9 +44,10 @@ class DataAccountController extends GetxController {
   // 添加账户
   List<AccountModel> addAccount(AccountModel account) {
     if (checkAccountIsHad(account)) {
-      for (int i = 0; i< state.accountsList.length; i++) {
+      for (int i = 0; i < state.accountsList.length; i++) {
         var item = state.accountsList[i];
-        if (item.address == account.address && account.accountType == item.accountType) {
+        if (item.address == account.address &&
+            account.accountType == item.accountType) {
           state.accountsList.removeAt(i);
           break;
         }
@@ -55,16 +57,21 @@ class DataAccountController extends GetxController {
     saveAccounts();
     return state.accountsList;
   }
+
   bool checkAccountIsHad(AccountModel account) {
     for (var item in state.accountsList) {
-      if (item.address == account.address && account.accountType == item.accountType) return true;
+      if (item.address == account.address &&
+          account.accountType == item.accountType) return true;
     }
     return false;
   }
+
   // 储存账户
   saveAccounts() {
-    GetStorage().write(state.accountStorageName, json.encode(state.accountsList.map((e) => e.toJson()).toList()));
+    GetStorage().write(state.accountStorageName,
+        json.encode(state.accountsList.map((e) => e.toJson()).toList()));
   }
+
   // 切换账户
   bool exchangeAccount(String _address) {
     if (_address == state.nowAccount!.address) return false;
@@ -79,6 +86,7 @@ class DataAccountController extends GetxController {
     }
     return false;
   }
+
   // 根据地址获取账户
   AccountModel? getAccountFromAddress(String _address) {
     for (var element in state.accountsList) {
@@ -86,6 +94,7 @@ class DataAccountController extends GetxController {
     }
     return null;
   }
+
   // 更新账户处理
   bool updateAccount(AccountModel? _account) {
     if (_account == null) return false;
@@ -98,6 +107,7 @@ class DataAccountController extends GetxController {
     }
     return false;
   }
+
   // 更新账户名称
   bool updateAccountName(String _address, String _nickName) {
     for (var _item in state.accountsList) {
@@ -112,25 +122,34 @@ class DataAccountController extends GetxController {
     }
     return false;
   }
+
   // 移除账户
   bool removeAccount(AccountModel _account) {
-    var _index = state.accountsList.indexWhere((element) => element.address == _account.address);
+    var _index = state.accountsList
+        .indexWhere((element) => element.address == _account.address);
     if (_index < 0) return false;
     state.accountsList.removeAt(_index);
     saveAccounts();
     return true;
   }
+
   // 判断账户是否有基础币
   bool checkAccountHadCoin(String address, String minUnit) {
-    return getAccountFromAddress(address)?.tokenList.where((element) => element.minUnit == minUnit).isNotEmpty??false;
+    return getAccountFromAddress(address)
+            ?.tokenList
+            .where((element) => element.minUnit == minUnit)
+            .isNotEmpty ??
+        false;
   }
+
   _readStorage() {
     // 读取账户列表
     String? data = GetStorage().read(state.accountStorageName);
     if (data == null) return;
     try {
       List<dynamic> listData = json.decode(data);
-      state.accountsList.addAll(listData.map((e) => AccountModel()..setData(e)));
+      state.accountsList
+          .addAll(listData.map((e) => AccountModel()..setData(e)));
     } catch (_) {}
   }
 }

@@ -14,11 +14,11 @@ class ChainVerifiersPageState {
   // 是否获取过我的质押列表
   final Rx<bool> _initMyPledgeList = false.obs;
   bool get initMyPledgeList => _initMyPledgeList.value;
-  set initMyPledgeList (bool value) => _initMyPledgeList.value = value;
+  set initMyPledgeList(bool value) => _initMyPledgeList.value = value;
   // 当前第几页
   final Rx<int> _listPage = 1.obs;
   int get listPage => _listPage.value;
-  set listPage (int value) => _listPage.value = value;
+  set listPage(int value) => _listPage.value = value;
 }
 
 class ChainVerifiersPageController extends GetxController {
@@ -41,13 +41,18 @@ class ChainVerifiersPageController extends GetxController {
 
   _getData() async {
     if (state.initMyPledgeList == false) {
-      var _pledgeResult = await httpToolApp.getAccountDelegateData(dataAccount.state.nowAccount!.address);
-        if (_pledgeResult != null && _pledgeResult.status == 0 && _pledgeResult.data['delegation_responses'] != null) {
-          for (var _item in _pledgeResult.data['delegation_responses']) {
-            state.myPledgeList.add(UserVerifierModel()..address=_item['delegation']['validator_address']..pledged=_item['balance']['amount']);
-          }
-          state.initMyPledgeList = true;
+      var _pledgeResult = await httpToolApp
+          .getAccountDelegateData(dataAccount.state.nowAccount!.address);
+      if (_pledgeResult != null &&
+          _pledgeResult.status == 0 &&
+          _pledgeResult.data['delegation_responses'] != null) {
+        for (var _item in _pledgeResult.data['delegation_responses']) {
+          state.myPledgeList.add(UserVerifierModel()
+            ..address = _item['delegation']['validator_address']
+            ..pledged = _item['balance']['amount']);
         }
+        state.initMyPledgeList = true;
+      }
     }
     var verifierList = await _getVerifierList();
     for (var _item in verifierList) {
@@ -60,26 +65,27 @@ class ChainVerifiersPageController extends GetxController {
       state.verifiesList.add(_item);
     }
   }
+
   Future<List<UserVerifierModel>> _getVerifierList() async {
-    var result = await httpToolApp.getChainVerifiersList(state.listPage, limit: 10);
+    var result =
+        await httpToolApp.getChainVerifiersList(state.listPage, limit: 10);
     List<UserVerifierModel> list = [];
     if (result.status == 0) {
       if (result.data.length < 10) state.listPage = 0;
       for (var _item in result.data) {
-        list.add(
-          UserVerifierModel()
-            ..address = _item['operator_address']
-            ..setStatus(_item['status'])
-            ..nickName = _item['description']['moniker']
-            ..allPledged = _item['tokens']
-            ..minPledgeVolume = _item['min_self_delegation']
-        );
+        list.add(UserVerifierModel()
+          ..address = _item['operator_address']
+          ..setStatus(_item['status'])
+          ..nickName = _item['description']['moniker']
+          ..allPledged = _item['tokens']
+          ..minPledgeVolume = _item['min_self_delegation']);
       }
     }
     // 获取节点头像
-    var avatarList = await httpToolServer.getChainVerifierAvatar(list.map((e) => e.address).toList());
+    var avatarList = await httpToolServer
+        .getChainVerifierAvatar(list.map((e) => e.address).toList());
     for (var element in list) {
-      element.avatar = avatarList?.data[element.address]??'';
+      element.avatar = avatarList?.data[element.address] ?? '';
     }
     return list;
   }
@@ -90,14 +96,17 @@ class ChainVerifiersPageController extends GetxController {
     state.listPage = 1;
     await _getData();
   }
+
   // 加载更多事件
   Future<void> onLoadListener() async {
     if (state.listPage == 0) return;
     state.listPage++;
     await _getData();
   }
+
   // 验证者查看详情
   onVerifierDetailListener(UserVerifierModel verifier) {
-    Get.toNamed(PlugRoutesNames.chainVerifierDetail(verifier.address, verifier.pledged != '' ? '1' : '0'));
+    Get.toNamed(PlugRoutesNames.chainVerifierDetail(
+        verifier.address, verifier.pledged != '' ? '1' : '0'));
   }
 }

@@ -18,19 +18,19 @@ class WalletTokenSendPageState {
   // 账户信息
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
-  set accountInfo (AccountModel value) => _accountInfo.value = value;  
+  set accountInfo(AccountModel value) => _accountInfo.value = value;
   // 币种信息
   final Rx<TokenModel> _tokenInfo = TokenModel().obs;
   TokenModel get tokenInfo => _tokenInfo.value;
-  set tokenInfo (TokenModel value) => _tokenInfo.value = value;
+  set tokenInfo(TokenModel value) => _tokenInfo.value = value;
   // 手续费
   final Rx<String> _fee = ''.obs;
   String get fee => _fee.value;
-  set fee (String value) => _fee.value = value;
+  set fee(String value) => _fee.value = value;
   // 发送中
   final Rx<bool> _sendLoading = false.obs;
   bool get sendLoading => _sendLoading.value;
-  set sendLoading (bool value) => _sendLoading.value = value;
+  set sendLoading(bool value) => _sendLoading.value = value;
 }
 
 class WalletTokenSendPageController extends GetxController {
@@ -47,14 +47,17 @@ class WalletTokenSendPageController extends GetxController {
   @override
   void onReady() async {
     String? tokenIndent = Get.parameters['token'];
-    if (dataAccount.state.nowAccount == null || tokenIndent == null) return Get.back();
+    if (dataAccount.state.nowAccount == null || tokenIndent == null)
+      return Get.back();
     state.accountInfo = dataAccount.state.nowAccount!;
     for (var _item in state.accountInfo.tokenList) {
-      if (_item.minUnit == tokenIndent || _item.contractAddress == tokenIndent) {
+      if (_item.minUnit == tokenIndent ||
+          _item.contractAddress == tokenIndent) {
         state.tokenInfo = _item;
       }
     }
-    if (state.tokenInfo.minUnit != tokenIndent && state.tokenInfo.contractAddress != tokenIndent) {
+    if (state.tokenInfo.minUnit != tokenIndent &&
+        state.tokenInfo.contractAddress != tokenIndent) {
       LToast.warning('sendWarningTip'.tr + '(' + tokenIndent + ')');
       return Get.back();
     }
@@ -68,6 +71,7 @@ class WalletTokenSendPageController extends GetxController {
   onClose() {
     LLoading.dismiss();
   }
+
   // 判断链接内参数
   _checkUriParameters() {
     var address = Get.parameters['address'];
@@ -79,7 +83,11 @@ class WalletTokenSendPageController extends GetxController {
   _getInit() async {
     var result = await Future.wait([
       // 账户余额
-      httpToolApp.getAccountBalance(dataAccount.state.nowAccount!.address, state.tokenInfo.type == enumTokenType.prc10 ? state.tokenInfo.minUnit : state.tokenInfo.contractAddress),
+      httpToolApp.getAccountBalance(
+          dataAccount.state.nowAccount!.address,
+          state.tokenInfo.type == enumTokenType.prc10
+              ? state.tokenInfo.minUnit
+              : state.tokenInfo.contractAddress),
       // 手续费
       httpToolServer.getChainFee(),
     ]);
@@ -89,44 +97,55 @@ class WalletTokenSendPageController extends GetxController {
       state.tokenInfo.amount = _balance.data;
       state._tokenInfo.refresh();
     }
-    state.fee = _fee?.data??'0.0002';
+    state.fee = _fee?.data ?? '0.0002';
   }
 
   // 前往地址簿
   onGoToAddressList() async {
-    dynamic address = await Get.toNamed(PlugRoutesNames.userAddressBookList, arguments: 'select');
+    dynamic address = await Get.toNamed(PlugRoutesNames.userAddressBookList,
+        arguments: 'select');
     if (address != null) {
       addressController.text = address;
     }
   }
+
   // 扫码事件
   onScanQr() async {
-    var address = await Get.toNamed(PlugRoutesNames.walletQrScanner, parameters: { 'result': 'true' });
-    if (address is! String || !StringTool.checkChainAddress(address)) return LToast.error('ErrorWithAddressType'.tr);
+    var address = await Get.toNamed(PlugRoutesNames.walletQrScanner,
+        parameters: {'result': 'true'});
+    if (address is! String || !StringTool.checkChainAddress(address))
+      return LToast.error('ErrorWithAddressType'.tr);
     addressController.text = address;
   }
+
   // 全部划转
   onAllSend() {
     if (dataCoins.state.baseCoin.minUnit == state.tokenInfo.minUnit) {
-      int canUseVolume = int.parse(state.tokenInfo.amount) - int.parse(NumberTool.balanceToAmount(state.fee));
-      volumeController.text = NumberTool.amountToBalance(canUseVolume.toString(), scale: state.tokenInfo.scale);
+      int canUseVolume = int.parse(state.tokenInfo.amount) -
+          int.parse(NumberTool.balanceToAmount(state.fee));
+      volumeController.text = NumberTool.amountToBalance(
+          canUseVolume.toString(),
+          scale: state.tokenInfo.scale);
     } else {
-      volumeController.text = NumberTool.amountToBalance(state.tokenInfo.amount, scale: state.tokenInfo.scale);
+      volumeController.text = NumberTool.amountToBalance(state.tokenInfo.amount,
+          scale: state.tokenInfo.scale);
     }
   }
+
   // 确认转账
   onSend() async {
     Get.focusScope?.unfocus();
-    if (addressController.text == '') return LToast.warning('ErrorWithAddressInput'.tr);
+    if (addressController.text == '')
+      return LToast.warning('ErrorWithAddressInput'.tr);
     var _transferValue = NumberTool.balanceToAmount(volumeController.text);
     var douValue = double.tryParse(_transferValue);
-    if (
-      douValue == null || douValue == 0.0
-    ) return LToast.warning('ErrorWithVolumeInput'.tr);
+    if (douValue == null || douValue == 0.0)
+      return LToast.warning('ErrorWithVolumeInput'.tr);
     String? password = await LBottomSheet.passwordBottomSheet();
     if (password == null) return;
     LLoading.showLoading();
-    var mnemonicList = await WalletTool.decryptMnemonic(dataAccount.state.nowAccount!.stringifyRaw, password);
+    var mnemonicList = await WalletTool.decryptMnemonic(
+        dataAccount.state.nowAccount!.stringifyRaw, password);
     if (mnemonicList == null) {
       LLoading.dismiss();
       return LToast.warning('ErrorWithPasswordInput'.tr);
@@ -138,7 +157,8 @@ class WalletTokenSendPageController extends GetxController {
       result = await WalletTool.transfer(
         mnemonic: mnemonicList,
         toAddress: addressController.text,
-        volume: NumberTool.balanceToAmount(volumeController.text, scale: state.tokenInfo.scale),
+        volume: NumberTool.balanceToAmount(volumeController.text,
+            scale: state.tokenInfo.scale),
         gasAll: NumberTool.balanceToAmount(state.fee),
         denom: state.tokenInfo.minUnit,
       );
@@ -149,7 +169,9 @@ class WalletTokenSendPageController extends GetxController {
           'transfer(address,uint256)',
           [
             StringTool.anyToHex(addressController.text),
-            EvmClient.toolFormatVolumeToHex(double.tryParse(volumeController.text)??0, scale: state.tokenInfo.scale),
+            EvmClient.toolFormatVolumeToHex(
+                double.tryParse(volumeController.text) ?? 0,
+                scale: state.tokenInfo.scale),
           ],
         ),
       );
@@ -157,7 +179,8 @@ class WalletTokenSendPageController extends GetxController {
     state.sendLoading = false;
     _getInit();
     LLoading.dismiss();
-    if (result.status == -10001) return LToast.error('ErrorWithSendCallback'.tr);
+    if (result.status == -10001)
+      return LToast.error('ErrorWithSendCallback'.tr);
     if (result.status == -10002) return LToast.error('ErrorWithSendTimeout'.tr);
     if (result.status != 0) return LToast.error('ErrorWithSendUnknown'.tr);
     LToast.success('SuccessWithSend'.tr);

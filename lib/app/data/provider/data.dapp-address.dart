@@ -10,9 +10,7 @@ class DataDappAddressState {
   RxList<DappModel> dappCollectList = RxList();
   // 最近的dapp
   RxList<DappModel> dappLatelyList = RxList();
-  
 }
-
 
 class DataDappAddressController extends GetxController {
   DataDappAddressController() {
@@ -22,13 +20,13 @@ class DataDappAddressController extends GetxController {
 
   // 更新储存
   saveData() {
-    var collectList = state.dappCollectList.map((item) => item.toJson()).toList();
+    var collectList =
+        state.dappCollectList.map((item) => item.toJson()).toList();
     var latelyList = state.dappLatelyList.map((item) => item.toJson()).toList();
-    GetStorage().write(state.dappAddressName, json.encode({
-      'collectList': collectList,
-      'latelyList': latelyList
-    }));
+    GetStorage().write(state.dappAddressName,
+        json.encode({'collectList': collectList, 'latelyList': latelyList}));
   }
+
   // 读取本地数据
   _readStorage() {
     String? data = GetStorage().read(state.dappAddressName);

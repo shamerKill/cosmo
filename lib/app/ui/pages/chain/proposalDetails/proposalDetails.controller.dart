@@ -34,6 +34,7 @@ class _ProposalCardInfo {
   String vetoVolume = ''; // 否决数量
   _ProposalCardInfo();
 }
+
 // 投票交易信息
 class HashInfo {
   // 交易用户地址
@@ -54,6 +55,7 @@ class HashInfo {
     this.amount,
   });
 }
+
 // 投票类型
 enum EnumOptionStatus {
   agree, // 同意
@@ -72,79 +74,80 @@ class ChainProposalDetailsPageState {
   // 基础代币信息
   final Rx<TokenModel> _baseCoinInfo = TokenModel().obs;
   TokenModel get baseCoinInfo => _baseCoinInfo.value;
-  set baseCoinInfo (TokenModel value) => _baseCoinInfo.value = value;
+  set baseCoinInfo(TokenModel value) => _baseCoinInfo.value = value;
   // 提案详情信息
   final Rx<_ProposalCardInfo> _proposalInfo = _ProposalCardInfo().obs;
   _ProposalCardInfo get proposalInfo => _proposalInfo.value;
-  set proposalInfo (_ProposalCardInfo value) => _proposalInfo.value = value;
+  set proposalInfo(_ProposalCardInfo value) => _proposalInfo.value = value;
   // 所有投票列表页数
   final Rx<int> _allHashPage = 1.obs;
   int get allHashPage => _allHashPage.value;
-  set allHashPage (int value) => _allHashPage.value = value;
+  set allHashPage(int value) => _allHashPage.value = value;
   // 所有投票列表总页数
   final Rx<int> _allHashTotalPage = 1.obs;
   int get allHashTotalPage => _allHashTotalPage.value;
-  set allHashTotalPage (int value) => _allHashTotalPage.value = value;
+  set allHashTotalPage(int value) => _allHashTotalPage.value = value;
   // 所有投票列表总条数
   final Rx<int> _allHashTotalLength = 0.obs;
   int get allHashTotalLength => _allHashTotalLength.value;
-  set allHashTotalLength (int value) => _allHashTotalLength.value = value;
+  set allHashTotalLength(int value) => _allHashTotalLength.value = value;
   // 所有投票列表
   final RxList<HashInfo> allHashList = RxList();
   // 赞同投票列表页数
   final Rx<int> _agreeHashPage = 1.obs;
   int get agreeHashPage => _agreeHashPage.value;
-  set agreeHashPage (int value) => _agreeHashPage.value = value;
+  set agreeHashPage(int value) => _agreeHashPage.value = value;
   // 赞同投票列表总页数
   final Rx<int> _agreeHashTotalPage = 1.obs;
   int get agreeHashTotalPage => _agreeHashTotalPage.value;
-  set agreeHashTotalPage (int value) => _agreeHashTotalPage.value = value;
+  set agreeHashTotalPage(int value) => _agreeHashTotalPage.value = value;
   // 赞同投票列表总条数
   final Rx<int> _agreeHashTotalLength = 0.obs;
   int get agreeHashTotalLength => _agreeHashTotalLength.value;
-  set agreeHashTotalLength (int value) => _agreeHashTotalLength.value = value;
+  set agreeHashTotalLength(int value) => _agreeHashTotalLength.value = value;
   // 赞同投票列表
   final RxList<HashInfo> agreeHashList = RxList();
   // 不赞同投票页数
   final Rx<int> _rejectHashPage = 1.obs;
   int get rejectHashPage => _rejectHashPage.value;
-  set rejectHashPage (int value) => _rejectHashPage.value = value;
+  set rejectHashPage(int value) => _rejectHashPage.value = value;
   // 不赞同投票总页数
   final Rx<int> _rejectHashTotalPage = 1.obs;
   int get rejectHashTotalPage => _rejectHashTotalPage.value;
-  set rejectHashTotalPage (int value) => _rejectHashTotalPage.value = value;
+  set rejectHashTotalPage(int value) => _rejectHashTotalPage.value = value;
   // 不赞同投票列表总页数
   final Rx<int> _rejectHashTotalLength = 0.obs;
   int get rejectHashTotalLength => _rejectHashTotalLength.value;
-  set rejectHashTotalLength (int value) => _rejectHashTotalLength.value = value;
+  set rejectHashTotalLength(int value) => _rejectHashTotalLength.value = value;
   // 不赞同投票列表
   final RxList<HashInfo> rejectHashList = RxList();
   // 否定投票页数
   final Rx<int> _vetoHashPage = 1.obs;
   int get vetoHashPage => _vetoHashPage.value;
-  set vetoHashPage (int value) => _vetoHashPage.value = value;
+  set vetoHashPage(int value) => _vetoHashPage.value = value;
   // 否定投票总页数
   final Rx<int> _vetoHashTotalPage = 1.obs;
   int get vetoHashTotalPage => _vetoHashTotalPage.value;
-  set vetoHashTotalPage (int value) => _vetoHashTotalPage.value = value;
+  set vetoHashTotalPage(int value) => _vetoHashTotalPage.value = value;
   // 否定投票总条数
   final Rx<int> _vetoHashTotalLength = 0.obs;
   int get vetoHashTotalLength => _vetoHashTotalLength.value;
-  set vetoHashTotalLength (int value) => _vetoHashTotalLength.value = value;
+  set vetoHashTotalLength(int value) => _vetoHashTotalLength.value = value;
   // 否定投票列表
   final RxList<HashInfo> vetoHashList = RxList();
   // 弃权投票页数
   final Rx<int> _abandonHashPage = 1.obs;
   int get abandonHashPage => _abandonHashPage.value;
-  set abandonHashPage (int value) => _abandonHashPage.value = value;
+  set abandonHashPage(int value) => _abandonHashPage.value = value;
   // 弃权投票总页数
   final Rx<int> _abandonHashTotalPage = 1.obs;
   int get abandonHashTotalPage => _abandonHashTotalPage.value;
-  set abandonHashTotalPage (int value) => _abandonHashTotalPage.value = value;
+  set abandonHashTotalPage(int value) => _abandonHashTotalPage.value = value;
   // 弃权投票总条数
   final Rx<int> _abandonHashTotalLength = 0.obs;
   int get abandonHashTotalLength => _abandonHashTotalLength.value;
-  set abandonHashTotalLength (int value) => _abandonHashTotalLength.value = value;
+  set abandonHashTotalLength(int value) =>
+      _abandonHashTotalLength.value = value;
   // 弃权投票列表
   final RxList<HashInfo> abandonHashList = RxList();
   // 存款人列表
@@ -152,10 +155,11 @@ class ChainProposalDetailsPageState {
   // 投票页面高度
   final Rx<double> _vetoTabViewHeight = 0.0.obs;
   double get vetoTabViewHeight => _vetoTabViewHeight.value;
-  set vetoTabViewHeight (double value) => _vetoTabViewHeight.value = value;
+  set vetoTabViewHeight(double value) => _vetoTabViewHeight.value = value;
 }
 
-class ChainProposalDetailsPageController extends GetxController with GetTickerProviderStateMixin {
+class ChainProposalDetailsPageController extends GetxController
+    with GetTickerProviderStateMixin {
   ChainProposalDetailsPageController();
   ChainProposalDetailsPageState state = ChainProposalDetailsPageState();
   TabController? listTabController;
@@ -187,11 +191,11 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
 
   // 获取高度
   _getVetoHeight() {
-    var _height = vetoTitleKey.currentContext?.size?.height??0.0;
-    if (_height == 0.0) return Future.delayed(const Duration(milliseconds: 1000), _getVetoHeight);
+    var _height = vetoTitleKey.currentContext?.size?.height ?? 0.0;
+    if (_height == 0.0)
+      return Future.delayed(const Duration(milliseconds: 1000), _getVetoHeight);
     state.vetoTabViewHeight = _height * 14.0;
   }
-  
 
   // 获取信息
   _initGetData(String id) async {
@@ -205,24 +209,35 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
     var resultProposer = res[2];
     double memYesVolume = double.parse(resultTally.data['tally']['yes']);
     double memNoVolume = double.parse(resultTally.data['tally']['no']);
-    double memAbstainVolume = double.parse(resultTally.data['tally']['abstain']);
-    double memVetoVolume = double.parse(resultTally.data['tally']['no_with_veto']);
-    double memAllVolume = memYesVolume + memNoVolume + memAbstainVolume + memVetoVolume;
+    double memAbstainVolume =
+        double.parse(resultTally.data['tally']['abstain']);
+    double memVetoVolume =
+        double.parse(resultTally.data['tally']['no_with_veto']);
+    double memAllVolume =
+        memYesVolume + memNoVolume + memAbstainVolume + memVetoVolume;
     EnumProposalStatus memStatus = (() {
       switch (resultData['status']) {
-        case 'PROPOSAL_STATUS_UNSPECIFIED': return EnumProposalStatus.unspecified;
-        case 'PROPOSAL_STATUS_DEPOSIT_PERIOD': return EnumProposalStatus.deposit;
-        case 'PROPOSAL_STATUS_VOTING_PERIOD': return EnumProposalStatus.votingPeriod;
-        case 'PROPOSAL_STATUS_PASSED': return EnumProposalStatus.passed;
-        case 'PROPOSAL_STATUS_REJECTED': return EnumProposalStatus.rejected;
-        case 'PROPOSAL_STATUS_FAILED': return EnumProposalStatus.failed;
-        default: return EnumProposalStatus.unspecified;
+        case 'PROPOSAL_STATUS_UNSPECIFIED':
+          return EnumProposalStatus.unspecified;
+        case 'PROPOSAL_STATUS_DEPOSIT_PERIOD':
+          return EnumProposalStatus.deposit;
+        case 'PROPOSAL_STATUS_VOTING_PERIOD':
+          return EnumProposalStatus.votingPeriod;
+        case 'PROPOSAL_STATUS_PASSED':
+          return EnumProposalStatus.passed;
+        case 'PROPOSAL_STATUS_REJECTED':
+          return EnumProposalStatus.rejected;
+        case 'PROPOSAL_STATUS_FAILED':
+          return EnumProposalStatus.failed;
+        default:
+          return EnumProposalStatus.unspecified;
       }
     })();
     double memAllAmount = (() {
       double allAmount = 0;
       for (int i = 0; i < resultData['total_deposit'].length; i++) {
-        allAmount += double.tryParse(resultData['total_deposit'][i]['amount'])??0;
+        allAmount +=
+            double.tryParse(resultData['total_deposit'][i]['amount']) ?? 0;
       }
       return allAmount;
     })();
@@ -231,7 +246,8 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
       ..title = resultData['content']['title']
       ..status = memStatus
       ..sender = resultProposer.data['result']['proposer']
-      ..startBondVolume = NumberTool.amountToBalance(resultData['total_deposit'][0]['amount'])
+      ..startBondVolume =
+          NumberTool.amountToBalance(resultData['total_deposit'][0]['amount'])
       ..allBondVolume = NumberTool.amountToBalance('$memAllAmount')
       ..submitStartTime = DateTime.parse(resultData['submit_time'])
       ..fundEndTime = DateTime.parse(resultData['deposit_end_time'])
@@ -253,6 +269,7 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
       getList(1, 'SUPPORTER'),
     ]);
   }
+
   Future<void> getList(int page, String type) async {
     if (type == 'ALL') {
       if (page > state.allHashTotalPage) return;
@@ -284,56 +301,65 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
       state.depositsHashList.addAll(await _getDepositsList(page));
     }
   }
+
   Future<List<HashInfo>> _getDepositsList(int page) async {
-    var result = await httpToolApp.getChainProposalDetailDeposits(state.proposalInfo.id.toString());
+    var result = await httpToolApp
+        .getChainProposalDetailDeposits(state.proposalInfo.id.toString());
     List<HashInfo> _list = [];
     for (var item in result.data['deposits']) {
       var allAmount = 0.0;
       for (var j = 0; j < item['amount'].length; j++) {
-        allAmount += double.tryParse(item['amount'][j]['amount'])??0;
+        allAmount += double.tryParse(item['amount'][j]['amount']) ?? 0;
       }
       _list.add(HashInfo(
-        userAddress: item['depositor'],
-        hash: '',
-        dateTime: '',
-        amount: NumberTool.amountToBalance('$allAmount')
-      ));
+          userAddress: item['depositor'],
+          hash: '',
+          dateTime: '',
+          amount: NumberTool.amountToBalance('$allAmount')));
     }
     return _list;
   }
+
   Future<List<HashInfo>> _getAllVoteList(int page) async {
     LLoading.showLoading();
     var result = await _getVoteList(page);
     LLoading.dismiss();
     return result;
   }
+
   _getAgreeVoteList(int page) async {
     LLoading.showLoading();
     var result = await _getVoteList(page, type: 'VOTE_OPTION_YES');
     LLoading.dismiss();
     return result;
   }
+
   _getRejectVoteList(int page) async {
     LLoading.showLoading();
     var result = await _getVoteList(page, type: 'VOTE_OPTION_NO');
     LLoading.dismiss();
     return result;
   }
+
   _getVetoVoteList(int page) async {
     LLoading.showLoading();
     var result = await _getVoteList(page, type: 'VOTE_OPTION_NO_WITH_VETO');
     LLoading.dismiss();
     return result;
   }
+
   _getAbandonVoteList(int page) async {
     LLoading.showLoading();
     var result = await _getVoteList(page, type: 'VOTE_OPTION_ABSTAIN');
     LLoading.dismiss();
     return result;
   }
-  Future<List<HashInfo>> _getVoteList(int page, { String? type }) async {
-    var result = await httpToolApp.getChainProposalDetailVotes(state.proposalInfo.id.toString(), page, type: type, limit: 5);
-    int totalValue = int.tryParse(result.data['pagination']['total'])??0;
+
+  Future<List<HashInfo>> _getVoteList(int page, {String? type}) async {
+    var result = await httpToolApp.getChainProposalDetailVotes(
+        state.proposalInfo.id.toString(), page,
+        type: type, limit: 5);
+    int totalValue = int.tryParse(result.data['pagination']['total']) ?? 0;
     if (totalValue == 0) return [];
     int totalPage = (totalValue / 5).ceil();
     List<HashInfo> memList = [];
@@ -370,11 +396,11 @@ class ChainProposalDetailsPageController extends GetxController with GetTickerPr
     return memList;
   }
 
-
   // 转换比例
   String getVolumeRate(String volume) {
-    double allVolume = double.tryParse(state.proposalInfo.totalBalanceVolume)??1;
-    double douVolume = double.tryParse(volume)??0;
+    double allVolume =
+        double.tryParse(state.proposalInfo.totalBalanceVolume) ?? 1;
+    double douVolume = double.tryParse(volume) ?? 0;
     if (allVolume == 0) allVolume = 1;
     return ((douVolume / allVolume) * 100).toStringAsFixed(4);
   }

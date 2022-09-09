@@ -16,10 +16,14 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
     AccountAdminPageState state = controller.state;
 
     return LScaffold(
-      statusBar: LAppBar.defaultStatus(backgroundColor: appTheme.colors.pageBackgroundColor),
+      statusBar: LAppBar.defaultStatus(
+          backgroundColor: appTheme.colors.pageBackgroundColor),
       headerBar: LAppBar.defaultHeader(
         backgroundColor: appTheme.colors.pageBackgroundColor,
-        actions: IconButton(onPressed: controller.onShowScan, icon: Icon(Icons.qr_code_outlined, color: appTheme.colors.textBlack)),
+        actions: IconButton(
+            onPressed: controller.onShowScan,
+            icon:
+                Icon(Icons.qr_code_outlined, color: appTheme.colors.textBlack)),
       ),
       titleBar: LAppBar.defaultTitle(
         backgroundColor: appTheme.colors.pageBackgroundColor,
@@ -29,7 +33,10 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
         ),
       ),
       basicBackgroundColor: true,
-      padding: EdgeInsets.only(bottom: ScreenUtil.getBottomBarH(context) == 0 ? appTheme.sizes.padding : ScreenUtil.getBottomBarH(context)),
+      padding: EdgeInsets.only(
+          bottom: ScreenUtil.getBottomBarH(context) == 0
+              ? appTheme.sizes.padding
+              : ScreenUtil.getBottomBarH(context)),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,12 +49,14 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                   padding: EdgeInsets.only(right: appTheme.sizes.paddingSmall),
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.logoSize)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(appTheme.sizes.logoSize)),
                       color: appTheme.colors.pageBackgroundColorBasic,
                     ),
                     clipBehavior: Clip.antiAlias,
                     child: LViewImage(
-                      bgColor: StringTool.stringToColor(state.accountInfo.address),
+                      bgColor:
+                          StringTool.stringToColor(state.accountInfo.address),
                       width: appTheme.sizes.logoSize,
                       height: appTheme.sizes.logoSize,
                     ),
@@ -58,14 +67,24 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
-                      Obx(() => Text(state.accountInfo.nickName, style: TextStyle(fontSize: appTheme.sizes.fontSizeBig))),
-                      Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
-                      Obx(() => Text(state.accountInfo.address, style: Get.textTheme.bodyText1, softWrap: true)),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(top: appTheme.sizes.padding)),
+                      Obx(() => Text(state.accountInfo.nickName,
+                          style:
+                              TextStyle(fontSize: appTheme.sizes.fontSizeBig))),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: appTheme.sizes.paddingSmall / 2)),
+                      Obx(() => Text(state.accountInfo.address,
+                          style: Get.textTheme.bodyText1, softWrap: true)),
                     ],
                   ),
                 ),
-                IconButton(onPressed: controller.onCopyAddress, icon: Icon(const IconData(0xe6fc, fontFamily: 'plugIcon'), color: appTheme.colors.textGray)),
+                IconButton(
+                    onPressed: controller.onCopyAddress,
+                    icon: Icon(const IconData(0xe6fc, fontFamily: 'plugIcon'),
+                        color: appTheme.colors.textGray)),
               ],
             ),
           ),
@@ -73,7 +92,9 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
           InkWell(
             onTap: controller.onToBackupAddress,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
+              padding: EdgeInsets.symmetric(
+                  horizontal: appTheme.sizes.padding,
+                  vertical: appTheme.sizes.padding),
               decoration: BoxDecoration(
                 color: appTheme.colors.pageBackgroundColor,
               ),
@@ -84,27 +105,32 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
                     child: Text('backupAccount'.tr),
                   ),
                   Obx(() => Row(
-                    children: [
-                      if (state.accountInfo.createTime != null) Text('noBackup'.tr, style: Get.textTheme.bodyText1),
-                      Icon(
-                        const IconData(0xe658, fontFamily: 'plugIcon'),
-                        size: appTheme.sizes.fontSizeSmall,
-                        color: appTheme.colors.textGray,
-                      ),
-                    ],
-                  )),
+                        children: [
+                          if (state.accountInfo.createTime != null)
+                            Text('noBackup'.tr, style: Get.textTheme.bodyText1),
+                          Icon(
+                            const IconData(0xe658, fontFamily: 'plugIcon'),
+                            size: appTheme.sizes.fontSizeSmall,
+                            color: appTheme.colors.textGray,
+                          ),
+                        ],
+                      )),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall, horizontal: appTheme.sizes.padding),
+            padding: EdgeInsets.symmetric(
+                vertical: appTheme.sizes.paddingSmall,
+                horizontal: appTheme.sizes.padding),
             child: Text('backupDesc'.tr, style: Get.textTheme.bodyText1),
           ),
           InkWell(
             onTap: controller.onEditPassword,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
+              padding: EdgeInsets.symmetric(
+                  horizontal: appTheme.sizes.padding,
+                  vertical: appTheme.sizes.padding),
               decoration: BoxDecoration(
                 color: appTheme.colors.pageBackgroundColor,
               ),
@@ -127,7 +153,9 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
           InkWell(
             onTap: controller.onEditAccountName,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
+              padding: EdgeInsets.symmetric(
+                  horizontal: appTheme.sizes.padding,
+                  vertical: appTheme.sizes.padding),
               decoration: BoxDecoration(
                 color: appTheme.colors.pageBackgroundColor,
               ),
@@ -147,18 +175,24 @@ class AccountAdminPage extends GetView<AccountAdminPageController> {
             ),
           ),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
-          if (state.accountInfo.address != state.useAccountInfo.address) InkWell(
-            onTap: controller.onRemoveAccount,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding, vertical: appTheme.sizes.padding),
-              decoration: BoxDecoration(
-                color: appTheme.colors.pageBackgroundColor,
-              ),
-              child: Center(
-                child: Text('delete'.tr, style: TextStyle(color: appTheme.colors.errorColor, fontSize: appTheme.sizes.fontSizeBig)),
+          if (state.accountInfo.address != state.useAccountInfo.address)
+            InkWell(
+              onTap: controller.onRemoveAccount,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: appTheme.sizes.padding,
+                    vertical: appTheme.sizes.padding),
+                decoration: BoxDecoration(
+                  color: appTheme.colors.pageBackgroundColor,
+                ),
+                child: Center(
+                  child: Text('delete'.tr,
+                      style: TextStyle(
+                          color: appTheme.colors.errorColor,
+                          fontSize: appTheme.sizes.fontSizeBig)),
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

@@ -8,13 +8,23 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
+
 @$core.Deprecated('Use genesisStateDescriptor instead')
 const GenesisState$json = const {
   '1': 'GenesisState',
   '2': const [
-    const {'1': 'collections', '3': 1, '4': 3, '5': 11, '6': '.plugchain.nft.Collection', '8': const {}, '10': 'collections'},
+    const {
+      '1': 'collections',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.plugchain.nft.Collection',
+      '8': const {},
+      '10': 'collections'
+    },
   ],
 };
 
 /// Descriptor for `GenesisState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List genesisStateDescriptor = $convert.base64Decode('CgxHZW5lc2lzU3RhdGUSQQoLY29sbGVjdGlvbnMYASADKAsyGS5wbHVnY2hhaW4ubmZ0LkNvbGxlY3Rpb25CBMjeHwBSC2NvbGxlY3Rpb25z');
+final $typed_data.Uint8List genesisStateDescriptor = $convert.base64Decode(
+    'CgxHZW5lc2lzU3RhdGUSQQoLY29sbGVjdGlvbnMYASADKAsyGS5wbHVnY2hhaW4ubmZ0LkNvbGxlY3Rpb25CBMjeHwBSC2NvbGxlY3Rpb25z');

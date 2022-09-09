@@ -16,26 +16,35 @@ import 'tx.pbjson.dart';
 export 'tx.pb.dart';
 
 abstract class MsgServiceBase extends $pb.GeneratedService {
-  $async.Future<$33.MsgGrantAllowanceResponse> grantAllowance($pb.ServerContext ctx, $33.MsgGrantAllowance request);
-  $async.Future<$33.MsgRevokeAllowanceResponse> revokeAllowance($pb.ServerContext ctx, $33.MsgRevokeAllowance request);
+  $async.Future<$33.MsgGrantAllowanceResponse> grantAllowance(
+      $pb.ServerContext ctx, $33.MsgGrantAllowance request);
+  $async.Future<$33.MsgRevokeAllowanceResponse> revokeAllowance(
+      $pb.ServerContext ctx, $33.MsgRevokeAllowance request);
 
   $pb.GeneratedMessage createRequest($core.String method) {
     switch (method) {
-      case 'GrantAllowance': return $33.MsgGrantAllowance();
-      case 'RevokeAllowance': return $33.MsgRevokeAllowance();
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'GrantAllowance':
+        return $33.MsgGrantAllowance();
+      case 'RevokeAllowance':
+        return $33.MsgRevokeAllowance();
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
-  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx, $core.String method, $pb.GeneratedMessage request) {
+  $async.Future<$pb.GeneratedMessage> handleCall($pb.ServerContext ctx,
+      $core.String method, $pb.GeneratedMessage request) {
     switch (method) {
-      case 'GrantAllowance': return this.grantAllowance(ctx, request as $33.MsgGrantAllowance);
-      case 'RevokeAllowance': return this.revokeAllowance(ctx, request as $33.MsgRevokeAllowance);
-      default: throw $core.ArgumentError('Unknown method: $method');
+      case 'GrantAllowance':
+        return this.grantAllowance(ctx, request as $33.MsgGrantAllowance);
+      case 'RevokeAllowance':
+        return this.revokeAllowance(ctx, request as $33.MsgRevokeAllowance);
+      default:
+        throw $core.ArgumentError('Unknown method: $method');
     }
   }
 
   $core.Map<$core.String, $core.dynamic> get $json => MsgServiceBase$json;
-  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>> get $messageJson => MsgServiceBase$messageJson;
+  $core.Map<$core.String, $core.Map<$core.String, $core.dynamic>>
+      get $messageJson => MsgServiceBase$messageJson;
 }
-

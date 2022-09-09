@@ -18,7 +18,8 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
     DappExhibitionPageState state = controller.state;
 
     return LScaffold(
-      statusBar: LAppBar.defaultStatus(backgroundColor: appTheme.colors.pageBackgroundColorBasic),
+      statusBar: LAppBar.defaultStatus(
+          backgroundColor: appTheme.colors.pageBackgroundColorBasic),
       headerBar: Padding(
         padding: EdgeInsets.only(
           left: appTheme.sizes.padding,
@@ -60,11 +61,12 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
               onTap: controller.onGoToQrScan,
               splashColor: appTheme.colors.transparent,
               child: Padding(
-                padding: EdgeInsets.only(left: appTheme.sizes.paddingSmall, top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall),
-                child: Icon(
-                  const IconData(0xe6de, fontFamily: 'plugIcon'),
-                  color: appTheme.colors.textBlack
-                ),
+                padding: EdgeInsets.only(
+                    left: appTheme.sizes.paddingSmall,
+                    top: appTheme.sizes.paddingSmall,
+                    bottom: appTheme.sizes.paddingSmall),
+                child: Icon(const IconData(0xe6de, fontFamily: 'plugIcon'),
+                    color: appTheme.colors.textBlack),
               ),
             ),
           ],
@@ -77,7 +79,8 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
           Container(
             decoration: BoxDecoration(
               color: appTheme.colors.pageBackgroundColor,
-              borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
             ),
             clipBehavior: Clip.antiAlias,
             child: Column(
@@ -85,14 +88,15 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(appTheme.sizes.radius)),
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: Obx(() => LViewImage(
-                    url: state.topBanner,
-                    width: appTheme.sizes.basic * 690,
-                    height: appTheme.sizes.basic * 240,
-                  )),
+                        url: state.topBanner,
+                        width: appTheme.sizes.basic * 690,
+                        height: appTheme.sizes.basic * 240,
+                      )),
                 ),
                 if (state.localDappTab != null)
                   Row(
@@ -107,29 +111,36 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                         indicatorSize: TabBarIndicatorSize.label,
                         tabs: [
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+                            padding: EdgeInsets.symmetric(
+                                vertical: appTheme.sizes.paddingSmall),
                             child: Text('collection'.tr),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: appTheme.sizes.paddingSmall),
+                            padding: EdgeInsets.symmetric(
+                                vertical: appTheme.sizes.paddingSmall),
                             child: Text('lately'.tr),
                           ),
                         ],
                       ),
-                      Obx(() => (state.localDappTabIndex == 0) ? InkWell(
-                        onTap: controller.onGoToCollection,
-                        child: Row(
-                          children: [
-                            Text('all'.tr, style: Get.textTheme.bodyText1),
-                            Icon(
-                              Icons.chevron_right_outlined,
-                              size: appTheme.sizes.fontSizeSmall,
-                              color: appTheme.colors.textGray,
-                            ),
-                            Padding(padding: EdgeInsets.only(right: appTheme.sizes.paddingSmall)),
-                          ],
-                        ),
-                      ) : Container()),
+                      Obx(() => (state.localDappTabIndex == 0)
+                          ? InkWell(
+                              onTap: controller.onGoToCollection,
+                              child: Row(
+                                children: [
+                                  Text('all'.tr,
+                                      style: Get.textTheme.bodyText1),
+                                  Icon(
+                                    Icons.chevron_right_outlined,
+                                    size: appTheme.sizes.fontSizeSmall,
+                                    color: appTheme.colors.textGray,
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          right: appTheme.sizes.paddingSmall)),
+                                ],
+                              ),
+                            )
+                          : Container()),
                     ],
                   ),
                 if (state.localDappTab != null)
@@ -141,20 +152,26 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Obx(() => Row(
-                            children: [
-                              for (DappModel _item in controller.dataDappAddress.state.dappCollectList)
-                                _LocalDappItem(item: _item, goToDapp: controller.onGoToDapp)
-                            ],
-                          )),
+                                children: [
+                                  for (DappModel _item in controller
+                                      .dataDappAddress.state.dappCollectList)
+                                    _LocalDappItem(
+                                        item: _item,
+                                        goToDapp: controller.onGoToDapp)
+                                ],
+                              )),
                         ),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Obx(() => Row(
-                            children: [
-                              for (DappModel _item in controller.dataDappAddress.state.dappLatelyList)
-                                _LocalDappItem(item: _item, goToDapp: controller.onGoToDapp)
-                            ],
-                          )),
+                                children: [
+                                  for (DappModel _item in controller
+                                      .dataDappAddress.state.dappLatelyList)
+                                    _LocalDappItem(
+                                        item: _item,
+                                        goToDapp: controller.onGoToDapp)
+                                ],
+                              )),
                         ),
                       ],
                     ),
@@ -165,65 +182,75 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
           Expanded(
             child: Obx(() => Container(
-              width: appTheme.sizes.infinity,
-              decoration: BoxDecoration(
-                color: appTheme.colors.pageBackgroundColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(appTheme.sizes.radius),
-                  topRight: Radius.circular(appTheme.sizes.radius),
-                ),
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: state.remoteDappTab == null ? null
-                : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: appTheme.sizes.infinity,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: appTheme.colors.borderColor,
-                            width: appTheme.sizes.basic,
-                          ),
-                        ),
-                      ),
-                      child: TabBar(
-                        isScrollable: true,
-                        controller: state.remoteDappTab,
-                        labelColor: appTheme.colors.textBlack,
-                        unselectedLabelColor: appTheme.colors.textGray,
-                        indicatorColor: appTheme.colors.textBlack,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        tabs: [
-                          for (DappRemoteTypeModel _item in state.remoteDappType)
-                            Padding(
-                              padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall, bottom: appTheme.sizes.paddingSmall / 2),
-                              child: Text(_item.name),
-                            ),
-                        ],
-                      ),
+                  width: appTheme.sizes.infinity,
+                  decoration: BoxDecoration(
+                    color: appTheme.colors.pageBackgroundColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(appTheme.sizes.radius),
+                      topRight: Radius.circular(appTheme.sizes.radius),
                     ),
-                    Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall / 2)),
-                    Expanded(
-                      child: TabBarView(
-                        controller: state.remoteDappTab,
-                        children: [
-                          for (List<DappModel> _list in state.remoteDappList)
-                            SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  for (DappModel _item in _list)
-                                    _RemoteDappItem(item: _item, goToDapp: controller.onGoToDapp)
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: state.remoteDappTab == null
+                      ? null
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: appTheme.sizes.infinity,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: appTheme.colors.borderColor,
+                                    width: appTheme.sizes.basic,
+                                  ),
+                                ),
+                              ),
+                              child: TabBar(
+                                isScrollable: true,
+                                controller: state.remoteDappTab,
+                                labelColor: appTheme.colors.textBlack,
+                                unselectedLabelColor: appTheme.colors.textGray,
+                                indicatorColor: appTheme.colors.textBlack,
+                                indicatorSize: TabBarIndicatorSize.label,
+                                tabs: [
+                                  for (DappRemoteTypeModel _item
+                                      in state.remoteDappType)
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: appTheme.sizes.paddingSmall,
+                                          bottom:
+                                              appTheme.sizes.paddingSmall / 2),
+                                      child: Text(_item.name),
+                                    ),
                                 ],
                               ),
-                            )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-            )),
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(
+                                    top: appTheme.sizes.paddingSmall / 2)),
+                            Expanded(
+                              child: TabBarView(
+                                controller: state.remoteDappTab,
+                                children: [
+                                  for (List<DappModel> _list
+                                      in state.remoteDappList)
+                                    SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          for (DappModel _item in _list)
+                                            _RemoteDappItem(
+                                                item: _item,
+                                                goToDapp: controller.onGoToDapp)
+                                        ],
+                                      ),
+                                    )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                )),
           ),
         ],
       ),
@@ -233,7 +260,8 @@ class DappExhibitionPage extends GetView<DappExhibitionPageController> {
 }
 
 class _LocalDappItem extends StatelessWidget {
-  const _LocalDappItem({ Key? key, required this.item, required this.goToDapp }) : super(key: key);
+  const _LocalDappItem({Key? key, required this.item, required this.goToDapp})
+      : super(key: key);
   final DappModel item;
   final Function(String link) goToDapp;
 
@@ -252,12 +280,14 @@ class _LocalDappItem extends StatelessWidget {
               padding: EdgeInsets.all(appTheme.sizes.basic * 2.0),
               decoration: BoxDecoration(
                 border: Border.all(color: appTheme.colors.borderColor),
-                borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                color: appTheme.colors.pageBackgroundColor, 
+                borderRadius:
+                    BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                color: appTheme.colors.pageBackgroundColor,
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: LViewImage(
@@ -269,9 +299,14 @@ class _LocalDappItem extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall * 0.8),
-              child: Text(StringTool.hideAddressCenter(
-                item.title == '' ? StringTool.getNetLocal(item.address) : item.title, startLen: 10, endLen: 0
-              ), style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall)),
+              child: Text(
+                  StringTool.hideAddressCenter(
+                      item.title == ''
+                          ? StringTool.getNetLocal(item.address)
+                          : item.title,
+                      startLen: 10,
+                      endLen: 0),
+                  style: TextStyle(fontSize: appTheme.sizes.fontSizeSmall)),
             ),
           ],
         ),
@@ -281,7 +316,8 @@ class _LocalDappItem extends StatelessWidget {
 }
 
 class _RemoteDappItem extends StatelessWidget {
-  const _RemoteDappItem({ Key? key, required this.item, required this.goToDapp }) : super(key: key);
+  const _RemoteDappItem({Key? key, required this.item, required this.goToDapp})
+      : super(key: key);
   final DappModel item;
   final Function(String link) goToDapp;
 
@@ -297,12 +333,14 @@ class _RemoteDappItem extends StatelessWidget {
               padding: EdgeInsets.all(appTheme.sizes.basic * 2.0),
               decoration: BoxDecoration(
                 border: Border.all(color: appTheme.colors.borderColor),
-                borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                color: appTheme.colors.pageBackgroundColor, 
+                borderRadius:
+                    BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                color: appTheme.colors.pageBackgroundColor,
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: LViewImage(
@@ -324,13 +362,15 @@ class _RemoteDappItem extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(color: appTheme.colors.borderColor.withOpacity(0.6)),
+                    bottom: BorderSide(
+                        color: appTheme.colors.borderColor.withOpacity(0.6)),
                   ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(StringTool.hideAddressCenter(item.title, startLen: 15, endLen: 0)),
+                    Text(StringTool.hideAddressCenter(item.title,
+                        startLen: 15, endLen: 0)),
                     Text(
                       item.description,
                       style: Get.textTheme.bodyText1,
