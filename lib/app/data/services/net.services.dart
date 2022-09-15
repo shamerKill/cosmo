@@ -11,6 +11,15 @@ import 'package:plug/app/data/models/interface/interface.dart';
 class _HttpToolApp extends UriTool {
   _HttpToolApp() : super(Env.envConfig.urlInfo.chainInfoRpcUrl);
 
+  // 获取主链年化收益率
+  Future<String> getChainRate() {
+    return HttpToolClient.getHttp(customUri('/cosmos/mint/v1beta1/inflation'))
+        .then(
+      (res) => res.data['inflation'],
+      onError: (e) => null,
+    );
+  }
+
   /// 获取账户信息
   Future<HttpToolResponse?> getAccountChainInfo(String address) {
     return HttpToolClient.getHttp(

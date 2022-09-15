@@ -51,10 +51,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                     children: [
                                       LAnimationView(
                                         randomKey: false,
-                                        child: Text(
-                                            NumberTool.formatNumberStr(
-                                                NumberTool.amountToBalance(
-                                                    _item.minPledgeVolume)),
+                                        child: Text(_item.yieldRate,
                                             style: TextStyle(
                                               color:
                                                   appTheme.colors.primaryColor,
@@ -67,7 +64,7 @@ class ChainVerifiersPage extends GetView<ChainVerifiersPageController> {
                                           padding: EdgeInsets.only(
                                               top: appTheme.sizes.paddingSmall *
                                                   0.5)),
-                                      Text('minVolumeForPledge'.tr,
+                                      Text('yearYieldRate'.tr,
                                           style: Get.textTheme.bodyText1)
                                     ],
                                   ),

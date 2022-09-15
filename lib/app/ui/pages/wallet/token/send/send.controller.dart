@@ -40,6 +40,8 @@ class WalletTokenSendPageController extends GetxController {
   TextEditingController addressController = TextEditingController();
   // 数量controller
   TextEditingController volumeController = TextEditingController();
+  // 备注controller
+  TextEditingController remarksController = TextEditingController();
 
   DataAccountController dataAccount = Get.find();
   DataCoinsController dataCoins = Get.find();
@@ -155,13 +157,13 @@ class WalletTokenSendPageController extends GetxController {
     HttpToolResponse result;
     if (state.tokenInfo.type == enumTokenType.prc10) {
       result = await WalletTool.transfer(
-        mnemonic: mnemonicList,
-        toAddress: addressController.text,
-        volume: NumberTool.balanceToAmount(volumeController.text,
-            scale: state.tokenInfo.scale),
-        gasAll: NumberTool.balanceToAmount(state.fee),
-        denom: state.tokenInfo.minUnit,
-      );
+          mnemonic: mnemonicList,
+          toAddress: addressController.text,
+          volume: NumberTool.balanceToAmount(volumeController.text,
+              scale: state.tokenInfo.scale),
+          gasAll: NumberTool.balanceToAmount(state.fee),
+          denom: state.tokenInfo.minUnit,
+          memo: remarksController.text);
     } else {
       result = await EvmClient(mnemonic: mnemonicList).sendAsync(
         StringTool.anyToHex(state.tokenInfo.contractAddress),

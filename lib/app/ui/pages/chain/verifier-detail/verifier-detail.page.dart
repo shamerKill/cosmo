@@ -270,6 +270,26 @@ class ChainVerifierDetailPage
                     ),
                   ],
                 ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding:
+                            EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+                    Text('yearYieldRate'.tr,
+                        style: TextStyle(color: appTheme.colors.textGrayBig)),
+                    Padding(
+                        padding: EdgeInsets.only(
+                            bottom: appTheme.sizes.paddingSmall * 0.5)),
+                    Obx(() => Text(state.verifierInfo.yieldRate)),
+                    Padding(
+                        padding: EdgeInsets.only(
+                            bottom: appTheme.sizes.paddingSmall)),
+                    DottedLine(
+                      dashColor: appTheme.colors.borderColor,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

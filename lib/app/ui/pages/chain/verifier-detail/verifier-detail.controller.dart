@@ -8,6 +8,7 @@ import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/wallet.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -62,15 +63,24 @@ class ChainVerifierDetailPageController extends GetxController {
   _getData({bool init = false}) async {
     // 获取验证者信息
     if (init) LLoading.showBgLoading();
-    var result =
-        await httpToolApp.getChainVerifierInfo(state.verifierInfo.address);
+    var httpResult = await Future.wait([
+      httpToolApp.getChainVerifierInfo(state.verifierInfo.address),
+      httpToolApp.getChainRate(),
+    ]);
+    HttpToolResponse? result = httpResult.first as HttpToolResponse?;
+    String chainRate = httpResult.last as String;
     if (result == null || result.status != 0 || result.data == null) return;
     var verifier = result.data['validator'];
     state.verifierInfo
       ..nickName = verifier['description']['moniker']
       ..setStatus(verifier['status'])
       ..allPledged = verifier['tokens']
-      ..minPledgeVolume = verifier['min_self_delegation'];
+      ..minPledgeVolume = verifier['min_self_delegation']
+      ..yieldRate = NumberTool.toPercentage(
+          inputNum: double.parse(chainRate) *
+              (1 -
+                  double.parse(
+                      verifier['commission']['commission_rates']['rate'])));
     state.baseCoinInfo = dataCoins.state.baseCoin;
     if (state.showPledgedState == true) {
       var _res = await Future.wait([

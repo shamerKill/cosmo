@@ -4,6 +4,7 @@ import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/utils/number.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChainVerifiersPageState {
@@ -22,6 +23,9 @@ class ChainVerifiersPageState {
 }
 
 class ChainVerifiersPageController extends GetxController {
+  // 主网收益率
+  String? chainRate;
+
   ChainVerifiersPageController();
   ChainVerifiersPageState state = ChainVerifiersPageState();
   DataAccountController dataAccount = Get.find();
@@ -40,6 +44,7 @@ class ChainVerifiersPageController extends GetxController {
   }
 
   _getData() async {
+    chainRate ??= await httpToolApp.getChainRate();
     if (state.initMyPledgeList == false) {
       var _pledgeResult = await httpToolApp
           .getAccountDelegateData(dataAccount.state.nowAccount!.address);
@@ -78,7 +83,12 @@ class ChainVerifiersPageController extends GetxController {
           ..setStatus(_item['status'])
           ..nickName = _item['description']['moniker']
           ..allPledged = _item['tokens']
-          ..minPledgeVolume = _item['min_self_delegation']);
+          ..minPledgeVolume = _item['min_self_delegation']
+          ..yieldRate = NumberTool.toPercentage(
+              inputNum: double.parse(chainRate!) *
+                  (1 -
+                      double.parse(
+                          _item['commission']['commission_rates']['rate']))));
       }
     }
     // 获取节点头像

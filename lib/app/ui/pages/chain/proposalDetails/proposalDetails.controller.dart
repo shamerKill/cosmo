@@ -63,6 +63,7 @@ enum EnumOptionStatus {
   reject, // 不同意
   veto, // 否决
 }
+
 Map<String, EnumOptionStatus> _mapOptionStatus = {
   'VOTE_OPTION_YES': EnumOptionStatus.agree,
   'VOTE_OPTION_NO': EnumOptionStatus.abandon,
@@ -192,8 +193,9 @@ class ChainProposalDetailsPageController extends GetxController
   // 获取高度
   _getVetoHeight() {
     var _height = vetoTitleKey.currentContext?.size?.height ?? 0.0;
-    if (_height == 0.0)
+    if (_height == 0.0) {
       return Future.delayed(const Duration(milliseconds: 1000), _getVetoHeight);
+    }
     state.vetoTabViewHeight = _height * 14.0;
   }
 

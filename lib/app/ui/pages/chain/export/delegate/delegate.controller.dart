@@ -80,9 +80,11 @@ class ChainExportDelegatePageController extends GetxController {
       for (var _reItem in rewardInfo?.data['rewards']) {
         if (_reItem['validator_address'] ==
             delegation['delegation']['validator_address']) {
-          var _amount = _reItem['reward'].firstWhere(
-              (_ele) => _ele['denom'] == state.tokenInfo.minUnit)['amount'];
-          _info.reward = NumberTool.getNumberInt(_amount);
+          if (_reItem['reward'].length != 0) {
+            var _amount = _reItem['reward'].firstWhere(
+                (_ele) => _ele['denom'] == state.tokenInfo.minUnit)['amount'];
+            _info.reward = NumberTool.getNumberInt(_amount);
+          }
           break;
         }
       }

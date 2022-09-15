@@ -81,4 +81,21 @@ class NumberTool {
       return '';
     }
   }
+
+  static String toPercentage({
+    String? inputStr,
+    double? inputNum,
+    int scale = 2,
+  }) {
+    double num = 0;
+    if (inputStr != null) {
+      num = double.parse(inputStr);
+    } else if (inputNum != null) {
+      num = inputNum;
+    } else {
+      return '';
+    }
+    num = num * 100;
+    return '${num.toStringAsFixed(scale)}%';
+  }
 }

@@ -20,6 +20,7 @@ enum EnumProposalStatus {
   deposit, // 筹款中
   failed, // 失败
 }
+
 Map<EnumProposalStatus, String> statusMap = {
   EnumProposalStatus.votingPeriod: 'proposalIng'.tr,
   EnumProposalStatus.passed: 'passedType'.tr,

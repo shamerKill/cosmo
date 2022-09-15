@@ -75,6 +75,14 @@ class WalletTokenSendPage extends GetView<WalletTokenSendPageController> {
                 ),
               )),
           Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+          Text('remark'.tr,
+              style: TextStyle(color: appTheme.colors.textBlackBig)),
+          Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
+          Obx(() => LInput(
+                textController: controller.remarksController,
+                disabled: state.sendLoading,
+              )),
+          Padding(padding: EdgeInsets.only(top: appTheme.sizes.paddingSmall)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

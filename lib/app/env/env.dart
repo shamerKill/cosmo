@@ -32,11 +32,24 @@ abstract class _EnvName {
   static const String release = "release";
   static const String test = "test";
 }
+// 声明的渠道
+abstract class EnvChannel {
+  // 渠道key
+  static const String envKey = "BUILD_CHANNEL";
+  // 浏览器 android
+  static const String android = "android-browser";
+  // ios
+  static const String ios = "ios-browser";
+  // google
+  static const String google = "android-google";
+}
 
 // 获取的配置信息
 class Env {
   // 获取到当前环境
   static const _appEnv = String.fromEnvironment(_EnvName.envKey);
+  // 获取到渠道版本
+  static const channel = String.fromEnvironment(EnvChannel.envKey);
 
   static final EnvConfig _debugConfig = EnvConfig(
     type: EnvType.debug,
