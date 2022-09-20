@@ -31,7 +31,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
             Obx(() => LViewImage(
                   url: state.tokenInfo.logo,
                   bgColor: StringTool.stringToColor(
-                      state.tokenInfo.type == enumTokenType.prc20
+                      state.tokenInfo.type == EnumTokenType.prc20
                           ? state.tokenInfo.contractAddress
                           : state.tokenInfo.minUnit),
                   width: appTheme.sizes.basic * 80,
@@ -74,7 +74,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     ],
                   ),
                 ),
-                Obx(() => state.tokenInfo.type == enumTokenType.prc10
+                Obx(() => state.tokenInfo.type == EnumTokenType.prc10
                     ? (Padding(
                         padding: EdgeInsets.only(top: appTheme.sizes.padding),
                         child: Row(
@@ -101,7 +101,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     ],
                   ),
                 ),
-                Obx(() => state.tokenInfo.type == enumTokenType.prc10
+                Obx(() => state.tokenInfo.type == EnumTokenType.prc10
                     ? (Padding(
                         padding: EdgeInsets.only(top: appTheme.sizes.padding),
                         child: Row(
@@ -142,7 +142,7 @@ class WalletTokenDetailPage extends GetView<WalletTokenDetailPageController> {
                     ],
                   ),
                 ),
-                Obx(() => state.tokenInfo.type == enumTokenType.prc20
+                Obx(() => state.tokenInfo.type == EnumTokenType.prc20
                     ? (Padding(
                         padding: EdgeInsets.only(top: appTheme.sizes.padding),
                         child: Row(

@@ -76,8 +76,9 @@ class AccountAdminVerifyPageController extends GetxController {
     state.verifyLoading = false;
     if (state.type == 1) return LToast.error('notSupportedMnemonic'.tr);
     // 助记词列表
-    if (resultMnemonic == null)
+    if (resultMnemonic == null) {
       return LToast.error('ErrorWithPasswordInput'.tr);
+    }
     Get.back<String?>(result: resultMnemonic);
   }
 }

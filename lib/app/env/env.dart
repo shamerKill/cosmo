@@ -39,7 +39,7 @@ abstract class EnvChannel {
   // 浏览器 android
   static const String android = "android-browser";
   // ios
-  static const String ios = "ios-browser";
+  static const String iosTest = "ios-browser";
   // google
   static const String google = "android-google";
 }
@@ -49,7 +49,7 @@ class Env {
   // 获取到当前环境
   static const _appEnv = String.fromEnvironment(_EnvName.envKey);
   // 获取到渠道版本
-  static const channel = String.fromEnvironment(EnvChannel.envKey);
+  static const _channel = String.fromEnvironment(EnvChannel.envKey);
 
   static final EnvConfig _debugConfig = EnvConfig(
     type: EnvType.debug,
@@ -84,5 +84,32 @@ class Env {
       default:
         return _debugConfig;
     }
+  }
+  // 获取不同的渠道
+  static String? get envChannel {
+    if (_channel == EnvChannel.android) return EnvChannel.android;
+    if (_channel == EnvChannel.google) return EnvChannel.google;
+    if (_channel == EnvChannel.iosTest) return EnvChannel.iosTest;
+    return null;
+  }
+  // 判断渠道是不是android
+  static bool get getEnvIsAndroid {
+    if (getEnvIsAndroidBrowser || getEnvIsGooglePlay) return true;
+    return false;
+  }
+  // 判断渠道是不是从安卓浏览器下载
+  static bool get getEnvIsAndroidBrowser {
+    if (_channel == EnvChannel.android) return true;
+    return false;
+  }
+  // 判读渠道是不是ios浏览器下载
+  static bool get getEnvIsIosBrowser {
+    if (_channel == EnvChannel.iosTest) return true;
+    return false;
+  }
+  // 判断渠道是不是从谷歌商店下载
+  static bool get getEnvIsGooglePlay {
+    if (_channel == EnvChannel.google) return true;
+    return false;
   }
 }

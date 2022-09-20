@@ -14,7 +14,9 @@ class UserAboutPage extends GetView<UserAboutPageController> {
 
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
-      headerBar: LAppBar.defaultHeader(),
+      headerBar: LAppBar.defaultHeader(
+        // showBack: false
+      ),
       basicBackgroundColor: true,
       singleScroll: true,
       body: Column(
@@ -42,7 +44,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
               bottom: appTheme.sizes.padding * 2,
             ),
             child: Obx(() => Text(
-                  state.appVersion,
+                  'v ' + state.appVersion,
                   style: TextStyle(color: appTheme.colors.textGray),
                 )),
           ),
@@ -54,35 +56,39 @@ class UserAboutPage extends GetView<UserAboutPageController> {
             ),
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: appTheme.sizes.padding,
-                      horizontal: appTheme.sizes.padding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('versionUpdateLogs'.tr),
-                      Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
-                          color: appTheme.colors.textGray,
-                          size: appTheme.sizes.iconSize * 0.6),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: appTheme.sizes.basic,
-                  width: appTheme.sizes.infinity,
-                  color: appTheme.colors.borderColor,
-                ),
+                // // 更新日志
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       vertical: appTheme.sizes.padding,
+                //       horizontal: appTheme.sizes.padding),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text('versionUpdateLogs'.tr),
+                //       Icon(const IconData(0xe658, fontFamily: 'plugIcon'),
+                //           color: appTheme.colors.textGray,
+                //           size: appTheme.sizes.iconSize * 0.6),
+                //     ],
+                //   ),
+                // ),
+                // Container(
+                //   height: appTheme.sizes.basic,
+                //   width: appTheme.sizes.infinity,
+                //   color: appTheme.colors.borderColor,
+                // ),
                 InkWell(
                   onTap: controller.onUpdateVersion,
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                         vertical: appTheme.sizes.padding,
                         horizontal: appTheme.sizes.padding),
-                    child: Row(
+                    child: Obx(() => Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('versionUpdate'.tr),
+                        if (state.hadUpdate == '')
+                          Text('versionUpdate'.tr)
+                        else 
+                          Text('versionUpdateFunc'.tr),
                         if (state.hadUpdate == '')
                           Text('versionIsLasted'.tr,
                               style: Get.textTheme.bodyText1)
@@ -90,7 +96,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                           Row(
                             children: [
                               Text('v ${state.hadUpdate}',
-                                  style: Get.textTheme.bodyText1),
+                                  style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.primaryColor)),
                               Padding(
                                   padding: EdgeInsets.only(
                                       left: appTheme.sizes.paddingSmall / 2)),
@@ -106,7 +112,7 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                             ],
                           ),
                       ],
-                    ),
+                    )),
                   ),
                 ),
               ],
@@ -133,12 +139,15 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('website'.tr),
-                      Obx(() => SelectableText(
+                      InkWell(
+                        onTap: controller.onGoToBrowser,
+                        child: Obx(() => Text(
                             state.webSite,
                             style: TextStyle(
                                 color: appTheme.colors.primaryColor,
                                 fontSize: appTheme.sizes.fontSizeSmall),
                           )),
+                      ),
                     ],
                   ),
                 ),

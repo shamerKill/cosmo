@@ -56,12 +56,10 @@ class DappCollectionPage extends GetView<DappCollectionPageController> {
 class _DappCollectionListItem extends StatelessWidget {
   const _DappCollectionListItem({
     Key? key,
-    required this.dapp,
-    this.onPressed,
     this.onDelete,
+    required this.dapp,
   }) : super(key: key);
   final DappModel dapp;
-  final void Function()? onPressed;
   final void Function()? onDelete;
 
   @override
@@ -76,7 +74,6 @@ class _DappCollectionListItem extends StatelessWidget {
         horizontal: appTheme.sizes.paddingSmall,
       ),
       child: InkWell(
-        onTap: onPressed,
         splashColor: appTheme.colors.transparent,
         highlightColor: appTheme.colors.transparent,
         focusColor: appTheme.colors.transparent,

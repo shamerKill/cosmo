@@ -40,7 +40,7 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
                       Obx(() => LViewImage(
                             url: state.tokenInfo.logo,
                             bgColor: StringTool.stringToColor(
-                                state.tokenInfo.type == enumTokenType.prc20
+                                state.tokenInfo.type == EnumTokenType.prc20
                                     ? state.tokenInfo.contractAddress
                                     : state.tokenInfo.minUnit),
                             width: appTheme.sizes.basic * 60,

@@ -8,7 +8,7 @@ import 'package:plug/app/routes/routes.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/utils/evm/evmClient.dart';
+import 'package:plug/app/ui/utils/evm/evm_client.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
@@ -49,8 +49,9 @@ class WalletTokenSendPageController extends GetxController {
   @override
   void onReady() async {
     String? tokenIndent = Get.parameters['token'];
-    if (dataAccount.state.nowAccount == null || tokenIndent == null)
+    if (dataAccount.state.nowAccount == null || tokenIndent == null) {
       return Get.back();
+    }
     state.accountInfo = dataAccount.state.nowAccount!;
     for (var _item in state.accountInfo.tokenList) {
       if (_item.minUnit == tokenIndent ||
@@ -87,7 +88,7 @@ class WalletTokenSendPageController extends GetxController {
       // 账户余额
       httpToolApp.getAccountBalance(
           dataAccount.state.nowAccount!.address,
-          state.tokenInfo.type == enumTokenType.prc10
+          state.tokenInfo.type == EnumTokenType.prc10
               ? state.tokenInfo.minUnit
               : state.tokenInfo.contractAddress),
       // 手续费
@@ -115,8 +116,9 @@ class WalletTokenSendPageController extends GetxController {
   onScanQr() async {
     var address = await Get.toNamed(PlugRoutesNames.walletQrScanner,
         parameters: {'result': 'true'});
-    if (address is! String || !StringTool.checkChainAddress(address))
+    if (address is! String || !StringTool.checkChainAddress(address)) {
       return LToast.error('ErrorWithAddressType'.tr);
+    }
     addressController.text = address;
   }
 
@@ -137,12 +139,14 @@ class WalletTokenSendPageController extends GetxController {
   // 确认转账
   onSend() async {
     Get.focusScope?.unfocus();
-    if (addressController.text == '')
+    if (addressController.text == '') {
       return LToast.warning('ErrorWithAddressInput'.tr);
+    }
     var _transferValue = NumberTool.balanceToAmount(volumeController.text);
     var douValue = double.tryParse(_transferValue);
-    if (douValue == null || douValue == 0.0)
+    if (douValue == null || douValue == 0.0) {
       return LToast.warning('ErrorWithVolumeInput'.tr);
+    }
     String? password = await LBottomSheet.passwordBottomSheet();
     if (password == null) return;
     LLoading.showLoading();
@@ -155,7 +159,7 @@ class WalletTokenSendPageController extends GetxController {
     Get.focusScope?.unfocus();
     state.sendLoading = true;
     HttpToolResponse result;
-    if (state.tokenInfo.type == enumTokenType.prc10) {
+    if (state.tokenInfo.type == EnumTokenType.prc10) {
       result = await WalletTool.transfer(
           mnemonic: mnemonicList,
           toAddress: addressController.text,
@@ -181,8 +185,9 @@ class WalletTokenSendPageController extends GetxController {
     state.sendLoading = false;
     _getInit();
     LLoading.dismiss();
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithSendCallback'.tr);
+    }
     if (result.status == -10002) return LToast.error('ErrorWithSendTimeout'.tr);
     if (result.status != 0) return LToast.error('ErrorWithSendUnknown'.tr);
     LToast.success('SuccessWithSend'.tr);

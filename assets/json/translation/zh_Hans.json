@@ -267,6 +267,7 @@
 	"updateTipDesc": "是否前往浏览器下载新版本？",
 	"versionUpdateLogs": "版本更新日志",
 	"versionUpdate": "版本更新",
+	"versionUpdateFunc": "点击进行更新",
 	"versionIsLasted": "已是最新版本",
 	"maxAccountLength": "最多10个账户",
 	"dappSafeModeTip": "是否开启安全模式?",
@@ -313,6 +314,8 @@
 	"verifierNodeInvalid": "已失效",
 	"exitAppToast": "再次点击退出",
 	"yearYieldRate": "年化收益率",
+	"iosTestUpdatePleaseHolder": "请联系工作人员",
+	"googlePlayUpdatePleaseHolder": "请前往谷歌商店进行更新升级",
 
 	"SuccessWithImport": "导入成功",
 	"SuccessWithCopy": "复制成功",

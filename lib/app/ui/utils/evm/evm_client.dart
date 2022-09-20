@@ -5,7 +5,7 @@ import 'dart:core';
 import 'package:http/http.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/ui/utils/error.dart';
-import 'package:plug/app/ui/utils/evm/evmWallet.dart';
+import 'package:plug/app/ui/utils/evm/evm_wallet.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:web3dart/crypto.dart';

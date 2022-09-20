@@ -247,7 +247,7 @@ class _WalletTokenListItem extends StatelessWidget {
             LViewImage(
               url: token.logo,
               bgColor: StringTool.stringToColor(
-                  token.type == enumTokenType.prc20
+                  token.type == EnumTokenType.prc20
                       ? token.contractAddress
                       : token.minUnit),
               width: appTheme.sizes.basic * 60,

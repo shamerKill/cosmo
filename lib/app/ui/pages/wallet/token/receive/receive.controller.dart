@@ -24,8 +24,9 @@ class WalletTokenReceivePageController extends GetxController {
   @override
   void onReady() {
     String? token = Get.parameters['token'];
-    if (dataAccount.state.nowAccount == null || token == null)
+    if (dataAccount.state.nowAccount == null || token == null) {
       return Get.back();
+    }
     state.accountInfo = dataAccount.state.nowAccount!;
     state._accountInfo.refresh();
     for (var _item in state.accountInfo.tokenList) {

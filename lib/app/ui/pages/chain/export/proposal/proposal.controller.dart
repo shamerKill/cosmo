@@ -208,10 +208,12 @@ class ChainExportProposalPageController extends GetxController {
       gasAll: NumberTool.balanceToAmount(_fee.data ?? '0.0002'),
     );
     LLoading.dismiss();
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithProposalCallback'.tr);
-    if (result.status == -10002)
+    }
+    if (result.status == -10002) {
       return LToast.error('ErrorWithProposalTimeout'.tr);
+    }
     if (result.status != 0) return LToast.error('ErrorWithProposalUnKnow'.tr);
     LToast.success('SuccessWithProposal'.tr);
   }

@@ -1,6 +1,6 @@
 part of './interface.dart';
 
-enum enumTokenType { prc10, prc20 }
+enum EnumTokenType { prc10, prc20 }
 
 /// 代币模型
 class TokenModel extends _StorageBaseAbstract {
@@ -113,13 +113,13 @@ class TokenModel extends _StorageBaseAbstract {
   String _logo = '';
 
   /// 币种类型
-  enumTokenType get type => _type;
-  set type(enumTokenType value) {
+  EnumTokenType get type => _type;
+  set type(EnumTokenType value) {
     _type = value;
     _saveKey();
   }
 
-  enumTokenType _type = enumTokenType.prc10;
+  EnumTokenType _type = EnumTokenType.prc10;
 
   /// 合约地址
   String get contractAddress => _contractAddress;

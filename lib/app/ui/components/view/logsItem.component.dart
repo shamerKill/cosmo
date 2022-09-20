@@ -147,7 +147,7 @@ class LLogsItemViewController extends GetxController {
       _descText +=
           '${NumberTool.amountToBalance(_formatData.offerCoin.amount, scale: _token.scale)} ${_token.symbol} ';
     } else if (_formatData is Map &&
-        _formatData['type'] == enumTokenType.prc20) {
+        _formatData['type'] == EnumTokenType.prc20) {
       // 合约交易
       _descText += '${_formatData['amount']} ${_formatData['symbol']} ';
     }
@@ -203,7 +203,7 @@ class LLogsItemViewController extends GetxController {
         formatData is ModelMsgSwapWithinBatch) {
       // liquidity交易池操作
       iconUrl = 'assets/images/log_icon/pool.png';
-    } else if (formatData is Map && formatData['type'] == enumTokenType.prc20) {
+    } else if (formatData is Map && formatData['type'] == EnumTokenType.prc20) {
       // 合约交易
       iconUrl = 'assets/images/log_icon/contract.png';
     }
@@ -373,7 +373,7 @@ class LLogsItemViewController extends GetxController {
       // liquidity交易
       _titleText = 'swapWithinBatch'.tr;
     } else if (_formatData is Map &&
-        _formatData['type'] == enumTokenType.prc20) {
+        _formatData['type'] == EnumTokenType.prc20) {
       // 合约交易
       if (_formatData['from'] == accountAddress) {
         _titleType = 'right';

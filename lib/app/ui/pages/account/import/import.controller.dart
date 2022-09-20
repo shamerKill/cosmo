@@ -36,14 +36,14 @@ class AccountImportPageState {
   set importLoading(bool value) => _importLoading.value = value;
 
   // 账户类型列表
-  final RxList<enumAccountType> accountTypeList = RxList([
-    enumAccountType.prc20,
-    enumAccountType.prc10,
+  final RxList<EnumAccountType> accountTypeList = RxList([
+    EnumAccountType.prc20,
+    EnumAccountType.prc10,
   ]);
   // 账户类型选择
-  final Rx<enumAccountType> _accountType = enumAccountType.prc20.obs;
-  enumAccountType get accountType => _accountType.value;
-  set accountType(enumAccountType value) => _accountType.value = value;
+  final Rx<EnumAccountType> _accountType = EnumAccountType.prc20.obs;
+  EnumAccountType get accountType => _accountType.value;
+  set accountType(EnumAccountType value) => _accountType.value = value;
 }
 
 class AccountImportPageController extends GetxController {
@@ -182,7 +182,7 @@ class AccountImportPageController extends GetxController {
 
   String _getAccountAddress(List<String> mnemonic) {
     // 创建20账户
-    if (state.accountType == enumAccountType.prc20) {
+    if (state.accountType == EnumAccountType.prc20) {
       return WalletTool.walletForMnemonicPrc20(mnemonic).bech32Address;
     } else {
       // 创建10账户

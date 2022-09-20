@@ -76,9 +76,7 @@ class ExamplePageController extends GetxController {
     var newAccount = AccountModel()..setData(accountDemo.toJson());
 
     var verifer = VerifierModel()..status = VerifierStatusEnum.jailing;
-    print(verifer.toJson());
     var verifierRaw = VerifierModel()..setData(verifer.toJson());
-    print(verifierRaw.status);
     await Future.delayed(const Duration(milliseconds: 1000));
     if (state.items.isEmpty) {
       state.items.value = newAccount.tokenList.map((e) => e.symbol).toList();

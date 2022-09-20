@@ -97,8 +97,9 @@ class ChainPledgeTransferPageController extends GetxController {
   onPledgeListener() async {
     var _pledgeValue = NumberTool.balanceToAmount(pledgeController.text);
     var douValue = double.tryParse(_pledgeValue);
-    if (douValue == null || douValue == 0.0)
+    if (douValue == null || douValue == 0.0) {
       return LToast.warning('ErrorWithVolumeInput'.tr);
+    }
     String? pass = await LBottomSheet.passwordBottomSheet();
     if (pass == null) return;
     LLoading.showBgLoading();
@@ -118,10 +119,12 @@ class ChainPledgeTransferPageController extends GetxController {
     );
     LLoading.dismiss();
     state.pledgeLoading = false;
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithPledgeCallback'.tr);
-    if (result.status == -10002)
+    }
+    if (result.status == -10002) {
       return LToast.error('ErrorWithPledgeTimeout'.tr);
+    }
     if (result.status != 0) return LToast.error('ErrorWithPledgeUnKnow'.tr);
     LToast.success('SuccessWithPledge'.tr);
     pledgeController.text = '0';

@@ -36,6 +36,12 @@ class BasicHomePageState {
   AccountModel get accountInfo => _accountInfo.value;
   set accountInfo(AccountModel value) => _accountInfo.value = value;
 
+
+  // 账户主网币价值
+  final Rx<String> _accountAssetsToken = ''.obs;
+  String get accountAssetsToken => _accountAssetsToken.value;
+  set accountAssetsToken(String value) => _accountAssetsToken.value = value;
+
   // 账户价值
   final Rx<String> _accountAssetsPrice = ''.obs;
   String get accountAssetsPrice => _accountAssetsPrice.value;
@@ -121,7 +127,7 @@ class BasicHomePageController extends GetxController
     var result = await Future.wait<dynamic>(state.accountInfo.tokenList
         .map<Future<dynamic>>((token) => httpToolApp.getAccountBalance(
             state.accountInfo.address,
-            token.type == enumTokenType.prc10
+            token.type == EnumTokenType.prc10
                 ? token.minUnit
                 : token.contractAddress))
         .toList());
@@ -152,23 +158,33 @@ class BasicHomePageController extends GetxController
   // 获取账户价值
   _getAccountPrice() async {
     double num = 0.0;
-    var result = await Future.wait([
-      for (var token in state.accountInfo.tokenList)
-        httpToolServer.getCoinPrice(token.type == enumTokenType.prc20
-            ? token.contractAddress
-            : token.minUnit)
-    ]);
+    double tokenNum = 0.0;
+    List<String> tokensList = [];
+    for (var token in state.accountInfo.tokenList) {
+      tokensList.add(token.type == EnumTokenType.prc20
+          ? token.contractAddress
+          : token.minUnit);
+    }
+    var result = await browserToolServer.getTokenPrice(tokensList);
+    if (result == null || result.status != 0) return;
+    var data = result.data;
+    if (data == null || data['errno'] != 200) return;
+    var priceList = data['data'];
     for (var i = 0; i < state.accountInfo.tokenList.length; i++) {
       var token = state.accountInfo.tokenList[i];
-      if (result[i].status != 0 || result[i].data == null) break;
-      token.price = '${result[i].data['price']}';
+      token.price = '${priceList[i]['price']}';
       num += double.tryParse(NumberTool.numMul(
               NumberTool.amountToBalance(token.amount, scale: token.scale),
               token.price)) ??
           0;
+      tokenNum += double.tryParse(NumberTool.numMul(
+              NumberTool.amountToBalance(token.amount, scale: token.scale),
+              '${priceList[i]['base_price']}')) ??
+          0;
     }
     state._accountInfo.refresh();
     state.accountAssetsPrice = num.toString();
+    state.accountAssetsToken = tokenNum.toString();
   }
 
   // 检查是否需要备份
@@ -258,7 +274,7 @@ class BasicHomePageController extends GetxController
   // 我的代币详情
   onToTokenPage(TokenModel token) async {
     await Get.toNamed(PlugRoutesNames.walletTokenLogs(
-        token.type == enumTokenType.prc10
+        token.type == EnumTokenType.prc10
             ? token.minUnit
             : token.contractAddress));
     initAccountStorage();

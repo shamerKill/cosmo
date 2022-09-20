@@ -108,8 +108,9 @@ class ChainBackupPledgePageController extends GetxController {
   onPledgeListener() async {
     var _unPledgeValue = NumberTool.balanceToAmount(pledgeController.text);
     var douValue = double.tryParse(_unPledgeValue);
-    if (douValue == null || douValue == 0.0)
+    if (douValue == null || douValue == 0.0) {
       return LToast.warning('ErrorWithVolumeInput'.tr);
+    }
     String? pass = await LBottomSheet.passwordBottomSheet();
     if (pass == null) return;
     LLoading.showBgLoading();
@@ -127,10 +128,12 @@ class ChainBackupPledgePageController extends GetxController {
       gasAll: NumberTool.balanceToAmount(state.feeAmount),
     );
     LLoading.dismiss();
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithRedeemCallback'.tr);
-    if (result.status == -10002)
+    }
+    if (result.status == -10002) {
       return LToast.error('ErrorWithRedeemTimeout'.tr);
+    }
     if (result.status != 0) return LToast.error('ErrorWithRedeemUnKnow'.tr);
     LToast.success('SuccessWithRedeem'.tr);
     pledgeController.text = '0';

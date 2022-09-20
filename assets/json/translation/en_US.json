@@ -267,6 +267,7 @@
 	"updateTipDesc": "Whether to go to your browser to download the new version?",
 	"versionUpdateLogs": "Version changelog",
 	"versionUpdate": "Version update",
+	"versionUpdateFunc": "Tap to update",
 	"versionIsLasted": "It is the latest version",
 	"maxAccountLength": "At most 10 accounts",
 	"dappSafeModeTip": "Whether to turn on safe mode",
@@ -313,6 +314,8 @@
 	"verifierNodeInvalid": "Invalid",
 	"exitAppToast": "click again to exit",
 	"yearYieldRate": "Arr",
+	"iosTestUpdatePleaseHolder": "Please contact the staff",
+	"googlePlayUpdatePleaseHolder": "Please go to Google Play to update",
 
 	"SuccessWithImport": "Import successfully",
 	"SuccessWithCopy": "Copy successfully",

@@ -1,6 +1,6 @@
 part of './interface.dart';
 
-enum enumAccountType { prc10, prc20 }
+enum EnumAccountType { prc10, prc20 }
 
 /// 账户模型
 class AccountModel extends _StorageBaseAbstract {
@@ -69,13 +69,13 @@ class AccountModel extends _StorageBaseAbstract {
   List<UserVerifierModel> _verifierList = [];
 
   /// 地址类型 prc10或者prc20
-  enumAccountType get accountType => _accountType;
-  set accountType(enumAccountType value) {
+  EnumAccountType get accountType => _accountType;
+  set accountType(EnumAccountType value) {
     _accountType = value;
     _saveKey();
   }
 
-  enumAccountType _accountType = enumAccountType.prc20;
+  EnumAccountType _accountType = EnumAccountType.prc20;
 
   /// 账户储存的dapp权限列表
   List<DappModel> get dappPermissionList => _dappPermissionList;

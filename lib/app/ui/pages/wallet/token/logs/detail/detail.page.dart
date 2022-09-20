@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -180,13 +179,9 @@ class _WalletTokenLogsDetailItem extends StatelessWidget {
     required this.title,
     required this.child,
     this.copyCallback,
-    this.action,
-    this.hidBorder = false,
   }) : super(key: key);
   final String title;
   final Widget child;
-  final Widget? action;
-  final bool hidBorder;
   final void Function()? copyCallback;
 
   @override
@@ -206,14 +201,12 @@ class _WalletTokenLogsDetailItem extends StatelessWidget {
                 color: appTheme.colors.textGray,
               ),
             )),
-          if (action != null) action!,
         ],
       ),
       Padding(
           padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall / 2)),
       LAnimationView(child: child),
       Padding(padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-      if (!hidBorder) DottedLine(dashColor: appTheme.colors.borderColor),
     ]);
   }
 }

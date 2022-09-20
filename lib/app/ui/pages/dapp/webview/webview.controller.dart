@@ -11,7 +11,7 @@ import 'package:plug/app/data/provider/data.dapp-address.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
-import 'package:plug/app/ui/utils/evm/evmClient.dart';
+import 'package:plug/app/ui/utils/evm/evm_client.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:plug/app/ui/utils/string.dart';
@@ -153,8 +153,9 @@ class DappWebviewPageController extends GetxController
     if (_description != null) state.description = _description;
     String? _logo = await state.webviewController?.runJavascriptReturningResult(
         '(function(){var list=document.getElementsByTagName("link");for(var i=0;i<list.length;i++){var item=list[i];if(/icon/.test(item.getAttribute("rel")))return item.href}})()');
-    if (_logo != null)
+    if (_logo != null) {
       state.logo = _logo.replaceAll('"', '').replaceAll("'", '');
+    }
     _finishDappLatelyList();
   }
 
@@ -174,8 +175,9 @@ class DappWebviewPageController extends GetxController
   // webview路由拦截
   FutureOr<NavigationDecision> onNavigationDelegate(
       NavigationRequest request) async {
-    if (StringTool.isHttpsUrl(request.url) || StringTool.isHttpUrl(request.url))
+    if (StringTool.isHttpsUrl(request.url) || StringTool.isHttpUrl(request.url)) {
       return NavigationDecision.navigate;
+    }
     // if (StringTool.isHttpUrl(request.url)) LToast.warning('ErrorWithWebUnsafe'.tr);
     return NavigationDecision.prevent;
   }
@@ -478,8 +480,9 @@ class DappWebviewPageController extends GetxController
 
   // 读取已授予权限
   _callGetPermission(String _windowAttrName) async {
-    if (_windowAttrName == '')
+    if (_windowAttrName == '') {
       _webviewGetError('input type error, windowAttrName can\'t use empty');
+    }
     var _list = await _getPermissionFromLocal();
     state.webviewController
         ?.runJavascript('window.$_windowAttrName = ${json.encode(_list)};');
@@ -487,17 +490,20 @@ class DappWebviewPageController extends GetxController
 
   // 申请权限
   _callApplyPermission(String _windowAttrName, dynamic _permissionList) async {
-    if (_permissionList is! List)
+    if (_permissionList is! List) {
       _webviewGetError('input type error, need data as list with string');
-    if (_windowAttrName == '')
+    }
+    if (_windowAttrName == '') {
       _webviewGetError('input type error, windowAttrName can\'t use empty');
+    }
     List<String> _permissionListApply = [];
     for (dynamic item in _permissionList) {
       item = item.toString();
       if (_permissionListAll.contains(item)) _permissionListApply.add(item);
     }
-    if (_permissionListApply.isNotEmpty)
+    if (_permissionListApply.isNotEmpty) {
       _permissionDialog(_permissionListApply, _windowAttrName);
+    }
   }
 
   // 获取账户地址
@@ -781,7 +787,7 @@ class DappWebviewPageController extends GetxController
   // 合约call调用
   _callContractCall(String _windowAttrName, dynamic sendData) async {
     // 判断账户类型
-    if (_accountInfo?.accountType != enumAccountType.prc20) {
+    if (_accountInfo?.accountType != EnumAccountType.prc20) {
       _webviewGetError('account type error');
       state.webviewController?.runJavascript('window.$_windowAttrName = null;');
     } else if ( // 判断传入信息
@@ -821,7 +827,7 @@ class DappWebviewPageController extends GetxController
   // 合约send调用
   _callContractSend(String _windowAttrName, dynamic sendData) async {
     // 判断账户类型
-    if (_accountInfo?.accountType != enumAccountType.prc20) {
+    if (_accountInfo?.accountType != EnumAccountType.prc20) {
       _webviewGetError('account type error');
       state.webviewController?.runJavascript('window.$_windowAttrName = null;');
     } else if ( // 判断传入信息

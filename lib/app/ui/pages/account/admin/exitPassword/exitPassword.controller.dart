@@ -92,8 +92,9 @@ class AccountExitPasswordPageController extends GetxController {
     if (dataAccountController.state.memMnemonic == null) return Get.back();
     state.accountInfo.stringifyRaw = WalletTool.encryptMnemonic(
         dataAccountController.state.memMnemonic!, passwordController.text);
-    if (!dataAccountController.updateAccount(state.accountInfo))
+    if (!dataAccountController.updateAccount(state.accountInfo)) {
       return LToast.error('FailEdit'.tr);
+    }
     LToast.error('SuccessEdit'.tr);
     state._createLoading.toggle();
     LLoading.dismiss();

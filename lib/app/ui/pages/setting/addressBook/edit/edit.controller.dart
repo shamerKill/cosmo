@@ -48,13 +48,15 @@ class UserAddressBookEditPageController extends GetxController {
 
   // 保存
   onSave() {
-    if (addressController.text == '')
+    if (addressController.text == '') {
       return LToast.warning('ErrorWithAddressInput'.tr);
+    }
     state.addressInfo.name = nameController.text;
     state.addressInfo.remarks = remarksController.text;
     state.addressInfo.address = addressController.text;
-    if (state.addressInfo.id == '')
+    if (state.addressInfo.id == '') {
       state.addressInfo.id = StringTool.getRandomStr();
+    }
     if (state.isEdit) {
       dataAddress.updateAddress(state.addressInfo);
     } else {
@@ -81,8 +83,9 @@ class UserAddressBookEditPageController extends GetxController {
   onScanQr() async {
     var address = await Get.toNamed(PlugRoutesNames.walletQrScanner,
         parameters: {'result': 'true'});
-    if (address is! String || !StringTool.checkChainAddress(address))
+    if (address is! String || !StringTool.checkChainAddress(address)) {
       return LToast.error('ErrorWithAddressType'.tr);
+    }
     addressController.text = address;
   }
 }

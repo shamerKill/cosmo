@@ -158,16 +158,16 @@ class StringTool {
           .hasMatch(email);
 
   /// 账户类型切换
-  static String accountTypeToString(enumAccountType? type) =>
-      type == enumAccountType.prc20 ? 'PRC20' : 'PRC10';
-  static enumAccountType accountStringToType(String? str) =>
-      str == 'PRC20' ? enumAccountType.prc20 : enumAccountType.prc10;
+  static String accountTypeToString(EnumAccountType? type) =>
+      type == EnumAccountType.prc20 ? 'PRC20' : 'PRC10';
+  static EnumAccountType accountStringToType(String? str) =>
+      str == 'PRC20' ? EnumAccountType.prc20 : EnumAccountType.prc10;
 
   /// 代币类型切换
-  static String tokenTypeToString(enumTokenType? type) =>
-      type == enumTokenType.prc20 ? 'PRC20' : 'PRC10';
-  static enumTokenType tokenStringToType(String? str) =>
-      str == 'PRC20' ? enumTokenType.prc20 : enumTokenType.prc10;
+  static String tokenTypeToString(EnumTokenType? type) =>
+      type == EnumTokenType.prc20 ? 'PRC20' : 'PRC10';
+  static EnumTokenType tokenStringToType(String? str) =>
+      str == 'PRC20' ? EnumTokenType.prc20 : EnumTokenType.prc10;
   // hex转bech32
   static String hexToBech32(String hexAddress) {
     return bech32.bech32.encode(bech32.Decoded(

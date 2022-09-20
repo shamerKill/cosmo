@@ -13,7 +13,7 @@ class UtilGlobalInit {
   static init() async {
     _changeSystemUI();
     if (Env.envConfig.isRelease) {
-      // await _openSuperFPS();
+      await _openSuperFPS();
     }
     await _changeSystemPerferred();
     await DataInitState.onInit();

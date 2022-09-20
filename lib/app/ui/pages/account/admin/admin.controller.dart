@@ -141,11 +141,13 @@ class AccountAdminPageController extends GetxController {
     dataAccountController.state.memMnemonic = mnemonic.split(' ');
     dataAccountController.state.memAddress = state.accountInfo.address;
     // 备份
-    if (_doType == 'backup')
+    if (_doType == 'backup') {
       await Get.toNamed(PlugRoutesNames.accountBackupShow);
+    }
     // 修改密码
-    if (_doType == 'exitPassword')
+    if (_doType == 'exitPassword') {
       await Get.toNamed(PlugRoutesNames.accountAdminEditPassword);
+    }
     dataAccountController.state.memMnemonic = null;
     dataAccountController.state.memAddress = null;
     // 移除账户

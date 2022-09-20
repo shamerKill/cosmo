@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:plug/app/env/env.dart';
-import 'package:plug/app/ui/utils/evm/evmClient.dart';
+import 'package:plug/app/ui/utils/evm/evm_client.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
@@ -342,8 +342,9 @@ class _HttpToolServer extends UriTool {
   Future<HttpToolResponse> searchTokenInfo(String tokenHand) {
     tokenHand = tokenHand.replaceAll(RegExp(r'\s'), '');
     // 判断hex地址
-    if (tokenHand.startsWith('0x') && tokenHand.length == 42)
+    if (tokenHand.startsWith('0x') && tokenHand.length == 42) {
       return searchToken20Info(tokenHand);
+    }
     // 判断bech32地址
     if (tokenHand.startsWith(Env.envConfig.chainInfo.addressPrefix) &&
         tokenHand.length == 41) {
@@ -364,8 +365,9 @@ class _HttpToolServer extends UriTool {
   // 搜索prc20代币信息
   Future<HttpToolResponse> searchToken20Info(String tokenAddress) {
     var _memAddress = tokenAddress;
-    if (StringTool.checkChainAddress(tokenAddress))
+    if (StringTool.checkChainAddress(tokenAddress)) {
       _memAddress = StringTool.bech32ToHex(tokenAddress);
+    }
     return HttpToolClient.getHttp(customUri('rpc/swap/erc20/coin',
         queryParameters: {'contract': _memAddress})).then(
       (res) => res.status != 0
@@ -373,10 +375,15 @@ class _HttpToolServer extends UriTool {
           : HttpToolResponse({
               'token': _resFormatToToken(res.data,
                   contractAddress: StringTool.hexToBech32(_memAddress),
-                  type: enumTokenType.prc20)
+                  type: EnumTokenType.prc20)
             }),
       onError: (e) => null,
     );
+  }
+
+  // 获取远程版本号
+  Future<HttpToolResponse> getRemoteAppVersion() {
+    return HttpToolClient.getHttp(customUri('/v2/version'));
   }
 }
 
@@ -423,13 +430,24 @@ class _BrowserToolServer extends UriTool {
       onError: (e) => null,
     );
   }
+
+  // 获取代币单价
+  Future<HttpToolResponse?> getTokenPrice(List<String> tokens) {
+    return HttpToolClient.getHttp(customUri('pvmApi/price/coins',
+        queryParameters: {
+          'tokens': tokens.join(',')
+        })).then(
+      (res) => res,
+      onError: (e) => null,
+    );
+  }
 }
 
 _BrowserToolServer browserToolServer = _BrowserToolServer();
 
 // 格式化代币数据
 TokenModel _resFormatToToken(dynamic _token,
-    {enumTokenType? type, String? contractAddress}) {
+    {EnumTokenType? type, String? contractAddress}) {
   return TokenModel()
     ..symbol = _token['symbol'] ?? ''
     ..name = _token['name'] ?? ''
@@ -439,6 +457,6 @@ TokenModel _resFormatToToken(dynamic _token,
     ..owner = _token['owner'] ?? ''
     ..scale = _token['scale'] ?? int.tryParse(_token['decimal']) ?? 0
     ..mintable = _token['mintable'] ?? false
-    ..type = type ?? enumTokenType.prc10
+    ..type = type ?? EnumTokenType.prc10
     ..contractAddress = contractAddress ?? '';
 }

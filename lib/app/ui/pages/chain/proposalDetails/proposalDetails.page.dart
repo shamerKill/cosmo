@@ -38,11 +38,13 @@ class ChainProposalDetailsPage
                     vertical: appTheme.sizes.basic * 5),
                 decoration: BoxDecoration(
                   color: (() {
-                    if (state.proposalInfo.status == EnumProposalStatus.passed)
+                    if (state.proposalInfo.status == EnumProposalStatus.passed) {
                       return appTheme.colors.primaryColor.withOpacity(0.2);
+                    }
                     if (state.proposalInfo.status ==
-                        EnumProposalStatus.rejected)
+                        EnumProposalStatus.rejected) {
                       return appTheme.colors.errorColor.withOpacity(0.2);
+                    }
                     return appTheme.colors.textGrayBig.withOpacity(0.2);
                   })(),
                   borderRadius:
@@ -52,11 +54,13 @@ class ChainProposalDetailsPage
                     style: TextStyle(
                         color: (() {
                           if (state.proposalInfo.status ==
-                              EnumProposalStatus.passed)
+                              EnumProposalStatus.passed) {
                             return appTheme.colors.primaryColor;
+                          }
                           if (state.proposalInfo.status ==
-                              EnumProposalStatus.rejected)
+                              EnumProposalStatus.rejected) {
                             return appTheme.colors.errorColor;
+                          }
                           return appTheme.colors.textGrayBig;
                         })(),
                         fontSize: appTheme.sizes.fontSizeSmall,

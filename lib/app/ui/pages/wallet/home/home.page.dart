@@ -415,15 +415,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Obx(() => Text((state.accountInfo
-                                                        .tokenList.isEmpty
-                                                    ? ''
-                                                    : state
-                                                        .accountInfo
-                                                        .tokenList
-                                                        .first
-                                                        .symbol) +
-                                                'balance'.tr)),
+                                            Text('balance'.tr),
                                             Padding(
                                                 padding: EdgeInsets.only(
                                                     bottom: appTheme.sizes
@@ -433,17 +425,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                               var _balance = state.accountInfo
                                                       .tokenList.isEmpty
                                                   ? ''
-                                                  : NumberTool.amountToBalance(
-                                                      state
-                                                          .accountInfo
-                                                          .tokenList
-                                                          .first
-                                                          .amount,
-                                                      scale: state
-                                                          .accountInfo
-                                                          .tokenList
-                                                          .first
-                                                          .scale);
+                                                  : state.accountAssetsToken;
                                               return LAnimationView(
                                                   randomKey: false,
                                                   child: Text.rich(
@@ -647,7 +629,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                         LViewImage(
                                           url: _item.logo,
                                           bgColor: StringTool.stringToColor(
-                                              _item.type == enumTokenType.prc20
+                                              _item.type == EnumTokenType.prc20
                                                   ? _item.contractAddress
                                                   : _item.minUnit),
                                           width: appTheme.sizes.basic * 60,
@@ -673,7 +655,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                                       top: appTheme.sizes
                                                               .paddingSmall *
                                                           0.2)),
-                                              _item.type == enumTokenType.prc10
+                                              _item.type == EnumTokenType.prc10
                                                   ? Container()
                                                   : Text(
                                                       '(' +

@@ -241,11 +241,13 @@ class WalletTokenListPageController extends GetxController
 
   // 前往代币详情页面
   onGoToDetail(TokenModel token) async {
-    if (token.type == enumTokenType.prc10)
+    if (token.type == EnumTokenType.prc10) {
       await Get.toNamed(PlugRoutesNames.walletTokenDetail(token.minUnit));
-    if (token.type == enumTokenType.prc20)
+    }
+    if (token.type == EnumTokenType.prc20) {
       await Get.toNamed(
           PlugRoutesNames.walletTokenDetail(token.contractAddress));
+    }
     _getLocalTokenList();
   }
 }

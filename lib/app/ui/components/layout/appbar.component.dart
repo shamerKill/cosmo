@@ -32,6 +32,7 @@ class LAppBar {
     double? height,
     Color? backgroundColor,
     Map? backResult,
+    bool showBack = true,
   }) {
     Color _bgColor = backgroundColor ?? appTheme.colors.transparent;
     double _height = height ?? appTheme.sizes.titleBarHeight;
@@ -44,7 +45,7 @@ class LAppBar {
         color: _bgColor,
         child: Stack(
           children: [
-            if (Get.key.currentState?.canPop() == true)
+            if (Get.key.currentState?.canPop() == true && showBack)
               Positioned(
                   child: SizedBox(
                 width: _height,

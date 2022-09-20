@@ -173,7 +173,7 @@ class WalletTokenLogsDetailPageController extends GetxController {
       // liquidity交易
       state.logTypeTitle = 'swapWithinBatch'.tr;
     } else if (_formatData is Map &&
-        _formatData['type'] == enumTokenType.prc20) {
+        _formatData['type'] == EnumTokenType.prc20) {
       if (_formatData['from'] == accountAddress) {
         state.logTypeTitle = 'contractTransferOut'.tr;
       } else if (_formatData['to'] == accountAddress) {
@@ -181,7 +181,7 @@ class WalletTokenLogsDetailPageController extends GetxController {
         state.logTypeTitle = 'contractTransferIn'.tr;
       }
     }
-    if (_formatData is Map && _formatData['type'] == enumTokenType.prc20) {
+    if (_formatData is Map && _formatData['type'] == EnumTokenType.prc20) {
       _showPrc20Volume(item);
     } else {
       _showDetail(item);

@@ -5,10 +5,11 @@ import 'package:hex/hex.dart';
 import 'package:dart_bech32/dart_bech32.dart' as bech32;
 import 'package:web3dart/crypto.dart' as crypto;
 import 'package:web3dart/web3dart.dart' as web3;
+// ignore: implementation_imports
 import 'package:web3dart/src/utils/typed_data.dart';
 
 class NewWallet extends Wallet {
-  static const DERIVATION_PATH = "m/44'/60'/0'/0/0";
+  static const derivationPath = "m/44'/60'/0'/0/0";
   static NetworkInfo defaultNetworkInfo = NetworkInfo.fromSingleHost(
     bech32Hrp: 'gx',
     host: '',
@@ -33,7 +34,7 @@ class NewWallet extends Wallet {
   factory NewWallet.derive(
     List<String> mnemonic, {
     NetworkInfo? networkInfo,
-    String derivationPath = DERIVATION_PATH,
+    String derivationPath = derivationPath,
   }) {
     networkInfo ??= defaultNetworkInfo;
     // Validate the mnemonic

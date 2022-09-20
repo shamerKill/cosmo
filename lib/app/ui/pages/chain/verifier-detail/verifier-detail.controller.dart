@@ -200,12 +200,15 @@ class ChainVerifierDetailPageController extends GetxController {
       validatorAddress: state.verifierInfo.address,
       gasAll: NumberTool.balanceToAmount(fee.data ?? '0.0002'),
     );
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithRedeemRewardCallback'.tr);
-    if (result.status == -10002)
+    }
+    if (result.status == -10002) {
       return LToast.error('ErrorWithRedeemRewardTimeout'.tr);
-    if (result.status != 0)
+    }
+    if (result.status != 0) {
       return LToast.error('ErrorWithRedeemRewardUnKnow'.tr);
+    }
     LToast.success('SuccessWithRewardRedeem'.tr);
     LLoading.dismiss();
     onRefresh();

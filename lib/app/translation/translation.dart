@@ -69,9 +69,12 @@ class _InitTranslation {
   }
 
   String localToString(Locale language) {
-    if (language.toLanguageTag() == localList[0].toLanguageTag()) return '简体中文';
-    if (language.toLanguageTag() == localList[1].toLanguageTag())
+    if (language.toLanguageTag() == localList[0].toLanguageTag()) {
+      return '简体中文';
+    }
+    if (language.toLanguageTag() == localList[1].toLanguageTag()) {
       return 'English';
+    }
     return '';
   }
 }

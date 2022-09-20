@@ -135,8 +135,9 @@ class ChainCreateTokenPageController extends GetxController {
 
   // 开始发行
   createToken() async {
-    if (!RegExp(r'^[az][a-z0-9]{2,7}$').hasMatch(coinSymbolTextController.text))
+    if (!RegExp(r'^[az][a-z0-9]{2,7}$').hasMatch(coinSymbolTextController.text)) {
       return LToast.warning('tokenCreateSymbolTip'.tr);
+    }
     if (coinNameTextController.text == '' ||
         !RegExp(r'^[az][a-z0-9]{2 ,7}$')
             .hasMatch(coinSymbolTextController.text) ||
@@ -165,8 +166,9 @@ class ChainCreateTokenPageController extends GetxController {
       scale: coinScaleVolumeTextController.text,
       gasAll: state.fee,
     );
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithSendCallback'.tr);
+    }
     if (result.status == -10002) return LToast.error('ErrorWithSendTimeout'.tr);
     if (result.status == 2) return LToast.error('ErrorWithCoinName'.tr);
     if (result.status == 3) return LToast.error('ErrorWithCoinMinUnit'.tr);

@@ -5,13 +5,13 @@ import 'package:alan/alan.dart' as alan;
 import 'package:alan/proto/cosmos/bank/v1beta1/export.dart' as bank;
 import 'package:flustars/flustars.dart';
 import 'package:alan/proto/cosmos/auth/v1beta1/export.dart' as auth;
-import 'package:alan/proto/cosmos/auth/v1beta1/auth.pb.dart' as authPb;
+import 'package:alan/proto/cosmos/auth/v1beta1/auth.pb.dart' as auth_pb;
 import 'package:alan/proto/cosmos/staking/v1beta1/tx.pb.dart' as staking;
 import 'package:alan/proto/cosmos/gov/v1beta1/tx.pb.dart' as gov;
-import 'package:alan/proto/cosmos/gov/v1beta1/gov.pb.dart' as govDef;
+import 'package:alan/proto/cosmos/gov/v1beta1/gov.pb.dart' as gov_def;
 import 'package:alan/proto/cosmos/distribution/v1beta1/tx.pb.dart'
     as distribution;
-import 'package:alan/proto/google/protobuf/any.pb.dart' as $1;
+import 'package:alan/proto/google/protobuf/any.pb.dart' as any_pb;
 import 'package:encrypt/encrypt.dart';
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:flutter/foundation.dart' as foundation;
@@ -24,12 +24,12 @@ import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.base-coin.dart';
 import 'package:plug/app/data/services/net.services.dart';
 import 'package:plug/app/env/env.dart';
-import 'package:plug/app/ui/utils/evm/evmWallet.dart';
+import 'package:plug/app/ui/utils/evm/evm_wallet.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:protobuf/protobuf.dart';
-import 'package:plug/protobuf/chain/token/tx.pb.dart' as tokenTx;
+import 'package:plug/protobuf/chain/token/tx.pb.dart' as token_tx;
 import 'package:plug/protobuf/chain/liquidity/v1beta1/tx.pb.dart'
-    as liquidityTx;
+    as liquidity_tx;
 import 'package:plug/protobuf/chain/signer/v1beta1/signer.pb.dart' as secp2561;
 
 List<int> errorCode = [
@@ -39,7 +39,7 @@ List<int> errorCode = [
 
 class SelfAuthQuerier extends alan.AuthQuerier {
   final alan.Wallet wallet;
-  enumAccountType addressType;
+  EnumAccountType addressType;
 
   SelfAuthQuerier({
     required auth.QueryClient client,
@@ -49,16 +49,16 @@ class SelfAuthQuerier extends alan.AuthQuerier {
 
   @override
   factory SelfAuthQuerier.build(alan.Wallet wallet, grpc.ClientChannel channel,
-      {enumAccountType? addressType}) {
+      {EnumAccountType? addressType}) {
     return SelfAuthQuerier(
         client: auth.QueryClient(channel),
         wallet: wallet,
-        addressType: addressType ?? enumAccountType.prc10);
+        addressType: addressType ?? EnumAccountType.prc10);
   }
   @override
   Future<alan.AccountI?> getAccountData(String address) async {
-    $1.Any pubKey;
-    if (addressType == enumAccountType.prc20) {
+    any_pb.Any pubKey;
+    if (addressType == EnumAccountType.prc20) {
       // 短公钥
       var secp256Key = secp2561.PubKey.create()
         ..key = (wallet as dynamic).comPublicKeyBytes;
@@ -78,12 +78,14 @@ class SelfAuthQuerier extends alan.AuthQuerier {
       accountInfo = accountResult?.data['base_account'];
     }
     if (accountResult != null) {
-      if (accountResult.data["account_number"] != '')
+      if (accountResult.data["account_number"] != '') {
         accountNumber = '${accountInfo["account_number"]}';
-      if (accountResult.data["sequence"] != '')
+      }
+      if (accountResult.data["sequence"] != '') {
         sequence = '${accountInfo["sequence"]}';
+      }
     }
-    return alan.BaseAccount(authPb.BaseAccount(
+    return alan.BaseAccount(auth_pb.BaseAccount(
       address: wallet.bech32Address,
       pubKey: pubKey,
       accountNumber: $fixnum.Int64.parseInt(accountNumber),
@@ -100,6 +102,7 @@ class SelfNodeQuerier extends alan.QueryHelper implements alan.NodeQuerier {
   factory SelfNodeQuerier.build(http.Client httpClient) {
     return SelfNodeQuerier._(httpClient: httpClient);
   }
+  @override
   Future<alan.NodeInfo> getNodeInfo(String lcdEndpoint) async {
     return alan.NodeInfo(
       network: Env.envConfig.chainInfo.appChainId,
@@ -124,11 +127,11 @@ class WalletTool {
     DataAccountController dataAccountController = Get.find();
     alan.TxSigner signer;
     if (dataAccountController.state.nowAccount?.accountType ==
-        enumAccountType.prc20) {
+        EnumAccountType.prc20) {
       signer = alan.TxSigner(
         nodeQuerier: SelfNodeQuerier.build(http.Client()),
         authQuerier: SelfAuthQuerier.build(wallet, _networkInfo.gRPCChannel,
-            addressType: enumAccountType.prc20),
+            addressType: EnumAccountType.prc20),
       );
     } else {
       signer = alan.TxSigner(
@@ -277,7 +280,7 @@ class WalletTool {
   static alan.Wallet getWallet(List<String> mnemonic) {
     DataAccountController dataAccountController = Get.find();
     if (dataAccountController.state.nowAccount?.accountType ==
-        enumAccountType.prc20) return walletForMnemonicPrc20(mnemonic);
+        EnumAccountType.prc20) return walletForMnemonicPrc20(mnemonic);
     return walletForMnemonic(mnemonic);
   }
 
@@ -389,7 +392,7 @@ class WalletTool {
   static Future<HttpToolResponse> proposalVote({
     required List<String> mnemonic,
     required String proposalId,
-    required govDef.VoteOption option,
+    required gov_def.VoteOption option,
     required String gasAll,
     String memo = '',
     $fixnum.Int64? gasLimit,
@@ -420,7 +423,7 @@ class WalletTool {
     $fixnum.Int64 gasLimit = 400000.toInt64();
     var wallet = getWallet(mnemonic);
     String memo = '';
-    var message = tokenTx.MsgIssueToken.create()
+    var message = token_tx.MsgIssueToken.create()
       ..owner = wallet.bech32Address
       ..name = name
       ..symbol = symbol
@@ -447,7 +450,7 @@ class WalletTool {
   }) {
     $fixnum.Int64 gasLimit = 400000.toInt64();
     var wallet = getWallet(mnemonic);
-    var message = liquidityTx.MsgSwapWithinBatch.create()
+    var message = liquidity_tx.MsgSwapWithinBatch.create()
       ..swapRequesterAddress = wallet.bech32Address
       ..poolId = poolId.toInt64()
       ..swapTypeId = 1
@@ -476,7 +479,7 @@ class WalletTool {
   }) {
     $fixnum.Int64 gasLimit = 400000.toInt64();
     var wallet = getWallet(mnemonic);
-    var message = liquidityTx.MsgCreatePool.create()
+    var message = liquidity_tx.MsgCreatePool.create()
       ..poolCreatorAddress = wallet.bech32Address
       ..poolTypeId = 1
       ..depositCoins.addAll([
@@ -504,7 +507,7 @@ class WalletTool {
   }) {
     $fixnum.Int64 gasLimit = 400000.toInt64();
     var wallet = getWallet(mnemonic);
-    var message = liquidityTx.MsgDepositWithinBatch.create()
+    var message = liquidity_tx.MsgDepositWithinBatch.create()
       ..depositorAddress = wallet.bech32Address
       ..poolId = poolId.toInt64()
       ..depositCoins.addAll([
@@ -530,7 +533,7 @@ class WalletTool {
   }) {
     $fixnum.Int64 gasLimit = 400000.toInt64();
     var wallet = getWallet(mnemonic);
-    var message = liquidityTx.MsgWithdrawWithinBatch.create()
+    var message = liquidity_tx.MsgWithdrawWithinBatch.create()
       ..withdrawerAddress = wallet.bech32Address
       ..poolId = poolId.toInt64()
       ..poolCoin = (alan.Coin.create()

@@ -188,8 +188,9 @@ class ChainRePledgePageController extends GetxController {
     if (state.selectVerifier.address == '') return;
     var _rePledgeValue = NumberTool.balanceToAmount(pledgeController.text);
     var douValue = double.tryParse(_rePledgeValue);
-    if (douValue == null || douValue == 0.0)
+    if (douValue == null || douValue == 0.0) {
       return LToast.warning('ErrorWithVolumeInput'.tr);
+    }
     String? pass = await LBottomSheet.passwordBottomSheet();
     if (pass == null) return;
     LLoading.showBgLoading();
@@ -210,10 +211,12 @@ class ChainRePledgePageController extends GetxController {
     );
     LLoading.dismiss();
     state.pledgeLoading = false;
-    if (result.status == -10001)
+    if (result.status == -10001) {
       return LToast.error('ErrorWithRePledgeCallback'.tr);
-    if (result.status == -10002)
+    }
+    if (result.status == -10002) {
       return LToast.error('ErrorWithRePledgeTimeout'.tr);
+    }
     if (result.status != 0) return LToast.error('ErrorWithRePledgeUnKnow'.tr);
     LToast.success('SuccessRePledgeRedeem'.tr);
     pledgeController.text = '0';

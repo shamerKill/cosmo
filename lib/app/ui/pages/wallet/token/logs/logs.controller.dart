@@ -66,17 +66,17 @@ class WalletTokenLogsPageController extends GetxController
   _initTokenInfo(String tokenMark) async {
     LLoading.showLoading();
     state.accountInfo = dataAccount.state.nowAccount!;
-    enumAccountType _tokenType = StringTool.checkChainAddress(tokenMark)
-        ? enumAccountType.prc20
-        : enumAccountType.prc10;
+    EnumAccountType _tokenType = StringTool.checkChainAddress(tokenMark)
+        ? EnumAccountType.prc20
+        : EnumAccountType.prc10;
     var token = dataAccount.state.nowAccount?.tokenList.firstWhere(
-        (_itemToken) => _tokenType == enumAccountType.prc10
+        (_itemToken) => _tokenType == EnumAccountType.prc10
             ? _itemToken.minUnit == tokenMark
             : _itemToken.contractAddress == tokenMark);
     if (token != null) {
       state.tokenInfo = token;
     } else {
-      token = _tokenType == enumAccountType.prc10
+      token = _tokenType == EnumAccountType.prc10
           ? (await httpToolApp.getCoinInfo(tokenMark))
           : (await httpToolServer.searchToken20Info(tokenMark)).data?['token'];
     }
@@ -93,10 +93,12 @@ class WalletTokenLogsPageController extends GetxController
 
   // 获取交易记录
   Future<void> _getTransferLogs({bool refresh = false}) async {
-    if (state.tokenInfo.type == enumTokenType.prc10)
+    if (state.tokenInfo.type == EnumTokenType.prc10) {
       return _getTransferLogsPRC10(refresh);
-    if (state.tokenInfo.type == enumTokenType.prc20)
+    }
+    if (state.tokenInfo.type == EnumTokenType.prc20) {
       return _getTransferLogsPRC20(refresh);
+    }
   }
 
   Future<void> _getTransferLogsPRC10(bool refresh) async {
@@ -163,7 +165,7 @@ class WalletTokenLogsPageController extends GetxController
             : TransferLogStatusEnum.fail
         // 交易数量
         ..rawLog = {
-          'type': enumTokenType.prc20,
+          'type': EnumTokenType.prc20,
           'from': res['From'],
           'to': res['To'],
           'amount': res['Balance'],
@@ -177,7 +179,7 @@ class WalletTokenLogsPageController extends GetxController
   // 转账
   onToSend() async {
     await Get.toNamed(PlugRoutesNames.walletTokenSend(
-        state.tokenInfo.type == enumTokenType.prc10
+        state.tokenInfo.type == EnumTokenType.prc10
             ? state.tokenInfo.minUnit
             : state.tokenInfo.contractAddress));
     _refreshData();
@@ -186,7 +188,7 @@ class WalletTokenLogsPageController extends GetxController
   // 收款
   onToReceive() async {
     await Get.toNamed(PlugRoutesNames.walletTokenReceive(
-        state.tokenInfo.type == enumTokenType.prc10
+        state.tokenInfo.type == EnumTokenType.prc10
             ? state.tokenInfo.minUnit
             : state.tokenInfo.contractAddress));
     _refreshData();
@@ -211,7 +213,7 @@ class WalletTokenLogsPageController extends GetxController
 
   // 刷新页面
   _refreshData() {
-    if (state.tokenInfo.type == enumTokenType.prc10) {
+    if (state.tokenInfo.type == EnumTokenType.prc10) {
       _initTokenInfo(state.tokenInfo.minUnit);
     } else {
       _initTokenInfo(state.tokenInfo.contractAddress);

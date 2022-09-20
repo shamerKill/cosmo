@@ -83,8 +83,9 @@ class WalletQrScannerPageController extends GetxController {
     scanController!.startCamera((String result, _) async {
       if (state.isScanned) return;
       if (result == '') return;
-      if (state.warningQrCode.firstWhereOrNull((ele) => ele == result) != null)
+      if (state.warningQrCode.firstWhereOrNull((ele) => ele == result) != null) {
         return;
+      }
       state.isScanned = true;
       scanController?.stopCamera();
       if (StringTool.checkNetAddress(result) && !state.isGetResultBack) {
@@ -131,8 +132,9 @@ class WalletQrScannerPageController extends GetxController {
       if (status.isDenied || status.isPermanentlyDenied) {
         status = await Permission.photos.request();
       }
-      if (!(status.isGranted || status.isLimited))
+      if (!(status.isGranted || status.isLimited)) {
         return LToast.warning('ErrorWithPermissionCamera'.tr);
+      }
       state.isGetPermission = false;
       scanController?.stopCamera();
       final ImagePicker _picker = ImagePicker();

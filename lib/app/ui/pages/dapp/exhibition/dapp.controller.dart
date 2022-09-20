@@ -58,8 +58,9 @@ class DappExhibitionPageController extends GetxController
   _initTabBar() async {
     state.localDappTab = TabController(vsync: this, length: 2);
     state.localDappTab?.addListener(() {
-      if (state.localDappTab != null)
+      if (state.localDappTab != null) {
         state.localDappTabIndex = state.localDappTab!.index;
+      }
     });
   }
 

@@ -88,8 +88,9 @@ class UserDappSettingPageController extends GetxController {
       title: 'clearNetCacheTip'.tr,
     );
     if (result != true) return;
-    if (state.webviewController == null)
+    if (state.webviewController == null) {
       return LToast.error('ErrorWithClear'.tr);
+    }
     try {
       LLoading.showBgLoading();
       state.webviewController?.clearCache();
