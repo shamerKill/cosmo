@@ -15,8 +15,8 @@ class UserAboutPage extends GetView<UserAboutPageController> {
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(
-        // showBack: false
-      ),
+          // showBack: false
+          ),
       basicBackgroundColor: true,
       singleScroll: true,
       body: Column(
@@ -83,36 +83,39 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                         vertical: appTheme.sizes.padding,
                         horizontal: appTheme.sizes.padding),
                     child: Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (state.hadUpdate == '')
-                          Text('versionUpdate'.tr)
-                        else 
-                          Text('versionUpdateFunc'.tr),
-                        if (state.hadUpdate == '')
-                          Text('versionIsLasted'.tr,
-                              style: Get.textTheme.bodyText1)
-                        else
-                          Row(
-                            children: [
-                              Text('v ${state.hadUpdate}',
-                                  style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.primaryColor)),
-                              Padding(
-                                  padding: EdgeInsets.only(
-                                      left: appTheme.sizes.paddingSmall / 2)),
-                              Container(
-                                width: appTheme.sizes.radius / 2,
-                                height: appTheme.sizes.radius / 2,
-                                decoration: BoxDecoration(
-                                  color: appTheme.colors.primaryColor,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(appTheme.sizes.radius)),
-                                ),
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (state.hadUpdate == '')
+                              Text('versionUpdate'.tr)
+                            else
+                              Text('versionUpdateFunc'.tr),
+                            if (state.hadUpdate == '')
+                              Text('versionIsLasted'.tr,
+                                  style: Get.textTheme.bodyText1)
+                            else
+                              Row(
+                                children: [
+                                  Text('v ${state.hadUpdate}',
+                                      style: Get.textTheme.bodyText1?.copyWith(
+                                          color: appTheme.colors.primaryColor)),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left:
+                                              appTheme.sizes.paddingSmall / 2)),
+                                  Container(
+                                    width: appTheme.sizes.radius / 2,
+                                    height: appTheme.sizes.radius / 2,
+                                    decoration: BoxDecoration(
+                                      color: appTheme.colors.primaryColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(
+                                              appTheme.sizes.radius)),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                      ],
-                    )),
+                          ],
+                        )),
                   ),
                 ),
               ],
@@ -142,11 +145,11 @@ class UserAboutPage extends GetView<UserAboutPageController> {
                       InkWell(
                         onTap: controller.onGoToBrowser,
                         child: Obx(() => Text(
-                            state.webSite,
-                            style: TextStyle(
-                                color: appTheme.colors.primaryColor,
-                                fontSize: appTheme.sizes.fontSizeSmall),
-                          )),
+                              state.webSite,
+                              style: TextStyle(
+                                  color: appTheme.colors.primaryColor,
+                                  fontSize: appTheme.sizes.fontSizeSmall),
+                            )),
                       ),
                     ],
                   ),

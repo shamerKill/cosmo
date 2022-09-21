@@ -135,7 +135,8 @@ class ChainCreateTokenPageController extends GetxController {
 
   // 开始发行
   createToken() async {
-    if (!RegExp(r'^[az][a-z0-9]{2,7}$').hasMatch(coinSymbolTextController.text)) {
+    if (!RegExp(r'^[az][a-z0-9]{2,7}$')
+        .hasMatch(coinSymbolTextController.text)) {
       return LToast.warning('tokenCreateSymbolTip'.tr);
     }
     if (coinNameTextController.text == '' ||

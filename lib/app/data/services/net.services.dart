@@ -434,9 +434,7 @@ class _BrowserToolServer extends UriTool {
   // 获取代币单价
   Future<HttpToolResponse?> getTokenPrice(List<String> tokens) {
     return HttpToolClient.getHttp(customUri('pvmApi/price/coins',
-        queryParameters: {
-          'tokens': tokens.join(',')
-        })).then(
+        queryParameters: {'tokens': tokens.join(',')})).then(
       (res) => res,
       onError: (e) => null,
     );

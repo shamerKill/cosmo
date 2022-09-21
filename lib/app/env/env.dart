@@ -32,6 +32,7 @@ abstract class _EnvName {
   static const String release = "release";
   static const String test = "test";
 }
+
 // 声明的渠道
 abstract class EnvChannel {
   // 渠道key
@@ -85,6 +86,7 @@ class Env {
         return _debugConfig;
     }
   }
+
   // 获取不同的渠道
   static String? get envChannel {
     if (_channel == EnvChannel.android) return EnvChannel.android;
@@ -92,21 +94,25 @@ class Env {
     if (_channel == EnvChannel.iosTest) return EnvChannel.iosTest;
     return null;
   }
+
   // 判断渠道是不是android
   static bool get getEnvIsAndroid {
     if (getEnvIsAndroidBrowser || getEnvIsGooglePlay) return true;
     return false;
   }
+
   // 判断渠道是不是从安卓浏览器下载
   static bool get getEnvIsAndroidBrowser {
     if (_channel == EnvChannel.android) return true;
     return false;
   }
+
   // 判读渠道是不是ios浏览器下载
   static bool get getEnvIsIosBrowser {
     if (_channel == EnvChannel.iosTest) return true;
     return false;
   }
+
   // 判断渠道是不是从谷歌商店下载
   static bool get getEnvIsGooglePlay {
     if (_channel == EnvChannel.google) return true;

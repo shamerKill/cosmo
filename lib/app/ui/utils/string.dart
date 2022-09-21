@@ -194,4 +194,23 @@ class StringTool {
     if (checkHexAddress(address)) return address;
     return bech32ToHex(address);
   }
+
+  // 网站内容转码
+  static String webInfoToBase(String input) {
+    return 'data:text/html;base64,' + base64Encode(const Utf8Encoder().convert('''
+      <!DOCTYPE html>
+      <head>
+        <meta charset="utf-8">
+        <style>
+          * {
+            font-size: 40px;
+          }
+        </style>
+      </head>
+      <body>
+        $input
+      </body>
+      </html>
+    '''));
+  }
 }

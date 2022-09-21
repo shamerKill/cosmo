@@ -12,6 +12,7 @@ class LBottomSheet {
     Widget? child,
     bool horizontalPadding = false,
     bool showClose = true,
+    bool isDismissible = true,
   }) {
     return Get.bottomSheet<T>(
       Container(
@@ -55,7 +56,7 @@ class LBottomSheet {
         ),
       ),
       enableDrag: true,
-      isDismissible: true,
+      isDismissible: isDismissible,
       barrierColor: appTheme.colors.pageConTrastColor.withOpacity(0.5),
     );
   }

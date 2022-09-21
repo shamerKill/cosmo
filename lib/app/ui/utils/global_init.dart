@@ -12,7 +12,7 @@ import 'package:uni_links/uni_links.dart';
 class UtilGlobalInit {
   static init() async {
     _changeSystemUI();
-    if (Env.envConfig.isRelease) {
+    if (Env.envConfig.isRelease && Env.getEnvIsAndroid) {
       await _openSuperFPS();
     }
     await _changeSystemPerferred();
@@ -30,12 +30,14 @@ class UtilGlobalInit {
 
   // 禁止转向
   static _changeSystemPerferred({canRotate = false}) async {
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      if (canRotate) DeviceOrientation.landscapeLeft,
-      if (canRotate) DeviceOrientation.landscapeRight,
-    ]);
+    try {
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+        if (canRotate) DeviceOrientation.landscapeLeft,
+        if (canRotate) DeviceOrientation.landscapeRight,
+      ]);
+    } on PlatformException catch (_) {}
   }
 
   // 开启高高刷

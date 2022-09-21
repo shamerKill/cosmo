@@ -175,7 +175,8 @@ class DappWebviewPageController extends GetxController
   // webview路由拦截
   FutureOr<NavigationDecision> onNavigationDelegate(
       NavigationRequest request) async {
-    if (StringTool.isHttpsUrl(request.url) || StringTool.isHttpUrl(request.url)) {
+    if (StringTool.isHttpsUrl(request.url) ||
+        StringTool.isHttpUrl(request.url)) {
       return NavigationDecision.navigate;
     }
     // if (StringTool.isHttpUrl(request.url)) LToast.warning('ErrorWithWebUnsafe'.tr);

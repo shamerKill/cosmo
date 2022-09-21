@@ -306,7 +306,8 @@ class ChainExportProposalPage
                                   vertical: appTheme.sizes.paddingSmall * 0.2),
                               decoration: BoxDecoration(
                                 color: (() {
-                                  if (_item.status == EnumProposalStatus.passed) {
+                                  if (_item.status ==
+                                      EnumProposalStatus.passed) {
                                     return appTheme.colors.primaryColor;
                                   }
                                   if (_item.status ==

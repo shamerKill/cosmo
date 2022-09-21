@@ -83,7 +83,8 @@ class WalletQrScannerPageController extends GetxController {
     scanController!.startCamera((String result, _) async {
       if (state.isScanned) return;
       if (result == '') return;
-      if (state.warningQrCode.firstWhereOrNull((ele) => ele == result) != null) {
+      if (state.warningQrCode.firstWhereOrNull((ele) => ele == result) !=
+          null) {
         return;
       }
       state.isScanned = true;

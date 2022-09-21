@@ -1,289 +1,137 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
-import 'dart:ui';
-
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:flutter_webview_pro/webview_flutter.dart';
-import 'package:dio/dio.dart';
-import 'package:plug/app/ui/components/function/toast.component.dart';
-import 'package:plug/app/ui/theme/theme.dart';
+import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:plug/app/data/provider/data.config.dart';
+import 'package:plug/app/env/env.dart';
+import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/components/function/button.component.dart';
+import 'package:plug/app/ui/components/function/toast.component.dart';
+import 'package:plug/app/ui/utils/string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CheckUpdateApp {
-  late final BuildContext _context;
-  bool _loading = false;
-  String _downloadName = 'pando_wallet.apk';
-  String _downloadUrl = '';
   void Function(int)? setModalHeightSheetState;
   void Function(bool)? setModalLoadingSheetState;
 
-  CheckUpdateApp(
-    BuildContext context,
-  ) {
-    _context = context;
-  }
-
   String _upLoadDetail = ''; // 更新公告
   bool _isImportant = false; // 是否强制更新
+  String _downloadSite = ''; // 下载地址
+  String _remoteVersion = ''; // 远程版本
   void Function()? callbackFunc;
+  DataConfigController appConfig = Get.put(DataConfigController());
 
+  // 检查版本
   checkVersion(void Function() callbackFunc) async {
     this.callbackFunc = callbackFunc;
-    var result = await httpToolServer.getVersion();
-    // TODO: 获取更新
-    return print(result);
-    if (result.status == 200) {
-      var random = Random(DateTime.now().microsecondsSinceEpoch)
-          .nextInt(10000)
-          .toString();
-      _isImportant = result.data['enforce'] == '1' ? true : false;
-      _upLoadDetail = result.data['content'] ?? '';
-      _downloadName = 'pando_wallet${result.data['version']}$random.apk';
-      _downloadUrl = result.data['downloadurl'];
-      await _checkVersion(result.data['version']);
-    } else {
-      if (this.callbackFunc != null) this.callbackFunc!();
+    var result = await httpToolServer.getRemoteAppVersion();
+    if (result.status != 0 || result.data == null) return;
+    if (result.data.isEmpty) return;
+    var appInfo = result.data.first;
+    _upLoadDetail = appInfo['content'];
+    _isImportant = appInfo['enforce'] == '0';
+    _downloadSite = appInfo['downloadurl'];
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    _remoteVersion = appInfo['version'];
+    if (
+      _checkVersionUpgrade(packageInfo.version, appInfo['version']) &&
+      _checkVersionUpgrade(appConfig.state.config.ignoreVersion??'0.0.0', packageInfo.version)
+    ) {
+      _showModal();
     }
-    return;
   }
 
-  _checkVersion(String version) async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    List<String> localVersionList = packageInfo.version.split('.');
-    List<String> networkVersionList = version.split('.');
+  // 判断版本
+  bool _checkVersionUpgrade(String local, String remote) {
+    List<String> localVersionList = local.split('.');
+    List<String> remoteVersionList = remote.split('.');
     bool hadUpdate = false;
     for (int index = 0; index < localVersionList.length; index++) {
       if (double.parse(localVersionList[index]) >
-          double.parse(networkVersionList[index])) {
+          double.parse(remoteVersionList[index])) {
         hadUpdate = false;
         break;
       }
       if (double.parse(localVersionList[index]) <
-          double.parse(networkVersionList[index])) {
+          double.parse(remoteVersionList[index])) {
         hadUpdate = true;
         break;
       }
     }
-    if (hadUpdate) {
-      _showModal();
+    return hadUpdate;
+  }
+
+
+
+  // 更新版本
+  onUpdateVersion() async {
+    if (Env.getEnvIsIosBrowser) {
+      LToast.info('iosTestUpdatePleaseHolder'.tr);
+    } else if (Env.getEnvIsGooglePlay) {
+      // TODO: 谷歌商店打开
+      LToast.info('googlePlayUpdatePleaseHolder'.tr);
+    } else if (Env.getEnvIsAndroidBrowser) {
+      bool? result = await LBottomSheet.promptBottomSheet(
+        title: 'updateTip'.tr,
+        message: Column(children: [
+          Text('updateTipDesc'.tr),
+        ]),
+      );
+      if (result != true) return;
+      await launchUrl(Uri.parse(_downloadSite));
     } else {
-      if (callbackFunc != null) callbackFunc!();
+      LToast.info('iosTestUpdatePleaseHolder'.tr);
     }
   }
 
-  _closeModal() {
-    Navigator.of(_context).pop();
-    if (callbackFunc != null) callbackFunc!();
-  }
-
-  _openDownLoad() async {
-    await Future.delayed(const Duration(seconds: 1), () async {
-      if (setModalLoadingSheetState != null) setModalLoadingSheetState!(false);
-      await OpenFile.open(_downloadName);
-      exit(0);
-    });
-  }
-
-  _checkPermissions() async {
-    var statusType = await Permission.storage.status;
-    if (statusType.isDenied || statusType.isPermanentlyDenied) {
-      statusType = await Permission.storage.request();
-    }
-    if (statusType.isRestricted) {
-      LToast.warning('ErrorWithPermissionStorage'.tr);
-      await Future.delayed(const Duration(seconds: 3));
-      openAppSettings();
-      return false;
-    }
-    if (!statusType.isGranted) {
-      LToast.warning('ErrorWithPermissionStorage'.tr);
-      return false;
-    }
-    var status = await Permission.requestInstallPackages.status;
-    if (status.isDenied || status.isPermanentlyDenied) {
-      status = await Permission.requestInstallPackages.request();
-    }
-    if (status.isRestricted) {
-      LToast.warning('ErrorWithPermissionStorage'.tr);
-      await Future.delayed(const Duration(seconds: 3));
-      openAppSettings();
-      return false;
-    }
-    if (!status.isGranted) {
-      LToast.warning('ErrorWithPermissionStorage'.tr);
-      return false;
-    }
-    return true;
-  }
-
-  _download() async {
-    if (!(await _checkPermissions())) return exit(0);
-    if (_loading) return;
-    _loading = true;
-    if (setModalLoadingSheetState != null) setModalLoadingSheetState!(true);
-    // var directory = 'await AndroidPathProvider.downloadsPath';
-    var directory = await getTemporaryDirectory();
-    Dio dio = Dio();
-    _downloadName = '${directory.path}/$_downloadName';
-    await dio.download(_downloadUrl, _downloadName,
-        onReceiveProgress: (received, total) {
-      if (total != -1) {
-        var step = (received / total * 100).toInt();
-        setModalHeightSheetState!(step);
-
-        ///当前下载的百分比例
-        if (step == 100) {
-          _openDownLoad();
-        }
-      }
-    });
+  // 忽略当前版本
+  onIgnoreNowVersion() {
+    appConfig.upIgnoreVersion(_remoteVersion);
+    Get.back();
   }
 
   _showModal() {
-    showModalBottomSheet(
-        context: _context,
-        backgroundColor: Colors.transparent,
-        barrierColor: Colors.transparent,
-        isDismissible: false,
-        enableDrag: false,
-        isScrollControlled: true,
-        builder: (_) {
-          double _bgHeight = 0; // 0 <= height <= 1
-          int _progress = 0;
-          bool _loading = false;
-          return StatefulBuilder(builder: (_, setBottomSheetState) {
-            setModalHeightSheetState = (int progress) {
-              setBottomSheetState(() {
-                _bgHeight = (progress / 100) * 300;
-                _progress = progress;
-              });
-            };
-            setModalLoadingSheetState = (bool loading) {
-              setBottomSheetState(() {
-                _loading = loading;
-              });
-            };
-            return SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: [
-                  Positioned(
-                    child: SizedBox(
-                      height: 300,
-                      width: 300,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            bottom: 0,
-                            height: _bgHeight,
-                            width: 300,
-                            child: Container(
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                color: appTheme.colors.primaryColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(appTheme.sizes.radius)),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            child: Container(
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                color: appTheme.colors.pageBackgroundColor
-                                    .withOpacity(0.7),
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(appTheme.sizes.radius)),
-                              ),
-                              child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: appTheme.sizes.padding),
-                                      child: Text(
-                                        'upgradeTitle'.tr,
-                                        style: TextStyle(
-                                          color: appTheme.colors.primaryColor,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: SingleChildScrollView(
-                                        child: WebView(
-                                          initialUrl: 'data:text/html;base64,' +
-                                              base64Encode(const Utf8Encoder()
-                                                  .convert(
-                                                      '<!DOCTYPE html><body>$_upLoadDetail</body></html>')),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: appTheme.sizes.padding),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            flex: _isImportant ? 0 : 1,
-                                            child: Offstage(
-                                              offstage: _isImportant,
-                                              child: LButton(
-                                                contrast: true,
-                                                child: Text(
-                                                    _loading
-                                                        ? '${'loadingWithUpgradeInstall'.tr}\r$_progress%'
-                                                        : 'upgradeVersionSkip'
-                                                            .tr,
-                                                    style: TextStyle(
-                                                        color: appTheme
-                                                            .colors.textGray)),
-                                                onPressed: _loading
-                                                    ? null
-                                                    : _closeModal,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: LButton(
-                                              child: Text(_loading
-                                                  ? '${'loadingWithUpgradeInstall'.tr}\r$_progress%'
-                                                  : 'upgradeVersionInstall'.tr),
-                                              onPressed:
-                                                  _loading ? null : _download,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+    LBottomSheet.baseBottomSheet(
+      isDismissible: !_isImportant,
+      horizontalPadding: false,
+      child: Column(
+        children: [
+          Center(
+            child: SizedBox(
+              width: Get.width,
+              height: Get.height * 0.4,
+              child: WebView(
+                initialUrl: StringTool.webInfoToBase(_upLoadDetail),
               ),
-            );
-          });
-        });
+            ),
+          ),
+          _isImportant ? (
+            LButton(
+              width: Get.width * 0.8,
+              child: Text('goToUpgrade'.tr),
+              onPressed: onUpdateVersion,
+            )
+          ) : (
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                LButton(
+                  width: Get.width * 0.4,
+                  child: Text('ignoreNow'.tr),
+                  contrast: true,
+                  onPressed: onIgnoreNowVersion,
+                ),
+                LButton(
+                  width: Get.width * 0.4,
+                  child: Text('goToUpgrade'.tr),
+                  onPressed: onUpdateVersion,
+                )
+              ],
+            )
+          ),
+        ],
+      ),
+    );
   }
 }

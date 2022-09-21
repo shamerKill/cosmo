@@ -23,7 +23,7 @@ class UserAboutPageState {
   // 更新的网址
   final Rx<String> _downloadSite = ''.obs;
   String get downloadSite => _downloadSite.value;
-  set downloadSite (String value) => _downloadSite.value = value;
+  set downloadSite(String value) => _downloadSite.value = value;
   // 官网
   final Rx<String> _webSite = ''.obs;
   String get webSite => _webSite.value;
@@ -72,11 +72,13 @@ class UserAboutPageController extends GetxController {
     List<String> remoteVersionList = remote.split('.');
     bool hadUpdate = false;
     for (int index = 0; index < localVersionList.length; index++) {
-      if (double.parse(localVersionList[index]) > double.parse(remoteVersionList[index])) {
+      if (double.parse(localVersionList[index]) >
+          double.parse(remoteVersionList[index])) {
         hadUpdate = false;
         break;
       }
-      if (double.parse(localVersionList[index]) < double.parse(remoteVersionList[index])) {
+      if (double.parse(localVersionList[index]) <
+          double.parse(remoteVersionList[index])) {
         hadUpdate = true;
         break;
       }

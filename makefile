@@ -1,5 +1,5 @@
 
-all: format clean install build-apk build-bundle
+all: format clean install build-apk build-bundle build-ipa
 
 format:
 	@echo "======> Format project ......"
@@ -26,3 +26,9 @@ build-bundle:
 	@echo "======> build android appbundle ......"
 	@flutter build appbundle --dart-define=DART_DEFINE_APP_ENV=release --dart-define=BUILD_CHANNEL=android-google
 	@echo "...... build android appbundle end <======"
+
+
+build-ipa:
+	@echo "======> build ios ipa ......"
+	@flutter build ipa --dart-define=DART_DEFINE_APP_ENV=release --dart-define=BUILD_CHANNEL=ios-browser --export-method=development
+	@echo "...... build ios ipa end <======"

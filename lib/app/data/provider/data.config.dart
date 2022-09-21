@@ -34,6 +34,12 @@ class DataConfigController extends GetxController {
     _saveConfig();
   }
 
+  // 设置忽略版本号
+  upIgnoreVersion(String version) {
+    state.config.ignoreVersion = version;
+    _saveConfig();
+  }
+
   // 储存配置
   _saveConfig() {
     GetStorage().write(state.baseStorageName, state.config.toJson());

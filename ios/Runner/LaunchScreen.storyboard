@@ -17,24 +17,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="demo" highlightedImage="demo" highlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKE-QL-nC8">
+                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="demo" highlightedImage="demo" highlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BKE-QL-nC8">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.017942778770000001" green="0.067011974749999995" blue="0.10862847420000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default" weight="regular"/>
                             </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre" propertyAccessControl="all"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="BKE-QL-nC8" secondAttribute="bottom" id="E0M-Ys-mAe"/>
-                            <constraint firstAttribute="bottom" secondItem="BKE-QL-nC8" secondAttribute="bottom" id="GHg-ZA-P8D"/>
-                            <constraint firstItem="BKE-QL-nC8" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="H9Y-Hr-Osg"/>
-                            <constraint firstItem="BKE-QL-nC8" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="O18-m0-b4e"/>
-                            <constraint firstAttribute="trailing" secondItem="BKE-QL-nC8" secondAttribute="trailing" id="YMH-5s-nWf"/>
-                            <constraint firstAttribute="bottom" secondItem="BKE-QL-nC8" secondAttribute="bottom" id="Yt7-d6-eIi"/>
-                            <constraint firstAttribute="bottom" secondItem="BKE-QL-nC8" secondAttribute="bottom" id="d2f-3I-IH3"/>
-                            <constraint firstItem="BKE-QL-nC8" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="n2q-jb-fcn"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -43,7 +34,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="demo" width="414" height="896"/>
+        <image name="demo" width="375" height="812"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

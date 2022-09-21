@@ -38,7 +38,8 @@ class ChainProposalDetailsPage
                     vertical: appTheme.sizes.basic * 5),
                 decoration: BoxDecoration(
                   color: (() {
-                    if (state.proposalInfo.status == EnumProposalStatus.passed) {
+                    if (state.proposalInfo.status ==
+                        EnumProposalStatus.passed) {
                       return appTheme.colors.primaryColor.withOpacity(0.2);
                     }
                     if (state.proposalInfo.status ==

@@ -13,6 +13,7 @@ import 'package:plug/app/ui/components/function/loading.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/components/view/qrcode.component.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/components/view/update.dart';
 import 'package:plug/app/ui/utils/global_init.dart';
 import 'package:plug/app/ui/utils/number.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -35,7 +36,6 @@ class BasicHomePageState {
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
   AccountModel get accountInfo => _accountInfo.value;
   set accountInfo(AccountModel value) => _accountInfo.value = value;
-
 
   // 账户主网币价值
   final Rx<String> _accountAssetsToken = ''.obs;
@@ -93,6 +93,8 @@ class BasicHomePageController extends GetxController
     initAccountStorage();
     _initAnimationController();
     _checkBackup();
+    // 检查更新
+    CheckUpdateApp().checkVersion(() {});
   }
 
   @override

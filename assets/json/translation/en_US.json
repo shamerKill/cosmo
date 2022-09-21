@@ -316,6 +316,8 @@
 	"yearYieldRate": "Arr",
 	"iosTestUpdatePleaseHolder": "Please contact the staff",
 	"googlePlayUpdatePleaseHolder": "Please go to Google Play to update",
+	"goToUpgrade": "Upgrade",
+	"ignoreNow": "Ignore",
 
 	"SuccessWithImport": "Import successfully",
 	"SuccessWithCopy": "Copy successfully",

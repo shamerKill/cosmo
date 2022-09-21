@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/services/net.services.dart';
+import 'package:plug/app/ui/utils/string.dart';
 
 class WalletNotificationDetailsPageState {
   // 消息详情
@@ -40,21 +41,6 @@ class WalletNotificationDetailsPageController extends GetxController {
 
   // 设置内容详情
   setContext() {
-    state.notificationContext =
-        'data:text/html;base64,' + base64Encode(const Utf8Encoder().convert('''
-      <!DOCTYPE html>
-      <head>
-        <meta charset="utf-8">
-        <style>
-          * {
-            font-size: 40px;
-          }
-        </style>
-      </head>
-      <body>
-        ${state.notificationInfo.context[0]}
-      </body>
-      </html>
-    '''));
+    state.notificationContext = StringTool.webInfoToBase(state.notificationInfo.context[0]);
   }
 }

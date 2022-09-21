@@ -36,6 +36,15 @@ class ConfigAppData extends _StorageBaseAbstract {
 
   bool _homeValueHide = false;
 
+  // 是否有忽略的版本号
+  String? get ignoreVersion => _ignoreVersion;
+  set ignoreVersion(String? version) {
+    _ignoreVersion = version;
+    _saveKey();
+  }
+
+  String? _ignoreVersion;
+
   ConfigAppData._() : super();
   factory ConfigAppData() => create();
   static ConfigAppData create() => ConfigAppData._();
@@ -46,6 +55,7 @@ class ConfigAppData extends _StorageBaseAbstract {
     _valueMap['useBiometrics'] = useBiometrics;
     _valueMap['languageType'] = languageType?.toLanguageTag();
     _valueMap['homeValueHide'] = homeValueHide;
+    _valueMap['ignoreVersion'] = ignoreVersion;
   }
 
   @override
@@ -57,5 +67,6 @@ class ConfigAppData extends _StorageBaseAbstract {
         ? Locale.fromSubtags(languageCode: source['languageType'])
         : null;
     homeValueHide = source['homeValueHide'] ?? false;
+    ignoreVersion = source['ignoreVersion'];
   }
 }
