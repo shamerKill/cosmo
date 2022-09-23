@@ -258,6 +258,7 @@
 	"authorizationPrompt": "授权提示",
 	"authorizationDescription": "当前DAPP需要您以下授权",
 	"authorizationDescriptionAddress": "读取当前账户地址",
+	"authorizationDescriptionAddressType": "读取当前账户地址类型",
 	"authorizationDescriptionTransfer": "调用当前账户交易功能",
 	"authorizationDescriptionContractCall": "获取当前账户PRC20合约信息",
 	"authorizationDescriptionContractSend": "调用当前账户PRC20合约交易",

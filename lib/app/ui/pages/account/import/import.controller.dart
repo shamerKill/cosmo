@@ -35,6 +35,16 @@ class AccountImportPageState {
   bool get importLoading => _importLoading.value;
   set importLoading(bool value) => _importLoading.value = value;
 
+
+  // 密码有误
+  final Rx<bool> _passwordInputError = false.obs;
+  bool get passwordInputError => _passwordInputError.value;
+  set passwordInputError (bool value) => _passwordInputError.value = value;
+  // 再次输入有误
+  final Rx<bool> _rePasswordInputError = false.obs;
+  bool get rePasswordInputError => _rePasswordInputError.value;
+  set rePasswordInputError (bool value) => _rePasswordInputError.value = value;
+
   // 账户类型列表
   final RxList<EnumAccountType> accountTypeList = RxList([
     EnumAccountType.prc20,
@@ -59,16 +69,16 @@ class AccountImportPageController extends GetxController {
   onInit() {
     super.onInit();
     mnemonicController.addListener(_checkGanImport);
-    passwordController.addListener(_checkGanImport);
-    rePasswordController.addListener(_checkGanImport);
+    passwordController.addListener(_passwordListener);
+    rePasswordController.addListener(_rePasswordListener);
   }
 
   @override
   onClose() {
     super.onClose();
     mnemonicController.addListener(_checkGanImport);
-    passwordController.removeListener(_checkGanImport);
-    rePasswordController.removeListener(_checkGanImport);
+    passwordController.removeListener(_passwordListener);
+    rePasswordController.removeListener(_rePasswordListener);
   }
 
   toggleAgreement(bool? type) {
@@ -96,6 +106,24 @@ class AccountImportPageController extends GetxController {
         'link': base64.encode(
             utf8.encode('https://www.plugchain.network/v2/privacyAgreemen'))
       });
+  // 输入密码监听
+  _passwordListener() {
+    if (!VerifyTool.password(passwordController.text)) {
+      state.passwordInputError = true;
+    } else {
+      state.passwordInputError = false;
+    }
+    _checkGanImport();
+  }
+  // 再次输入密码监听
+  _rePasswordListener() {
+    if (!VerifyTool.password(rePasswordController.text) || passwordController.text != rePasswordController.text) {
+      state.rePasswordInputError = true;
+    } else {
+      state.rePasswordInputError = false;
+    }
+    _checkGanImport();
+  }
   // 判断是否可以导入
   _checkGanImport() {
     if (VerifyTool.password(passwordController.text) &&

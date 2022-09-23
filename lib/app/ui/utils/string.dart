@@ -197,7 +197,8 @@ class StringTool {
 
   // 网站内容转码
   static String webInfoToBase(String input) {
-    return 'data:text/html;base64,' + base64Encode(const Utf8Encoder().convert('''
+    return 'data:text/html;base64,' +
+        base64Encode(const Utf8Encoder().convert('''
       <!DOCTYPE html>
       <head>
         <meta charset="utf-8">

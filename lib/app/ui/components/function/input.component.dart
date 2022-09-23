@@ -8,6 +8,7 @@ class LInput extends StatelessWidget {
     Key? key,
     this.textController,
     this.labelText,
+    this.labelStyle,
     this.suffixIcon,
     this.suffixText,
     this.suffix,
@@ -41,6 +42,7 @@ class LInput extends StatelessWidget {
   final bool? obscureText;
   final TextEditingController? textController;
   final String? labelText;
+  final TextStyle? labelStyle;
   final String? hintText;
   final Widget? suffixIcon;
   final String? suffixText;
@@ -104,6 +106,8 @@ class LInput extends StatelessWidget {
             right: appTheme.sizes.paddingSmall,
           ),
           labelText: labelText,
+          labelStyle: labelStyle,
+          floatingLabelStyle: labelStyle,
           hintText: hintText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           suffixText: suffixText,

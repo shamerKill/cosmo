@@ -33,6 +33,15 @@ class AccountCreateState {
   bool get createLoading => _createLoading.value;
   set createLoading(bool value) => _createLoading.value = value;
 
+  // 密码有误
+  final Rx<bool> _passwordInputError = false.obs;
+  bool get passwordInputError => _passwordInputError.value;
+  set passwordInputError (bool value) => _passwordInputError.value = value;
+  // 再次输入有误
+  final Rx<bool> _rePasswordInputError = false.obs;
+  bool get rePasswordInputError => _rePasswordInputError.value;
+  set rePasswordInputError (bool value) => _rePasswordInputError.value = value;
+
   // 账户类型列表
   final RxList<EnumAccountType> accountTypeList = RxList([
     EnumAccountType.prc20,
@@ -54,15 +63,15 @@ class AccountCreateController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    passwordController.addListener(_checkGanCreate);
-    rePasswordController.addListener(_checkGanCreate);
+    passwordController.addListener(_passwordListener);
+    rePasswordController.addListener(_rePasswordListener);
   }
 
   @override
   onClose() {
     super.onClose();
-    passwordController.removeListener(_checkGanCreate);
-    rePasswordController.removeListener(_checkGanCreate);
+    passwordController.removeListener(_passwordListener);
+    rePasswordController.removeListener(_rePasswordListener);
   }
 
   togglePasswordView(String type) {
@@ -90,6 +99,24 @@ class AccountCreateController extends GetxController {
         'link': base64.encode(
             utf8.encode('https://www.plugchain.network/v2/privacyAgreemen'))
       });
+  // 输入密码监听
+  _passwordListener() {
+    if (!VerifyTool.password(passwordController.text)) {
+      state.passwordInputError = true;
+    } else {
+      state.passwordInputError = false;
+    }
+    _checkGanCreate();
+  }
+  // 再次输入密码监听
+  _rePasswordListener() {
+    if (!VerifyTool.password(rePasswordController.text) || passwordController.text != rePasswordController.text) {
+      state.rePasswordInputError = true;
+    } else {
+      state.rePasswordInputError = false;
+    }
+    _checkGanCreate();
+  }
   // 判断是否可以创建
   _checkGanCreate() {
     if (VerifyTool.password(passwordController.text) &&

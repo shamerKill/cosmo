@@ -41,6 +41,7 @@ class WalletNotificationDetailsPageController extends GetxController {
 
   // 设置内容详情
   setContext() {
-    state.notificationContext = StringTool.webInfoToBase(state.notificationInfo.context[0]);
+    state.notificationContext =
+        StringTool.webInfoToBase(state.notificationInfo.context[0]);
   }
 }

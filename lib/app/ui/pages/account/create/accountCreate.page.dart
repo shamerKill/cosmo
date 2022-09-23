@@ -29,6 +29,7 @@ class AccountCreatePage extends GetView<AccountCreateController> {
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
             child: Obx(() => LInput(
+                  labelStyle: state.passwordInputError ? TextStyle(color: appTheme.colors.errorColor) : null,
                   labelText: 'inputPassword'.tr,
                   disabled: state.createLoading,
                   hintText: 'passwordFormatTip'.tr,
@@ -41,6 +42,7 @@ class AccountCreatePage extends GetView<AccountCreateController> {
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
             child: Obx(() => LInput(
+                  labelStyle: state.rePasswordInputError ? TextStyle(color: appTheme.colors.errorColor) : null,
                   labelText: 'inputPasswordAgain'.tr,
                   disabled: state.createLoading,
                   textController: controller.rePasswordController,

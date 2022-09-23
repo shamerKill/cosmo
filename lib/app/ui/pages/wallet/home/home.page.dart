@@ -325,7 +325,8 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                     ))
                                 .toList()
                               ..addIf(
-                                  () => state.accountList.length < 10,
+                                  // () => state.accountList.length < 10,
+                                  () => true,
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: appTheme.sizes.padding),

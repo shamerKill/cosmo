@@ -269,7 +269,7 @@ class DappWebviewPageController extends GetxController
   _webviewGetError(dynamic e) {
     String _error = e is Object ? json.encode(e) : e.toString();
     state.webviewController?.runJavascript(
-        'if (typeof window.${_formatJsName('errorCall')} == \'function\') { window.${_formatJsName('errorCall')}(`COSMO ERROR: $_error`); }'); // _cosmoErrorCall
+        'if (typeof window.${_formatJsName('errorCall')} == \'function\') { window.${_formatJsName('errorCall')}(`WALLET ERROR: $_error`); }'); // _cosmoErrorCall
   }
 
   // 从本地获取当前地址权限
@@ -337,7 +337,7 @@ class DappWebviewPageController extends GetxController
                       color: appTheme.colors.primaryColor,
                       fontSize: appTheme.sizes.fontSizeSmall)),
             if (_permissionListApply.contains(_permissionListAll[1]))
-              Text('- ${'authorizationDescriptionAddress'.tr}',
+              Text('- ${'authorizationDescriptionAddressType'.tr}',
                   style: TextStyle(
                       color: appTheme.colors.primaryColor,
                       fontSize: appTheme.sizes.fontSizeSmall)),

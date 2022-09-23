@@ -94,7 +94,7 @@ class AccountAdminPageController extends GetxController {
         child: LInput(
           textController: _controller,
           autoFocus: true,
-          textInputAction: TextInputAction.done,
+          textInputAction: TextInputAction.send,
           onSubmitted: (String? value) {
             if (value == null || value.isEmpty) {
               LToast.error('ErrorWithAccountNotEmpty'.tr);

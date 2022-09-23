@@ -121,11 +121,11 @@ class BasicHomePageController extends GetxController
     onInfoHide(type: dataAppConfig.state.config.homeValueHide);
   }
 
+
   // 获取当前账户信息
   Future<void> initAccountStorage() async {
     _checkAndInsertAccountBaseCoin();
     LLoading.showLoading();
-    httpToolApp.getAccountSenderList(state.accountInfo.address);
     var result = await Future.wait<dynamic>(state.accountInfo.tokenList
         .map<Future<dynamic>>((token) => httpToolApp.getAccountBalance(
             state.accountInfo.address,
@@ -142,6 +142,26 @@ class BasicHomePageController extends GetxController
     _getAccountPrice();
   }
 
+  // 判断账户内是否有重复代币，如果有进行删除
+  AccountModel _checkAndRemoveAccountRepeatCoin(AccountModel account) {
+    List<TokenModel> tokenList = [];
+    for (var token in account.tokenList) {
+      var isRepeat = tokenList.where((_memToken) {
+        if (token.type == EnumTokenType.prc20) {
+          if (_memToken.contractAddress == token.contractAddress) return true;
+        } else {
+          if (_memToken.minUnit == token.minUnit) return true;
+        }
+        return false;
+      }).isNotEmpty;
+      if (!isRepeat) {
+        tokenList.add(token);
+      }
+    }
+    account.tokenList = tokenList;
+    return account;
+  }
+
   // 判断账户是否有基础币，如果没有加入并储存
   _checkAndInsertAccountBaseCoin() {
     var type = dataAccountController.checkAccountHadCoin(
@@ -153,7 +173,8 @@ class BasicHomePageController extends GetxController
           ..tokenList.insert(0, dataCoinsController.state.baseCoin),
       );
     }
-    state.accountInfo = dataAccountController.state.nowAccount!;
+    
+    state.accountInfo = _checkAndRemoveAccountRepeatCoin(dataAccountController.state.nowAccount!);
     onDrawerSelect(state.accountInfo.address);
   }
 
@@ -185,8 +206,11 @@ class BasicHomePageController extends GetxController
           0;
     }
     state._accountInfo.refresh();
-    state.accountAssetsPrice = num.toString();
-    state.accountAssetsToken = tokenNum.toString();
+    state.accountAssetsPrice =
+        double.tryParse(num.toStringAsFixed(2)).toString();
+    state.accountAssetsToken = double.tryParse(
+            tokenNum.toStringAsFixed(state.accountInfo.tokenList.first.scale))
+        .toString();
   }
 
   // 检查是否需要备份

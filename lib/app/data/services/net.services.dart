@@ -35,7 +35,17 @@ class _HttpToolApp extends UriTool {
     return HttpToolClient.getHttp(customUri('token/params')).then((res) {
       return getCoinInfo(
           res.data?['params']['issue_token_base_fee']['denom'] ?? '');
-    }, onError: (e) => null);
+    }, onError: (e) => _resFormatToToken('''{
+      "@type": "/plugchain.prc10.Token",
+      "symbol": "pc",
+      "name": "plughub staking token",
+      "scale": 6,
+      "min_unit": "uplugcn",
+      "initial_supply": "15989000000",
+      "max_supply": "100000000000",
+      "mintable": false,
+      "owner": "gx1fjljkcf5f9ceh9cu54z7pp9wtmm586r2fm5gde"
+      }'''));
   }
 
   /// 获取币种信息

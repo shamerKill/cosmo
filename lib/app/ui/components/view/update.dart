@@ -34,10 +34,9 @@ class CheckUpdateApp {
     _downloadSite = appInfo['downloadurl'];
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _remoteVersion = appInfo['version'];
-    if (
-      _checkVersionUpgrade(packageInfo.version, appInfo['version']) &&
-      _checkVersionUpgrade(appConfig.state.config.ignoreVersion??'0.0.0', packageInfo.version)
-    ) {
+    if (_checkVersionUpgrade(packageInfo.version, appInfo['version']) &&
+        _checkVersionUpgrade(appConfig.state.config.ignoreVersion ?? '0.0.0',
+            packageInfo.version)) {
       _showModal();
     }
   }
@@ -61,8 +60,6 @@ class CheckUpdateApp {
     }
     return hadUpdate;
   }
-
-
 
   // 更新版本
   onUpdateVersion() async {
@@ -106,30 +103,28 @@ class CheckUpdateApp {
               ),
             ),
           ),
-          _isImportant ? (
-            LButton(
-              width: Get.width * 0.8,
-              child: Text('goToUpgrade'.tr),
-              onPressed: onUpdateVersion,
-            )
-          ) : (
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                LButton(
-                  width: Get.width * 0.4,
-                  child: Text('ignoreNow'.tr),
-                  contrast: true,
-                  onPressed: onIgnoreNowVersion,
-                ),
-                LButton(
-                  width: Get.width * 0.4,
+          _isImportant
+              ? (LButton(
+                  width: Get.width * 0.8,
                   child: Text('goToUpgrade'.tr),
                   onPressed: onUpdateVersion,
-                )
-              ],
-            )
-          ),
+                ))
+              : (Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    LButton(
+                      width: Get.width * 0.4,
+                      child: Text('ignoreNow'.tr),
+                      contrast: true,
+                      onPressed: onIgnoreNowVersion,
+                    ),
+                    LButton(
+                      width: Get.width * 0.4,
+                      child: Text('goToUpgrade'.tr),
+                      onPressed: onUpdateVersion,
+                    )
+                  ],
+                )),
         ],
       ),
     );

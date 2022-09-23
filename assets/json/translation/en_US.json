@@ -258,6 +258,7 @@
 	"authorizationPrompt": "Authorization prompt",
 	"authorizationDescription": "The current DAPP requires your following authorizations",
 	"authorizationDescriptionAddress": "Read the current account address",
+	"authorizationDescriptionAddressType": "Read the current account address type",
 	"authorizationDescriptionTransfer": "Call the current account transaction function",
 	"authorizationDescriptionContractCall": "Obtaining the contract information of the account PRC20",
 	"authorizationDescriptionContractSend": "Calling the contract information of the account PRC20",

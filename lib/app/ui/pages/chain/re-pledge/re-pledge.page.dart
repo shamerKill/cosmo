@@ -397,7 +397,7 @@ class ChainRePledgePage extends GetView<ChainRePledgePageController> {
               onPressed: controller.onPledgeListener,
               width: appTheme.sizes.infinity,
               disabled: state.pledgeLoading,
-              child: Text('转让质押'.tr),
+              child: Text('rePledge'.tr),
             )),
       ),
     );

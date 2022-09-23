@@ -28,6 +28,7 @@ class AccountExitPasswordPage
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
             child: Obx(() => LInput(
+                  labelStyle: state.passwordInputError ? TextStyle(color: appTheme.colors.errorColor) : null,
                   labelText: 'inputPassword'.tr,
                   disabled: state.createLoading,
                   textController: controller.passwordController,
@@ -39,6 +40,7 @@ class AccountExitPasswordPage
           Padding(
             padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
             child: Obx(() => LInput(
+                  labelStyle: state.rePasswordInputError ? TextStyle(color: appTheme.colors.errorColor) : null,
                   labelText: 'inputPasswordAgain'.tr,
                   disabled: state.createLoading,
                   textController: controller.rePasswordController,

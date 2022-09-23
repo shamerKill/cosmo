@@ -150,13 +150,13 @@ class WalletTokenListPageController extends GetxController
   bool checkTokenIsAdd(String minUnit) {
     return state.accountInfo.tokenList
         .where((_token) =>
-            _token.minUnit == minUnit || _token.contractAddress == minUnit)
+            (minUnit != '' && _token.minUnit == minUnit) || _token.contractAddress == minUnit)
         .isNotEmpty;
   }
 
   // 添加/删除当前代币
   onToggleToken(TokenModel token) async {
-    if (checkTokenIsAdd(token.minUnit)) {
+    if (checkTokenIsAdd(token.type == EnumTokenType.prc20 ? token.contractAddress : token.minUnit)) {
       bool? result = await LBottomSheet.promptBottomSheet(
         title: 'tip'.tr,
         message: Text('deleteTokenTip'.tr + token.symbol + '?'),
@@ -199,6 +199,7 @@ class WalletTokenListPageController extends GetxController
       state.accountInfo.tokenList.insert(newIndex + 1, _token);
     }
     accountController.updateAccount(state.accountInfo);
+    state._accountInfo.refresh();
   }
 
   // 一键获取所有资产
