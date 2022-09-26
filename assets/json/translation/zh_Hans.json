@@ -319,6 +319,12 @@
 	"googlePlayUpdatePleaseHolder": "请前往谷歌商店进行更新升级",
 	"goToUpgrade": "前往升级",
 	"ignoreNow": "忽略本次",
+	"proposalIng": "投票中",
+	"passedType": "通过",
+	"rejectType": "拒绝",
+	"undefinedType": "未定义",
+	"depositType": "筹款中",
+	"failedType": "失败",
 
 	"SuccessWithImport": "导入成功",
 	"SuccessWithCopy": "复制成功",

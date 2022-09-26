@@ -18,17 +18,18 @@ class DataCoinsState {
 class DataCoinsController extends GetxController {
   DataCoinsController() {
     _readStorage();
-    _init();
   }
   final DataCoinsState state = DataCoinsState();
 
-  _init() async {
+  init() async {
     TokenModel? token = await httpToolApp.getBaseCoin();
     state.isInit = true;
     if (token != null) {
       state.baseCoin.setData(token.toJson());
-      saveAccounts();
+    } else {
+      state.baseCoin.setData(localDefaultCoinInfo.toJson());
     }
+    saveAccounts();
   }
 
   // 储存基础币

@@ -9,9 +9,13 @@ import 'package:plug/app/data/provider/data.notification-id.dart';
 
 class DataInitState {
   static onInit() async {
+    // 初始化数据库
     await GetStorage.init();
+    // 初始化代币信息
+    var dataCoinController = DataCoinsController();
+    await dataCoinController.init();
+    Get.put(dataCoinController);
     Get.put(DataAccountController());
-    Get.put(DataCoinsController());
     Get.put(DataAddressController());
     Get.put(DataNotificationIdController());
     Get.put(DataDappAddressController());

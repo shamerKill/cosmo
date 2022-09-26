@@ -164,10 +164,10 @@ class BasicHomePageController extends GetxController
 
   // 判断账户是否有基础币，如果没有加入并储存
   _checkAndInsertAccountBaseCoin() {
-    var type = dataAccountController.checkAccountHadCoin(
+    var noBase = dataAccountController.checkAccountHadCoin(
         dataAccountController.state.nowAccount!.address,
         dataCoinsController.state.baseCoin.minUnit);
-    if (!type) {
+    if (!noBase) {
       dataAccountController.updateAccount(
         dataAccountController.state.nowAccount!
           ..tokenList.insert(0, dataCoinsController.state.baseCoin),

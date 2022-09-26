@@ -416,7 +416,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text('balance'.tr),
+                                            Text('accountBalance'.tr),
                                             Padding(
                                                 padding: EdgeInsets.only(
                                                     bottom: appTheme.sizes

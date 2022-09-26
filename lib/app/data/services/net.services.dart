@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:plug/app/env/env.dart';
@@ -6,6 +7,19 @@ import 'package:plug/app/ui/utils/evm/evm_client.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/data/models/interface/interface.dart';
+
+// 本地默认代币信息
+TokenModel localDefaultCoinInfo = _resFormatToToken(jsonDecode('''{
+  "@type": "/plugchain.prc10.Token",
+  "symbol": "pc",
+  "name": "plughub staking token",
+  "scale": 6,
+  "min_unit": "uplugcn",
+  "initial_supply": "15989000000",
+  "max_supply": "100000000000",
+  "mintable": false,
+  "owner": "gx1fjljkcf5f9ceh9cu54z7pp9wtmm586r2fm5gde"
+  }'''));
 
 // 1317接口信息
 class _HttpToolApp extends UriTool {
@@ -34,18 +48,8 @@ class _HttpToolApp extends UriTool {
   Future<TokenModel?> getBaseCoin() {
     return HttpToolClient.getHttp(customUri('token/params')).then((res) {
       return getCoinInfo(
-          res.data?['params']['issue_token_base_fee']['denom'] ?? '');
-    }, onError: (e) => _resFormatToToken('''{
-      "@type": "/plugchain.prc10.Token",
-      "symbol": "pc",
-      "name": "plughub staking token",
-      "scale": 6,
-      "min_unit": "uplugcn",
-      "initial_supply": "15989000000",
-      "max_supply": "100000000000",
-      "mintable": false,
-      "owner": "gx1fjljkcf5f9ceh9cu54z7pp9wtmm586r2fm5gde"
-      }'''));
+          res.data?['params']['issue_token_base_fee']['denom'] ?? localDefaultCoinInfo.minUnit);
+    }, onError: (e) => localDefaultCoinInfo);
   }
 
   /// 获取币种信息
@@ -53,7 +57,7 @@ class _HttpToolApp extends UriTool {
     return HttpToolClient.getHttp(customUri('token/tokens/$denom'))
         .then<TokenModel?>(
       (res) => res.status != 0 ? null : _resFormatToToken(res.data?['Token']),
-      onError: (e) => null,
+      onError: (e) => localDefaultCoinInfo,
     );
   }
 

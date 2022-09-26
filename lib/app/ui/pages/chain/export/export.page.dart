@@ -43,7 +43,7 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                       child: Center(child: Text('pledge'.tr)),
                     ),
                     SizedBox(
-                      width: appTheme.sizes.basic * 150,
+                      width: appTheme.sizes.basic * 200,
                       height: appTheme.sizes.basic * 60,
                       child: Center(child: Text('proposal'.tr)),
                     ),
