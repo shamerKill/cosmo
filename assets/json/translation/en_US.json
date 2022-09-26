@@ -203,6 +203,10 @@
 	"allSend": "Send all",
 	"forgetPasswordTip": "Please remove and re import the account",
 	"accountRepeatTip": "The current account already exists. Do you want to overwrite the account?",
+	"watchAccount": "Watch Account",
+	"watchAccountTip": "No operation permission, only for watch",
+	"importWatchAccountHint": "Please input the account address to be watch",
+	"watch": "Watching",
 
 	"transferTo": "transfer to",
 	"transferIn": "transfer in",

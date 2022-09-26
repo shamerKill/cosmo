@@ -40,6 +40,8 @@ class DataAccountController extends GetxController {
   }
 
   final DataAccountState state = DataAccountState();
+  // 广播事件
+  final List<void Function(AccountModel? data)> _nowAccountListener = [];
 
   // 添加账户
   List<AccountModel> addAccount(AccountModel account) {
@@ -58,6 +60,20 @@ class DataAccountController extends GetxController {
     return state.accountsList;
   }
 
+  // 获取当前账户
+  AccountModel? getNowAccount() {
+    if (!state.hadAccount) return null;
+    int maxWeight = 0;
+    AccountModel? _account;
+    for (var element in state.accountsList) {
+      if (element.weight >= maxWeight) {
+        maxWeight = element.weight;
+        _account = element;
+      }
+    }
+    return _account;
+  }
+
   bool checkAccountIsHad(AccountModel account) {
     for (var item in state.accountsList) {
       if (item.address == account.address &&
@@ -68,6 +84,9 @@ class DataAccountController extends GetxController {
 
   // 储存账户
   saveAccounts() {
+    for (var func in _nowAccountListener) {
+      func(getNowAccount());
+    }
     GetStorage().write(state.accountStorageName,
         json.encode(state.accountsList.map((e) => e.toJson()).toList()));
   }
@@ -131,6 +150,17 @@ class DataAccountController extends GetxController {
     state.accountsList.removeAt(_index);
     saveAccounts();
     return true;
+  }
+
+  // 监听当前账户
+  listenNowAccount(void Function(AccountModel? account) listener) {
+    // 进来就触发一次
+    listener(state.nowAccount);
+    _nowAccountListener.add(listener);
+  }
+  // 已出监听当前账户
+  removeListenNowAccount(void Function(AccountModel? account) listener) {
+    _nowAccountListener.remove(listener);
   }
 
   // 判断账户是否有基础币

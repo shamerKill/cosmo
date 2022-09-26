@@ -10,6 +10,7 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
 
   @override
   Widget build(BuildContext context) {
+    AccountChoosePageState state = controller.state;
     return LScaffold(
       statusBar: LAppBar.defaultStatus(),
       headerBar: LAppBar.defaultHeader(
@@ -142,7 +143,61 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
                         ),
                       ),
                       onTap: controller.importWallet,
-                    )
+                    ),
+                    Obx(() => (
+                      Column(
+                        children: state.hadAccount ? [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: appTheme.sizes.paddingSmall,
+                                right: appTheme.sizes.paddingSmall),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: appTheme.colors.borderColor))),
+                            ),
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(appTheme.sizes.radius)),
+                                color: appTheme.colors.pageBackgroundColor,
+                              ),
+                              padding: EdgeInsets.all(appTheme.sizes.paddingSmall),
+                              child: Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('watchAccount'.tr,
+                                          style: TextStyle(
+                                            fontSize: appTheme.sizes.fontSizeBig,
+                                            color: appTheme.colors.textGray,
+                                          )),
+                                      Padding(
+                                          padding: EdgeInsets.only(
+                                              top: appTheme.sizes.paddingSmall / 2)),
+                                      Text('watchAccountTip'.tr,
+                                          style: TextStyle(
+                                            fontSize: appTheme.sizes.fontSizeSmall,
+                                            fontWeight: FontWeight.w400,
+                                            color: appTheme.colors.textGray,
+                                          )),
+                                    ],
+                                  ),
+                                  Expanded(child: Container(), flex: 1),
+                                  Icon(Icons.keyboard_arrow_right_outlined,
+                                      size: appTheme.sizes.iconSize),
+                                ],
+                              ),
+                            ),
+                            onTap: controller.importWatchWallet,
+                          )
+                        ] : [],
+                      )
+                    )),
                   ],
                 ),
                 decoration: BoxDecoration(
@@ -151,7 +206,7 @@ class AccountChoosePage extends GetView<AccountChoosePageController> {
                         Radius.circular(appTheme.sizes.radius))),
               ),
             ),
-            Expanded(child: Container(), flex: 5),
+            Obx(() => Expanded(child: Container(), flex: state.hadAccount ? 3 : 5)),
           ],
         ),
       ),

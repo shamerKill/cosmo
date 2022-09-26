@@ -1,6 +1,10 @@
 part of './interface.dart';
 
+// 账户地址类型
 enum EnumAccountType { prc10, prc20 }
+// 账户类型
+enum EnumAccountClass { normal, watch }
+
 
 /// 账户模型
 class AccountModel extends _StorageBaseAbstract {
@@ -77,6 +81,15 @@ class AccountModel extends _StorageBaseAbstract {
 
   EnumAccountType _accountType = EnumAccountType.prc20;
 
+  /// 账户类型， 普通账户/观察账户
+  EnumAccountClass get accountClass => _accountClass;
+  set accountClass(EnumAccountClass value) {
+    _accountClass = value;
+    _saveKey();
+  }
+
+  EnumAccountClass _accountClass = EnumAccountClass.normal;
+
   /// 账户储存的dapp权限列表
   List<DappModel> get dappPermissionList => _dappPermissionList;
   set dappPermissionList(List<DappModel> value) {
@@ -101,6 +114,7 @@ class AccountModel extends _StorageBaseAbstract {
     _valueMap['verifierList'] = verifierList;
     _valueMap['accountType'] = StringTool.accountTypeToString(accountType);
     _valueMap['dappPermissionList'] = dappPermissionList;
+    _valueMap['accountClass'] = accountClass;
   }
 
   @override
@@ -124,5 +138,6 @@ class AccountModel extends _StorageBaseAbstract {
     dappPermissionList = (source['dappPermissionList'] ?? [])
         .map<DappModel>((dynamic item) => DappModel()..setData(item))
         .toList();
+    accountClass = source['accountClass'] == 'EnumAccountClass.watch' ? EnumAccountClass.watch : EnumAccountClass.normal;
   }
 }

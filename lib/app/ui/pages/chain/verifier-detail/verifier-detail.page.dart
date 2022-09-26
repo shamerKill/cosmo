@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/function/button.component.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -296,7 +297,7 @@ class ChainVerifierDetailPage
           Padding(
               padding: EdgeInsets.only(bottom: appTheme.sizes.padding * 2.0)),
           Obx(() => Visibility(
-                visible: state.showPledgedState,
+                visible: state.showPledgedState && state.accountInfo.accountClass != EnumAccountClass.watch,
                 child: Column(
                   children: [
                     Row(
@@ -341,7 +342,7 @@ class ChainVerifierDetailPage
                 ),
               )),
           Obx(() => Visibility(
-                visible: state.showNoPledgeState,
+                visible: state.showNoPledgeState && state.accountInfo.accountClass != EnumAccountClass.watch,
                 child: Column(
                   children: [
                     Padding(

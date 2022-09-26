@@ -30,6 +30,10 @@ class ChainVerifierDetailPageState {
   final Rx<bool> _showNoPledgeState = false.obs;
   bool get showNoPledgeState => _showNoPledgeState.value;
   set showNoPledgeState(bool value) => _showNoPledgeState.value = value;
+  // 当前账户
+  final Rx<AccountModel> _accountInfo = AccountModel().obs;
+  AccountModel get accountInfo => _accountInfo.value;
+  set accountInfo(AccountModel value) => _accountInfo.value = value;
 }
 
 class ChainVerifierDetailPageController extends GetxController {
@@ -52,6 +56,9 @@ class ChainVerifierDetailPageController extends GetxController {
       state.showNoPledgeState = true;
     }
     await _getData(init: true);
+    if (dataAccount.state.nowAccount != null) {
+      state.accountInfo = dataAccount.state.nowAccount!;
+    }
     LLoading.dismiss();
   }
 

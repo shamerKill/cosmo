@@ -130,11 +130,14 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                 ),
                 color: appTheme.colors.textBlack,
               ),
-              IconButton(
-                onPressed: controller.goToScan,
-                icon: const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
-                color: appTheme.colors.textBlack,
-              ),
+              ((state.accountInfo.accountClass == EnumAccountClass.watch)
+                  ? Container()
+                  : IconButton(
+                      onPressed: controller.goToScan,
+                      icon:
+                          const Icon(IconData(0xe6de, fontFamily: 'plugIcon')),
+                      color: appTheme.colors.textBlack,
+                    )),
             ],
           ),
           basicBackgroundColor: true,
@@ -269,10 +272,13 @@ class BasicHomePage extends GetView<BasicHomePageController> {
                                                                       .paddingSmall)),
                                                           Text(
                                                             '(' +
-                                                                StringTool
-                                                                    .accountTypeToString(
-                                                                        _item
-                                                                            .accountType) +
+                                                                (_item.accountClass ==
+                                                                        EnumAccountClass
+                                                                            .watch
+                                                                    ? 'watch'.tr
+                                                                    : StringTool
+                                                                        .accountTypeToString(
+                                                                            _item.accountType)) +
                                                                 ')',
                                                             style: TextStyle(
                                                                 color: appTheme
@@ -725,7 +731,8 @@ class BasicHomePage extends GetView<BasicHomePageController> {
               ],
             ),
           ),
-          bottomNavigationBar: const LBottomNavigation(),
+          bottomNavigationBar:
+              const LBottomNavigation(),
         ));
   }
 }

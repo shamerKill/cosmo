@@ -24,6 +24,9 @@ class UserAccountListPageController extends GetxController {
     super.onInit();
     state.accountList.clear();
     state.accountList.addAll(dataAccount.state.accountsList);
+    if (dataAccount.state.nowAccount != null) {
+      state.drawerSelected = dataAccount.state.nowAccount!.address;
+    }
   }
 
   // 侧边栏账户选择

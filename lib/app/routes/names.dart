@@ -16,6 +16,9 @@ abstract class PlugRoutesNames {
   /// 导入地址页面
   static const accountImport = '/accountImport';
 
+  /// 导入观察者账户
+  static const watchAccountImport = '/watchAccountImport';
+
   /// 创建账户-提示备份助记词页
   static const accountBackupTip = '/accountBackupTip';
 

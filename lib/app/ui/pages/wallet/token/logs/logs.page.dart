@@ -84,37 +84,42 @@ class WalletTokenLogsPage extends GetView<WalletTokenLogsPageController> {
                       ),
                     ],
                   ),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: appTheme.sizes.padding)),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: LButton(
-                          child: Text('send'.tr,
-                              style:
-                                  TextStyle(color: appTheme.colors.textBlack)),
-                          onPressed: controller.onToSend,
-                          radius: true,
-                          contrast: true,
-                          height: appTheme.sizes.basic * 70,
-                        ),
-                      ),
-                      Padding(
-                          padding:
-                              EdgeInsets.only(left: appTheme.sizes.padding)),
-                      Expanded(
-                        child: LButton(
-                          child: Text('receive'.tr,
-                              style:
-                                  TextStyle(color: appTheme.colors.textBlack)),
-                          onPressed: controller.onToReceive,
-                          radius: true,
-                          contrast: true,
-                          height: appTheme.sizes.basic * 70,
-                        ),
-                      ),
-                    ],
-                  ),
+                  Obx(() => Column(
+                        children: state.accountInfo.accountClass == EnumAccountClass.watch ? [] : [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: appTheme.sizes.padding)),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: LButton(
+                                  child: Text('send'.tr,
+                                      style: TextStyle(
+                                          color: appTheme.colors.textBlack)),
+                                  onPressed: controller.onToSend,
+                                  radius: true,
+                                  contrast: true,
+                                  height: appTheme.sizes.basic * 70,
+                                ),
+                              ),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: appTheme.sizes.padding)),
+                              Expanded(
+                                child: LButton(
+                                  child: Text('receive'.tr,
+                                      style: TextStyle(
+                                          color: appTheme.colors.textBlack)),
+                                  onPressed: controller.onToReceive,
+                                  radius: true,
+                                  contrast: true,
+                                  height: appTheme.sizes.basic * 70,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ))
                 ],
               ),
             ),

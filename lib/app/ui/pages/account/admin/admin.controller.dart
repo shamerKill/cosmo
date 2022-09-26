@@ -120,6 +120,14 @@ class AccountAdminPageController extends GetxController {
           message: Text('deleteDesc'.tr + ' ${state.accountInfo.nickName} ?'),
         )) !=
         true) return;
+    if (state.accountInfo.accountClass == EnumAccountClass.watch) {
+      if (dataAccountController.removeAccount(state.accountInfo)) {
+        Get.offAllNamed(PlugRoutesNames.walletHome,
+            predicate: (route) =>
+                Get.currentRoute == PlugRoutesNames.walletHome);
+      }
+      return;
+    }
     _doType = 'remove';
     LBottomSheet.baseBottomSheet(
       showClose: false,

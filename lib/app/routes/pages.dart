@@ -29,6 +29,12 @@ class PlugPages {
         page: () => const AccountImportPage(),
         binding: AccountImportPageBinding()),
 
+    /// 导入观察者地址
+    GetPage(
+        name: PlugRoutesNames.watchAccountImport,
+        page: () => const AccountImportWatch(),
+        binding: AccountImportWatchBinding()),
+
     /// 创建账户-提示备份助记词
     GetPage(
       name: PlugRoutesNames.accountBackupTip,

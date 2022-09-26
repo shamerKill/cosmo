@@ -20,6 +20,8 @@ import 'package:plug/app/ui/pages/account/create/accountCreate.binding.dart';
 import 'package:plug/app/ui/pages/account/create/accountCreate.page.dart';
 import 'package:plug/app/ui/pages/account/import/import.binding.dart';
 import 'package:plug/app/ui/pages/account/import/import.page.dart';
+import 'package:plug/app/ui/pages/account/import_watch/import_watch.binding.dart';
+import 'package:plug/app/ui/pages/account/import_watch/import_watch.page.dart';
 import 'package:plug/app/ui/pages/chain/backup-pledge/backup-pledge.binding.dart';
 import 'package:plug/app/ui/pages/chain/backup-pledge/backup-pledge.page.dart';
 import 'package:plug/app/ui/pages/chain/create-token/create-token.binding.dart';

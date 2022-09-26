@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/ui/components/layout/appbar.component.dart';
 import 'package:plug/app/ui/components/layout/bottomBar.component.dart';
 import 'package:plug/app/ui/components/layout/scaffold.component.dart';
@@ -14,7 +15,6 @@ class ChainExportPage extends GetView<ChainExportPageController> {
   @override
   Widget build(BuildContext context) {
     ChainExportPageState state = controller.state;
-
     return LScaffold(
       statusBar: LAppBar.defaultStatus(
           backgroundColor: appTheme.colors.pageBackgroundColorBasic),
@@ -24,7 +24,7 @@ class ChainExportPage extends GetView<ChainExportPageController> {
         child: Row(
           children: [
             Expanded(
-              child: TabBar(
+              child: Obx(() => TabBar(
                   controller: state.pageTabController,
                   isScrollable: true,
                   labelStyle: TextStyle(
@@ -36,7 +36,13 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                   labelColor: appTheme.colors.textBlackBig,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorColor: appTheme.colors.primaryColor,
-                  tabs: [
+                  tabs: state.accountInfo.accountClass == EnumAccountClass.watch ? [
+                    SizedBox(
+                      width: appTheme.sizes.basic * 150,
+                      height: appTheme.sizes.basic * 60,
+                      child: Center(child: Text('pledge'.tr)),
+                    )
+                  ] : [
                     SizedBox(
                       width: appTheme.sizes.basic * 150,
                       height: appTheme.sizes.basic * 60,
@@ -47,9 +53,9 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                       height: appTheme.sizes.basic * 60,
                       child: Center(child: Text('proposal'.tr)),
                     ),
-                  ]),
+                  ])),
             ),
-            InkWell(
+            Obx(() => state.accountInfo.accountClass == EnumAccountClass.watch ? Container() : InkWell(
               onTap: controller.onCreateToken,
               child: Container(
                 decoration: BoxDecoration(
@@ -69,15 +75,21 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                       )),
                 ),
               ),
-            ),
+            )),
           ],
         ),
       ),
       basicBackgroundColor: true,
       hidHorizontalPadding: true,
-      body: TabBarView(
+      body: Obx(() => TabBarView(
         controller: state.pageTabController,
-        children: [
+        children: state.accountInfo.accountClass == EnumAccountClass.watch ? 
+          [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
+            child: const ChainExportDelegatePage(),
+          ),
+        ]: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
             child: const ChainExportDelegatePage(),
@@ -87,7 +99,7 @@ class ChainExportPage extends GetView<ChainExportPageController> {
             child: const ChainExportProposalPage(),
           ),
         ],
-      ),
+      )),
       bottomNavigationBar: const LBottomNavigation(),
     );
   }

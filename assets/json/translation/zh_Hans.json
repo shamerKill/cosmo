@@ -203,6 +203,10 @@
 	"allSend": "全部划转",
 	"forgetPasswordTip": "请移除后重新导入账户",
 	"accountRepeatTip": "当前账户已存在，是否进行覆盖导入？",
+	"watchAccount": "观察账户",
+	"watchAccountTip": "无操作权限，仅供观察",
+	"importWatchAccountHint": "请输入需要观察的账户地址",
+	"watch": "观察",
 
 	"transferTo": "转账至",
 	"transferIn": "转入",
