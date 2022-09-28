@@ -47,8 +47,8 @@ class _HttpToolApp extends UriTool {
   /// 获取基础币信息
   Future<TokenModel?> getBaseCoin() {
     return HttpToolClient.getHttp(customUri('token/params')).then((res) {
-      return getCoinInfo(
-          res.data?['params']['issue_token_base_fee']['denom'] ?? localDefaultCoinInfo.minUnit);
+      return getCoinInfo(res.data?['params']['issue_token_base_fee']['denom'] ??
+          localDefaultCoinInfo.minUnit);
     }, onError: (e) => localDefaultCoinInfo);
   }
 

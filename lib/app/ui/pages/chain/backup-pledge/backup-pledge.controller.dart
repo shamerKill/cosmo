@@ -33,7 +33,7 @@ class ChainBackupPledgePageController extends GetxController {
   ChainBackupPledgePageController();
   ChainBackupPledgePageState state = ChainBackupPledgePageState();
   // 质押数量输入值
-  TextEditingController pledgeController = TextEditingController(text: '0');
+  TextEditingController pledgeController = TextEditingController(text: '');
 
   DataAccountController dataAccount = Get.find();
   DataCoinsController dataCoins = Get.find();

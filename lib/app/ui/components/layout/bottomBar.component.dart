@@ -125,7 +125,8 @@ class LBottomNavigationController extends GetxController {
     // 刷新状态情况下，保持
     if ([PlugRoutesNames.userLanguage, PlugRoutesNames.userNetwork]
         .contains(Get.currentRoute)) {
-      state.selectedIndex = state.tabItems.indexWhere((element) => element.route == PlugRoutesNames.userMy);
+      state.selectedIndex = state.tabItems
+          .indexWhere((element) => element.route == PlugRoutesNames.userMy);
     }
 
     // 监听是否是观察钱包
@@ -138,18 +139,25 @@ class LBottomNavigationController extends GetxController {
     dataAccountController.removeListenNowAccount(_watchAccountClass);
   }
 
-  _watchAccountClass (AccountModel? account) {
+  _watchAccountClass(AccountModel? account) {
     if (account == null) return;
     if (account.accountClass == EnumAccountClass.normal) {
-      state.tabItems..clear()..addAll(state.defaultTabItems);
+      state.tabItems
+        ..clear()
+        ..addAll(state.defaultTabItems);
     } else {
-      state.tabItems..clear()..addAll(state.defaultTabItems.where((element) => element.route != PlugRoutesNames.dappExhibition));
+      state.tabItems
+        ..clear()
+        ..addAll(state.defaultTabItems.where(
+            (element) => element.route != PlugRoutesNames.dappExhibition));
     }
     state.tabItems.refresh();
   }
 
   changeSwitch(int type) {
-    if (type != state.selectedIndex && type < state.tabItems.length && type >= 0) {
+    if (type != state.selectedIndex &&
+        type < state.tabItems.length &&
+        type >= 0) {
       state.selectedIndex = type;
       Get.offAndToNamed(state.tabItems[type].route);
     }

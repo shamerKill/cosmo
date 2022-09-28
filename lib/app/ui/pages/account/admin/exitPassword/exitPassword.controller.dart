@@ -29,11 +29,11 @@ class AccountExitPasswordPageState {
   // 密码有误
   final Rx<bool> _passwordInputError = false.obs;
   bool get passwordInputError => _passwordInputError.value;
-  set passwordInputError (bool value) => _passwordInputError.value = value;
+  set passwordInputError(bool value) => _passwordInputError.value = value;
   // 再次输入有误
   final Rx<bool> _rePasswordInputError = false.obs;
   bool get rePasswordInputError => _rePasswordInputError.value;
-  set rePasswordInputError (bool value) => _rePasswordInputError.value = value;
+  set rePasswordInputError(bool value) => _rePasswordInputError.value = value;
 
   // 当前编辑账户
   final Rx<AccountModel> _accountInfo = AccountModel().obs;
@@ -87,15 +87,18 @@ class AccountExitPasswordPageController extends GetxController {
     }
     _checkGanCreate();
   }
+
   // 再次输入密码监听
   _rePasswordListener() {
-    if (!VerifyTool.password(rePasswordController.text) || passwordController.text != rePasswordController.text) {
+    if (!VerifyTool.password(rePasswordController.text) ||
+        passwordController.text != rePasswordController.text) {
       state.rePasswordInputError = true;
     } else {
       state.rePasswordInputError = false;
     }
     _checkGanCreate();
   }
+
   // 判断是否可以修改
   _checkGanCreate() {
     if (VerifyTool.password(passwordController.text) &&

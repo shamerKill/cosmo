@@ -33,7 +33,10 @@ class ChainExportPageController extends GetxController
 
   // 初始化切换控制器
   _onInitPageTabController() {
-    state.pageTabController = TabController(vsync: this, length: state.accountInfo.accountClass == EnumAccountClass.watch ? 1 : 2);
+    state.pageTabController = TabController(
+        vsync: this,
+        length:
+            state.accountInfo.accountClass == EnumAccountClass.watch ? 1 : 2);
   }
 
   // 一键发行

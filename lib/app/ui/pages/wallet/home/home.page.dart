@@ -731,8 +731,7 @@ class BasicHomePage extends GetView<BasicHomePageController> {
               ],
             ),
           ),
-          bottomNavigationBar:
-              const LBottomNavigation(),
+          bottomNavigationBar: const LBottomNavigation(),
         ));
   }
 }

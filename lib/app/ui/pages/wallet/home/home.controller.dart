@@ -121,7 +121,6 @@ class BasicHomePageController extends GetxController
     onInfoHide(type: dataAppConfig.state.config.homeValueHide);
   }
 
-
   // 获取当前账户信息
   Future<void> initAccountStorage() async {
     _checkAndInsertAccountBaseCoin();
@@ -173,8 +172,9 @@ class BasicHomePageController extends GetxController
           ..tokenList.insert(0, dataCoinsController.state.baseCoin),
       );
     }
-    
-    state.accountInfo = _checkAndRemoveAccountRepeatCoin(dataAccountController.state.nowAccount!);
+
+    state.accountInfo = _checkAndRemoveAccountRepeatCoin(
+        dataAccountController.state.nowAccount!);
     onDrawerSelect(state.accountInfo.address);
   }
 

@@ -17,6 +17,11 @@ install:
 	@flutter pub get
 	@echo "....... Install end     <======"
 
+build-apk-test:
+	@echo "======> build android apk ......"
+	@flutter build apk --dart-define=DART_DEFINE_APP_ENV=test --dart-define=BUILD_CHANNEL=android-browser
+	@echo "...... build android end <======"
+
 build-apk:
 	@echo "======> build android apk ......"
 	@flutter build apk --dart-define=DART_DEFINE_APP_ENV=release --dart-define=BUILD_CHANNEL=android-browser

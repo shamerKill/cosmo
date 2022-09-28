@@ -19,7 +19,9 @@ class AccountImportWatch extends GetView<AccountImportWatchController> {
       headerBar: LAppBar.defaultHeader(),
       titleBar: LAppBar.defaultTitle(
         title: LAppBar.defaultHeaderTextWidget('watchAccount'.tr),
-        description: Text('watchAccountTip'.tr, style: Get.textTheme.bodyText1?.copyWith(color: appTheme.colors.primaryColor)),
+        description: Text('watchAccountTip'.tr,
+            style: Get.textTheme.bodyText1
+                ?.copyWith(color: appTheme.colors.primaryColor)),
       ),
       body: Column(
         children: [

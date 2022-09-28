@@ -45,7 +45,7 @@ class ChainRePledgePageController extends GetxController {
   ChainRePledgePageController();
   ChainRePledgePageState state = ChainRePledgePageState();
   // 转质押数量输入值
-  TextEditingController pledgeController = TextEditingController(text: '0');
+  TextEditingController pledgeController = TextEditingController(text: '');
   RefreshController verifiersRefreshController = RefreshController();
 
   DataAccountController dataAccount = Get.find();

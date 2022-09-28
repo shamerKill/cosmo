@@ -148,7 +148,10 @@ class WalletTokenListPage extends GetView<WalletTokenListPageController> {
                                 EdgeInsets.all(appTheme.sizes.paddingSmall),
                             child: LAnimationView(
                               randomKey: false,
-                              child: controller.checkTokenIsAdd(_item.type == EnumTokenType.prc20 ? _item.contractAddress : _item.minUnit)
+                              child: controller.checkTokenIsAdd(
+                                      _item.type == EnumTokenType.prc20
+                                          ? _item.contractAddress
+                                          : _item.minUnit)
                                   ? Icon(
                                       const IconData(0xe81e,
                                           fontFamily: 'plugIcon'),

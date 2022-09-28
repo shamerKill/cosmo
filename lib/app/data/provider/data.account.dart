@@ -158,6 +158,7 @@ class DataAccountController extends GetxController {
     listener(state.nowAccount);
     _nowAccountListener.add(listener);
   }
+
   // 已出监听当前账户
   removeListenNowAccount(void Function(AccountModel? account) listener) {
     _nowAccountListener.remove(listener);

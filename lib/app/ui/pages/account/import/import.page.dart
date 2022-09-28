@@ -38,7 +38,9 @@ class AccountImportPage extends GetView<AccountImportPageController> {
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.basic * 50),
               child: Obx(() => LInput(
-                    labelStyle: state.passwordInputError ? TextStyle(color: appTheme.colors.errorColor) : null,
+                    labelStyle: state.passwordInputError
+                        ? TextStyle(color: appTheme.colors.errorColor)
+                        : null,
                     labelText: 'inputPassword'.tr,
                     disabled: state.importLoading,
                     textController: controller.passwordController,
@@ -52,7 +54,9 @@ class AccountImportPage extends GetView<AccountImportPageController> {
             Padding(
               padding: EdgeInsets.only(top: appTheme.sizes.basic * 20),
               child: Obx(() => LInput(
-                    labelStyle: state.rePasswordInputError ? TextStyle(color: appTheme.colors.errorColor) : null,
+                    labelStyle: state.rePasswordInputError
+                        ? TextStyle(color: appTheme.colors.errorColor)
+                        : null,
                     labelText: 'inputPasswordAgain'.tr,
                     disabled: state.importLoading,
                     textController: controller.rePasswordController,

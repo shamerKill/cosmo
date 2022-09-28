@@ -33,7 +33,7 @@ class ChainPledgeTransferPageController extends GetxController {
   ChainPledgeTransferPageController();
   ChainPledgeTransferPageState state = ChainPledgeTransferPageState();
   // 质押数量输入值
-  TextEditingController pledgeController = TextEditingController(text: '0');
+  TextEditingController pledgeController = TextEditingController(text: '');
 
   DataAccountController dataAccount = Get.find();
   DataCoinsController dataCoins = Get.find();

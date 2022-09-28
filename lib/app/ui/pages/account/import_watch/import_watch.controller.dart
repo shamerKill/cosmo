@@ -20,12 +20,9 @@ class AccountImportWatchState {
   bool get canImport => _canImport.value;
   set canImport(bool value) => _canImport.value = value;
 
-
   final Rx<bool> _importLoading = false.obs;
   bool get importLoading => _importLoading.value;
   set importLoading(bool value) => _importLoading.value = value;
-
-
 }
 
 class AccountImportWatchController extends GetxController {
@@ -46,7 +43,6 @@ class AccountImportWatchController extends GetxController {
     addressController.addListener(_checkGanImport);
   }
 
-
   toggleAgreement(bool? type) {
     state.agreement = type ?? state.agreement;
     _checkGanImport();
@@ -54,7 +50,8 @@ class AccountImportWatchController extends GetxController {
 
   // 判断是否可以导入
   _checkGanImport() {
-    if (state.agreement && StringTool.checkChainAddress(addressController.text)) {
+    if (state.agreement &&
+        StringTool.checkChainAddress(addressController.text)) {
       state.canImport = true;
     } else {
       state.canImport = false;
@@ -72,10 +69,10 @@ class AccountImportWatchController extends GetxController {
             utf8.encode('https://www.plugchain.network/v2/privacyAgreemen'))
       });
 
-  
   // 导入
   importAccount() async {
-    if (state.agreement == false || !StringTool.checkChainAddress(addressController.text)) {
+    if (state.agreement == false ||
+        !StringTool.checkChainAddress(addressController.text)) {
       return LToast.error('ErrorWithUserArguments'.tr);
     }
     try {

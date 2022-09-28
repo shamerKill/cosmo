@@ -297,7 +297,8 @@ class ChainVerifierDetailPage
           Padding(
               padding: EdgeInsets.only(bottom: appTheme.sizes.padding * 2.0)),
           Obx(() => Visibility(
-                visible: state.showPledgedState && state.accountInfo.accountClass != EnumAccountClass.watch,
+                visible: state.showPledgedState &&
+                    state.accountInfo.accountClass != EnumAccountClass.watch,
                 child: Column(
                   children: [
                     Row(
@@ -342,7 +343,8 @@ class ChainVerifierDetailPage
                 ),
               )),
           Obx(() => Visibility(
-                visible: state.showNoPledgeState && state.accountInfo.accountClass != EnumAccountClass.watch,
+                visible: state.showNoPledgeState &&
+                    state.accountInfo.accountClass != EnumAccountClass.watch,
                 child: Column(
                   children: [
                     Padding(

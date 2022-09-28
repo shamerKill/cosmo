@@ -21,7 +21,6 @@ class UserAccountListPageController extends GetxController {
 
   @override
   onReady() {
-    super.onInit();
     state.accountList.clear();
     state.accountList.addAll(dataAccount.state.accountsList);
     if (dataAccount.state.nowAccount != null) {
@@ -29,7 +28,7 @@ class UserAccountListPageController extends GetxController {
     }
   }
 
-  // 侧边栏账户选择
+  // 账户选择
   onDrawerSelect(String _address) {
     state.drawerSelected = _address;
   }

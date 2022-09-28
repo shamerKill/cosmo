@@ -6,7 +6,7 @@ class AccountChoosePageState {
   // 是否已经添加有账户
   final Rx<bool> _hadAccount = false.obs;
   bool get hadAccount => _hadAccount.value;
-  set hadAccount (bool value) => _hadAccount.value = value;
+  set hadAccount(bool value) => _hadAccount.value = value;
 }
 
 class AccountChoosePageController extends GetxController {

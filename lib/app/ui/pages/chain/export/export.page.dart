@@ -36,70 +36,79 @@ class ChainExportPage extends GetView<ChainExportPageController> {
                   labelColor: appTheme.colors.textBlackBig,
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorColor: appTheme.colors.primaryColor,
-                  tabs: state.accountInfo.accountClass == EnumAccountClass.watch ? [
-                    SizedBox(
-                      width: appTheme.sizes.basic * 150,
-                      height: appTheme.sizes.basic * 60,
-                      child: Center(child: Text('pledge'.tr)),
-                    )
-                  ] : [
-                    SizedBox(
-                      width: appTheme.sizes.basic * 150,
-                      height: appTheme.sizes.basic * 60,
-                      child: Center(child: Text('pledge'.tr)),
-                    ),
-                    SizedBox(
-                      width: appTheme.sizes.basic * 200,
-                      height: appTheme.sizes.basic * 60,
-                      child: Center(child: Text('proposal'.tr)),
-                    ),
-                  ])),
+                  tabs: state.accountInfo.accountClass == EnumAccountClass.watch
+                      ? [
+                          SizedBox(
+                            width: appTheme.sizes.basic * 150,
+                            height: appTheme.sizes.basic * 60,
+                            child: Center(child: Text('pledge'.tr)),
+                          )
+                        ]
+                      : [
+                          SizedBox(
+                            width: appTheme.sizes.basic * 150,
+                            height: appTheme.sizes.basic * 60,
+                            child: Center(child: Text('pledge'.tr)),
+                          ),
+                          SizedBox(
+                            width: appTheme.sizes.basic * 200,
+                            height: appTheme.sizes.basic * 60,
+                            child: Center(child: Text('proposal'.tr)),
+                          ),
+                        ])),
             ),
-            Obx(() => state.accountInfo.accountClass == EnumAccountClass.watch ? Container() : InkWell(
-              onTap: controller.onCreateToken,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: appTheme.colors.textBlack,
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(appTheme.sizes.radius)),
-                ),
-                height: appTheme.sizes.basic * 44,
-                padding: EdgeInsets.symmetric(
-                  horizontal: appTheme.sizes.paddingSmall,
-                ),
-                child: Center(
-                  child: Text('issueToken'.tr,
-                      style: TextStyle(
-                        color: appTheme.colors.hightColor.withOpacity(0.9),
-                        fontSize: appTheme.sizes.fontSizeSmall,
-                      )),
-                ),
-              ),
-            )),
+            Obx(() => state.accountInfo.accountClass == EnumAccountClass.watch
+                ? Container()
+                : InkWell(
+                    onTap: controller.onCreateToken,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: appTheme.colors.textBlack,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(appTheme.sizes.radius)),
+                      ),
+                      height: appTheme.sizes.basic * 44,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: appTheme.sizes.paddingSmall,
+                      ),
+                      child: Center(
+                        child: Text('issueToken'.tr,
+                            style: TextStyle(
+                              color:
+                                  appTheme.colors.hightColor.withOpacity(0.9),
+                              fontSize: appTheme.sizes.fontSizeSmall,
+                            )),
+                      ),
+                    ),
+                  )),
           ],
         ),
       ),
       basicBackgroundColor: true,
       hidHorizontalPadding: true,
       body: Obx(() => TabBarView(
-        controller: state.pageTabController,
-        children: state.accountInfo.accountClass == EnumAccountClass.watch ? 
-          [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
-            child: const ChainExportDelegatePage(),
-          ),
-        ]: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
-            child: const ChainExportDelegatePage(),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: appTheme.sizes.padding),
-            child: const ChainExportProposalPage(),
-          ),
-        ],
-      )),
+            controller: state.pageTabController,
+            children: state.accountInfo.accountClass == EnumAccountClass.watch
+                ? [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: appTheme.sizes.padding),
+                      child: const ChainExportDelegatePage(),
+                    ),
+                  ]
+                : [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: appTheme.sizes.padding),
+                      child: const ChainExportDelegatePage(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: appTheme.sizes.padding),
+                      child: const ChainExportProposalPage(),
+                    ),
+                  ],
+          )),
       bottomNavigationBar: const LBottomNavigation(),
     );
   }
