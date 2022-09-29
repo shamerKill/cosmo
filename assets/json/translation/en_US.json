@@ -152,6 +152,7 @@
 	"pledge": "PLEDGE",
 	"pledgeQuantity": "Pledge quantity",
 	"pledgeInputHint": "Please input the amount to be pledged",
+	"backPledgeInputHint": "Please input the amount to be withdraw",
 	"canUseVolume": "The amount that can be pledged",
 	"pledgeTipList_1_1": "delegate",
 	"pledgeTipList_1_2": "The staked plugcn can be unstaked at any time to the validator node, but it will take 21 days to the account.",

@@ -156,7 +156,7 @@ class ChainBackupPledgePage extends GetView<ChainBackupPledgePageController> {
                 Padding(padding: EdgeInsets.only(top: appTheme.sizes.padding)),
                 LInput(
                   textController: controller.pledgeController,
-                  hintText: 'inputPledgedVolume'.tr,
+                  hintText: 'backPledgeInputHint'.tr,
                   obscureText: true,
                   suffix: Obx(() => Text(state.baseCoin.symbol,
                       style: TextStyle(color: appTheme.colors.textBlack))),

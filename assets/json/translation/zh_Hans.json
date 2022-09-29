@@ -152,6 +152,7 @@
 	"pledge": "质押",
 	"pledgeQuantity": "质押数量",
 	"pledgeInputHint": "请输入将要质押的数量",
+	"backPledgeInputHint": "请输入将要赎回的数量",
 	"canUseVolume": "可质押数量",
 	"pledgeTipList_1_1": "委托",
 	"pledgeTipList_1_2": "给验证节点可以随时赎回，但赎回委托需要等待21天。",
