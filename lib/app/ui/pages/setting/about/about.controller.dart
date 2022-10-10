@@ -102,7 +102,7 @@ class UserAboutPageController extends GetxController {
         ]),
       );
       if (result != true) return;
-      await launchUrl(Uri.parse(state.webSite));
+      await launchUrl(Uri.parse(state.webSite), mode: LaunchMode.externalApplication);
     }
   }
 

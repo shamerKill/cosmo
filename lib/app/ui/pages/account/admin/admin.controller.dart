@@ -88,8 +88,24 @@ class AccountAdminPageController extends GetxController {
   onEditAccountName() {
     TextEditingController _controller =
         TextEditingController(text: state.accountInfo.nickName);
-    LBottomSheet.baseBottomSheet(
-      child: SizedBox(
+    LBottomSheet.promptBottomSheet(
+      title: 'editAccountName'.tr,
+      sureCallback: () {
+        var value = _controller.text;
+        if (value.isEmpty) {
+          LToast.error('ErrorWithAccountNotEmpty'.tr);
+          return false;
+        } else if (dataAccountController.updateAccountName(
+            state.accountInfo.address, value)) {
+          LToast.success('SuccessEdit'.tr);
+          _getAccountData(state.accountInfo.address);
+          return true;
+        } else {
+          LToast.success('FailEdit'.tr);
+          return false;
+        }
+      },
+      message: SizedBox(
         width: Get.size.width * 0.8,
         child: LInput(
           textController: _controller,

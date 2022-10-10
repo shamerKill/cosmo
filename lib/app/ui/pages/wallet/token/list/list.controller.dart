@@ -70,12 +70,12 @@ class WalletTokenListPageController extends GetxController
       });
     tabBarController = TabController(vsync: this, length: 2);
     tabBarController.addListener(_onToggleList);
-    getTokenRemoteList();
-    _getLocalTokenList();
     state._fetchLoading.listen((_type) {
       if (_type) LLoading.showBgLoading();
       if (!_type) LLoading.dismiss();
     });
+    getTokenRemoteList();
+    _getLocalTokenList();
   }
 
   @override
@@ -108,14 +108,19 @@ class WalletTokenListPageController extends GetxController
     if (text == null) return null;
     if (text == '') return getTokenRemoteList();
     state.fetchLoading = true;
-    httpToolServer.searchTokenInfo(text).then((res) {
+    httpToolServer.searchTokenInfo(text).then((res) async {
+      var token = res.data['token'];
+      // 获取logo
+      var logoListRes = await httpToolServer.getTokenLogo([(token.minUnit == '') ? token.contractAddress : token.minUnit]);
+      token.logo = logoListRes.data[0];
       if (res.status == 0) {
         state.allTokenList
           ..clear()
-          ..add(res.data['token']);
+          ..add(token);
       } else {
         LToast.info('tokenNotFind'.tr);
       }
+      return;
     }).whenComplete(() => state.fetchLoading = false);
   }
 
@@ -126,7 +131,7 @@ class WalletTokenListPageController extends GetxController
     state.fetchLoading = true;
     return httpToolApp
         .getChainTokensList(state.allTokenPage, limit: 10)
-        .then((res) {
+        .then((res) async {
       if (res.status != 0) {
         state.allTokenPage = 0;
         remoteListRefreshController = RefreshController();
@@ -137,7 +142,13 @@ class WalletTokenListPageController extends GetxController
         state.allTokenPage = 0;
         remoteListRefreshController = RefreshController();
       }
-      return res.data.forEach((_item) => state.allTokenList.add(_item));
+      // 获取logo
+      var logoListRes = await httpToolServer.getTokenLogo(res.data.map((e) => (e.minUnit == '') ? e.contractAddress : e.minUnit).toList());
+      List<String> logoList = logoListRes.data.map<String>((item) => item.toString()).toList();
+      for (int i = 0; i < res.data.length; i++) {
+        state.allTokenList.add(res.data[i]..logo = logoList[i]);
+      }
+      return;
     }).whenComplete(() => state.fetchLoading = false);
   }
 
@@ -240,6 +251,13 @@ class WalletTokenListPageController extends GetxController
           var token = await dataToolServer.getTokenInfo(_item['Contract']);
           state.accountInfo.tokenList.add(token..amount = _item['Num']);
         }
+      }
+    }
+    // 获取logo
+    var logoListRes = await httpToolServer.getTokenLogo(state.accountInfo.tokenList.map((e) => e.type == EnumTokenType.prc20 ? e.contractAddress : e.minUnit).toList());
+    if (logoListRes.data != null) {
+      for (int index = 0; index < state.accountInfo.tokenList.length; index++) {
+        state.accountInfo.tokenList[index].logo = logoListRes.data[index] ?? '';
       }
     }
     state._accountInfo.refresh();

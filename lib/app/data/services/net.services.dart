@@ -18,7 +18,8 @@ TokenModel localDefaultCoinInfo = _resFormatToToken(jsonDecode('''{
   "initial_supply": "15989000000",
   "max_supply": "100000000000",
   "mintable": false,
-  "owner": "gx1fjljkcf5f9ceh9cu54z7pp9wtmm586r2fm5gde"
+  "owner": "gx1fjljkcf5f9ceh9cu54z7pp9wtmm586r2fm5gde",
+  "logo": "https://www.gxswap.io/pc-logo.jpg"
   }'''));
 
 // 1317接口信息
@@ -399,6 +400,11 @@ class _HttpToolServer extends UriTool {
   Future<HttpToolResponse> getRemoteAppVersion() {
     return HttpToolClient.getHttp(customUri('/v2/version'));
   }
+
+  // 获取代币logo
+  Future<HttpToolResponse> getTokenLogo(List tokenList) {
+    return HttpToolClient.getHttp(customUri('/rpc/token/logo', query: tokenList.map((e) => 'token=$e').join('&')));
+  }
 }
 
 _HttpToolServer httpToolServer = _HttpToolServer();
@@ -470,5 +476,6 @@ TokenModel _resFormatToToken(dynamic _token,
     ..scale = _token['scale'] ?? int.tryParse(_token['decimal']) ?? 0
     ..mintable = _token['mintable'] ?? false
     ..type = type ?? EnumTokenType.prc10
-    ..contractAddress = contractAddress ?? '';
+    ..contractAddress = contractAddress ?? ''
+    ..logo = _token['logo'] ?? '';
 }

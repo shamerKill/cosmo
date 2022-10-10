@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -141,7 +143,7 @@ class LBottomSheet {
     );
   }
 
-  static Future<bool?> promptBottomSheet({String? title, Widget? message}) {
+  static Future<bool?> promptBottomSheet({String? title, Widget? message, FutureOr<bool?> Function()? sureCallback}) {
     return baseBottomSheet<bool>(
       showClose: false,
       child: Padding(
@@ -172,7 +174,14 @@ class LBottomSheet {
                   child: LButton(
                     height: appTheme.sizes.buttonHeight * 0.8,
                     child: Text('sure'.tr),
-                    onPressed: () => Get.back(result: true),
+                    onPressed: () async {
+                      bool close = true;
+                      if (sureCallback != null) {
+                        var result = await sureCallback();
+                        if (result != null) close = result;
+                      }
+                      if (close) Get.back(result: true);
+                    },
                   ),
                 ),
               ],

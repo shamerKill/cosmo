@@ -30,7 +30,7 @@ class CheckUpdateApp {
     if (result.data.isEmpty) return;
     var appInfo = result.data.first;
     _upLoadDetail = appInfo['content'];
-    _isImportant = appInfo['enforce'] == '0';
+    _isImportant = appInfo['enforce'] == '1';
     _downloadSite = appInfo['downloadurl'];
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _remoteVersion = appInfo['version'];
@@ -76,7 +76,7 @@ class CheckUpdateApp {
         ]),
       );
       if (result != true) return;
-      await launchUrl(Uri.parse(_downloadSite));
+      await launchUrl(Uri.parse(_downloadSite), mode: LaunchMode.externalApplication);
     } else {
       LToast.info('iosTestUpdatePleaseHolder'.tr);
     }
