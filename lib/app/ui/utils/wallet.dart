@@ -290,14 +290,15 @@ class WalletTool {
     required String validatorAddress,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) async {
-    gasLimit ??= 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = distribution.MsgWithdrawDelegatorReward.create()
       ..delegatorAddress = wallet.bech32Address
       ..validatorAddress = validatorAddress;
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // 赎回质押
@@ -307,9 +308,10 @@ class WalletTool {
     required String volume,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) async {
-    gasLimit ??= 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
     DataCoinsController dataCoins = Get.find();
     var wallet = getWallet(mnemonic);
     var message = staking.MsgUndelegate.create()
@@ -318,7 +320,7 @@ class WalletTool {
       ..amount = (alan.Coin.create()
         ..denom = dataCoins.state.baseCoin.minUnit
         ..amount = volume);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // 质押
@@ -328,9 +330,10 @@ class WalletTool {
     required String volume,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) async {
-    gasLimit ??= 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
     DataCoinsController dataCoins = Get.find();
     var wallet = getWallet(mnemonic);
     var message = staking.MsgDelegate.create()
@@ -339,7 +342,7 @@ class WalletTool {
       ..amount = (alan.Coin.create()
         ..denom = dataCoins.state.baseCoin.minUnit
         ..amount = volume);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // 转让质押
@@ -350,9 +353,10 @@ class WalletTool {
     required String volume,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) async {
-    gasLimit ??= 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
     DataCoinsController dataCoins = Get.find();
     var wallet = getWallet(mnemonic);
     var message = staking.MsgBeginRedelegate.create()
@@ -362,7 +366,7 @@ class WalletTool {
       ..amount = (alan.Coin.create()
         ..denom = dataCoins.state.baseCoin.minUnit
         ..amount = volume);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // 转账
@@ -373,10 +377,11 @@ class WalletTool {
     required String gasAll,
     required String denom,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
     bool? noWait,
   }) async {
-    gasLimit ??= 200000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = bank.MsgSend.create()
       ..fromAddress = wallet.bech32Address
@@ -384,7 +389,7 @@ class WalletTool {
       ..amount.add(alan.Coin.create()
         ..denom = denom
         ..amount = volume);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll,
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll,
         noWait: noWait);
   }
 
@@ -395,15 +400,16 @@ class WalletTool {
     required gov_def.VoteOption option,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) async {
-    gasLimit ??= 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = gov.MsgVote.create()
       ..voter = wallet.bech32Address
       ..proposalId = $fixnum.Int64.parseInt(proposalId)
       ..option = option;
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // 创建代币
@@ -418,9 +424,10 @@ class WalletTool {
     required String scale,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) async {
-    $fixnum.Int64 gasLimit = 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     String memo = '';
     var message = token_tx.MsgIssueToken.create()
@@ -432,7 +439,7 @@ class WalletTool {
       ..maxSupply = $fixnum.Int64.parseInt(maxSupply)
       ..mintable = mintable
       ..scale = int.parse(scale);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // token10 swap
@@ -446,9 +453,10 @@ class WalletTool {
     required double orderPrice,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) {
-    $fixnum.Int64 gasLimit = 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = liquidity_tx.MsgSwapWithinBatch.create()
       ..swapRequesterAddress = wallet.bech32Address
@@ -463,7 +471,7 @@ class WalletTool {
         ..amount = feeAmount)
       ..orderPrice =
           NumUtil.multiplyDec(orderPrice, pow(10, 18)).toStringAsFixed(0);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // create token10 swap
@@ -475,9 +483,10 @@ class WalletTool {
     required String toAmount,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) {
-    $fixnum.Int64 gasLimit = 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = liquidity_tx.MsgCreatePool.create()
       ..poolCreatorAddress = wallet.bech32Address
@@ -490,7 +499,7 @@ class WalletTool {
           ..denom = toSymbol
           ..amount = toAmount)
       ]);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // add token10 swap
@@ -503,9 +512,10 @@ class WalletTool {
     required String toAmount,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) {
-    $fixnum.Int64 gasLimit = 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = liquidity_tx.MsgDepositWithinBatch.create()
       ..depositorAddress = wallet.bech32Address
@@ -518,7 +528,7 @@ class WalletTool {
           ..denom = toSymbol
           ..amount = toAmount)
       ]);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 
   // remove token10 swap
@@ -529,9 +539,10 @@ class WalletTool {
     required String fromAmount,
     required String gasAll,
     String memo = '',
-    $fixnum.Int64? gasLimit,
+    int? gasLimit,
   }) {
-    $fixnum.Int64 gasLimit = 400000.toInt64();
+    $fixnum.Int64 gasLimitInt =
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = liquidity_tx.MsgWithdrawWithinBatch.create()
       ..withdrawerAddress = wallet.bech32Address
@@ -539,6 +550,6 @@ class WalletTool {
       ..poolCoin = (alan.Coin.create()
         ..denom = fromSymbol
         ..amount = fromAmount);
-    return _createAndSendMsg(wallet, [message], memo, gasLimit, gasAll);
+    return _createAndSendMsg(wallet, [message], memo, gasLimitInt, gasAll);
   }
 }

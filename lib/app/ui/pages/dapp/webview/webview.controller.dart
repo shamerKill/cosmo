@@ -267,7 +267,7 @@ class DappWebviewPageController extends GetxController
       '_cosmo${name[0].toUpperCase()}${name.substring(1)}';
   // webview回掉错误方法
   _webviewGetError(dynamic e) {
-    String _error = e is Object ? json.encode(e) : e.toString();
+    String _error = e.toString();
     state.webviewController?.runJavascript(
         'if (typeof window.${_formatJsName('errorCall')} == \'function\') { window.${_formatJsName('errorCall')}(`WALLET ERROR: $_error`); }'); // _cosmoErrorCall
   }
@@ -553,6 +553,7 @@ class DappWebviewPageController extends GetxController
           return state.webviewController
               ?.runJavascript('window.$_windowAttrName = null;');
         }
+
         HttpToolResponse transferResult = await WalletTool.transfer(
           mnemonic: mnemonicList,
           toAddress: sendData['toAddress'],
