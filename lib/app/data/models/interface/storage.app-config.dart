@@ -67,6 +67,7 @@ class ConfigAppData extends _StorageBaseAbstract {
         ? Locale.fromSubtags(languageCode: source['languageType'])
         : null;
     homeValueHide = source['homeValueHide'] ?? false;
-    ignoreVersion = source['ignoreVersion'] == 'null' ? null : source['ignoreVersion'];
+    ignoreVersion =
+        source['ignoreVersion'] == 'null' ? null : source['ignoreVersion'];
   }
 }

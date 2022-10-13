@@ -143,7 +143,10 @@ class LBottomSheet {
     );
   }
 
-  static Future<bool?> promptBottomSheet({String? title, Widget? message, FutureOr<bool?> Function()? sureCallback}) {
+  static Future<bool?> promptBottomSheet(
+      {String? title,
+      Widget? message,
+      FutureOr<bool?> Function()? sureCallback}) {
     return baseBottomSheet<bool>(
       showClose: false,
       child: Padding(

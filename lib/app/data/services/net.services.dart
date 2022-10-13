@@ -57,7 +57,13 @@ class _HttpToolApp extends UriTool {
   Future<TokenModel?> getCoinInfo(String denom) {
     return HttpToolClient.getHttp(customUri('token/tokens/$denom'))
         .then<TokenModel?>(
-      (res) => res.status != 0 ? null : _resFormatToToken(res.data?['Token']),
+      (res) async {
+        var token =
+            res.status != 0 ? null : _resFormatToToken(res.data?['Token']);
+        var tokenLogo = await httpToolServer.getTokenLogo([denom]);
+        token?.logo = tokenLogo.status != 0 ? null : tokenLogo.data[0];
+        return token;
+      },
       onError: (e) => localDefaultCoinInfo,
     );
   }
@@ -403,7 +409,8 @@ class _HttpToolServer extends UriTool {
 
   // 获取代币logo
   Future<HttpToolResponse> getTokenLogo(List tokenList) {
-    return HttpToolClient.getHttp(customUri('/rpc/token/logo', query: tokenList.map((e) => 'token=$e').join('&')));
+    return HttpToolClient.getHttp(customUri('/rpc/token/logo',
+        query: tokenList.map((e) => 'token=$e').join('&')));
   }
 }
 

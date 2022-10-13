@@ -111,7 +111,8 @@ class WalletTokenListPageController extends GetxController
     httpToolServer.searchTokenInfo(text).then((res) async {
       var token = res.data['token'];
       // 获取logo
-      var logoListRes = await httpToolServer.getTokenLogo([(token.minUnit == '') ? token.contractAddress : token.minUnit]);
+      var logoListRes = await httpToolServer.getTokenLogo(
+          [(token.minUnit == '') ? token.contractAddress : token.minUnit]);
       token.logo = logoListRes.data[0];
       if (res.status == 0) {
         state.allTokenList
@@ -143,8 +144,11 @@ class WalletTokenListPageController extends GetxController
         remoteListRefreshController = RefreshController();
       }
       // 获取logo
-      var logoListRes = await httpToolServer.getTokenLogo(res.data.map((e) => (e.minUnit == '') ? e.contractAddress : e.minUnit).toList());
-      List<String> logoList = logoListRes.data.map<String>((item) => item.toString()).toList();
+      var logoListRes = await httpToolServer.getTokenLogo(res.data
+          .map((e) => (e.minUnit == '') ? e.contractAddress : e.minUnit)
+          .toList());
+      List<String> logoList =
+          logoListRes.data.map<String>((item) => item.toString()).toList();
       for (int i = 0; i < res.data.length; i++) {
         state.allTokenList.add(res.data[i]..logo = logoList[i]);
       }
@@ -254,7 +258,11 @@ class WalletTokenListPageController extends GetxController
       }
     }
     // 获取logo
-    var logoListRes = await httpToolServer.getTokenLogo(state.accountInfo.tokenList.map((e) => e.type == EnumTokenType.prc20 ? e.contractAddress : e.minUnit).toList());
+    var logoListRes = await httpToolServer.getTokenLogo(state
+        .accountInfo.tokenList
+        .map((e) =>
+            e.type == EnumTokenType.prc20 ? e.contractAddress : e.minUnit)
+        .toList());
     if (logoListRes.data != null) {
       for (int index = 0; index < state.accountInfo.tokenList.length; index++) {
         state.accountInfo.tokenList[index].logo = logoListRes.data[index] ?? '';

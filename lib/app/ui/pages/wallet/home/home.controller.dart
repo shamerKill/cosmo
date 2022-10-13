@@ -132,6 +132,7 @@ class BasicHomePageController extends GetxController
                 ? token.minUnit
                 : token.contractAddress))
         .toList());
+    initAllAccountTokenLogo();
     LLoading.dismiss();
     // 更改币种余额
     for (var i = 0; i < result.length; i++) {
@@ -139,6 +140,18 @@ class BasicHomePageController extends GetxController
     }
     state._accountInfo.refresh();
     _getAccountPrice();
+  }
+
+  // 获取所有币种logo
+  Future<void> initAllAccountTokenLogo() async {
+    var result = await httpToolServer.getTokenLogo(state.accountInfo.tokenList
+        .map((e) =>
+            e.type == EnumTokenType.prc10 ? e.minUnit : e.contractAddress)
+        .toList());
+    if (result.status != 0 || result.data is! List) return;
+    for (var i = 0; i < result.data.length; i++) {
+      state.accountInfo.tokenList[i].logo = result.data[i] ?? '';
+    }
   }
 
   // 判断账户内是否有重复代币，如果有进行删除

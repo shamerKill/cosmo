@@ -76,7 +76,8 @@ class CheckUpdateApp {
         ]),
       );
       if (result != true) return;
-      await launchUrl(Uri.parse(_downloadSite), mode: LaunchMode.externalApplication);
+      await launchUrl(Uri.parse(_downloadSite),
+          mode: LaunchMode.externalApplication);
     } else {
       LToast.info('iosTestUpdatePleaseHolder'.tr);
     }
