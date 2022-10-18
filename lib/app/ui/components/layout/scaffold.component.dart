@@ -22,6 +22,7 @@ class LScaffold extends GetView<LScaffoldController> {
     this.hidBottomBar = false,
     this.singleScroll = false,
     this.basicBackgroundColor = false,
+    this.unfocusScope = true,
   }) : super(key: key);
   final AppBar? statusBar;
   final Widget? headerBar;
@@ -44,13 +45,15 @@ class LScaffold extends GetView<LScaffoldController> {
   final Key? scaffoldKey;
   // 底部元素背景色
   final Color? footerBgColor;
+  // 是否开启点击取消焦点
+  final bool unfocusScope;
 
   @override
   Widget build(BuildContext context) {
     final LScaffoldController controller = Get.put(LScaffoldController());
     return GestureDetector(
       // 点击其他位置取消焦点
-      onTap: () => Get.focusScope?.unfocus(),
+      onTap: unfocusScope ? () => Get.focusScope?.unfocus() : null,
       child: WillPopScope(
         child: Scaffold(
           key: scaffoldKey,

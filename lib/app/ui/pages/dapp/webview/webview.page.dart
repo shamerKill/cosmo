@@ -14,6 +14,7 @@ class DappWebviewPage extends GetView<DappWebviewPageController> {
     DappWebviewPageState state = controller.state;
 
     return LScaffold(
+      unfocusScope: false,
       statusBar: LAppBar.defaultStatus(),
       headerBar: Padding(
         padding: EdgeInsets.only(

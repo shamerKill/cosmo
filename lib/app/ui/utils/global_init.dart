@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_webview_pro/webview_flutter.dart';
 import 'package:plug/app/data/provider/data.init.dart';
 import 'package:plug/app/env/env.dart';
 import 'package:plug/app/routes/routes.dart';
@@ -12,6 +14,7 @@ import 'package:uni_links/uni_links.dart';
 class UtilGlobalInit {
   static init() async {
     _changeSystemUI();
+    _changeAndroidWebview();
     if (Env.envConfig.isRelease && Env.getEnvIsAndroid) {
       await _openSuperFPS();
     }
@@ -26,6 +29,11 @@ class UtilGlobalInit {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
     ));
+  }
+
+  // 更改webview
+  static _changeAndroidWebview() {
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   // 禁止转向
