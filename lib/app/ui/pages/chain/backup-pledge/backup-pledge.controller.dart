@@ -128,6 +128,7 @@ class ChainBackupPledgePageController extends GetxController {
       gasAll: NumberTool.balanceToAmount(state.feeAmount),
     );
     LLoading.dismiss();
+    state.pledgeLoading = false;
     if (result.status == -10001) {
       return LToast.error('ErrorWithRedeemCallback'.tr);
     }
@@ -138,6 +139,5 @@ class ChainBackupPledgePageController extends GetxController {
     LToast.success('SuccessWithRedeem'.tr);
     pledgeController.text = '0';
     _initData();
-    state.pledgeLoading = false;
   }
 }

@@ -293,7 +293,7 @@ class WalletTool {
     int? gasLimit,
   }) async {
     $fixnum.Int64 gasLimitInt =
-        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = distribution.MsgWithdrawDelegatorReward.create()
       ..delegatorAddress = wallet.bech32Address
@@ -311,7 +311,7 @@ class WalletTool {
     int? gasLimit,
   }) async {
     $fixnum.Int64 gasLimitInt =
-        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     DataCoinsController dataCoins = Get.find();
     var wallet = getWallet(mnemonic);
     var message = staking.MsgUndelegate.create()
@@ -333,7 +333,7 @@ class WalletTool {
     int? gasLimit,
   }) async {
     $fixnum.Int64 gasLimitInt =
-        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     DataCoinsController dataCoins = Get.find();
     var wallet = getWallet(mnemonic);
     var message = staking.MsgDelegate.create()
@@ -356,7 +356,7 @@ class WalletTool {
     int? gasLimit,
   }) async {
     $fixnum.Int64 gasLimitInt =
-        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     DataCoinsController dataCoins = Get.find();
     var wallet = getWallet(mnemonic);
     var message = staking.MsgBeginRedelegate.create()
@@ -381,7 +381,7 @@ class WalletTool {
     bool? noWait,
   }) async {
     $fixnum.Int64 gasLimitInt =
-        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = bank.MsgSend.create()
       ..fromAddress = wallet.bech32Address
@@ -403,7 +403,7 @@ class WalletTool {
     int? gasLimit,
   }) async {
     $fixnum.Int64 gasLimitInt =
-        (gasLimit == null ? 200000.toInt64() : gasLimit.toInt64());
+        (gasLimit == null ? 400000.toInt64() : gasLimit.toInt64());
     var wallet = getWallet(mnemonic);
     var message = gov.MsgVote.create()
       ..voter = wallet.bech32Address
