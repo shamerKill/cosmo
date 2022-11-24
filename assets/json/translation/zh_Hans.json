@@ -268,6 +268,7 @@
 	"authorizationDescriptionContractCall": "获取当前账户PRC20合约信息",
 	"authorizationDescriptionContractSend": "调用当前账户PRC20合约交易",
 	"authorizationDescriptionLiquidity": "调用当前账户流动性功能",
+	"authorizationDescriptionSign": "调用当前账户签名功能",
 	"authorizationAuthorizeTip": "同意授权后，将不会再次提示",
 	"updateTip": "更新提示",
 	"updateTipDesc": "是否前往浏览器下载新版本？",

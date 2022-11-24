@@ -28,6 +28,7 @@ List<String> _permissionListAll = [
   'contractCall', // 合约数据获取调用
   'contractSend', // 合约发送调用
   'liquidity', // liquidity操作调用 sendLiquidity / createLiquidity / addLiquidity / removeLiquidity
+  'sign', // 信息签名
 ];
 
 class DappWebviewPageState {
@@ -361,6 +362,11 @@ class DappWebviewPageController extends GetxController
                   style: TextStyle(
                       color: appTheme.colors.primaryColor,
                       fontSize: appTheme.sizes.fontSizeSmall)),
+            if (_permissionListApply.contains(_permissionListAll[6]))
+              Text('- ${'authorizationDescriptionSign'.tr}',
+                  style: TextStyle(
+                      color: appTheme.colors.primaryColor,
+                      fontSize: appTheme.sizes.fontSizeSmall)),
             Padding(
                 padding: EdgeInsets.only(bottom: appTheme.sizes.paddingSmall)),
             Text('authorizationAuthorizeTip'.tr,
@@ -476,6 +482,9 @@ class DappWebviewPageController extends GetxController
       case 'contractSend':
         _callContractSend(webviewCallData.windowAttrName, webviewCallData.data);
         break; // 发送合约
+      case 'sign':
+        _callSign(webviewCallData.windowAttrName, webviewCallData.data);
+        break; // 签名
     }
   }
 
@@ -879,6 +888,48 @@ class DappWebviewPageController extends GetxController
         );
         state.webviewController?.runJavascript(
             'window.$_windowAttrName = {status: ${sendResult.status}, data: ${json.encode(sendResult.data)}};');
+      } catch (e) {
+        _webviewGetError({'msg': e.toString()});
+        state.webviewController
+            ?.runJavascript('window.$_windowAttrName = null;');
+      }
+    }
+  }
+
+  // 账户签名调用
+  _callSign(String _windowAttrName, dynamic sendData) async {
+    // 判断账户类型
+    if (_accountInfo?.accountType != EnumAccountType.prc20) {
+      _webviewGetError('account type error');
+      state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+    } else if ( // 判断传入信息
+        sendData['signData'] is! String
+        ) {
+      _webviewGetError('input type error, please check');
+      state.webviewController?.runJavascript('window.$_windowAttrName = null;');
+    } else {
+      try {
+        String? password = await LBottomSheet.passwordBottomSheet();
+        if (password == null) {
+          _webviewGetError('input password is empty');
+          return state.webviewController
+              ?.runJavascript('window.$_windowAttrName = null;');
+        }
+        List<String>? mnemonicList = await WalletTool.decryptMnemonic(
+          _accountInfo?.stringifyRaw ?? '',
+          password,
+        );
+        if (mnemonicList == null) {
+          _webviewGetError('input password error');
+          return state.webviewController
+              ?.runJavascript('window.$_windowAttrName = null;');
+        }
+        String signature = 
+            await EvmClient(mnemonic: mnemonicList).sign(
+          sendData['signData'],
+        );
+        state.webviewController?.runJavascript(
+            'window.$_windowAttrName = {data: "$signature"};');
       } catch (e) {
         _webviewGetError({'msg': e.toString()});
         state.webviewController

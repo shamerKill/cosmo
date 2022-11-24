@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:core';
 
@@ -10,6 +11,7 @@ import 'package:plug/app/ui/utils/http.dart';
 import 'package:plug/app/ui/utils/string.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
+
 
 class EvmClient {
   late Web3Client ethClient;
@@ -169,6 +171,16 @@ class EvmClient {
       data: data,
     );
   }
+  // 对字符串签名
+  Future<String> sign(String input) async {
+    const _messagePrefix = '\u0019Ethereum Signed Message:\n';
+    final prefix = _messagePrefix + input.length.toString();
+    final prefixBytes = ascii.encode(prefix);
+    final payload = uint8ListFromList(prefixBytes + ascii.encode(input));
+    final signature =
+        await _ethPrivateKey.sign(payload, chainId: chainId, isEIP1559: true);
+    return '0x' + bytesToHex(signature);
+  }
 
   // 获取账户合约余额
   static Future<BigInt> getContractBalance(
@@ -271,4 +283,19 @@ class EvmClient {
     });
     return compute.future;
   }
+}
+
+
+Uint8List uint8ListFromList(List<int> data) {
+  if (data is Uint8List) return data;
+
+  return Uint8List.fromList(data);
+}
+
+Uint8List padUint8ListTo32(Uint8List data) {
+  assert(data.length <= 32);
+  if (data.length == 32) return data;
+
+  // todo there must be a faster way to do this?
+  return Uint8List(32)..setRange(32 - data.length, 32, data);
 }
