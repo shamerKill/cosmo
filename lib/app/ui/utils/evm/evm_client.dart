@@ -177,6 +177,7 @@ class EvmClient {
     final prefix = _messagePrefix + input.length.toString();
     final prefixBytes = ascii.encode(prefix);
     final payload = uint8ListFromList(prefixBytes + ascii.encode(input));
+    // final hash = keccak256(payload);
     final signature =
         await _ethPrivateKey.sign(payload, chainId: chainId, isEIP1559: true);
     return '0x' + bytesToHex(signature);

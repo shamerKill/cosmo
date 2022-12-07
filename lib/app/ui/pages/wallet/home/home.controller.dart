@@ -123,7 +123,7 @@ class BasicHomePageController extends GetxController
 
   // 获取当前账户信息
   Future<void> initAccountStorage() async {
-    _checkAndInsertAccountBaseCoin();
+    await _checkAndInsertAccountBaseCoin();
     LLoading.showLoading();
     var result = await Future.wait<dynamic>(state.accountInfo.tokenList
         .map<Future<dynamic>>((token) => httpToolApp.getAccountBalance(
@@ -175,14 +175,33 @@ class BasicHomePageController extends GetxController
   }
 
   // 判断账户是否有基础币，如果没有加入并储存
-  _checkAndInsertAccountBaseCoin() {
-    var noBase = dataAccountController.checkAccountHadCoin(
+  _checkAndInsertAccountBaseCoin() async {
+    var hadBase = dataAccountController.checkAccountHadCoin(
         dataAccountController.state.nowAccount!.address,
         dataCoinsController.state.baseCoin.minUnit);
-    if (!noBase) {
+    if (!hadBase) {
       dataAccountController.updateAccount(
         dataAccountController.state.nowAccount!
           ..tokenList.insert(0, dataCoinsController.state.baseCoin),
+      );
+    }
+
+    // 加入默认PUSD
+    var PUSDContract = 'gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc';
+    var hadPUSD = dataAccountController.checkAccountHadPRCCoin(
+      dataAccountController.state.nowAccount!.address, PUSDContract
+    );
+    if (!hadPUSD) {
+      var pusdRes = await httpToolServer.searchToken20Info(PUSDContract);
+      TokenModel PUSD;
+      if (pusdRes.status == 0) {
+        PUSD = pusdRes.data['token'];
+      } else {
+        PUSD = localPUSDCoinInfo;
+      }
+      dataAccountController.updateAccount(
+        dataAccountController.state.nowAccount!
+          ..tokenList.insert(1, PUSD),
       );
     }
 

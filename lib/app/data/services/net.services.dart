@@ -21,6 +21,14 @@ TokenModel localDefaultCoinInfo = _resFormatToToken(jsonDecode('''{
   "owner": "gx1fjljkcf5f9ceh9cu54z7pp9wtmm586r2fm5gde",
   "logo": "https://www.gxswap.io/pc-logo.jpg"
   }'''));
+TokenModel localPUSDCoinInfo = _resFormatToToken(jsonDecode('''{
+  "@type": "/plugchain.prc20.Token",
+  "symbol": "pusd",
+  "name": "PLUG USD",
+  "scale": 18,
+  "min_unit": "pusd",
+  "logo": "https://pc-token-logo.oss-ap-southeast-1.aliyuncs.com/gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc.jpg"
+  }'''), type: EnumTokenType.prc20, contractAddress: 'gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc');
 
 // 1317接口信息
 class _HttpToolApp extends UriTool {

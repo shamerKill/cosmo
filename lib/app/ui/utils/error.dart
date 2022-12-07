@@ -4,4 +4,7 @@ class ErrorCode {
 
   /// 请求超时错误
   static const int timeError = -10002;
+
+  /// 手续费不足
+  static const int noBalance = -10003;
 }

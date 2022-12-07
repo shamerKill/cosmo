@@ -173,6 +173,15 @@ class DataAccountController extends GetxController {
         false;
   }
 
+  // 判断账户是否有20币
+  bool checkAccountHadPRCCoin(String address, String contract) {
+    return getAccountFromAddress(address)
+            ?.tokenList
+            .where((element) => element.contractAddress == contract)
+            .isNotEmpty ??
+        false;
+  }
+
   _readStorage() {
     // 读取账户列表
     String? data = GetStorage().read(state.accountStorageName);
