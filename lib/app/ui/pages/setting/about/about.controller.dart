@@ -89,12 +89,10 @@ class UserAboutPageController extends GetxController {
   // 更新版本
   onUpdateVersion() async {
     if (state.hadUpdate == '') return;
-    if (Env.getEnvIsIosBrowser) {
-      LToast.info('iosTestUpdatePleaseHolder'.tr);
-    } else if (Env.getEnvIsGooglePlay) {
+    if (Env.getEnvIsGooglePlay) {
       // TODO: 谷歌商店打开
       LToast.info('googlePlayUpdatePleaseHolder'.tr);
-    } else if (Env.getEnvIsAndroidBrowser) {
+    } else if (Env.getEnvIsAndroidBrowser || Env.getEnvIsIosBrowser) {
       bool? result = await LBottomSheet.promptBottomSheet(
         title: 'updateTip'.tr,
         message: Column(children: [

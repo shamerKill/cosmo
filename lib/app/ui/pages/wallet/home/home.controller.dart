@@ -189,8 +189,7 @@ class BasicHomePageController extends GetxController
     // 加入默认PUSD
     var PUSDContract = 'gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc';
     var hadPUSD = dataAccountController.checkAccountHadPRCCoin(
-      dataAccountController.state.nowAccount!.address, PUSDContract
-    );
+        dataAccountController.state.nowAccount!.address, PUSDContract);
     if (!hadPUSD) {
       var pusdRes = await httpToolServer.searchToken20Info(PUSDContract);
       TokenModel PUSD;
@@ -200,8 +199,7 @@ class BasicHomePageController extends GetxController
         PUSD = localPUSDCoinInfo;
       }
       dataAccountController.updateAccount(
-        dataAccountController.state.nowAccount!
-          ..tokenList.insert(1, PUSD),
+        dataAccountController.state.nowAccount!..tokenList.insert(1, PUSD),
       );
     }
 

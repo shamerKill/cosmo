@@ -8,6 +8,7 @@ import 'package:plug/app/data/models/interface/interface.dart';
 import 'package:plug/app/data/provider/data.account.dart';
 import 'package:plug/app/data/provider/data.config.dart';
 import 'package:plug/app/data/provider/data.dapp-address.dart';
+import 'package:plug/app/translation/translation.dart';
 import 'package:plug/app/ui/components/function/bottomSheet.component.dart';
 import 'package:plug/app/ui/components/function/toast.component.dart';
 import 'package:plug/app/ui/theme/theme.dart';
@@ -157,6 +158,7 @@ class DappWebviewPageController extends GetxController
     if (_logo != null) {
       state.logo = _logo.replaceAll('"', '').replaceAll("'", '');
     }
+    await _onloadDefaultJavascript();
     _finishDappLatelyList();
   }
 
@@ -247,6 +249,14 @@ class DappWebviewPageController extends GetxController
     dataDappAddress.saveData();
     LToast.success('SuccessWithCollected'.tr);
     Get.back();
+  }
+
+  // 加载默认前置js
+  _onloadDefaultJavascript() async {
+    // 修改当前语言
+    var language = plugTranslation.nowLocale.value.toLanguageTag();
+    await state.webviewController?.runJavascriptReturningResult(
+        '(function(){Object.defineProperty(navigator, "language", {value: "$language", writable: false})})()');
   }
 
   // 完善处理当前地址历史并添加记录
@@ -903,8 +913,7 @@ class DappWebviewPageController extends GetxController
       _webviewGetError('account type error');
       state.webviewController?.runJavascript('window.$_windowAttrName = null;');
     } else if ( // 判断传入信息
-        sendData['signData'] is! String
-        ) {
+        sendData['signData'] is! String) {
       _webviewGetError('input type error, please check');
       state.webviewController?.runJavascript('window.$_windowAttrName = null;');
     } else {
@@ -924,12 +933,11 @@ class DappWebviewPageController extends GetxController
           return state.webviewController
               ?.runJavascript('window.$_windowAttrName = null;');
         }
-        String signature = 
-            await EvmClient(mnemonic: mnemonicList).sign(
+        String signature = await EvmClient(mnemonic: mnemonicList).sign(
           sendData['signData'],
         );
-        state.webviewController?.runJavascript(
-            'window.$_windowAttrName = {data: "$signature"};');
+        state.webviewController
+            ?.runJavascript('window.$_windowAttrName = {data: "$signature"};');
       } catch (e) {
         _webviewGetError({'msg': e.toString()});
         state.webviewController

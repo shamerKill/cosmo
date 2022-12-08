@@ -28,7 +28,9 @@ TokenModel localPUSDCoinInfo = _resFormatToToken(jsonDecode('''{
   "scale": 18,
   "min_unit": "pusd",
   "logo": "https://pc-token-logo.oss-ap-southeast-1.aliyuncs.com/gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc.jpg"
-  }'''), type: EnumTokenType.prc20, contractAddress: 'gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc');
+  }'''),
+    type: EnumTokenType.prc20,
+    contractAddress: 'gx1jqulxg07n2cg8wtjkc457w650a3av3xdl5rauc');
 
 // 1317接口信息
 class _HttpToolApp extends UriTool {
@@ -412,7 +414,11 @@ class _HttpToolServer extends UriTool {
 
   // 获取远程版本号
   Future<HttpToolResponse> getRemoteAppVersion() {
-    return HttpToolClient.getHttp(customUri('/v2/version'));
+    String? type;
+    if (Env.getEnvIsIosBrowser) {
+      type = 'ios';
+    }
+    return HttpToolClient.getHttp(customUri('/v2/version',  queryParameters: { 'type': type }));
   }
 
   // 获取代币logo
