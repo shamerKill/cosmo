@@ -937,7 +937,7 @@ class DappWebviewPageController extends GetxController
           sendData['signData'],
         );
         state.webviewController
-            ?.runJavascript('window.$_windowAttrName = {data: "$signature"};');
+            ?.runJavascript('window.$_windowAttrName = {data: "$signature", status: 200};');
       } catch (e) {
         _webviewGetError({'msg': e.toString()});
         state.webviewController

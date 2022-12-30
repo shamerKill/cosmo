@@ -418,7 +418,8 @@ class _HttpToolServer extends UriTool {
     if (Env.getEnvIsIosBrowser) {
       type = 'ios';
     }
-    return HttpToolClient.getHttp(customUri('/v2/version',  queryParameters: { 'type': type }));
+    return HttpToolClient.getHttp(
+        customUri('/v2/version', queryParameters: {'type': type}));
   }
 
   // 获取代币logo

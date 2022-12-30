@@ -1,5 +1,5 @@
 
-all: format clean install build-apk build-bundle build-ipa
+all: format clean install build-apk build-bundle build-ipa end
 
 format:
 	@echo "======> Format project ......"
@@ -32,8 +32,17 @@ build-bundle:
 	@flutter build appbundle --dart-define=DART_DEFINE_APP_ENV=release --dart-define=BUILD_CHANNEL=android-google
 	@echo "...... build android appbundle end <======"
 
-
 build-ipa:
 	@echo "======> build ios ipa ......"
-	@flutter build ipa --dart-define=DART_DEFINE_APP_ENV=release --dart-define=BUILD_CHANNEL=ios-browser --export-method=development
+	@flutter build ipa --dart-define=DART_DEFINE_APP_ENV=release --dart-define=BUILD_CHANNEL=ios-browser --export-options-plist=./ios/Options/app-store.plist
 	@echo "...... build ios ipa end <======"
+
+end:
+	@echo "======> move file..."
+	@rm -r ./build_project
+	@mkdir ./build_project
+	@mv ./build/app/outputs/flutter-apk/app-release.apk ./build_project/pando.apk
+	@mv ./build/app/outputs/bundle/release/app-release.aab ./build_project/pando.aab
+	@mv ./build/ios/ipa ./build_project/pando.ipa
+	@echo "...... move file end <======"
+	

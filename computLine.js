@@ -1,6 +1,9 @@
 /**
  * @description 计算代码行数
 **/
+const ignorePath = [
+  'protobuf'
+];
 
 const path = require('path');
 const resolve = path.resolve;
@@ -17,6 +20,9 @@ function readDir(path) {
   const dirData = fs.readdirSync(path);
   let lineNum = 0;
   dirData.forEach(item => {
+    for (let i = 0; i < ignorePath.length; i++) {
+      if (new RegExp(ignorePath[i]).test(item)) return;
+    }
     const itemPath = join(path, item);
     const stat = fs.statSync(itemPath);
     if (stat.isDirectory()) {

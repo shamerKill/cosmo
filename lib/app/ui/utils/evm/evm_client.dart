@@ -12,7 +12,6 @@ import 'package:plug/app/ui/utils/string.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
-
 class EvmClient {
   late Web3Client ethClient;
   late NewWallet _cosmoWallet;
@@ -171,6 +170,7 @@ class EvmClient {
       data: data,
     );
   }
+
   // 对字符串签名
   Future<String> sign(String input) async {
     const _messagePrefix = '\u0019Ethereum Signed Message:\n';
@@ -285,7 +285,6 @@ class EvmClient {
     return compute.future;
   }
 }
-
 
 Uint8List uint8ListFromList(List<int> data) {
   if (data is Uint8List) return data;
